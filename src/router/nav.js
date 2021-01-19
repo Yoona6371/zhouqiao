@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// 该文件还没有链接到App.js上
 // 路由
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
