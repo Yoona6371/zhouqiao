@@ -1,6 +1,7 @@
 import React, { AsyncStorage } from 'react-native';
+
 export default {
-  constructor() { },
+  constructor() {},
   get(key) {
     if (!key) {
       return null;
@@ -9,8 +10,7 @@ export default {
     return AsyncStorage.getItem(key)
       .then((value) => {
         if (value) {
-          let obj = JSON.parse(value);
-          return obj.data;
+          return JSON.parse(value);
         }
         return null;
       })
@@ -26,8 +26,27 @@ export default {
     AsyncStorage.setItem(
       key,
       JSON.stringify({
-        data: value,
+        value,
       }),
     );
+  },
+  /**
+   * 删除key对应json数值
+   * @param key
+   * @returns {Promise<string>}
+   */
+  deleteItem(key) {
+    if (!key) {
+      return;
+    }
+    return AsyncStorage.removeItem(key);
+  },
+
+  /**
+   * 删除所有配置数据
+   * @returns {Promise<string>}
+   */
+  clear() {
+    return AsyncStorage.clear();
   },
 };

@@ -1,6 +1,7 @@
 import { observable, action } from 'mobx';
 import userStore from './userStore';
 import globalStore from './globalStore';
+import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 class RootStore {
   constructor() {
@@ -17,11 +18,21 @@ class UserStore {
     this.allData = data;
   }
 
-  @action infoSet(data) {
+  // 设置用户信息
+  @action async infoSet(data) {
     // 看后台传回的data是单个数据还是一个整的
     this.allData = data;
+    await LocalStorageUtils.set('userInfo', data);
+  }
+
+  // 移除用户信息
+  @action async infoRemove(data) {
+    // 看后台传回的data是单个数据还是一个整的
+    this.allData = data;
+    await LocalStorageUtils.deleteItem('userInfo');
   }
 }
+
 class GlobalStore {
   @observable allData = {};
 
