@@ -1,20 +1,19 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import Nav from './src/router/nav'
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+import Nav from './src/router/nav';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text></Text>
-        <Nav></Nav>
+        <Text />
+        <Nav />
       </View>
     );
   }
-
 }
 export default App;
