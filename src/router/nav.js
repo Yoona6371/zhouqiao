@@ -9,7 +9,6 @@ import Tabbar from '../router/tabbar';
 const Stack = createStackNavigator();
 
 function App() {
-  console.log('进入Nav');
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Tabbar" headerMode="none">

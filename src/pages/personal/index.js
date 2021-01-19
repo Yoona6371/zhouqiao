@@ -10,7 +10,7 @@ class Index extends Component {
   render() {
     return (
       <View>
-        <Text>首页</Text>
+        <Text>个人中心</Text>
       </View>
     );
   }
