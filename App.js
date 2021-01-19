@@ -6,7 +6,7 @@ import RootStore from './src/mobx/index';
 
 class App extends Component {
   constructor(props) {
-           super(props);
+    super(props);
     this.state = {};
   }
   render() {

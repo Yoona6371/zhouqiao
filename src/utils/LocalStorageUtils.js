@@ -1,4 +1,5 @@
 import React, { AsyncStorage } from 'react-native';
+
 export default {
   constructor() {},
   get(key) {
@@ -9,8 +10,7 @@ export default {
     return AsyncStorage.getItem(key)
       .then((value) => {
         if (value) {
-          let obj = JSON.parse(value);
-          return obj.data;
+          return JSON.parse(value);
         }
         return null;
       })
@@ -26,7 +26,7 @@ export default {
     AsyncStorage.setItem(
       key,
       JSON.stringify({
-        data: value,
+        value,
       }),
     );
   },
