@@ -1,6 +1,6 @@
 import React, { AsyncStorage } from 'react-native';
 export default {
-  constructor() {},
+  constructor() { },
   get(key) {
     if (!key) {
       return null;
