@@ -1,4 +1,3 @@
-const globalStore = {
-};
+const globalStore = {};
 
 export default globalStore;
