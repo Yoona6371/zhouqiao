@@ -1,24 +1,24 @@
 import axios from 'axios';
 import server from './api';
 // 拿taken，在请求拦截器中添加
-// import state from '../mobx/'
+import RootStore from '../mobx';
 
 // 缺：需要请求时的loading
 
 // server 循环遍历输出不同的请求方法
-let instance = axios.create({
-  baseURL: 'http://localhost:8080',
-  // 延时
+const instance = axios.create({
+  //基础路径
+  baseURL: 'https://www.baidu.com',
+  // 请求限时
   timeout: 10000,
 });
-
 // 包裹循环遍历出的请求方法
-const Http = {};
+let Http = {};
 
 for (let key in server) {
   let api = server[key]; // url method
 
-  Http[key] = async function (params, isFormData = false, config = {}) {
+  Http[key] = async (params, isFormData = false, config = {}) => {
     let url = api.url;
     let newParams = {};
 
@@ -51,13 +51,12 @@ for (let key in server) {
     return response;
   };
 }
-
 // 请求拦截器
 instance.interceptors.request.use(
   (config) => {
     // 加入token
-    if (store.state.token) {
-      config.headers.token = `${store.state.token}`;
+    if (RootStore.token) {
+      config.headers.token = `${RootStore.token}`;
     }
     return config;
   },
@@ -85,5 +84,4 @@ instance.interceptors.response.use(
     return Promise.reject(err);
   },
 );
-
 export default Http;

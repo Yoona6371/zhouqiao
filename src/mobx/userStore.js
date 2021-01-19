@@ -1,7 +1,7 @@
 const userStore = {
   token: '',
   userId: '',
-  name: '',
+  name: 'dsadasdsa',
   age: '',
   gender: '',
   password: '',

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Svg from 'react-native-svg-uri';
-import {} from 'mobx';
+import Home from '../pages/home';
+import Personal from '../pages/personal';
 
 // 导入svg
 import { tabbar_index } from '../constants/svg';
@@ -15,10 +16,9 @@ class Index extends Component {
     };
   }
   render() {
-    console.log('进入tabbar');
     return (
       <View style={{ flex: 1 }}>
-        <TabNavigator>
+        <TabNavigator tabBarStyle={{}}>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'home'}
             title="Home"
@@ -30,7 +30,7 @@ class Index extends Component {
             )}
             onPress={() => this.setState({ selectedTab: 'home' })}
           >
-            <Text>giao</Text>
+            {<Home />}
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'profile'}
@@ -43,7 +43,7 @@ class Index extends Component {
             )}
             onPress={() => this.setState({ selectedTab: 'profile' })}
           >
-            <Text>giaogiao</Text>
+            {<Personal />}
           </TabNavigator.Item>
         </TabNavigator>
       </View>
