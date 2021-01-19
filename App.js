@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import Nav from './src/router/nav'
+import { Provider } from 'mobx-react'
+import RootStore from './src/mobx/index'
 
 class App extends Component {
   constructor(props) {
@@ -10,8 +12,9 @@ class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Text></Text>
-        <Nav></Nav>
+        <Provider RootStore={RootStore}>
+          <Nav></Nav>
+        </Provider>
       </View>
     );
   }
