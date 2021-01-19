@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
+import Nav from './src/router/nav'
 
 class App extends Component {
   constructor(props) {
@@ -8,7 +9,10 @@ class App extends Component {
   }
   render() {
     return (
-      <View><Text>nb嗷</Text></View>
+      <View style={{ flex: 1 }}>
+        <Text></Text>
+        <Nav></Nav>
+      </View>
     );
   }
 
