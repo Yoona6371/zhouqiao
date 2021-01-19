@@ -5,19 +5,31 @@ import { createStackNavigator } from '@react-navigation/stack';
 // 路由
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
+import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 const Stack = createStackNavigator();
 
-function App() {
-  console.log('进入Nav');
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
-        <Stack.Screen name="Index" component={Index} />
-        <Stack.Screen name="Tabbar" component={Tabbar} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+class Nav extends React.Component {
+  render() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
+          <Stack.Screen name="Index" component={Index} />
+          <Stack.Screen name="Tabbar" component={Tabbar} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+  async componentWillMount() {
+    const userInfo = await LocalStorageUtils.get('userInfo');
+    if (userInfo !== null) {
+      // 1.重新获取用户信息
+      // 2.存储到mobx中
+    } else {
+      // 跳转登录
+      // this.props.navigate()
+    }
+  }
 }
 
-export default App;
+export default Nav;
