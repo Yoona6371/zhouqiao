@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 import TabNavigator from 'react-native-tab-navigator'
 import Svg from 'react-native-svg-uri'
+import { } from 'mobx'
 
 // 导入svg
 import { tabbar_index } from '../constants/svg'
