@@ -8,7 +8,7 @@ class Index extends Component {
   render() {
     return (
       <View>
-        <Text>测试</Text>
+        <Text>测试页面</Text>
       </View>
     );
   }
