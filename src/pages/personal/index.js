@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 @inject('RootStore')
+@observer
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -11,8 +12,6 @@ class Index extends Component {
     return (
       <View>
         <Text>个人中心</Text>
-        {/*  eg：全局数据调用*/}
-        <Text>{this.props.RootStore}</Text>
       </View>
     );
   }
