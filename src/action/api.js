@@ -20,6 +20,10 @@ const api = {
     url: '/info/delete',
     method: 'delete',
   },
+  test: {
+    url: '/',
+    method: 'get',
+  },
 };
 
 export default api;

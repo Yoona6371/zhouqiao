@@ -55,8 +55,9 @@ for (let key in server) {
 instance.interceptors.request.use(
   (config) => {
     // 加入token
-    if (RootStore.token) {
-      config.headers.token = `${RootStore.token}`;
+    let token = RootStore.userStore.allData.token;
+    if (token) {
+      config.headers.token = `${token}`;
     }
     return config;
   },

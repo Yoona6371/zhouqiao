@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Svg from 'react-native-svg-uri';
 import Home from '../pages/home';

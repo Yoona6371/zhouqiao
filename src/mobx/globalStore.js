@@ -1,3 +1,5 @@
-const globalStore = {};
+const globalStore = {
+  Http: {},
+};
 
 export default globalStore;
