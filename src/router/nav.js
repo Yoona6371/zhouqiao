@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // 路由
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
+import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 const Stack = createStackNavigator();
@@ -15,6 +16,7 @@ class Nav extends React.Component {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
           <Stack.Screen name="Index" component={Index} />
+          <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
         </Stack.Navigator>
       </NavigationContainer>
