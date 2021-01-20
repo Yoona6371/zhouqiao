@@ -8,7 +8,7 @@ import { Dimensions } from 'react-native';
 export const deviceHeightDp = Dimensions.get('window').height;
 export const deviceWidthDp = Dimensions.get('window').width;
 
-const uiHeightPx = 640;
+const uiHeightPx = 750;
 
 export function pxToDp(uiElementPx) {
   return (uiElementPx * deviceHeightDp) / uiHeightPx;
