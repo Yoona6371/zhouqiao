@@ -13,38 +13,59 @@ class Index extends Component {
     super(props);
     this.state = {
       selectedTab: 'home',
+      pages: [
+        {
+          selected: 'home',
+          title: 'home',
+          renderIcon: () => (
+            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+          ),
+          renderSelectedIcon: () => (
+            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+          ),
+          onPress: () => {
+            this.setState({ selectedTab: 'home' });
+          },
+          component: <Home />,
+        },
+        {
+          selected: 'personal',
+          title: 'personal',
+          renderIcon: () => (
+            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+          ),
+          renderSelectedIcon: () => (
+            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+          ),
+          onPress: () => {
+            this.setState({ selectedTab: 'personal' });
+          },
+          component: <Personal />,
+        },
+      ],
     };
   }
   render() {
+    const { selectedTab, pages } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        <TabNavigator tabBarStyle={{}}>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'home'}
-            title="Home"
-            renderIcon={() => (
-              <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
-            )}
-            renderSelectedIcon={() => (
-              <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
-            )}
-            onPress={() => this.setState({ selectedTab: 'home' })}
-          >
-            {<Home />}
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'profile'}
-            title="Profile"
-            renderIcon={() => (
-              <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
-            )}
-            renderSelectedIcon={() => (
-              <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
-            )}
-            onPress={() => this.setState({ selectedTab: 'profile' })}
-          >
-            {<Personal />}
-          </TabNavigator.Item>
+        <TabNavigator>
+          {pages.map((v, i) => (
+            <TabNavigator.Item
+              key={i}
+              selected={v.selected == selectedTab}
+              title={v.title}
+              renderIcon={v.renderIcon}
+              renderSelectedIcon={v.renderSelectedIcon}
+              onPress={v.onPress}
+              selectedTitleStyle={{
+                color: '#888',
+              }}
+              tabStyle={{ backgroundColor: '#eee' }}
+            >
+              {v.component}
+            </TabNavigator.Item>
+          ))}
         </TabNavigator>
       </View>
     );

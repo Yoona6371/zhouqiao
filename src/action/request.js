@@ -3,8 +3,6 @@ import server from './api';
 // 拿taken，在请求拦截器中添加
 import RootStore from '../mobx';
 
-// 缺：需要请求时的loading
-
 // server 循环遍历输出不同的请求方法
 const instance = axios.create({
   //基础路径
