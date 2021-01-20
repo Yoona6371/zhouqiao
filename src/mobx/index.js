@@ -2,7 +2,6 @@ import { observable, action } from 'mobx';
 import userStore from './userStore';
 import globalStore from './globalStore';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
-import Http from '../action/request';
 
 class RootStore {
   constructor() {
@@ -42,9 +41,7 @@ class GlobalStore {
     this.allData = data;
   }
   // 方法
-  @action setHttp = () => {
-    this.allData.Http = Http;
-  };
+  // @action
 }
 
 export default new RootStore();
