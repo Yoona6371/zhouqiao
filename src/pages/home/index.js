@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import Http from '../../action/request';
+// import Http from '../../action/request';
 import { inject } from 'mobx-react';
+import { onDoublePress } from '../../utils/onDoublePress';
+
 @inject('RootStore')
 class Index extends Component {
   constructor(props) {

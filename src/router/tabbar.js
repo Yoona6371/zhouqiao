@@ -4,6 +4,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import Svg from 'react-native-svg-uri';
 import Home from '../pages/home';
 import Personal from '../pages/personal';
+import { pxToDp } from '../utils/pxToDp';
 
 // 导入svg
 import { tabbar_index } from '../constants/svg';
@@ -18,10 +19,18 @@ class Index extends Component {
           selected: 'home',
           title: 'home',
           renderIcon: () => (
-            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+            <Svg
+              svgXmlData={tabbar_index}
+              width={pxToDp(50)}
+              heigth={pxToDp(50)}
+            />
           ),
           renderSelectedIcon: () => (
-            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+            <Svg
+              svgXmlData={tabbar_index}
+              width={pxToDp(50)}
+              heigth={pxToDp(50)}
+            />
           ),
           onPress: () => {
             this.setState({ selectedTab: 'home' });
@@ -32,10 +41,18 @@ class Index extends Component {
           selected: 'personal',
           title: 'personal',
           renderIcon: () => (
-            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+            <Svg
+              svgXmlData={tabbar_index}
+              width={pxToDp(50)}
+              heigth={pxToDp(50)}
+            />
           ),
           renderSelectedIcon: () => (
-            <Svg svgXmlData={tabbar_index} width="50" heigth="30" />
+            <Svg
+              svgXmlData={tabbar_index}
+              width={pxToDp(50)}
+              heigth={pxToDp(50)}
+            />
           ),
           onPress: () => {
             this.setState({ selectedTab: 'personal' });
