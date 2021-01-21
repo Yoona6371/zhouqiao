@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.12.12",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/material-top-tabs": "^5.3.11",
     "@react-navigation/native": "^5.9.0",
     "@react-navigation/stack": "^5.13.0",
     "axios": "^0.21.1",
@@ -29,7 +30,8 @@
     "react-native-screens": "^2.16.1",
     "react-native-svg": "^12.1.0",
     "react-native-svg-uri": "^1.2.3",
-    "react-native-tab-navigator": "^0.3.4"
+    "react-native-tab-navigator": "^0.3.4",
+    "react-native-tab-view": "^2.15.2"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
