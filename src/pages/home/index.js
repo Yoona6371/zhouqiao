@@ -7,6 +7,7 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {};
+    console.log('qwe', this.props);
   }
 
   componentDidMount() {
@@ -22,6 +23,9 @@ class Index extends Component {
     return (
       <View>
         <Text>首页</Text>
+        <Text onPress={() => this.props.navigation.navigate('ImageShow')}>
+          照片
+        </Text>
       </View>
     );
   }
