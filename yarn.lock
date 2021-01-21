@@ -1145,6 +1145,13 @@
     query-string "^6.13.6"
     react-is "^16.13.0"
 
+"@react-navigation/material-top-tabs@^5.3.11":
+  version "5.3.11"
+  resolved "https://registry.npm.taobao.org/@react-navigation/material-top-tabs/download/@react-navigation/material-top-tabs-5.3.11.tgz#f8f5a108d3d9adb6282e69292f6687d9ed579f07"
+  integrity sha1-+PWhCNPZrbYoLmkpL2aH2e1Xnwc=
+  dependencies:
+    color "^3.1.3"
+
 "@react-navigation/native@^5.9.0":
   version "5.9.0"
   resolved "https://registry.npm.taobao.org/@react-navigation/native/download/@react-navigation/native-5.9.0.tgz#fbea983d7142775b725de59dd18a5a856f26f480"
@@ -5807,6 +5814,11 @@ react-native-tab-navigator@^0.3.4:
   dependencies:
     immutable "^3.8.1"
     prop-types "^15.5.10"
+
+react-native-tab-view@^2.15.2:
+  version "2.15.2"
+  resolved "https://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-2.15.2.tgz#4bc7832d33a119306614efee667509672a7ee64e"
+  integrity sha1-S8eDLTOhGTBmFO/uZnUJZyp+5k4=
 
 react-native@0.63.4:
   version "0.63.4"
