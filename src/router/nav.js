@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // 路由
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
+import ImageShow from '../pages/ImageShow';
 import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 
@@ -18,6 +19,7 @@ class Nav extends React.Component {
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
+          <Stack.Screen name="ImageShow" component={ImageShow} />
         </Stack.Navigator>
       </NavigationContainer>
     );
