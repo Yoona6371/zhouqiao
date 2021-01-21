@@ -1,11 +1,10 @@
-src/pages/test
-
 # OSX
 #
 .DS_Store
 
 # Xcode
 #
+src/pages/test
 build/
 *.pbxuser
 !default.pbxuser
