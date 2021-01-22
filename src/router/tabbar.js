@@ -35,7 +35,7 @@ class Index extends Component {
           onPress: () => {
             this.setState({ selectedTab: 'home' });
           },
-          component: <Home />,
+          component: <Home {...props} />,
         },
         {
           selected: 'personal',
@@ -57,7 +57,7 @@ class Index extends Component {
           onPress: () => {
             this.setState({ selectedTab: 'personal' });
           },
-          component: <Personal />,
+          component: <Personal {...props} />,
         },
       ],
     };
