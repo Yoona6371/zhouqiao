@@ -6,7 +6,7 @@ export function onDoublePress() {
       times = 0;
       clearTimeout(timeID);
       return false;
-    }, 500);
+    }, 300);
   } else if (times === 2) {
     times = 0;
     return true;
