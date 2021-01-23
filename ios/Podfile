@@ -8,6 +8,8 @@ target 'zhouqio' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RCTWeChat', :path => '../node_modules/react-native-wechat-lib'
+
   target 'zhouqioTests' do
     inherit! :complete
     # Pods for testing

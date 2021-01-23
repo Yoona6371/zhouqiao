@@ -33,15 +33,15 @@ export default class Loading extends React.Component {
 }
 
 const loadTextColor = '#fff';
-const loadBoxBackgroundColor = 'transparent';
+const loadBoxBackgroundColor = '#222';
 const styles = StyleSheet.create({
   load_box: {
-    width: pxToDp(100),
-    height: pxToDp(100),
+    width: pxToDp(150),
+    height: pxToDp(150),
     backgroundColor: loadBoxBackgroundColor,
     alignItems: 'center',
-    marginLeft: deviceWidthDp / 2 - pxToDp(50),
-    marginTop: deviceHeightDp / 2 - pxToDp(50),
+    marginLeft: deviceWidthDp / 2 - pxToDp(75),
+    marginTop: deviceHeightDp / 2 - pxToDp(75),
     borderRadius: pxToDp(10),
   },
   load_progress: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: pxToDp(90),
   },
   load_text: {
-    marginTop: pxToDp(70),
+    marginTop: pxToDp(90),
     color: loadTextColor,
   },
 });

@@ -1,7 +1,7 @@
 package com.zhouqio;
 
 import com.facebook.react.ReactActivity;
-
+import com.theweflex.react.WeChatPackage; // Add this line
 public class MainActivity extends ReactActivity {
 
   /**

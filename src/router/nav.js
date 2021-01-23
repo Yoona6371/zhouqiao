@@ -12,10 +12,22 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
+  constructor(props) {
+    super(props);
+    LocalStorageUtils.get('userInfo').then((userInfo) => {
+      if (userInfo !== null) {
+        // 1.重新获取用户信息
+        // 2.存储到mobx中
+      } else {
+        // 跳转登录
+        // this.props.navigate()
+      }
+    });
+  }
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
+        <Stack.Navigator initialRouteName="Test" headerMode="none">
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
@@ -23,16 +35,6 @@ class Nav extends React.Component {
         </Stack.Navigator>
       </NavigationContainer>
     );
-  }
-  async componentWillMount() {
-    const userInfo = await LocalStorageUtils.get('userInfo');
-    if (userInfo !== null) {
-      // 1.重新获取用户信息
-      // 2.存储到mobx中
-    } else {
-      // 跳转登录
-      // this.props.navigate()
-    }
   }
 }
 
