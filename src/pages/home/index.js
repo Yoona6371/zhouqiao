@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+// import Http from '../../action/request';
+import { inject } from 'mobx-react';
+import { onDoublePress } from '../../utils/onDoublePress';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Http from '../../action/request';
 import { pxToDp } from '../../utils/pxToDp';
-import { inject } from 'mobx-react';
 const Tab = createMaterialTopTabNavigator();
 
 @inject('RootStore')
