@@ -28,9 +28,9 @@ class Index extends Component {
     //eg 全局数据调用，需要修改数据则需要添加obsever装饰器
     // console.log('全局数据调用：', this.props.RootStore);
     //eg 调用接口
-    this.props.RootStore.globalStore.allData.Http.test().then((res) => {
-      console.log('get请求返回值：', res);
-    });
+    // this.props.RootStore.globalStore.allData.Http.test().then((res) => {
+    //   console.log('get请求返回值：', res);
+    // });
   }
   MyTabs = () => {
     return (
