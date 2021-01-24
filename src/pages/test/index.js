@@ -6,7 +6,7 @@ class App extends Component {
     super(props);
   }
   render() {
-    return <RecordCard />;
+    return <View />;
   }
 }
 

@@ -6,13 +6,19 @@ import Icon from '../../common/Icon';
 import { color } from 'react-native-reanimated';
 
 export default class RecordCard extends React.Component {
-  static propTypes = {};
+  static propTypes = {
+    image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    Title: PropTypes.string,
+    user_img: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    RecordCard_type: PropTypes.string,
+  };
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
+    const { image, Title, user_img, RecordCard_type } = this.props;
     return (
       <View
         style={{
@@ -57,7 +63,7 @@ export default class RecordCard extends React.Component {
                   fontSize: pxToDp(28),
                 }}
               >
-                朗艺装饰企业网站建设 定制开发制作网页
+                {Title}
               </Text>
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', marginTop: pxToDp(32) }}>
@@ -87,7 +93,7 @@ export default class RecordCard extends React.Component {
                   }}
                 >
                   <Text style={{ color: '#fe9e0e', textAlign: 'center' }}>
-                    手绘
+                    {this.props.RecordCard_type}
                   </Text>
                 </View>
               </View>
