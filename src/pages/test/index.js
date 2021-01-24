@@ -5,7 +5,7 @@ class App extends Component {
     super(props);
   }
   render() {
-    return <View />;
+    return <View style={{margin:0,}} />;
   }
 }
 
