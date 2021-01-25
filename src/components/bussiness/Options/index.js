@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from '../../common/Icon';
 import { file } from '../../../constants/svg';
@@ -18,6 +18,8 @@ class Index extends Component {
     text_left: PropTypes.string,
     text_right: PropTypes.string,
     text: PropTypes.string,
+    router: PropTypes.string,
+    navigation: PropTypes.object.isRequired,
   };
   render() {
     let {
@@ -31,55 +33,61 @@ class Index extends Component {
       text_more,
     } = this.props;
     return (
-      <View
-        style={
-          type == 2
-            ? [styles.options__wrap, style]
-            : [styles.options__wrap, styles.options__line, style]
-        }
+      <TouchableOpacity
+        onPress={() => {
+          this.props.navigation.navigate('Tabbar');
+        }}
       >
-        {type === 0 ? (
-          <View style={styles.options}>
-            <View style={{ alignSelf: 'center' }}>
-              <Svg svgXmlData={file} width={pxToDp(43)} height={pxToDp(53)} />
-            </View>
-            <View style={styles.center}>
-              <Text style={styles.title}>{title}</Text>
-              <View style={styles.transcript}>
-                <Text style={styles.transcript_text}>{text_left}</Text>
-                <Text style={styles.transcript_line}>|</Text>
-                <Text style={styles.transcript_text}>{text_right}</Text>
+        <View
+          style={
+            type == 2
+              ? [styles.options__wrap, style]
+              : [styles.options__wrap, styles.options__line, style]
+          }
+        >
+          {type === 0 ? (
+            <View style={styles.options}>
+              <View style={{ alignSelf: 'center' }}>
+                <Svg svgXmlData={file} width={pxToDp(43)} height={pxToDp(53)} />
+              </View>
+              <View style={styles.center}>
+                <Text style={styles.title}>{title}</Text>
+                <View style={styles.transcript}>
+                  <Text style={styles.transcript_text}>{text_left}</Text>
+                  <Text style={styles.transcript_line}>|</Text>
+                  <Text style={styles.transcript_text}>{text_right}</Text>
+                </View>
               </View>
             </View>
-          </View>
-        ) : type === 1 ? (
+          ) : type === 1 ? (
+            <View style={styles.options}>
+              <View style={{ alignSelf: 'center' }}>
+                <Svg svgXmlData={svg} width={pxToDp(30)} height={pxToDp(30)} />
+              </View>
+              <Text style={styles.title_type02}>{title}</Text>
+            </View>
+          ) : (
+            <View style={styles.options}>
+              <View style={{ alignSelf: 'center' }}>
+                <Svg svgXmlData={svg} width={pxToDp(74)} height={pxToDp(74)} />
+              </View>
+              <View style={styles.center_type03}>
+                <Text style={styles.title_type03}>{title}</Text>
+                <Text style={styles.transcript_text_type03}>{text}</Text>
+              </View>
+            </View>
+          )}
           <View style={styles.options}>
-            <View style={{ alignSelf: 'center' }}>
-              <Svg svgXmlData={svg} width={pxToDp(30)} height={pxToDp(30)} />
-            </View>
-            <Text style={styles.title_type02}>{title}</Text>
+            {type == 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
+            <Icon
+              name={'more'}
+              width={pxToDp(16)}
+              height={pxToDp(27)}
+              style={styles.more_icon}
+            />
           </View>
-        ) : (
-          <View style={styles.options}>
-            <View style={{ alignSelf: 'center' }}>
-              <Svg svgXmlData={svg} width={pxToDp(74)} height={pxToDp(74)} />
-            </View>
-            <View style={styles.center_type03}>
-              <Text style={styles.title_type03}>{title}</Text>
-              <Text style={styles.transcript_text_type03}>{text}</Text>
-            </View>
-          </View>
-        )}
-        <View style={styles.options}>
-          {type == 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
-          <Icon
-            name={'more'}
-            width={pxToDp(16)}
-            height={pxToDp(27)}
-            style={styles.more_icon}
-          />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

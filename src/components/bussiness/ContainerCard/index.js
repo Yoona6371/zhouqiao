@@ -12,7 +12,7 @@ class Index extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
-    router: PropTypes.string.isRequired,
+    router: PropTypes,
   };
   press = () => {
     this.props.navigation.navigate(this.props.router);

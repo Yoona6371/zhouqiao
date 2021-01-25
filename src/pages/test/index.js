@@ -20,6 +20,7 @@ class App extends Component {
           }
           svg={file2}
           text_more={'去完善'}
+          {...this.props}
         />
       </View>
     );
