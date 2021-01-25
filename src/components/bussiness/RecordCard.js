@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
-import { pxToDp } from '../../../utils/pxToDp';
-import Icon from '../../common/Icon';
+import { pxToDp } from '../../utils/pxToDp';
+import Icon from '../common/Icon';
 
 export default class RecordCard extends React.Component {
   static propTypes = {
@@ -26,7 +26,7 @@ export default class RecordCard extends React.Component {
           <View style={styles.RecordCard__ImageBox}>
             <Image
               style={styles.RecordCard__Image}
-              source={require('../../../asserts/images/RecordCard__background.png')}
+              source={require('../../asserts/images/RecordCard__background.png')}
             />
           </View>
           {/*浏览图片结束*/}
@@ -40,7 +40,7 @@ export default class RecordCard extends React.Component {
               <View>
                 <Image
                   style={styles.RecordCard__userImage}
-                  source={require('../../../asserts/images/RecordCard__userImage.png')}
+                  source={require('../../asserts/images/RecordCard__userImage.png')}
                 />
               </View>
               {/*用户头像结束*/}
