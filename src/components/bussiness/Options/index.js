@@ -5,6 +5,7 @@ import Icon from '../../common/Icon';
 import { file } from '../../../constants/svg';
 import Svg from 'react-native-svg-uri';
 import { pxToDp } from '../../../utils/pxToDp';
+import { fontStyle } from '../../../utils/StyleUtils';
 
 class Index extends Component {
   constructor(props) {
@@ -19,7 +20,16 @@ class Index extends Component {
     text: PropTypes.string,
   };
   render() {
-    let { type, title, text_left, text_right, svg, text, style } = this.props;
+    let {
+      type,
+      title,
+      text_left,
+      text_right,
+      svg,
+      text,
+      style,
+      text_more,
+    } = this.props;
     return (
       <View
         style={
@@ -45,7 +55,7 @@ class Index extends Component {
         ) : type === 1 ? (
           <View style={styles.options}>
             <View style={{ alignSelf: 'center' }}>
-              <Svg svgXmlData={svg} />
+              <Svg svgXmlData={svg} width={pxToDp(30)} height={pxToDp(30)} />
             </View>
             <Text style={styles.title_type02}>{title}</Text>
           </View>
@@ -61,7 +71,7 @@ class Index extends Component {
           </View>
         )}
         <View style={styles.options}>
-          {type == 1 ? <Text style={styles.more}>去完善</Text> : <></>}
+          {type == 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
           <Icon
             name={'more'}
             width={pxToDp(16)}
@@ -90,9 +100,8 @@ const styles = StyleSheet.create({
   },
   more: {
     lineHeight: pxToDp(138),
-    fontSize: pxToDp(24),
-    color: '#999999',
     marginRight: pxToDp(23),
+    ...fontStyle(24, 138, 138, '500', '#999999', 'right'),
   },
   more_icon: {
     lineHeight: pxToDp(138),
@@ -108,35 +117,35 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    color: '#333333',
-    fontSize: pxToDp(30),
-    fontWeight: 'bold',
+    ...fontStyle(30, 32, 32, 'bold', '#333333', 'left'),
+    maxWidth: pxToDp(580),
   },
   title_type02: {
+    maxWidth: pxToDp(500),
     color: '#333333',
     fontSize: pxToDp(28),
     fontWeight: 'bold',
     marginLeft: pxToDp(25),
     alignSelf: 'center',
+    ...fontStyle(28, 30, 30, 'bold', '#333'),
   },
   title_type03: {
-    color: '#333333',
-    fontSize: pxToDp(34),
-    fontWeight: 'bold',
+    ...fontStyle(34, 36, 36, 'bold', '#333'),
+    maxWidth: pxToDp(550),
   },
   transcript: {
     flexDirection: 'row',
     lineHeight: pxToDp(18),
+    marginTop: pxToDp(5),
   },
   transcript_text: {
     marginTop: pxToDp(10),
-    color: '#888888',
-    fontSize: pxToDp(24),
+    ...fontStyle(24, 26, 26, 'bold', '#888888'),
   },
   transcript_text_type03: {
     marginTop: pxToDp(5),
-    fontSize: pxToDp(26),
-    color: '#999999',
+    ...fontStyle(26, 28, 28, '500', '#999999'),
+    maxWidth: pxToDp(550),
   },
   transcript_line: {
     color: '#e5e5e5',

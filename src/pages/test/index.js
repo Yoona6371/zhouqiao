@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import HotCard from '../../components/bussiness/HotCard';
-import UserXCard from '../../components/bussiness/UserXCard';
+import Option from '../../components/bussiness/Options';
+import { file2 } from '../../constants/svg';
 
 class App extends Component {
   constructor(props) {
@@ -10,9 +10,17 @@ class App extends Component {
   render() {
     return (
       <View>
-        <Text>APP定制开发毅文教育教 学培训在线视频平台</Text>
-        <HotCard />
-        <UserXCard />
+        <Option
+          title={'nb嗷ghgjghgjasiudbaiuasdasudausdiuasdbabsbdabsbjg'}
+          type={2}
+          text_left={'22M'}
+          text_right={'2020-20-20 20;20;20'}
+          text={
+            'asdasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasd'
+          }
+          svg={file2}
+          text_more={'去完善'}
+        />
       </View>
     );
   }
