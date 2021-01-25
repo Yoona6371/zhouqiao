@@ -75,8 +75,9 @@ const styles = StyleSheet.create({
   HotCardTitle: {
     width: pxToDp(231),
     paddingTop: pxToDp(8),
-    ...fontStyle(28, 80, 36, '400', '#333', 'left'),
+    ...fontStyle(28, 74, 36, '400', '#333', 'left'),
     overflow: 'hidden',
+    textAlignVertical: 'top',
   },
   HotCard__left: {
     width: pxToDp(200),

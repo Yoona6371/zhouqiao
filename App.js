@@ -4,6 +4,8 @@ import Nav from './src/router/nav';
 import { Provider } from 'mobx-react';
 import RootStore from './src/mobx/index';
 import Http from './src/action/request';
+import './src/utils/fontUtils';
+
 class App extends Component {
   constructor(props) {
     super(props);
