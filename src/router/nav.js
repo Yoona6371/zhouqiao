@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
 import ImageShow from '../pages/ImageShow';
-import Test from '../pages/test/option';
+import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 const Stack = createStackNavigator();
