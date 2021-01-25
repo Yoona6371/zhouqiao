@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     width: pxToDp(150),
     overflow: 'hidden',
     marginBottom: pxToDp(27),
-    ...fontStyle(30, 34, 34, 'bold', '#fff', 'left'),
+    ...fontStyle(30, 32, 32, 'bold', '#fff', 'left'),
   },
   left_text__container: {
     flexDirection: 'row',
@@ -122,13 +122,13 @@ const styles = StyleSheet.create({
   left_text: {
     maxWidth: pxToDp(110),
     overflow: 'hidden',
-    ...fontStyle(22, 25, 25, 'normal', '#fff', 'left'),
+    ...fontStyle(22, 24, 24, 'normal', '#fff', 'left'),
   },
   left_text2: {
-    ...fontStyle(22, 25, 25, 'normal', '#fff', 'left'),
+    ...fontStyle(22, 24, 24, 'normal', '#fff', 'left'),
   },
   footer_right: {},
   right_text: {
-    ...fontStyle(22, 25, 25, 'normal', '#fff', 'center'),
+    ...fontStyle(22, 24, 24, 'normal', '#fff', 'center'),
   },
 });
