@@ -5,8 +5,8 @@ import { inject } from 'mobx-react';
 import { onDoublePress } from '../../utils/onDoublePress';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { pxToDp } from '../../utils/pxToDp';
+import Pagination from '../../components/bussiness/Pagination';
 const Tab = createMaterialTopTabNavigator();
-import Pagination from '../../components/bussiness/pagination';
 
 @inject('RootStore')
 class HomeTab extends Component {
