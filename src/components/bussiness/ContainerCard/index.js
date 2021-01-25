@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import Icon from '../common/Icon';
-import { pxToDp } from '../../utils/pxToDp';
+import Icon from '../../common/Icon';
+import { pxToDp } from '../../../utils/pxToDp';
 import PropTypes from 'prop-types';
+import { fontStyle } from '../../../utils/StyleUtils';
 
 class Index extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class Index extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
-    router: PropTypes.string.isRequired,
+    router: PropTypes.string,
   };
   press = () => {
     this.props.navigation.navigate(this.props.router);
@@ -22,7 +23,7 @@ class Index extends Component {
         <TouchableOpacity onPress={this.press} style={styles.container__wrap}>
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.title}>
-              <Text>{this.props.title}</Text>
+              <Text style={styles.title_text}>{this.props.title}</Text>
             </View>
             <Icon style={styles.icon} name={'container_icon'} />
           </View>
@@ -42,10 +43,14 @@ var styles = StyleSheet.create({
     marginBottom: pxToDp(30),
     flexDirection: 'row',
     justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
   },
   title: {
-    height: pxToDp(35),
     alignItems: 'center',
+    height: pxToDp(34),
+  },
+  title_text: {
+    ...fontStyle(36, 34, 38, '600', '#1c2439', 'left'),
   },
   icon: {
     color: '#fe9e0e',
