@@ -15,4 +15,5 @@ export default {
   phone: '\ue658',
   vip: '\ue6c3',
   container_icon: '\ue627',
+  sousuo: '\ue62d',
 };

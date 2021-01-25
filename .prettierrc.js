@@ -8,3 +8,5 @@ module.exports = {
   "bracketSpacing": true, //对象大括号直接是否有空格，默认为true，效果：{ foo: bar }
   "parser": "babel" //代码的解析引擎，默认为babylon，与babel相同。
 };
+
+
