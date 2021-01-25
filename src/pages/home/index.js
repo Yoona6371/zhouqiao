@@ -6,6 +6,7 @@ import { onDoublePress } from '../../utils/onDoublePress';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { pxToDp } from '../../utils/pxToDp';
 const Tab = createMaterialTopTabNavigator();
+import Pagination from '../../components/bussiness/pagination';
 
 @inject('RootStore')
 class HomeTab extends Component {
@@ -20,8 +21,19 @@ class HomeTab extends Component {
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-    console.log('qwe', this.props);
+    this.state = {
+      pages: [
+        {
+          name: 'Home',
+          component: HomeTab,
+        },
+        {
+          name: 'Settings',
+          component: HomeTab,
+        },
+      ],
+    };
+    console.log('this.props:', this.props);
   }
 
   componentDidMount() {
@@ -33,6 +45,7 @@ class Index extends Component {
     // });
   }
   MyTabs = () => {
+    let { pages } = this.state;
     return (
       <Tab.Navigator
         tabBarOptions={{
@@ -46,8 +59,9 @@ class Index extends Component {
           },
         }}
       >
-        <Tab.Screen name="Home" component={HomeTab} />
-        <Tab.Screen name="Settings" component={HomeTab} />
+        {pages.map((v, i) => (
+          <Tab.Screen name={v.name} component={v.component} />
+        ))}
       </Tab.Navigator>
     );
   };
@@ -59,6 +73,7 @@ class Index extends Component {
           照片
         </Text>
         {this.MyTabs()}
+        <Pagination {...this.props} pages={this.state.pages} />
       </View>
     );
   }

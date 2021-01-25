@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
 import ImageShow from '../pages/ImageShow';
-import Test from '../pages/test';
+import Test from '../pages/test/option';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 const Stack = createStackNavigator();
@@ -27,7 +27,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode="none">
+        <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
