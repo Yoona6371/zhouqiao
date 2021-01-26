@@ -8,7 +8,7 @@ import { pxToDp } from '../../../utils/pxToDp';
 //onSubmitEditing 提交方法
 //value值
 
-class App extends Component {
+export default class SearchInput extends Component {
   constructor(props) {
     super(props);
   }
@@ -32,7 +32,7 @@ class App extends Component {
           style={{ fontSize: pxToDp(24), paddingLeft: pxToDp(60) }}
         />
         <Icon
-          name="sousuo"
+          name="search"
           style={{
             fontSize: pxToDp(22),
             position: 'absolute',
@@ -45,5 +45,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
