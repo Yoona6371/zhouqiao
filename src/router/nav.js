@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
 import ImageShow from '../pages/ImageShow';
+import MyFocus from '../pages/personal/myFocus';
 import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 
@@ -27,8 +28,13 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode="none">
+        <Stack.Navigator
+          initialRouteName="MyFocus"
+          headerMode="none"
+          cardStyle={{ backgroundColor: 'red' }}
+        >
           <Stack.Screen name="Index" component={Index} />
+          <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
           <Stack.Screen name="ImageShow" component={ImageShow} />
