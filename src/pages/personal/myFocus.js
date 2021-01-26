@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import UserXCard from '../../components/bussiness/UserXCard';
 import { pxToDp } from '../../utils/pxToDp';
+import { bgColor } from '../../constants/config';
 const Data = [
   {
     id: 1,
@@ -83,5 +84,6 @@ export default MyFocus;
 const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: pxToDp(30),
+    backgroundColor: bgColor,
   },
 });
