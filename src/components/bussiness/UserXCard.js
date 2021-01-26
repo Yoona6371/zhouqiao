@@ -34,7 +34,7 @@ class UserXCard extends Component {
 
   static defaultProps = {
     isVip: false,
-    fanNumber: 1,
+    fanNumber: '1',
     name: '夏允',
   };
 
