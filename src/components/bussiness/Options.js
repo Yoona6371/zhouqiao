@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from '../../common/Icon';
-import { file } from '../../../constants/svg';
+import Icon from '../common/Icon';
+import { file } from '../../constants/svg';
 import Svg from 'react-native-svg-uri';
-import { pxToDp } from '../../../utils/pxToDp';
-import { fontStyle } from '../../../utils/StyleUtils';
+import { pxToDp } from '../../utils/pxToDp';
+import { fontStyle } from '../../utils/StyleUtils';
 
 class Index extends Component {
   constructor(props) {
     super(props);
   }
-  static PropTypes = {
+  static propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     svg: PropTypes.string,
@@ -29,8 +29,9 @@ class Index extends Component {
       text_right,
       svg,
       text,
-      style,
       text_more,
+      color,
+      style,
     } = this.props;
     return (
       <TouchableOpacity
@@ -69,7 +70,12 @@ class Index extends Component {
           ) : (
             <View style={styles.options}>
               <View style={{ alignSelf: 'center' }}>
-                <Svg svgXmlData={svg} width={pxToDp(74)} height={pxToDp(74)} />
+                <Icon
+                  name={svg}
+                  width={pxToDp(16)}
+                  height={pxToDp(27)}
+                  style={{ ...styles.svg_type03, backgroundColor: color }}
+                />
               </View>
               <View style={styles.center_type03}>
                 <Text style={styles.title_type03}>{title}</Text>
@@ -95,9 +101,8 @@ const styles = StyleSheet.create({
   options__wrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: pxToDp(30),
     height: pxToDp(138),
-    backgroundColor: '#ffffff',
+    marginLeft: pxToDp(30),
   },
   options__line: {
     borderBottomColor: '#dddddd',
@@ -105,6 +110,11 @@ const styles = StyleSheet.create({
   },
   options: {
     flexDirection: 'row',
+  },
+  svg_type03: {
+    padding: pxToDp(15),
+    borderRadius: pxToDp(50),
+    color: '#fff',
   },
   more: {
     lineHeight: pxToDp(138),

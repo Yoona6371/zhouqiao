@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { pxToDp } from '../../../utils/pxToDp';
+import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 
 class Index extends Component {
