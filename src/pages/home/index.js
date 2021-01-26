@@ -33,7 +33,7 @@ class Index extends Component {
         },
       ],
     };
-    console.log('this.props:', this.props);
+    // console.log('this.props:', this.props);
   }
 
   componentDidMount() {
@@ -73,7 +73,10 @@ class Index extends Component {
           照片
         </Text>
         {this.MyTabs()}
-        <Pagination {...this.props} pages={this.state.pages} />
+        <Pagination
+          navigation={this.props.navigation}
+          pages={this.state.pages}
+        />
       </View>
     );
   }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
-import Icon from '../../common/Icon';
-import { pxToDp } from '../../../utils/pxToDp';
+import Icon from '../common/Icon';
+import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
-import { fontStyle } from '../../../utils/StyleUtils';
+import { fontStyle } from '../../utils/StyleUtils';
 
 class Index extends Component {
   constructor(props) {

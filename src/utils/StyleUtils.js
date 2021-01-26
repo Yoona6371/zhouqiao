@@ -14,17 +14,12 @@ export const padding = function (
   };
 };
 
-export const margin = (
-  paddingLeft,
-  paddingTop,
-  paddingRight,
-  paddingBottom,
-) => {
+export const margin = (marginLeft, marginTop, marginRight, marginBottom) => {
   return {
-    marginTop: pxToDp(paddingTop),
-    marginLeft: pxToDp(paddingLeft),
-    marginRight: pxToDp(paddingRight),
-    marginBottom: pxToDp(paddingBottom),
+    marginTop: pxToDp(marginTop),
+    marginLeft: pxToDp(marginLeft),
+    marginRight: pxToDp(marginRight),
+    marginBottom: pxToDp(marginBottom),
   };
 };
 
