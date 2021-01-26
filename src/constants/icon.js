@@ -16,4 +16,5 @@ export default {
   vip: '\ue6c3',
   container_icon: '\ue627',
   search: '\ue62d',
+  attention: '\ue63e',
 };
