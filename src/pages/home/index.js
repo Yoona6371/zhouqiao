@@ -7,6 +7,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { pxToDp } from '../../utils/pxToDp';
 import Pagination from '../../components/bussiness/Pagination';
 const Tab = createMaterialTopTabNavigator();
+import CommodityCard from '../../components/bussiness/CommodityCard';
 
 @inject('RootStore')
 class HomeTab extends Component {

@@ -7,7 +7,7 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import { pxToDp } from '../../../utils/pxToDp';
+import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 
 export default class CommodityCard extends React.Component {
@@ -50,7 +50,7 @@ export default class CommodityCard extends React.Component {
           <View style={styles.CommodityCard__typeThreeContainer}>
             <View style={styles.CommodityCard__shoppingImageBox}>
               <Image
-                source={require('../../../asserts/images/shopping_Image.png')}
+                source={require('../../asserts/images/shopping_Image.png')}
                 style={styles.CommodityCard__shoppingImage}
               />
             </View>
@@ -70,7 +70,7 @@ export default class CommodityCard extends React.Component {
             {/*案例图片开始*/}
             <View>
               <ImageBackground
-                source={require('../../../asserts/images/CommodityCard_background.png')}
+                source={require('../../asserts/images/CommodityCard_background.png')}
                 style={{ width: pxToDp(325), height: pxToDp(325) }}
               >
                 <View style={styles.CommodityCard__typeOneTpyeBox}>
@@ -92,7 +92,7 @@ export default class CommodityCard extends React.Component {
                 {/*用户头像开始*/}
                 <View style={styles.CommodityCard__typeOneUserImage}>
                   <Image
-                    source={require('../../../asserts/images/CommodityCard_userImage.png')}
+                    source={require('../../asserts/images/CommodityCard_userImage.png')}
                     // styel={{ width: pxToDp(50), height: pxToDp(50) }}
                   />
                 </View>
