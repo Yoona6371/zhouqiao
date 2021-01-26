@@ -7,13 +7,14 @@
       textSize,        number 直接传设计稿上px
       borderColor,
       borderWidth,     number 直接传设计稿上px
-      style
  */
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { pxToDp } from '../../../utils/pxToDp';
+import Icon from '../Icon';
+import { activeOpacity } from '../../../constants/config';
 
 export default class Avatar extends Component {
   static propTypes = {
@@ -24,18 +25,33 @@ export default class Avatar extends Component {
     text: PropTypes.string,
     textSize: PropTypes.number,
     borderRadius: PropTypes.number,
-    borderColor: PropTypes.string,
-    borderWidth: PropTypes.number,
-    style: PropTypes.object,
+    isVip: PropTypes.bool,
   };
 
   static defaultProps = {
     size: pxToDp(40),
     color: '#ffffff',
-    backgroundColor: 'skyblue',
-    borderColor: 'rgba(0,0,0,.1)',
-    borderWidth: 1,
+    backgroundColor: '#E3E3E3',
+    isVip: false,
+    textSize: pxToDp(88),
   };
+
+  vipIcon(size) {
+    return (
+      <Icon
+        name={'vip'}
+        style={{
+          position: 'absolute',
+          top: (98 / 130) * pxToDp(size),
+          left: (98 / 130) * pxToDp(size),
+          fontSize: pxToDp(30),
+          borderRadius: pxToDp(30) / 2,
+          color: '#fff',
+          backgroundColor: '#FE9E0E',
+        }}
+      />
+    );
+  }
 
   render() {
     const {
@@ -45,49 +61,76 @@ export default class Avatar extends Component {
       backgroundColor,
       text,
       textSize,
-      borderColor,
-      borderWidth,
-      style = {},
+      isVip,
     } = this.props;
 
     if (image) {
       return (
-        <View style={{ padding: pxToDp(3), ...style }}>
+        <TouchableOpacity
+          activeOpacity={activeOpacity}
+          onPress={() => this.handleClick()}
+          style={{
+            width: pxToDp(size),
+            height: pxToDp(size),
+            borderRadius: pxToDp(size) / 2,
+          }}
+        >
           <Image
             style={{
               width: pxToDp(size),
               height: pxToDp(size),
               borderRadius: pxToDp(size) / 2,
-              borderColor: borderColor,
-              borderWidth: pxToDp(borderWidth),
+              borderColor: isVip ? '#FEF5E7' : '#fff',
+              borderWidth: pxToDp(4),
             }}
             source={image}
           />
-        </View>
+          {isVip ? this.vipIcon(size) : null}
+        </TouchableOpacity>
       );
     }
 
     if (text) {
       return (
-        <View style={{ padding: pxToDp(5) }}>
+        <TouchableOpacity
+          activeOpacity={activeOpacity}
+          onPress={() => this.handleClick()}
+          style={{
+            width: pxToDp(size),
+            height: pxToDp(size),
+            borderRadius: pxToDp(size) / 2,
+          }}
+        >
           <View
             style={{
               width: pxToDp(size),
               height: pxToDp(size),
               borderRadius: pxToDp(size) / 2,
+              borderWidth: pxToDp(4),
+              borderColor: isVip ? '#FEF5E7' : '#fff',
               backgroundColor: backgroundColor,
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            <Text style={{ color: color, fontSize: pxToDp(textSize) }}>
+            <Text
+              style={{
+                color: color,
+                fontSize: pxToDp(textSize),
+              }}
+            >
               {text}
             </Text>
+            {isVip ? this.vipIcon(size) : null}
           </View>
-        </View>
+        </TouchableOpacity>
       );
     }
 
     return null;
+  }
+
+  handleClick() {
+    console.log('点击头像');
   }
 }
