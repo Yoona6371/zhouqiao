@@ -31,7 +31,7 @@ export default class LoginInput extends Component {
   };
   phoneNumberSubmitEditing = () => {
     const { phoneNumber } = this.state;
-    console.log(utils.checkPhone(phoneNumber));
+    // console.log(utils.checkPhone(phoneNumber));
   };
 
   //密码
@@ -40,7 +40,7 @@ export default class LoginInput extends Component {
   };
   passwordChangeText = () => {
     const { password } = this.state;
-    console.log(utils.checkPassword(password));
+    // console.log(utils.checkPassword(password));
   };
 
   render() {
