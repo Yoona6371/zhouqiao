@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 // import Http from '../../action/request';
 import { inject } from 'mobx-react';
 import { onDoublePress } from '../../utils/onDoublePress';
@@ -7,13 +7,62 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { pxToDp } from '../../utils/pxToDp';
 import Pagination from '../../components/bussiness/Pagination';
 const Tab = createMaterialTopTabNavigator();
+import CommodityCard from '../../components/bussiness/CommodityCard';
+import index from '../../mobx';
 
 @inject('RootStore')
 class HomeTab extends Component {
+  state = {
+    caseData: [
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+    ],
+    shoppingData: [
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+    ],
+  };
   render() {
+    const { caseData, shoppingData } = this.state;
     return (
       <View>
         <Text>首页</Text>
+        {/*案例列表开始*/}
+        <View style={{ flexDirection: 'row', backgroundColor: '#FFFFFF' }}>
+          <FlatList
+            data={caseData}
+            numColumns={2}
+            columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+            renderItem={({ item, index }) => (
+              <CommodityCard
+                Title={item.Title}
+                user_id={item.user_id}
+                Commodity_type={item.Commodity_type}
+              />
+            )}
+          />
+        </View>
+        {/*案例列表结束*/}
+        {/*商品列表开始*/}
+        <View>
+          <FlatList
+            data={shoppingData}
+            numColumns={2}
+            columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+            renderItem={({ item, index }) => (
+              <CommodityCard type={3} Title={item.Title} prince={item.prince} />
+            )}
+          />
+        </View>
+        {/*商品列表结束*/}
       </View>
     );
   }
@@ -33,7 +82,7 @@ class Index extends Component {
         },
       ],
     };
-    console.log('this.props:', this.props);
+    // console.log('this.props:', this.props);
   }
 
   componentDidMount() {
@@ -60,7 +109,7 @@ class Index extends Component {
         }}
       >
         {pages.map((v, i) => (
-          <Tab.Screen name={v.name} component={v.component} />
+          <Tab.Screen name={v.name} component={v.component} key={i} />
         ))}
       </Tab.Navigator>
     );
@@ -73,7 +122,10 @@ class Index extends Component {
           照片
         </Text>
         {this.MyTabs()}
-        <Pagination {...this.props} pages={this.state.pages} />
+        <Pagination
+          navigation={this.props.navigation}
+          pages={this.state.pages}
+        />
       </View>
     );
   }
