@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
 import PropTypes from 'prop-types';
-import Icon from '../../common/Icon';
-import { file } from '../../../constants/svg';
+import Icon from '../common/Icon';
+import { file } from '../../constants/svg';
 import Svg from 'react-native-svg-uri';
-import { pxToDp } from '../../../utils/pxToDp';
-import { fontStyle } from '../../../utils/StyleUtils';
+import { pxToDp } from '../../utils/pxToDp';
+import { fontStyle } from '../../utils/StyleUtils';
+import LinearGradient from 'react-native-linear-gradient';
 
 class Index extends Component {
   constructor(props) {
     super(props);
   }
-  static PropTypes = {
+  static propTypes = {
     title: PropTypes.string.isRequired,
     type: PropTypes.number.isRequired,
     svg: PropTypes.string,
@@ -20,6 +21,7 @@ class Index extends Component {
     text: PropTypes.string,
     router: PropTypes.string,
     navigation: PropTypes.object.isRequired,
+    colors: PropTypes.array,
   };
   render() {
     let {
@@ -29,18 +31,22 @@ class Index extends Component {
       text_right,
       svg,
       text,
-      style,
       text_more,
+      colors,
+      style,
     } = this.props;
     return (
       <TouchableOpacity
+        style={
+          type === 2 ? { backgroundColor: '#fff', marginTop: pxToDp(20) } : {}
+        }
         onPress={() => {
           this.props.navigation.navigate('Tabbar');
         }}
       >
         <View
           style={
-            type == 2
+            type === 2
               ? [styles.options__wrap, style]
               : [styles.options__wrap, styles.options__line, style]
           }
@@ -69,7 +75,19 @@ class Index extends Component {
           ) : (
             <View style={styles.options}>
               <View style={{ alignSelf: 'center' }}>
-                <Svg svgXmlData={svg} width={pxToDp(74)} height={pxToDp(74)} />
+                <LinearGradient
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  colors={colors}
+                  style={styles.linear}
+                >
+                  <Icon
+                    name={svg}
+                    width={pxToDp(74)}
+                    height={pxToDp(74)}
+                    style={styles.svg_type03}
+                  />
+                </LinearGradient>
               </View>
               <View style={styles.center_type03}>
                 <Text style={styles.title_type03}>{title}</Text>
@@ -78,7 +96,7 @@ class Index extends Component {
             </View>
           )}
           <View style={styles.options}>
-            {type == 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
+            {type === 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
             <Icon
               name={'more'}
               width={pxToDp(16)}
@@ -95,9 +113,8 @@ const styles = StyleSheet.create({
   options__wrap: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingLeft: pxToDp(30),
     height: pxToDp(138),
-    backgroundColor: '#ffffff',
+    marginLeft: pxToDp(30),
   },
   options__line: {
     borderBottomColor: '#dddddd',
@@ -105,6 +122,16 @@ const styles = StyleSheet.create({
   },
   options: {
     flexDirection: 'row',
+  },
+  svg_type03: {
+    color: '#fff',
+    alignSelf: 'center',
+    lineHeight: pxToDp(74),
+  },
+  linear: {
+    width: pxToDp(74),
+    height: pxToDp(74),
+    borderRadius: pxToDp(37),
   },
   more: {
     lineHeight: pxToDp(138),
@@ -138,7 +165,7 @@ const styles = StyleSheet.create({
     ...fontStyle(28, 30, 30, 'bold', '#333'),
   },
   title_type03: {
-    ...fontStyle(34, 36, 36, 'bold', '#333'),
+    ...fontStyle(34, 34, 36, 'bold', '#333'),
     maxWidth: pxToDp(550),
   },
   transcript: {
@@ -152,7 +179,7 @@ const styles = StyleSheet.create({
   },
   transcript_text_type03: {
     marginTop: pxToDp(5),
-    ...fontStyle(26, 28, 28, '500', '#999999'),
+    ...fontStyle(26, 34, 28, '500', '#999999'),
     maxWidth: pxToDp(550),
   },
   transcript_line: {

@@ -6,8 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Index from '../pages/home/index';
 import Tabbar from '../router/tabbar';
 import ImageShow from '../pages/ImageShow';
+import MyFocus from '../pages/personal/myFocus';
 import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
+import AccountSecurity from '../pages/personal/account-security';
+import ServiceList from '../pages/personal/setting/service-list';
+import SettinsIndex from '../pages/personal/setting';
 
 const Stack = createStackNavigator();
 
@@ -27,11 +31,15 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode="none">
+        <Stack.Navigator initialRouteName="AccountSecurity" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
+          <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
           <Stack.Screen name="ImageShow" component={ImageShow} />
+          <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
+          <Stack.Screen name="ServiceList" component={ServiceList} />
+          <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
         </Stack.Navigator>
       </NavigationContainer>
     );
