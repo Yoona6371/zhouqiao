@@ -12,6 +12,7 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettinsIndex from '../pages/personal/setting';
+import DemandList from '../components/bussiness/DemandList'
 
 const Stack = createStackNavigator();
 
@@ -40,6 +41,7 @@ class Nav extends React.Component {
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
           <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
+          <Stack.Screen name="DemandList" component={DemandList} />
         </Stack.Navigator>
       </NavigationContainer>
     );
