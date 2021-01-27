@@ -6,7 +6,11 @@ class App extends Component {
     super(props);
   }
   render() {
-    return <View />;
+    return (
+      <View>
+        <Text>test页</Text>
+      </View>
+    );
   }
 }
 
