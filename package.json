@@ -26,17 +26,18 @@
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-image-crop-picker": "0.34.1",
-    "react-native-orientation-locker": "^1.1.8",
     "react-native-image-zoom-viewer": "^3.0.1",
+    "react-native-linear-gradient": "^2.5.6",
+    "react-native-orientation-locker": "^1.1.8",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
     "react-native-svg": "^12.1.0",
     "react-native-svg-uri": "^1.2.3",
     "react-native-tab-navigator": "^0.3.4",
-    "react-native-wechat-lib": "^1.1.26",
+    "react-native-tab-view": "^2.15.2",
     "react-native-video": "^5.1.1",
-    "react-native-tab-view": "^2.15.2"
+    "react-native-wechat-lib": "^1.1.26"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

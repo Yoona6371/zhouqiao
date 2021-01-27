@@ -20,4 +20,5 @@ export default {
   add_file: '\ue636',
   right2: '\ue642',
   left2: '\ue641',
+  attention: '\ue63e',
 };
