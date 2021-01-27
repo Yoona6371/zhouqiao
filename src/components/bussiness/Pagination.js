@@ -11,7 +11,7 @@ class Index extends Component {
       pageNow: 0,
     };
   }
-  static PropTypes = {
+  static propTypes = {
     pages: PropTypes.array.isRequired,
     navigation: PropTypes.object.isRequired,
   };
