@@ -4,14 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // 路由
 import Index from '../pages/home/index';
-import Tabbar from '../router/tabbar';
+import Tab from '../router/tab';
 import ImageShow from '../pages/ImageShow';
 import MyFocus from '../pages/personal/myFocus';
 import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
-import SettinsIndex from '../pages/personal/setting';
+import SettingIndex from '../pages/personal/setting';
 
 const Stack = createStackNavigator();
 
@@ -31,15 +31,19 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
+<<<<<<< HEAD
+        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+=======
         <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
+>>>>>>> 9aaa6593db95a14dffd49c67a46ee6c205468992
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
-          <Stack.Screen name="Tabbar" component={Tabbar} />
+          <Stack.Screen name="Tab" component={Tab} />
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
-          <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
+          <Stack.Screen name="SettinsIndex" component={SettingIndex} />
         </Stack.Navigator>
       </NavigationContainer>
     );
