@@ -12,6 +12,7 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettinsIndex from '../pages/personal/setting';
+import DemandSet from '../pages/demand';
 
 const Stack = createStackNavigator();
 
@@ -31,7 +32,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="DemandSet" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -39,7 +40,8 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
-          <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
+          <Stack.Screen name="SettingIndex" component={SettinsIndex} />
+          <Stack.Screen name="DemandSet" component={DemandSet} />
         </Stack.Navigator>
       </NavigationContainer>
     );
