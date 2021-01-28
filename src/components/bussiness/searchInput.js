@@ -13,6 +13,7 @@ export default class SearchInput extends Component {
     super(props);
   }
   render() {
+    const { value } = this.props;
     return (
       <View
         style={{
@@ -26,7 +27,7 @@ export default class SearchInput extends Component {
         <TextInput
           onChangeText={this.props.onChangeText}
           onSubmitEditing={this.props.onSubmitEditing}
-          value={this.props.value}
+          value={value}
           placeholder="请输入您要搜索的内容"
           placeholderTextColor="#999999"
           style={{ fontSize: pxToDp(24), paddingLeft: pxToDp(60) }}

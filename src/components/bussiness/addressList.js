@@ -1,44 +1,50 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { pxToDp } from '../../../utils/pxToDp';
-import Icon from '../../common/Icon';
+import { pxToDp } from '../../utils/pxToDp';
+import Icon from '../../components/common/Icon';
 
 export default class AddressList extends Component {
   constructor(props) {
     super(props);
   }
   static defaultProps = {
-    user: {
-      detailedAddress: '曹杨九村11栋30号楼210室',
-      name: '卢伟军',
-      sex: '女士',
-      tel: '18721755801',
-    },
+    detailedAddress: '曹杨九村11栋30号楼210室',
+    name: '卢伟军',
+    sex: '女士',
+    tel: '18721755801',
     defaultShow: true,
-    jumPage: 'Tabber',
+    jumPage: 'Tabbar',
   };
 
   delete = () => {};
 
-  editor = () => {
-    this.props.navigation.navigate('');
+  editor = (jumPage) => {
+    this.props.navigation.navigate(jumPage);
+    console.log('asd');
   };
   render() {
-    const { user, defaultShow, jumPage } = this.props;
+    const {
+      detailedAddress,
+      name,
+      sex,
+      tel,
+      defaultShow,
+      jumPage,
+    } = this.props;
     return (
-      <View style={styles.adressList_box}>
+      <View style={[styles.adressList_box, this.props.style]}>
         {/*详细地址strat*/}
         <View style={styles.detailedAddress}>
           <Text
             style={{
               color: '#333333',
               fontWeight: 'bold',
-              fontsize: pxToDp(27),
+              fontSize: pxToDp(27),
             }}
           >
-            {this.props.user.detailedAddress}
+            {detailedAddress}
           </Text>
-          {this.props.defaultShow ? (
+          {defaultShow ? (
             <View style={styles.defaultShow_box}>
               <Text style={{ color: '#FFFFFF', fontSize: pxToDp(17) }}>
                 默认
@@ -52,15 +58,9 @@ export default class AddressList extends Component {
         {/*详细地址end*/}
         {/*身份信息start*/}
         <View style={styles.address_identity}>
-          <Text style={styles.address_identity_text}>
-            {this.props.user.name}
-          </Text>
-          <Text style={styles.address_identity_text}>
-            {this.props.user.sex}
-          </Text>
-          <Text style={styles.address_identity_text}>
-            {this.props.user.tel}
-          </Text>
+          <Text style={styles.address_identity_text}>{name}</Text>
+          <Text style={styles.address_identity_text}>{sex}</Text>
+          <Text style={styles.address_identity_text}>{tel}</Text>
         </View>
         {/*身份信息end*/}
         {/*右下角编辑删除start*/}
@@ -83,7 +83,7 @@ export default class AddressList extends Component {
           {/*编辑结束*/}
           {/*删除开始*/}
           <TouchableOpacity
-            onPress="Delete()"
+            onPress={this.delete}
             style={{
               flexDirection: 'row',
               alignItems: 'center',

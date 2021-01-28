@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView, Text, FlatList } from 'react-native';
 // import Http from '../../action/request';
 import { inject } from 'mobx-react';
 import { onDoublePress } from '../../utils/onDoublePress';
@@ -8,14 +8,58 @@ import { pxToDp } from '../../utils/pxToDp';
 import Pagination from '../../components/bussiness/Pagination';
 const Tab = createMaterialTopTabNavigator();
 import CommodityCard from '../../components/bussiness/CommodityCard';
+import index from '../../mobx';
 
 @inject('RootStore')
 class HomeTab extends Component {
+  state = {
+    caseData: [
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+      { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
+    ],
+    shoppingData: [
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+      { prince: 666, Title: 'One Plus 7' },
+    ],
+  };
   render() {
+    const { caseData, shoppingData } = this.state;
     return (
-      <View>
+      <ScrollView>
         <Text>首页</Text>
-      </View>
+        {/*案例列表开始*/}
+        <FlatList
+          data={caseData}
+          numColumns={2}
+          columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+          renderItem={({ item, index }) => (
+            <CommodityCard
+              Title={item.Title}
+              user_id={item.user_id}
+              Commodity_type={item.Commodity_type}
+            />
+          )}
+        />
+        {/*案例列表结束*/}
+        {/*商品列表开始*/}
+        <FlatList
+          data={shoppingData}
+          numColumns={2}
+          columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+          renderItem={({ item, index }) => (
+            <CommodityCard type={3} Title={item.Title} prince={item.prince} />
+          )}
+        />
+        {/*商品列表结束*/}
+      </ScrollView>
     );
   }
 }
