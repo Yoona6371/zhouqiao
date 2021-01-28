@@ -16,6 +16,7 @@ export default {
   vip: '\ue6c3',
   container_icon: '\ue627',
   search: '\ue62d',
+  verification: '\ue640',
   drop_down: '\ue635',
   add_file: '\ue636',
   right2: '\ue642',
