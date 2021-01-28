@@ -31,7 +31,11 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
+<<<<<<< HEAD
         <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+=======
+        <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
+>>>>>>> 9aaa6593db95a14dffd49c67a46ee6c205468992
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
