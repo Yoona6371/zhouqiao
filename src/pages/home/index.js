@@ -61,7 +61,11 @@ class Index extends Component {
         }}
       >
         {pages.map((v, i) => (
-          <Tab.Screen name={v.name} component={v.component} />
+          <Tab.Screen
+            name={v.name}
+            component={v.component}
+            key={`${v.name}page${i}`}
+          />
         ))}
       </Tab.Navigator>
     );

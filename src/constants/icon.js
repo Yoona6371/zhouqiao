@@ -17,4 +17,8 @@ export default {
   container_icon: '\ue627',
   search: '\ue62d',
   attention: '\ue63e',
+  tabbar_home: '\ue647',
+  tabbar_design: '\ue645',
+  tabbar_message: '\ue64b',
+  tabbar_mine: '\ue649',
 };
