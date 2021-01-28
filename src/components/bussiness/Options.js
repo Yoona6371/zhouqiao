@@ -42,9 +42,6 @@ class Index extends Component {
         style={
           type === 2 ? { backgroundColor: '#fff', marginTop: pxToDp(20) } : {}
         }
-        onPress={() => {
-          this.props.navigation.navigate('Tabbar');
-        }}
       >
         <View
           style={

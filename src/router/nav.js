@@ -11,6 +11,7 @@ import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
+import DemandSet from '../pages/demand';
 import SettingIndex from '../pages/personal/setting';
 
 const Stack = createStackNavigator();
@@ -39,7 +40,8 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
-          <Stack.Screen name="SettinsIndex" component={SettingIndex} />
+          <Stack.Screen name="SettingIndex" component={SettingIndex} />
+          <Stack.Screen name="DemandSet" component={DemandSet} />
         </Stack.Navigator>
       </NavigationContainer>
     );
