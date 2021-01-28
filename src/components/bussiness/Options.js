@@ -5,7 +5,7 @@ import Icon from '../common/Icon';
 import { file } from '../../constants/svg';
 import Svg from 'react-native-svg-uri';
 import { pxToDp } from '../../utils/pxToDp';
-import { fontStyle } from '../../utils/StyleUtils';
+import { fontStyle, padding } from '../../utils/StyleUtils';
 import LinearGradient from 'react-native-linear-gradient';
 
 class Index extends Component {
@@ -22,6 +22,7 @@ class Index extends Component {
     router: PropTypes.string,
     navigation: PropTypes.object.isRequired,
     colors: PropTypes.array,
+    text_more_status: PropTypes.bool,
   };
   render() {
     let {
@@ -34,15 +35,13 @@ class Index extends Component {
       text_more,
       colors,
       style,
+      text_more_status,
     } = this.props;
     return (
       <TouchableOpacity
         style={
           type === 2 ? { backgroundColor: '#fff', marginTop: pxToDp(20) } : {}
         }
-        onPress={() => {
-          this.props.navigation.navigate('Tabbar');
-        }}
       >
         <View
           style={
@@ -96,7 +95,19 @@ class Index extends Component {
             </View>
           )}
           <View style={styles.options}>
-            {type === 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
+            {type === 1 ? (
+              <Text
+                style={
+                  text_more_status
+                    ? { ...styles.more, ...styles.mored }
+                    : { ...styles.more }
+                }
+              >
+                {text_more}
+              </Text>
+            ) : (
+              <></>
+            )}
             <Icon
               name={'more'}
               width={pxToDp(16)}
@@ -118,7 +129,7 @@ const styles = StyleSheet.create({
   },
   options__line: {
     borderBottomColor: '#dddddd',
-    borderBottomWidth: pxToDp(1),
+    borderBottomWidth: pxToDp(1.5),
   },
   options: {
     flexDirection: 'row',
@@ -134,9 +145,15 @@ const styles = StyleSheet.create({
     borderRadius: pxToDp(37),
   },
   more: {
-    lineHeight: pxToDp(138),
+    alignSelf: 'center',
     marginRight: pxToDp(23),
-    ...fontStyle(24, 138, 138, '500', '#999999', 'right'),
+    ...fontStyle(24, 36, 24, '500', '#999999', 'right'),
+  },
+  mored: {
+    ...padding(10, 5, 10, 5),
+    borderRadius: pxToDp(10),
+    backgroundColor: '#ff9900',
+    color: '#fff',
   },
   more_icon: {
     lineHeight: pxToDp(138),

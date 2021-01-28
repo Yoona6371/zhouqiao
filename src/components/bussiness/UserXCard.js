@@ -96,7 +96,7 @@ class UserXCard extends Component {
             width: type === 1 ? '100%' : '75%',
           }}
         >
-          <View style={styles.footer_left}>
+          <View style={[styles.footer_left]}>
             <Text style={{ ...styles.left_title, color: this.fontColor[0] }}>
               {name}
             </Text>

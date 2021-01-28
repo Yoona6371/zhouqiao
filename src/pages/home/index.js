@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, ScrollView, Text, FlatList } from 'react-native';
 // import Http from '../../action/request';
 import { inject } from 'mobx-react';
 import { onDoublePress } from '../../utils/onDoublePress';
@@ -33,37 +33,33 @@ class HomeTab extends Component {
   render() {
     const { caseData, shoppingData } = this.state;
     return (
-      <View>
+      <ScrollView>
         <Text>首页</Text>
         {/*案例列表开始*/}
-        <View style={{ flexDirection: 'row', backgroundColor: '#FFFFFF' }}>
-          <FlatList
-            data={caseData}
-            numColumns={2}
-            columnWrapperStyle={{ marginLeft: pxToDp(32) }}
-            renderItem={({ item, index }) => (
-              <CommodityCard
-                Title={item.Title}
-                user_id={item.user_id}
-                Commodity_type={item.Commodity_type}
-              />
-            )}
-          />
-        </View>
+        <FlatList
+          data={caseData}
+          numColumns={2}
+          columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+          renderItem={({ item, index }) => (
+            <CommodityCard
+              Title={item.Title}
+              user_id={item.user_id}
+              Commodity_type={item.Commodity_type}
+            />
+          )}
+        />
         {/*案例列表结束*/}
         {/*商品列表开始*/}
-        <View>
-          <FlatList
-            data={shoppingData}
-            numColumns={2}
-            columnWrapperStyle={{ marginLeft: pxToDp(32) }}
-            renderItem={({ item, index }) => (
-              <CommodityCard type={3} Title={item.Title} prince={item.prince} />
-            )}
-          />
-        </View>
+        <FlatList
+          data={shoppingData}
+          numColumns={2}
+          columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+          renderItem={({ item, index }) => (
+            <CommodityCard type={3} Title={item.Title} prince={item.prince} />
+          )}
+        />
         {/*商品列表结束*/}
-      </View>
+      </ScrollView>
     );
   }
 }

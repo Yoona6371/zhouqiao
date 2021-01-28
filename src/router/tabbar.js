@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text, Image, ImageBackground, StyleSheet } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Svg from 'react-native-svg-uri';
 import Home from '../pages/home';
 import Personal from '../pages/personal';
 import { pxToDp } from '../utils/pxToDp';
+import { bgColor } from '../constants/config';
 
 // 导入svg
-import { tabbar_index } from '../constants/svg';
+import {
+  tabbar_design_selected,
+  tabbar_home_selected,
+  tabbar_message_selected,
+  tabbar_mine_selected,
+} from '../constants/svg';
+import Icon from '../components/common/Icon';
 
 class Index extends Component {
   constructor(props) {
@@ -18,16 +25,10 @@ class Index extends Component {
         {
           selected: 'home',
           title: 'home',
-          renderIcon: () => (
-            <Svg
-              svgXmlData={tabbar_index}
-              width={pxToDp(50)}
-              heigth={pxToDp(50)}
-            />
-          ),
+          renderIcon: () => <Icon name={'tabbar_home'} />,
           renderSelectedIcon: () => (
             <Svg
-              svgXmlData={tabbar_index}
+              svgXmlData={tabbar_home_selected}
               width={pxToDp(50)}
               heigth={pxToDp(50)}
             />
@@ -38,18 +39,61 @@ class Index extends Component {
           component: <Home {...props} />,
         },
         {
-          selected: 'personal',
-          title: 'personal',
-          renderIcon: () => (
+          selected: 'design',
+          title: 'design',
+          renderIcon: () => <Icon name={'tabbar_design'} />,
+          renderSelectedIcon: () => (
             <Svg
-              svgXmlData={tabbar_index}
+              svgXmlData={tabbar_design_selected}
               width={pxToDp(50)}
               heigth={pxToDp(50)}
             />
           ),
+          onPress: () => {
+            this.setState({ selectedTab: 'home' });
+          },
+          component: <Text>1231</Text>,
+        },
+        {
+          selected: 'release',
+          title: 'release',
+          renderIcon: () => (
+            <Image
+              source={require('../asserts/icons/release.png')}
+              style={{ width: pxToDp(100), height: pxToDp(100) }}
+            />
+          ),
+          renderSelectedIcon: () => (
+            <Image source={require('../asserts/icons/release.png')} />
+          ),
+          onPress: () => {
+            this.setState({ selectedTab: 'home' });
+          },
+          component: <Text>1231</Text>,
+        },
+        {
+          selected: 'message',
+          title: 'message',
+          renderIcon: () => <Icon name={'tabbar_message'} />,
           renderSelectedIcon: () => (
             <Svg
-              svgXmlData={tabbar_index}
+              svgXmlData={tabbar_message_selected}
+              width={pxToDp(50)}
+              heigth={pxToDp(50)}
+            />
+          ),
+          onPress: () => {
+            this.setState({ selectedTab: 'home' });
+          },
+          component: <Text>1231</Text>,
+        },
+        {
+          selected: 'personal',
+          title: 'personal',
+          renderIcon: () => <Icon name={'tabbar_mine'} />,
+          renderSelectedIcon: () => (
+            <Svg
+              svgXmlData={tabbar_mine_selected}
               width={pxToDp(50)}
               heigth={pxToDp(50)}
             />
@@ -66,11 +110,18 @@ class Index extends Component {
     const { selectedTab, pages } = this.state;
     return (
       <View style={{ flex: 1 }}>
-        <TabNavigator>
+        <Image
+          source={require('../asserts/images/home_bottom.png')}
+          style={styles.home_bottom}
+        />
+        <TabNavigator
+          sceneStyle={{ backgroundColor: bgColor }}
+          tabBarStyle={{ backgroundColor: '#fff' }}
+        >
           {pages.map((v, i) => (
             <TabNavigator.Item
               key={i}
-              selected={v.selected == selectedTab}
+              selected={v.selected === selectedTab}
               title={v.title}
               renderIcon={v.renderIcon}
               renderSelectedIcon={v.renderSelectedIcon}
@@ -78,7 +129,7 @@ class Index extends Component {
               selectedTitleStyle={{
                 color: '#888',
               }}
-              tabStyle={{ backgroundColor: '#eee' }}
+              tabStyle={styles.tabStyle}
             >
               {v.component}
             </TabNavigator.Item>
@@ -89,3 +140,17 @@ class Index extends Component {
   }
 }
 export default Index;
+
+const styles = StyleSheet.create({
+  home_bottom: {
+    position: 'absolute',
+    width: pxToDp(750),
+    height: pxToDp(156),
+    zIndex: 100,
+    bottom: 0,
+  },
+  tabStyle: {
+    position: 'relative',
+    zIndex: 200,
+  },
+});

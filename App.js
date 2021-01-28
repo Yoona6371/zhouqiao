@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import Nav from './src/router/nav';
 import { Provider } from 'mobx-react';
 import RootStore from './src/mobx/index';
@@ -20,6 +20,7 @@ class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <StatusBar translucent={true} backgroundColor={'transparent'} />
         <Provider RootStore={RootStore}>
           <Nav />
         </Provider>

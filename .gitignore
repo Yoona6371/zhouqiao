@@ -5,7 +5,6 @@
 # Xcode
 #
 src/pages/test
-android/app/my-release-key.keystore
 build/
 *.pbxuser
 !default.pbxuser
