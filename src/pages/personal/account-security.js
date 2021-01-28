@@ -14,35 +14,35 @@ class Index extends Component {
           title: '实名认证',
           text: '完善个人信息资料',
           router: '',
-          color: '#f19f3c',
+          colors: ['#f5be4c', '#f19a39'],
         },
         {
           svg: 'firm',
           title: '企业认证',
           text: '完善企业信息资料',
           router: '',
-          color: '#ed5d4c',
+          colors: ['#f29e6b', '#eb4a44'],
         },
         {
           svg: 'passwordUpdate',
           title: '修改登陆密码',
           text: '密码忘记啦？去修改下',
           router: '',
-          color: '#4d9bf8',
+          colors: ['#5db0f9', '#408bf7'],
         },
         {
           svg: 'telUpdate',
           title: '修改绑定手机',
           text: '换手机号了？去修改下绑定吧',
           router: '',
-          color: '#9c76f7',
+          colors: ['#c192f8', '#8a68f6'],
         },
         {
           svg: 'appeal',
           title: '账户申诉',
           text: '用的不爽？我有意见',
           router: '',
-          color: '#61d4b3',
+          colors: ['#65dccf', '#67d2aa'],
         },
       ],
     };
@@ -61,7 +61,7 @@ class Index extends Component {
             style={styles.option}
             svg={v.svg}
             router={v.router}
-            color={v.color}
+            colors={v.colors}
             navigation={this.props.navigation}
           />
         ))}
@@ -75,7 +75,7 @@ let styles = StyleSheet.create({
     marginRight: pxToDp(30),
   },
   option: {
-    marginTop: pxToDp(20),
+    // marginTop: pxToDp(20),
   },
 });
 
