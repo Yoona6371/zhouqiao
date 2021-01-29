@@ -13,6 +13,7 @@ import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
 import DemandSet from '../pages/demand';
 import SettingIndex from '../pages/personal/setting';
+import DadaEdit from '../pages/personal/setting/data-edit';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Index" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -42,6 +43,7 @@ class Nav extends React.Component {
           <Stack.Screen name="ServiceList" component={ServiceList} />
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
+          <Stack.Screen name="DadaEdit" component={DadaEdit} />
         </Stack.Navigator>
       </NavigationContainer>
     );
