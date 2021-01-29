@@ -11,6 +11,7 @@ import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
+import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
@@ -41,6 +42,7 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
+          <Stack.Screen name="DemandDetails" component={DemandDetails} />
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
