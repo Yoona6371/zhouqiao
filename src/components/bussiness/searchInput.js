@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
-import Icon from '../../common/Icon';
-import { pxToDp } from '../../../utils/pxToDp';
+import Icon from '../common/Icon';
+import { pxToDp } from '../../utils/pxToDp';
 
 // style 样式
 //onChangeText

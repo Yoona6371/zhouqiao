@@ -19,7 +19,7 @@ class Index extends Component {
   };
   render() {
     return (
-      <View style={this.props.stle}>
+      <View style={this.props.style}>
         <TouchableOpacity onPress={this.press} style={styles.container__wrap}>
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.title}>
