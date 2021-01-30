@@ -33,4 +33,8 @@ export default {
   tabbar_home: '\ue647',
   tabbar_mine: '\ue649',
   tabbar_message: '\ue64b',
+  information: '\ue643',
+  camera: '\ue628',
+  welfare_people: '\ue64c',
+  hot: '\ue64d',
 };
