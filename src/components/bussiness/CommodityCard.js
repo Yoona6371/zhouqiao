@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
     width: pxToDp(330),
     height: pxToDp(300),
     backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
+    elevation: 8,
   },
   CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
   CommodityCard__typeThreeShoppingTitleBox: {
