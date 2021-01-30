@@ -43,6 +43,7 @@ class HomeTabCase extends Component {
     const { caseData } = this.state;
     return (
       <ScrollView>
+        {/*案例列表开始*/}
         <FlatList
           data={caseData}
           numColumns={2}
@@ -180,7 +181,13 @@ class Index extends Component {
         }}
       >
         {pages.map((v, i) => (
-          <Tab.Screen name={v.name} component={v.component} key={i} />
+          <Tab.Screen
+            name={v.name}
+            component={v.component}
+            key={i}
+            navigationOptions={v.name}
+            route={{ params: { lab: v.name } }}
+          />
         ))}
       </Tab.Navigator>
     );

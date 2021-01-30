@@ -7,7 +7,7 @@ import {
   TextInput,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { fontStyle } from '../../utils/StyleUtils';
+import { fontStyle, padding } from '../../utils/StyleUtils';
 import { pxToDp, deviceWidthDp } from '../../utils/pxToDp';
 import Icon from '../common/Icon';
 import Overlay from '../common/Overlay/Overlay';
@@ -36,6 +36,7 @@ class Index extends Component {
     super(props);
     this.state = {
       input: props.input,
+      ungent: false,
     };
   }
   // type
@@ -43,6 +44,8 @@ class Index extends Component {
   // 1 选择类别
   // 2 上传附件
   // 3 其他（文字）
+  // 4 按钮
+  // 5 容器
   static propTypes = {
     type: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
@@ -67,16 +70,52 @@ class Index extends Component {
     Overlay.show(overlayView);
   };
   render() {
-    let { title, tips, type, hint } = this.props;
-    let { input } = this.state;
+    let { title, tips, type, hint, last } = this.props;
+    let { input, ungent } = this.state;
     let input_category = '';
     return (
-      <View style={styles.demand_title__wrap}>
+      <View
+        style={
+          last
+            ? styles.demand_title__wrap
+            : {
+                ...styles.demand_title__wrap,
+                ...styles.demand_title__wrap_line,
+              }
+        }
+      >
         <Text style={styles.demand_title}>
           {title}
           <Text style={styles.demand_hint}>{hint}</Text>
         </Text>
-        {type === 1 || type === 2 ? (
+        {type === 4 ? (
+          <View style={styles.demand_button}>
+            <TouchableOpacity
+              style={{ alignSelf: 'center', marginRight: pxToDp(28) }}
+              onPress={() => {
+                this.setState({ ungent: true });
+              }}
+            >
+              <Text
+                style={ungent ? styles.button_checked : styles.button_unchecked}
+              >
+                加急
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ alignSelf: 'center' }}
+              onPress={() => {
+                this.setState({ ungent: false });
+              }}
+            >
+              <Text
+                style={ungent ? styles.button_unchecked : styles.button_checked}
+              >
+                普通
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : type === 1 || type === 2 ? (
           <TouchableOpacity
             style={styles.demand_category}
             onPress={this.setCategory}
@@ -92,10 +131,10 @@ class Index extends Component {
                   ? {
                       width:
                         deviceWidthDp -
-                        pxToDp(172) -
+                        pxToDp(232) -
                         styles.demand_category.marginRight,
                     }
-                  : { width: deviceWidthDp - pxToDp(186 + 182) }
+                  : { width: deviceWidthDp - pxToDp(186 + 182 + 60) }
               }
             />
             {type === 2 ? (
@@ -143,10 +182,11 @@ const styles = StyleSheet.create({
   demand_title__wrap: {
     backgroundColor: 'transparent',
     flexDirection: 'row',
-    width: '100%',
     height: pxToDp(320 / 3),
-    borderBottomWidth: pxToDp(1),
     marginLeft: pxToDp(30),
+  },
+  demand_title__wrap_line: {
+    borderBottomWidth: pxToDp(1),
     borderBottomColor: '#aaa',
   },
   demand_title: {
@@ -158,8 +198,28 @@ const styles = StyleSheet.create({
     fontSize: pxToDp(24),
     color: '#6e7079',
   },
-  demand_input: {
-    // maxWidth: pxToDp(200),
+  demand_button: {
+    flexDirection: 'row',
+  },
+  button_checked: {
+    width: pxToDp(81),
+    backgroundColor: '#fffaf3',
+    ...padding(15, 9, 15, 9),
+    textAlign: 'center',
+    borderWidth: pxToDp(2),
+    borderColor: '#fe9e0e',
+    borderRadius: pxToDp(6),
+    ...fontStyle(24, 42, 26, 'bold', '#fe9e0e'),
+  },
+  button_unchecked: {
+    width: pxToDp(80),
+    backgroundColor: '#f0f0f0',
+    ...padding(15, 9, 15, 9),
+    textAlign: 'center',
+    borderWidth: pxToDp(2),
+    borderColor: '#f0f0f0',
+    borderRadius: pxToDp(6),
+    ...fontStyle(24, 42, 26, 'bold', '#999'),
   },
   demand_category: {
     flexDirection: 'row',

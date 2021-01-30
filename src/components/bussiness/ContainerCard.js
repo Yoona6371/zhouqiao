@@ -13,24 +13,34 @@ class Index extends Component {
     title: PropTypes.string.isRequired,
     navigation: PropTypes.object.isRequired,
     router: PropTypes.string,
+    rightRemove: PropTypes.bool,
+    IconRempve: PropTypes.bool,
   };
   press = () => {
-    this.props.navigation.navigate(this.props.router);
+    this.props.navigation.navigate('Index');
   };
   render() {
     return (
       <View style={this.props.style}>
-        <TouchableOpacity onPress={this.press} style={styles.container__wrap}>
+        <View style={styles.container__wrap}>
           <View style={{ flexDirection: 'row' }}>
             <View style={styles.title}>
               <Text style={styles.title_text}>{this.props.title}</Text>
             </View>
-            <Icon style={styles.icon} name={'container_icon'} />
+            <Icon
+              style={
+                this.props.iconRemove ? { display: 'none' } : { ...styles.icon }
+              }
+              name={'container_icon'}
+            />
           </View>
-          <View>
-            <Text>··></Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={this.props.rightRemove ? { display: 'none' } : {}}
+            onPress={this.press}
+          >
+            <Icon name={'right2'} width={pxToDp(32)} height={pxToDp(20)} />
+          </TouchableOpacity>
+        </View>
         <View style={styles.children}>{this.props.children}</View>
       </View>
     );
@@ -40,7 +50,6 @@ var styles = StyleSheet.create({
   container__wrap: {
     marginLeft: pxToDp(30),
     marginRight: pxToDp(30),
-    marginBottom: pxToDp(30),
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#ffffff',
