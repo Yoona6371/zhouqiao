@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
     width: pxToDp(420),
     height: pxToDp(150),
     marginLeft: pxToDp(30),
+    marginBottom: pxToDp(50),
+    marginTop: pxToDp(30),
     ...padding(24, 12, 12, 20),
     borderRadius: pxToDp(10),
     backgroundColor: '#fff',

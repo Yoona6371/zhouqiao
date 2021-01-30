@@ -3,20 +3,32 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // 路由
-import Index from '../pages/home/index';
-import Tab from '../router/tab';
-import ImageShow from '../pages/ImageShow';
-import MyFocus from '../pages/personal/myFocus';
-import Test from '../pages/test';
-import LocalStorageUtils from '../utils/LocalStorageUtils';
-import AccountSecurity from '../pages/personal/account-security';
-import ServiceList from '../pages/personal/setting/service-list';
 
+import Index from '../pages/home';
+import ImageShow from '../pages/ImageShow';
+
+// 组件
+import DemandList from '../components/bussiness/DemandList';
+import TopTabNavigator from '../components/common/TopTabNavigator';
+import Tab from '../router/tab';
+import LocalStorageUtils from '../utils/LocalStorageUtils';
 import SettinsIndex from '../pages/personal/setting';
+// 需求
 import DemandDetails from '../pages/demand/demand-details';
 
 import DemandSet from '../pages/demand';
+
+// 个人中心
+import AccountSecurity from '../pages/personal/account-security';
+import MyFocus from '../pages/personal/myFocus';
+import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
+
+import DadaEdit from '../pages/personal/setting/data-edit';
+import Feedback from '../pages/personal/setting/feedback';
+
+// 测试
+import Test from '../pages/test';
 
 const Stack = createStackNavigator();
 
@@ -36,7 +48,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -44,10 +56,13 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
-          <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
           <Stack.Screen name="DemandDetails" component={DemandDetails} />
-          <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
+          <Stack.Screen name="DemandList" component={DemandList} />
+          <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
+          <Stack.Screen name="SettingIndex" component={SettingIndex} />
+          <Stack.Screen name="DadaEdit" component={DadaEdit} />
+          <Stack.Screen name="Feedback" component={Feedback} />
         </Stack.Navigator>
       </NavigationContainer>
     );
