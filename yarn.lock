@@ -1146,6 +1146,14 @@
   resolved "https://registry.npm.taobao.org/@react-native-community/slider/download/@react-native-community/slider-3.0.3.tgz#830167fd757ba70ac638747ba3169b2dbae60330"
   integrity sha1-gwFn/XV7pwrGOHR7oxabLbrmAzA=
 
+"@react-navigation/bottom-tabs@^5.11.7":
+  version "5.11.7"
+  resolved "https://registry.npm.taobao.org/@react-navigation/bottom-tabs/download/@react-navigation/bottom-tabs-5.11.7.tgz#a1d220afe02b6897c0705ddc40265e65c01fa0ba"
+  integrity sha1-odIgr+AraJfAcF3cQCZeZcAfoLo=
+  dependencies:
+    color "^3.1.3"
+    react-native-iphone-x-helper "^1.3.0"
+
 "@react-navigation/core@^5.15.1":
   version "5.15.1"
   resolved "https://registry.npm.taobao.org/@react-navigation/core/download/@react-navigation/core-5.15.1.tgz#dab5192277c606d9acbea511dac407c2834b5fbe"

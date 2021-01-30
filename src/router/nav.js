@@ -11,13 +11,12 @@ import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
-<<<<<<< HEAD
+
 import SettinsIndex from '../pages/personal/setting';
 import DemandDetails from '../pages/demand/demand-details';
-=======
+
 import DemandSet from '../pages/demand';
 import SettingIndex from '../pages/personal/setting';
->>>>>>> 6b155b218492aaad7501bdd2e20fe7311e13180c
 
 const Stack = createStackNavigator();
 
@@ -37,11 +36,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-<<<<<<< HEAD
-        <Stack.Navigator initialRouteName="DemandDetails" headerMode={'none'}>
-=======
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
->>>>>>> 6b155b218492aaad7501bdd2e20fe7311e13180c
+        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -49,13 +44,10 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
-<<<<<<< HEAD
           <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
           <Stack.Screen name="DemandDetails" component={DemandDetails} />
-=======
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
->>>>>>> 6b155b218492aaad7501bdd2e20fe7311e13180c
         </Stack.Navigator>
       </NavigationContainer>
     );
