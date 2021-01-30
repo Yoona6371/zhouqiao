@@ -4,8 +4,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // 路由
 
+// 首页
 import Index from '../pages/home';
 import ImageShow from '../pages/ImageShow';
+
+// 设计
+import Design from '../pages/design';
+
+// 消息
+import Message from '../pages/message';
 
 // 组件
 import DemandList from '../components/bussiness/DemandList';
@@ -24,6 +31,9 @@ import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
+
+// 商品
+import Commodity from '../pages/commodity';
 
 // 测试
 import Test from '../pages/test';
@@ -46,7 +56,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Commodity" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -61,6 +71,9 @@ class Nav extends React.Component {
           <Stack.Screen name="DemandSet" component={DemandSet} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
           <Stack.Screen name="Feedback" component={Feedback} />
+          <Stack.Screen name="Commodity" component={Commodity} />
+          <Stack.Screen name="Design" component={Design} />
+          <Stack.Screen name="Message" component={Message} />
         </Stack.Navigator>
       </NavigationContainer>
     );
