@@ -22,7 +22,6 @@ export class DemandList extends Component {
             typeText: ''
         }
         if (this.props.type === 1) {
-            console.log(11)
             // this.setState({  typeText: this.props.type });
             // console.log(typeText,'constr')
         }
@@ -102,7 +101,6 @@ export class DemandList extends Component {
     render() {
         const { type, text, date } = this.props;
         const { typeText } = this.state;
-        console.log(this.state, 'render qian')
         return (
             <View style={styles.container}>
                 {/* 1.0需求列表最小单元开始 */}
