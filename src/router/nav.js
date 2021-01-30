@@ -3,13 +3,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // 路由
-import Index from '../pages/home/index';
-import Tab from '../router/tab';
+
+import Index from '../pages/home';
 import ImageShow from '../pages/ImageShow';
+
+// 组件
+import DemandList from '../components/bussiness/DemandList';
+import TopTabNavigator from '../components/common/TopTabNavigator';
+import Tab from '../router/tab';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
+
 // 需求
 import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
+
 // 个人中心
 import AccountSecurity from '../pages/personal/account-security';
 import MyFocus from '../pages/personal/myFocus';
@@ -17,6 +24,7 @@ import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
+
 // 测试
 import Test from '../pages/test';
 
@@ -46,6 +54,8 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
+          <Stack.Screen name="DemandList" component={DemandList} />
+          <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
           <Stack.Screen name="DemandDetails" component={DemandDetails} />
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
