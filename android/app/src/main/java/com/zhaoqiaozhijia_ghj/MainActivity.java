@@ -1,4 +1,4 @@
-package com.zhouqio;
+package com.zhaoqiaozhijia_ghj;
 
 import com.facebook.react.ReactActivity;
 import com.theweflex.react.WeChatPackage; // Add this line

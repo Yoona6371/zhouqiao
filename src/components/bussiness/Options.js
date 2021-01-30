@@ -5,7 +5,9 @@ import Icon from '../common/Icon';
 import { file } from '../../constants/svg';
 import Svg from 'react-native-svg-uri';
 import { pxToDp } from '../../utils/pxToDp';
-import { fontStyle } from '../../utils/StyleUtils';
+import { fontStyle, padding } from '../../utils/StyleUtils';
+import LinearGradient from 'react-native-linear-gradient';
+import Avatar from '../common/Avatar';
 
 class Index extends Component {
   constructor(props) {
@@ -20,6 +22,9 @@ class Index extends Component {
     text: PropTypes.string,
     router: PropTypes.string,
     navigation: PropTypes.object.isRequired,
+    colors: PropTypes.array,
+    text_more_status: PropTypes.bool,
+    avatar: PropTypes.string,
   };
   render() {
     let {
@@ -30,19 +35,30 @@ class Index extends Component {
       svg,
       text,
       text_more,
-      color,
+      colors,
       style,
+      text_more_status,
+      avatar,
+      last,
+      svgRemove,
     } = this.props;
     return (
       <TouchableOpacity
-        onPress={() => {
-          this.props.navigation.navigate('Tabbar');
-        }}
+        style={
+          type === 2 ? { backgroundColor: '#fff', marginTop: pxToDp(20) } : {}
+        }
       >
         <View
           style={
-            type == 2
+            type === 2
               ? [styles.options__wrap, style]
+              : type === 3
+              ? {
+                  ...styles.options__wrap,
+                  ...styles.options__line,
+                  ...style,
+                  height: pxToDp(200),
+                }
               : [styles.options__wrap, styles.options__line, style]
           }
         >
@@ -65,31 +81,73 @@ class Index extends Component {
               <View style={{ alignSelf: 'center' }}>
                 <Svg svgXmlData={svg} width={pxToDp(30)} height={pxToDp(30)} />
               </View>
-              <Text style={styles.title_type02}>{title}</Text>
+              <Text
+                style={
+                  svgRemove
+                    ? { ...styles.title_type02, marginLeft: pxToDp(0) }
+                    : { ...styles.title_type02 }
+                }
+              >
+                {title}
+              </Text>
             </View>
-          ) : (
+          ) : type === 2 ? (
             <View style={styles.options}>
               <View style={{ alignSelf: 'center' }}>
-                <Icon
-                  name={svg}
-                  width={pxToDp(16)}
-                  height={pxToDp(27)}
-                  style={{ ...styles.svg_type03, backgroundColor: color }}
-                />
+                <LinearGradient
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  colors={colors}
+                  style={styles.linear}
+                >
+                  <Icon
+                    name={svg}
+                    width={pxToDp(74)}
+                    height={pxToDp(74)}
+                    style={styles.svg_type03}
+                  />
+                </LinearGradient>
               </View>
               <View style={styles.center_type03}>
                 <Text style={styles.title_type03}>{title}</Text>
                 <Text style={styles.transcript_text_type03}>{text}</Text>
               </View>
             </View>
+          ) : (
+            <View style={{ ...styles.option, alignSelf: 'center' }}>
+              <Text style={styles.title}>头像</Text>
+            </View>
           )}
           <View style={styles.options}>
-            {type == 1 ? <Text style={styles.more}>{text_more}</Text> : <></>}
+            {type === 1 ? (
+              <Text
+                style={
+                  text_more_status
+                    ? {
+                        ...styles.more,
+                        ...styles.mored,
+                        lineHeight: pxToDp(24),
+                      }
+                    : { ...styles.more }
+                }
+              >
+                {text_more}
+              </Text>
+            ) : (
+              // type===3
+              <View style={{ alignSelf: 'center', marginRight: pxToDp(30) }}>
+                <Avatar image={{ uri: avatar }} size={80} />
+              </View>
+            )}
             <Icon
               name={'more'}
               width={pxToDp(16)}
               height={pxToDp(27)}
-              style={styles.more_icon}
+              style={
+                type === 3
+                  ? { ...styles.more_icon, lineHeight: pxToDp(195) }
+                  : styles.more_icon
+              }
             />
           </View>
         </View>
@@ -106,20 +164,31 @@ const styles = StyleSheet.create({
   },
   options__line: {
     borderBottomColor: '#dddddd',
-    borderBottomWidth: pxToDp(1),
+    borderBottomWidth: pxToDp(1.5),
   },
   options: {
     flexDirection: 'row',
   },
   svg_type03: {
-    padding: pxToDp(15),
-    borderRadius: pxToDp(50),
     color: '#fff',
+    alignSelf: 'center',
+    lineHeight: pxToDp(74),
+  },
+  linear: {
+    width: pxToDp(74),
+    height: pxToDp(74),
+    borderRadius: pxToDp(37),
   },
   more: {
-    lineHeight: pxToDp(138),
+    alignSelf: 'center',
     marginRight: pxToDp(23),
-    ...fontStyle(24, 138, 138, '500', '#999999', 'right'),
+    ...fontStyle(24, 36, 38, '500', '#999999', 'right'),
+  },
+  mored: {
+    ...padding(14, 8, 14, 8),
+    borderRadius: pxToDp(5),
+    backgroundColor: '#ff9900',
+    color: '#fff',
   },
   more_icon: {
     lineHeight: pxToDp(138),
@@ -148,7 +217,7 @@ const styles = StyleSheet.create({
     ...fontStyle(28, 30, 30, 'bold', '#333'),
   },
   title_type03: {
-    ...fontStyle(34, 36, 36, 'bold', '#333'),
+    ...fontStyle(34, 34, 36, 'bold', '#333'),
     maxWidth: pxToDp(550),
   },
   transcript: {
@@ -162,7 +231,7 @@ const styles = StyleSheet.create({
   },
   transcript_text_type03: {
     marginTop: pxToDp(5),
-    ...fontStyle(26, 28, 28, '500', '#999999'),
+    ...fontStyle(26, 34, 28, '500', '#999999'),
     maxWidth: pxToDp(550),
   },
   transcript_line: {

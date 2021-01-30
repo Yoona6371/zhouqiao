@@ -4,16 +4,19 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // 路由
 import Index from '../pages/home/index';
-import Tabbar from '../router/tabbar';
+import Tab from '../router/tab';
 import ImageShow from '../pages/ImageShow';
 import MyFocus from '../pages/personal/myFocus';
 import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
-import SettinsIndex from '../pages/personal/setting';
 import DemandList from '../components/bussiness/DemandList'
 import TopTabNavigator from '../components/common/TopTabNavigator/index'
+import DemandDetails from '../pages/demand/demand-details';
+import DemandSet from '../pages/demand';
+import SettingIndex from '../pages/personal/setting';
+import DadaEdit from '../pages/personal/setting/data-edit';
 
 const Stack = createStackNavigator();
 
@@ -33,17 +36,20 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Index" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
-          <Stack.Screen name="Tabbar" component={Tabbar} />
+          <Stack.Screen name="Tab" component={Tab} />
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
-          <Stack.Screen name="SettinsIndex" component={SettinsIndex} />
           <Stack.Screen name="DemandList" component={DemandList} />
           <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
+          <Stack.Screen name="DemandDetails" component={DemandDetails} />
+          <Stack.Screen name="SettingIndex" component={SettingIndex} />
+          <Stack.Screen name="DemandSet" component={DemandSet} />
+          <Stack.Screen name="DadaEdit" component={DadaEdit} />
         </Stack.Navigator>
       </NavigationContainer>
     );
