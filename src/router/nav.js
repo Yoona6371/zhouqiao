@@ -12,6 +12,7 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettinsIndex from '../pages/personal/setting';
+import LoginAndRegister from '../pages/users/loginAndRegister';
 
 const Stack = createStackNavigator();
 
@@ -31,9 +32,10 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tabbar" headerMode="none">
+        <Stack.Navigator initialRouteName="LoginAndRegister" headerMode="none">
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
+          <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           <Stack.Screen name="Test" component={Test} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
           <Stack.Screen name="ImageShow" component={ImageShow} />
