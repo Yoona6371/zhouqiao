@@ -27,6 +27,7 @@ import {
 import HotCard from '../../components/bussiness/HotCard';
 import ContainerCard from '../../components/bussiness/ContainerCard';
 import Avatar from '../../components/common/Avatar';
+import TopTabNavigator from '../../components/common/TopTabNavigator';
 
 class HomeTabCase extends Component {
   state = {
@@ -75,7 +76,7 @@ class HomeTabShop extends Component {
   render() {
     const { shoppingData } = this.state;
     return (
-      <ScrollView>
+      <ScrollView style={{ marginTop: pxToDp(40) }}>
         {/*商品列表开始*/}
         <FlatList
           data={shoppingData}
@@ -93,7 +94,7 @@ class HomeTabShop extends Component {
 class HomeAvatar extends Component {
   render() {
     return (
-      <View style={{ marginRight: pxToDp(40), marginBottom: pxToDp(46) }}>
+      <View style={{ ...margin(0, 36, 40, 46) }}>
         <Avatar size={130} image={this.props.image} />
         <Text
           style={{
@@ -167,29 +168,11 @@ class Index extends Component {
   }
   MyTabs = () => {
     let { pages } = this.state;
+    const name = ['关注', 'ps', 'AI'];
     return (
-      <Tab.Navigator
-        tabBarOptions={{
-          indicatorStyle: {
-            width: 5,
-            height: 5,
-            borderRadius: 5 / 2,
-            left: pxToDp(750 / 4),
-            transformX: '50%',
-            backgroundColor: 'orange',
-          },
-        }}
-      >
-        {pages.map((v, i) => (
-          <Tab.Screen
-            name={v.name}
-            component={v.component}
-            key={i}
-            navigationOptions={v.name}
-            route={{ params: { lab: v.name } }}
-          />
-        ))}
-      </Tab.Navigator>
+      <TopTabNavigator type={3} name={name} itemWidth={deviceWidthDp}>
+        {pages.map((v, i) => v.component)}
+      </TopTabNavigator>
     );
   };
 
@@ -294,10 +277,11 @@ class Index extends Component {
             width: pxToDp(690),
             height: pxToDp(72),
             alignSelf: 'center',
+            backgroundColor: '#FEF5E7',
           }}
         >
           <Text
-            style={{ ...fontStyle(26, 42, 42, 'normal', '#FE9E0E', 'center') }}
+            style={{ ...fontStyle(26, 72, 72, 'normal', '#FE9E0E', 'center') }}
           >
             点击查看更多
           </Text>
@@ -327,7 +311,6 @@ export default Index;
 
 const styles = StyleSheet.create({
   home_header: {
-    backgroundColor: 'red',
     width: deviceWidthDp,
     height: pxToDp(530),
   },
