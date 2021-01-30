@@ -11,6 +11,8 @@ import Test from '../pages/test';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import AccountSecurity from '../pages/personal/account-security';
 import ServiceList from '../pages/personal/setting/service-list';
+import DemandList from '../components/bussiness/DemandList'
+import TopTabNavigator from '../components/common/TopTabNavigator/index'
 import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 import SettingIndex from '../pages/personal/setting';
@@ -42,6 +44,8 @@ class Nav extends React.Component {
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
+          <Stack.Screen name="DemandList" component={DemandList} />
+          <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
           <Stack.Screen name="DemandDetails" component={DemandDetails} />
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
