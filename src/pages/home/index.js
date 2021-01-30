@@ -31,10 +31,11 @@ class HomeTab extends Component {
     ],
   };
   render() {
+    console.log(this.props);
     const { caseData, shoppingData } = this.state;
     return (
       <ScrollView>
-        <Text>首页</Text>
+        <Text>{this.props.route.name}</Text>
         {/*案例列表开始*/}
         <FlatList
           data={caseData}
@@ -105,7 +106,13 @@ class Index extends Component {
         }}
       >
         {pages.map((v, i) => (
-          <Tab.Screen name={v.name} component={v.component} key={i} />
+          <Tab.Screen
+            name={v.name}
+            component={v.component}
+            key={i}
+            navigationOptions={v.name}
+            route={{ params: { lab: v.name } }}
+          />
         ))}
       </Tab.Navigator>
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from '../common/Icon';
 import { file } from '../../constants/svg';
@@ -7,6 +7,7 @@ import Svg from 'react-native-svg-uri';
 import { pxToDp } from '../../utils/pxToDp';
 import { fontStyle, padding } from '../../utils/StyleUtils';
 import LinearGradient from 'react-native-linear-gradient';
+import Avatar from '../common/Avatar';
 
 class Index extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ class Index extends Component {
     navigation: PropTypes.object.isRequired,
     colors: PropTypes.array,
     text_more_status: PropTypes.bool,
+    avatar: PropTypes.string,
   };
   render() {
     let {
@@ -36,6 +38,9 @@ class Index extends Component {
       colors,
       style,
       text_more_status,
+      avatar,
+      last,
+      svgRemove,
     } = this.props;
     return (
       <TouchableOpacity
@@ -47,6 +52,13 @@ class Index extends Component {
           style={
             type === 2
               ? [styles.options__wrap, style]
+              : type === 3
+              ? {
+                  ...styles.options__wrap,
+                  ...styles.options__line,
+                  ...style,
+                  height: pxToDp(200),
+                }
               : [styles.options__wrap, styles.options__line, style]
           }
         >
@@ -69,9 +81,17 @@ class Index extends Component {
               <View style={{ alignSelf: 'center' }}>
                 <Svg svgXmlData={svg} width={pxToDp(30)} height={pxToDp(30)} />
               </View>
-              <Text style={styles.title_type02}>{title}</Text>
+              <Text
+                style={
+                  svgRemove
+                    ? { ...styles.title_type02, marginLeft: pxToDp(0) }
+                    : { ...styles.title_type02 }
+                }
+              >
+                {title}
+              </Text>
             </View>
-          ) : (
+          ) : type === 2 ? (
             <View style={styles.options}>
               <View style={{ alignSelf: 'center' }}>
                 <LinearGradient
@@ -93,26 +113,41 @@ class Index extends Component {
                 <Text style={styles.transcript_text_type03}>{text}</Text>
               </View>
             </View>
+          ) : (
+            <View style={{ ...styles.option, alignSelf: 'center' }}>
+              <Text style={styles.title}>头像</Text>
+            </View>
           )}
           <View style={styles.options}>
             {type === 1 ? (
               <Text
                 style={
                   text_more_status
-                    ? { ...styles.more, ...styles.mored }
+                    ? {
+                        ...styles.more,
+                        ...styles.mored,
+                        lineHeight: pxToDp(24),
+                      }
                     : { ...styles.more }
                 }
               >
                 {text_more}
               </Text>
             ) : (
-              <></>
+              // type===3
+              <View style={{ alignSelf: 'center', marginRight: pxToDp(30) }}>
+                <Avatar image={{ uri: avatar }} size={80} />
+              </View>
             )}
             <Icon
               name={'more'}
               width={pxToDp(16)}
               height={pxToDp(27)}
-              style={styles.more_icon}
+              style={
+                type === 3
+                  ? { ...styles.more_icon, lineHeight: pxToDp(195) }
+                  : styles.more_icon
+              }
             />
           </View>
         </View>
@@ -147,11 +182,11 @@ const styles = StyleSheet.create({
   more: {
     alignSelf: 'center',
     marginRight: pxToDp(23),
-    ...fontStyle(24, 36, 24, '500', '#999999', 'right'),
+    ...fontStyle(24, 36, 38, '500', '#999999', 'right'),
   },
   mored: {
-    ...padding(10, 5, 10, 5),
-    borderRadius: pxToDp(10),
+    ...padding(14, 8, 14, 8),
+    borderRadius: pxToDp(5),
     backgroundColor: '#ff9900',
     color: '#fff',
   },
