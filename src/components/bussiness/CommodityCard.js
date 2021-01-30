@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   CommodityCard__typeThreeContainer: {
     width: pxToDp(330),
     height: pxToDp(482),
+    marginRight: pxToDp(20),
   },
   CommodityCard__shoppingImageBox: {
     width: pxToDp(330),
