@@ -81,7 +81,7 @@ class HomeTabShop extends Component {
         <FlatList
           data={shoppingData}
           numColumns={2}
-          columnWrapperStyle={{ marginLeft: pxToDp(32) }}
+          columnWrapperStyle={{ marginLeft: pxToDp(10) }}
           renderItem={({ item, index }) => (
             <CommodityCard type={3} Title={item.Title} prince={item.prince} />
           )}
