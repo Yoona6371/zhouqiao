@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { pxToDp } from '../../utils/pxToDp';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 class Test extends Component {
   constructor(props) {
@@ -9,7 +8,7 @@ class Test extends Component {
   render() {
     return (
       <View>
-        <Text>Test页面</Text>
+        <Text>设计页面</Text>
       </View>
     );
   }
