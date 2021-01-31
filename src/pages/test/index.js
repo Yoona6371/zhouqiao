@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { pxToDp } from '../../utils/pxToDp';
 
 class Test extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: ['关注', 'PS/AI', '平面'],
-    };
   }
   render() {
-    const { name } = this.state;
-    return <View />;
+    return (
+      <View>
+        <Text>Test页面</Text>
+      </View>
+    );
   }
 }
 
