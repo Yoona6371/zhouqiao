@@ -41,9 +41,9 @@ export class index extends Component {
                 marginBottom: pxToDp(18),
                 backgroundColor: '#FE9E0E',
             }
-        }else if (type === 3) {
+        } else if (type === 3) {
             return {
-                height:itemWidth * 0.05,
+                height: itemWidth * 0.05,
                 width: itemWidth * 0.05,
                 marginLeft: itemWidth * 0.47,
                 marginBottom: pxToDp(16),
@@ -56,7 +56,9 @@ export class index extends Component {
         const { scrollEnabled, itemWidth } = this.state;
         const { type } = this.props;
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{
+                flex: 1,
+            }}>
                 <Tab.Navigator
                     backBehavior="history"
                     tabBarPosition="top"
@@ -70,7 +72,8 @@ export class index extends Component {
                         indicatorStyle: this.bottomLine,
                         tabStyle: {
                             width: itemWidth
-                        }
+                        },
+
                     }}
                 >
                     {this.state.pages.map((v, i) => (
