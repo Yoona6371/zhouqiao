@@ -14,7 +14,6 @@ import SvgUri from 'react-native-svg-uri';
 import { qq, WeChat } from '../../constants/svg';
 import Icon from '../../components/common/Icon';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { itemWidth } from '../../components/bussiness/banner/styles/SliderEntry.style';
 const Tab = createMaterialTopTabNavigator();
 
 class LoginTab extends Component {
