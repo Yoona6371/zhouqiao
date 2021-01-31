@@ -23,10 +23,11 @@ import AccountSecurity from '../pages/personal/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
-
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
-
+import Evaluate from '../pages/personal/evaluate';
+import AfterSales from '../pages/personal/after-sales';
+import OrderLists from '../pages/personal/order-list';
 // 测试
 import Test from '../pages/test';
 
@@ -48,7 +49,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Index" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -63,6 +64,9 @@ class Nav extends React.Component {
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
           <Stack.Screen name="Feedback" component={Feedback} />
+          <Stack.Screen name="Evaluate" component={Evaluate} />
+          <Stack.Screen name="AfterSales" component={AfterSales} />
+          <Stack.Screen name="OrderLists" component={OrderLists} />
         </Stack.Navigator>
       </NavigationContainer>
     );
