@@ -66,6 +66,7 @@ export class index extends Component {
                         scrollEnabled: scrollEnabled,
                         labelStyle: {
                             fontSize: pxToDp(24),
+                            fontWeight:'500',
                         },
                         activeTintColor: type === 1 ? '#FFFFFF' : type === 2 ? '#FE9E0E' : type === 3 ? '#000000' : '#FFFFFF',
                         inactiveTintColor: '#999999',
