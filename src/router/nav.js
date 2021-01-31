@@ -4,15 +4,21 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // 路由
 
+// 首页
 import Index from '../pages/home';
 import ImageShow from '../pages/ImageShow';
+
+// 设计
+import Design from '../pages/design';
+
+// 消息
+import Message from '../pages/message';
 
 // 组件
 import DemandList from '../components/bussiness/DemandList';
 import TopTabNavigator from '../components/common/TopTabNavigator';
 import Tab from '../router/tab';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
-import SettinsIndex from '../pages/personal/setting';
 // 需求
 import DemandDetails from '../pages/demand/demand-details';
 
@@ -22,12 +28,18 @@ import DemandSet from '../pages/demand';
 import AccountSecurity from '../pages/personal/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service-list';
+
 import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
+
 import Evaluate from '../pages/personal/evaluate';
 import AfterSales from '../pages/personal/after-sales';
 import OrderLists from '../pages/personal/order-list';
+
+// 商品
+import Commodity from '../pages/commodity';
+
 // 测试
 import Test from '../pages/test';
 
@@ -67,6 +79,9 @@ class Nav extends React.Component {
           <Stack.Screen name="Evaluate" component={Evaluate} />
           <Stack.Screen name="AfterSales" component={AfterSales} />
           <Stack.Screen name="OrderLists" component={OrderLists} />
+          <Stack.Screen name="Commodity" component={Commodity} />
+          <Stack.Screen name="Design" component={Design} />
+          <Stack.Screen name="Message" component={Message} />
         </Stack.Navigator>
       </NavigationContainer>
     );
