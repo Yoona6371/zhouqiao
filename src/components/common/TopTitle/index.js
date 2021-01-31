@@ -75,14 +75,14 @@ export class index extends Component {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     height: pxToDp(178),
-                    width: '90%'
+                    width: '90%',
                 }}>
                     <View style={{
                         marginTop: pxToDp(89),
                         // backgroundColor: 'red',
                         width: pxToDp(180),
                         justifyContent: 'center',
-                        alignItems: 'flex-start'
+                        alignItems: 'flex-start',
                     }}>
                          <TouchableOpacity
                             onPress={this.props.returnBack}
