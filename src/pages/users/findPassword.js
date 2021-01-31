@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon';
-import { left } from '../../constants/icon';
 import LoginInput from '../../components/bussiness/LoginInput';
 
 class Index extends Component {
