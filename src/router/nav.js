@@ -17,7 +17,7 @@ import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
-
+import detail from '../pages/personal/setting/service/detail'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -36,7 +36,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Index" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="detail" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -50,6 +50,7 @@ class Nav extends React.Component {
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
+          <Stack.Screen name="detail" component={detail} />
         </Stack.Navigator>
       </NavigationContainer>
     );

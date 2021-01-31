@@ -12,7 +12,7 @@ export class index extends Component {
         returnBack: PropTypes.func.isRequired,
         onPress:PropTypes.func,
         title:PropTypes.string.isRequired,
-        showBtn:PropTypes.bool
+        showBtn:PropTypes.bool.isRequired
     }
     ifShowBtn = () => {
         if (this.props.showBtn === false) {
@@ -90,7 +90,7 @@ export class index extends Component {
                         <SvgUri
                             svgXmlData={goBack}
                             width={26}
-                            height={31}
+                            height={30}
                         />
                         </TouchableOpacity>
 
