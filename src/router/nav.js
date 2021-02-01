@@ -18,7 +18,7 @@ import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 
 // 个人中心
-import AccountSecurity from '../pages/personal/account-security';
+import AccountSecurity from '../pages/personal/setting/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service/service-list';
 import SettingIndex from '../pages/personal/setting';
@@ -28,6 +28,7 @@ import myDemand from '../pages/personal/myDemand';
 import myCollect from '../pages/personal/myCollect';
 import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
+import MyAddress from '../pages/personal/setting/myAddress';
 
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
@@ -104,6 +105,8 @@ class Nav extends React.Component {
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           {/*个人资料修改页*/}
           <Stack.Screen name="DataEdit" component={DataEdit} />
+          {/*地址管理*/}
+          <Stack.Screen name="MyAddress" component={MyAddress} />
           {/*服务协议详情页*/}
           <Stack.Screen name="ServiceDetail" component={ServiceDetail} />
           {/*我的需求页*/}
@@ -120,12 +123,12 @@ class Nav extends React.Component {
           <Stack.Screen name="AfterSales" component={AfterSales} />
           {/*我的订单列表*/}
           <Stack.Screen name="OrderLists" component={OrderLists} />
-          {/*商品列表*/}
-          <Stack.Screen name="CommodityList" component={CommodityList} />
 
           {/*商品*/}
           {/*商品详情页*/}
           <Stack.Screen name="CommodityDetail" component={CommodityDetail} />
+          {/*商品列表*/}
+          <Stack.Screen name="CommodityList" component={CommodityList} />
         </Stack.Navigator>
       </NavigationContainer>
     );

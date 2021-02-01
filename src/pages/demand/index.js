@@ -8,12 +8,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LinearGradient from 'react-native-linear-gradient';
 import { fontStyle, margin } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
+import TopTitle from '../../components/common/TopTitle';
 
 class Index extends Component {
   constructor(props) {
@@ -84,6 +85,15 @@ class Index extends Component {
           style={styles.title_background}
           source={require('../../asserts/images/demand_back.png')}
         >
+          <TopTitle
+            returnBack={() => {
+              this.props.navigation.goBack();
+            }}
+            title="服务列表"
+            showBtn={false}
+            bgColor={'transparent'}
+            color={'#fff'}
+          />
           <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
@@ -186,7 +196,13 @@ class Index extends Component {
             colors={['#fe9e0e', '#fd7609']}
             style={styles.button_linear}
           >
-            <Text style={styles.button_text}>确认发布</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('DemandDetails');
+              }}
+            >
+              <Text style={styles.button_text}>确认发布</Text>
+            </TouchableOpacity>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
@@ -196,7 +212,7 @@ class Index extends Component {
 
 const styles = StyleSheet.create({
   title_background: {
-    width: pxToDp(750),
+    width: deviceWidthDp,
     height: pxToDp(421),
   },
   title_wrap: {
@@ -205,7 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   title: {
-    ...margin(30, 207, 30, 0),
+    ...margin(30, 30, 30, 0),
     height: pxToDp(83),
     flexDirection: 'row',
   },

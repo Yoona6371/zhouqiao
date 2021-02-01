@@ -11,6 +11,7 @@ import { fontStyle, margin, padding } from '../../../utils/StyleUtils';
 import { pxToDp } from '../../../utils/pxToDp';
 import Icon from '../../../components/common/Icon';
 import Avatar from '../../../components/common/Avatar';
+import TopTitle from '../../../components/common/TopTitle';
 
 class Test extends Component {
   constructor(props) {
@@ -23,6 +24,14 @@ class Test extends Component {
     let { avatar } = this.state;
     return (
       <ScrollView style={styles.feedback__wrap}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="资料编辑"
+          showBtn={false}
+          style={{ marginBottom: pxToDp(30) }}
+        />
         <TextInput
           multiline={true}
           style={{ ...styles.feedback, height: pxToDp(251) }}
@@ -58,7 +67,7 @@ class Test extends Component {
 const styles = StyleSheet.create({
   feedback__wrap: {
     flex: 1,
-    ...padding(30, 196, 30, 0),
+    ...padding(30, 0, 30, 0),
     backgroundColor: '#fff',
   },
   feedback: {

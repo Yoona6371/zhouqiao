@@ -5,7 +5,7 @@ import Home from '../pages/home';
 import Personal from '../pages/personal';
 import Design from '../pages/design';
 import Message from '../pages/message';
-import Demand from '../pages/demand';
+import DemandSet from '../pages/demand';
 
 import { pxToDp } from '../utils/pxToDp';
 
@@ -150,7 +150,7 @@ function Tabs() {
     <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
       <Tab.Screen name="首页" component={Home} />
       <Tab.Screen name="设计师" component={Design} />
-      <Tab.Screen name="发布" component={Demand} />
+      <Tab.Screen name="发布" component={DemandSet} />
       <Tab.Screen name="消息" component={Message} />
       <Tab.Screen name="我的" component={Personal} />
     </Tab.Navigator>
