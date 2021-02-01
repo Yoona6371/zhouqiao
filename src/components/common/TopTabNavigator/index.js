@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { View } from 'react-native'
+import React, { Component } from 'react';
+import { View } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { pxToDp } from '../../../utils/pxToDp'
+import { pxToDp } from '../../../utils/pxToDp';
 import PropTypes from 'prop-types';
 const Tab = createMaterialTopTabNavigator();
 export class index extends Component {
@@ -89,5 +89,41 @@ export class index extends Component {
             </View>
         );
     }
+  }
+  render() {
+    const { scrollEnabled, itemWidth } = this.state;
+    const { type } = this.props;
+    return (
+      <View style={{ flex: 1 }}>
+        <Tab.Navigator
+          backBehavior="history"
+          tabBarPosition="top"
+          tabBarOptions={{
+            scrollEnabled: scrollEnabled,
+            labelStyle: {
+              fontSize: pxToDp(24),
+            },
+            activeTintColor:
+              type === 1
+                ? '#FFFFFF'
+                : type === 2
+                ? '#FE9E0E'
+                : type === 3
+                ? '#000000'
+                : '#FFFFFF',
+            inactiveTintColor: '#999999',
+            indicatorStyle: this.bottomLine,
+            tabStyle: {
+              width: itemWidth,
+            },
+          }}
+        >
+          {this.state.pages.map((v, i) => (
+            <Tab.Screen key={i} name={this.props.name[i]} component={() => v} />
+          ))}
+        </Tab.Navigator>
+      </View>
+    );
+  }
 }
-export default index
+export default index;

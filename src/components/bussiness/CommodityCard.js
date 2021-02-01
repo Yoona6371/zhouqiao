@@ -124,11 +124,17 @@ const styles = StyleSheet.create({
   CommodityCard__typeThreeContainer: {
     width: pxToDp(330),
     height: pxToDp(482),
+    marginRight: pxToDp(20),
   },
   CommodityCard__shoppingImageBox: {
     width: pxToDp(330),
     height: pxToDp(300),
     backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 6,
+    elevation: 8,
   },
   CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
   CommodityCard__typeThreeShoppingTitleBox: {

@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import { pxToDp } from '../../utils/pxToDp';
 import AddressList from '../../components/bussiness/addressList';
+import Icon from '../../components/common/Icon';
 
 class Index extends Component {
   constructor(props) {
@@ -74,6 +81,44 @@ class Index extends Component {
             jumPage={v.jumPage}
           />
         ))}
+        {/*button start*/}
+        <View
+          style={{
+            marginTop: pxToDp(110),
+            alignItems: 'center',
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              width: pxToDp(461),
+              height: pxToDp(88),
+              borderRadius: pxToDp(44),
+              backgroundColor: '#FD840B',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
+            }}
+          >
+            <Icon
+              name="add"
+              style={{
+                fontSize: pxToDp(33),
+                color: '#FFFFFF',
+                marginRight: pxToDp(19),
+              }}
+            />
+            <Text
+              style={{
+                alignSelf: 'center',
+                fontSize: pxToDp(31),
+                color: '#FFFFFF',
+              }}
+            >
+              新建收货地址
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/*button  end*/}
       </ScrollView>
     );
   }
