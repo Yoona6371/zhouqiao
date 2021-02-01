@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  ScrollView,
-} from 'react-native';
+import { View, FlatList } from 'react-native';
 import TopTab from '../../components/common/TopTabNavigator';
-import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp } from '../../utils/pxToDp';
 import CommodityCard from '../../components/bussiness/CommodityCard';
+import TopTitle from '../../components/common/TopTitle';
+import { padding, margin } from '../../utils/StyleUtils';
 
 class Test extends Component {
   constructor(props) {
@@ -21,31 +17,37 @@ class Test extends Component {
             Title: '冯泽明的买卖',
             Commodity_type: 'Man',
             user_id: 'Agan的故事',
+            router: '',
           },
           {
             Title: '冯泽明的买卖',
             Commodity_type: 'Man',
             user_id: 'Agan的故事',
+            router: '',
           },
           {
             Title: '冯泽明的买卖',
             Commodity_type: 'Man',
             user_id: 'Agan的故事',
+            router: '',
           },
           {
             Title: '冯泽明的买卖',
             Commodity_type: 'Man',
             user_id: 'Agan的故事',
+            router: '',
           },
           {
             Title: '冯泽明的买卖',
             Commodity_type: 'Man',
             user_id: 'Agan的故事',
+            router: '',
           },
           {
             Title: '冯泽明的买卖',
             Commodity_type: 'Man',
             user_id: 'Agan的故事',
+            router: '',
           },
         ],
       ],
@@ -57,10 +59,16 @@ class Test extends Component {
   // }
 
   render() {
-    const { name, caseData, flatList } = this.state;
-    let length = name.length;
+    const { name, caseData } = this.state;
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={{ flex: 1 }}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="设计案例"
+          showBtn={false}
+        />
         <TopTab
           name={name}
           ifScrollEnabled={true}
@@ -69,57 +77,24 @@ class Test extends Component {
         >
           {name.map((v, i) => (
             <FlatList
+              style={{
+                backgroundColor: '#fff',
+                alignSelf: 'center',
+              }}
               data={caseData[i]}
               numColumns={2}
+              showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
                 <CommodityCard
                   type={1}
                   Title={item.Title}
                   prince={item.prince}
+                  router={v.router}
+                  style={{ ...padding(20, 0, 20, 0) }}
                 />
               )}
             />
           ))}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
         </TopTab>
       </View>
     );

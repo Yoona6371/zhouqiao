@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import Option from '../../../components/bussiness/Options';
+import TopTitle from '../../../components/common/TopTitle';
 
 class Index extends Component {
   constructor(props) {
@@ -62,6 +63,13 @@ class Index extends Component {
     let { list } = this.state;
     return (
       <ScrollView style={{ backgroundColor: '#fff' }}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="服务列表"
+          showBtn={false}
+        />
         {list.map((v, i) => (
           <Option
             key={i}

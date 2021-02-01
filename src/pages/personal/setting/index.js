@@ -4,6 +4,7 @@ import { pxToDp } from '../../../utils/pxToDp';
 import { margin } from '../../../utils/StyleUtils';
 import Option from '../../../components/bussiness/Options';
 import { file2, position, security } from '../../../constants/svg';
+import TopTitle from '../../../components/common/TopTitle';
 
 // 缺少：版本号获取
 
@@ -28,7 +29,7 @@ class Index extends Component {
           title: '账户安全',
           text_more: '去设置',
           svg: security,
-          router: '',
+          router: 'AccountSecurity',
         },
       ],
       listSystem: [
@@ -71,6 +72,13 @@ class Index extends Component {
     let { listIndividual, listSystem } = this.state;
     return (
       <ScrollView>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="设置"
+          showBtn={false}
+        />
         <View style={styles.individual}>
           {listIndividual.map((v, i) => (
             <Option
@@ -79,7 +87,7 @@ class Index extends Component {
               type={1}
               text_more={v.text_more}
               navigation={this.props.navigation}
-              router=""
+              router={v.router}
               svg={v.svg}
             />
           ))}

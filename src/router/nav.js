@@ -19,6 +19,7 @@ import DemandList from '../components/bussiness/DemandList';
 import TopTabNavigator from '../components/common/TopTabNavigator';
 import Tab from '../router/tab';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
+
 // 需求
 import DemandDetails from '../pages/demand/demand-details';
 
@@ -29,11 +30,11 @@ import AccountSecurity from '../pages/personal/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
-import DadaEdit from '../pages/personal/setting/data-edit';
+import DataEdit from '../pages/personal/setting/data-edit';
 import detail from '../pages/personal/setting/service/detail';
-import myDemand from '../pages/personal/myDemand'
-import myCollect from '../pages/personal/myCollect'
-import history from '../pages/personal/history'
+import myDemand from '../pages/personal/myDemand';
+import myCollect from '../pages/personal/myCollect';
+import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 
 import Evaluate from '../pages/personal/evaluate';
@@ -45,6 +46,10 @@ import Commodity from '../pages/commodity';
 
 // 测试
 import Test from '../pages/test';
+
+// 登录注册
+import loginAndRegister from '../pages/users/loginAndRegister';
+import FindPassword from '../pages/users/findPassword';
 
 const Stack = createStackNavigator();
 
@@ -64,20 +69,23 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
-          <Stack.Screen name="Index" component={Index} />
+        <Stack.Navigator initialRouteName="Commodity" headerMode={'none'}>
+          <Stack.Screen name="loginAndRegister" component={loginAndRegister} />
+          <Stack.Screen name="FindPassword" component={FindPassword} />
+
+          <Stack.Screen name="Tab" component={Tab} />
+          <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
+
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
-          <Stack.Screen name="Tab" component={Tab} />
           <Stack.Screen name="ImageShow" component={ImageShow} />
           <Stack.Screen name="AccountSecurity" component={AccountSecurity} />
           <Stack.Screen name="ServiceList" component={ServiceList} />
           <Stack.Screen name="DemandDetails" component={DemandDetails} />
           <Stack.Screen name="DemandSet" component={DemandSet} />
           <Stack.Screen name="DemandList" component={DemandList} />
-          <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
-          <Stack.Screen name="DadaEdit" component={DadaEdit} />
+          <Stack.Screen name="DataEdit" component={DataEdit} />
           <Stack.Screen name="detail" component={detail} />
           <Stack.Screen name="myDemand" component={myDemand} />
           <Stack.Screen name="myCollect" component={myCollect} />
@@ -87,8 +95,6 @@ class Nav extends React.Component {
           <Stack.Screen name="AfterSales" component={AfterSales} />
           <Stack.Screen name="OrderLists" component={OrderLists} />
           <Stack.Screen name="Commodity" component={Commodity} />
-          <Stack.Screen name="Design" component={Design} />
-          <Stack.Screen name="Message" component={Message} />
         </Stack.Navigator>
       </NavigationContainer>
     );
