@@ -11,8 +11,8 @@ import PropTypes from 'prop-types';
 import { fontStyle } from '../../utils/StyleUtils';
 {
   /*
-   *评价中心 需要传参需要配套，btnText=立即评价，topStatus=待评价，type不能是1
-   *退货售后 需要传参需要配套，btnText=查看进度，topStatus=售后声请，type不能是1
+   *评价中心 需要传参需要配套，btnText=立即评价，topStatus=待评价，type传2
+   *退货售后 需要传参需要配套，btnText=查看进度，topStatus=售后声请，type传2
    *订单列表 type为1，默认是1
    */
 }
@@ -60,7 +60,7 @@ class OrderCard extends React.Component {
       shoppingNumber,
     } = this.props;
     return (
-      <View style={styles.OrderCard_box}>
+      <View style={{ ...styles.OrderCard_box, ...this.props.style }}>
         {/*订单卡片开始*/}
         <View>
           {/*订单上部开始*/}
@@ -69,7 +69,12 @@ class OrderCard extends React.Component {
               <Text style={styles.Order_number}>订单号：{OrderCardNumber}</Text>
             </View>
             <View style={styles.Order_statusBox}>
-              <Text style={styles.Order_status}>
+              <Text
+                style={{
+                  ...styles.Order_status,
+                  ...(type === 2 ? { color: '#FE9E0EFF' } : null),
+                }}
+              >
                 {type === 1 ? '待付款' : topStatus}
               </Text>
             </View>

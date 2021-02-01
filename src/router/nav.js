@@ -19,7 +19,6 @@ import DemandList from '../components/bussiness/DemandList';
 import TopTabNavigator from '../components/common/TopTabNavigator';
 import Tab from '../router/tab';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
-import SettinsIndex from '../pages/personal/setting';
 // 需求
 import DemandDetails from '../pages/demand/demand-details';
 
@@ -30,9 +29,13 @@ import AccountSecurity from '../pages/personal/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
-
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
+
+import Evaluate from '../pages/personal/evaluate';
+import AfterSales from '../pages/personal/after-sales';
+import OrderLists from '../pages/personal/order-list';
+
 // 商品
 import Commodity from '../pages/commodity';
 
@@ -57,7 +60,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode="none">
+        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -72,6 +75,9 @@ class Nav extends React.Component {
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
           <Stack.Screen name="Feedback" component={Feedback} />
+          <Stack.Screen name="Evaluate" component={Evaluate} />
+          <Stack.Screen name="AfterSales" component={AfterSales} />
+          <Stack.Screen name="OrderLists" component={OrderLists} />
           <Stack.Screen name="Commodity" component={Commodity} />
           <Stack.Screen name="Design" component={Design} />
           <Stack.Screen name="Message" component={Message} />
