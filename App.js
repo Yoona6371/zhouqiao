@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar translucent={true} backgroundColor={'transparent'} />
+        <StatusBar translucent={true} backgroundColor={'transparent'} barStyle={'dark-content'}/>
         <Provider RootStore={RootStore}>
           <Nav />
         </Provider>

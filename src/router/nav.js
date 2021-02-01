@@ -30,6 +30,10 @@ import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service-list';
 import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
+import detail from '../pages/personal/setting/service/detail';
+import myDemand from '../pages/personal/myDemand'
+import myCollect from '../pages/personal/myCollect'
+import history from '../pages/personal/history'
 import Feedback from '../pages/personal/setting/feedback';
 
 import Evaluate from '../pages/personal/evaluate';
@@ -74,6 +78,10 @@ class Nav extends React.Component {
           <Stack.Screen name="TopTabNavigator" component={TopTabNavigator} />
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
+          <Stack.Screen name="detail" component={detail} />
+          <Stack.Screen name="myDemand" component={myDemand} />
+          <Stack.Screen name="myCollect" component={myCollect} />
+          <Stack.Screen name="history" component={history} />
           <Stack.Screen name="Feedback" component={Feedback} />
           <Stack.Screen name="Evaluate" component={Evaluate} />
           <Stack.Screen name="AfterSales" component={AfterSales} />

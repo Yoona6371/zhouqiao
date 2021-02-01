@@ -147,7 +147,9 @@ const styles = StyleSheet.create({
     width: pxToDp(325),
     height: pxToDp(520),
     backgroundColor: '#FFFFFF',
-    marginRight: pxToDp(32),
+    // marginRight: pxToDp(32),
+    marginTop:pxToDp(30),
+
   },
   CommodityCard__typeOneTpyeBox: {
     width: pxToDp(110),
