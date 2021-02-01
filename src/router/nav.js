@@ -45,7 +45,8 @@ import Commodity from '../pages/commodity';
 
 // 测试
 import Test from '../pages/test';
-
+import rankCardTop3 from '../components/bussiness/rankCard/rankCardTop3';
+import rankCard from '../components/bussiness/rankCard/rankCard';
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -64,7 +65,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -89,6 +90,8 @@ class Nav extends React.Component {
           <Stack.Screen name="Commodity" component={Commodity} />
           <Stack.Screen name="Design" component={Design} />
           <Stack.Screen name="Message" component={Message} />
+          <Stack.Screen name="rankCardTop3" component={rankCardTop3} />
+          <Stack.Screen name="rankCard" component={rankCard} />
         </Stack.Navigator>
       </NavigationContainer>
     );
