@@ -4,7 +4,7 @@ import TopTab from '../../components/common/TopTabNavigator';
 import { deviceWidthDp } from '../../utils/pxToDp';
 import CommodityCard from '../../components/bussiness/CommodityCard';
 import TopTitle from '../../components/common/TopTitle';
-import { padding, margin } from '../../utils/StyleUtils';
+import { padding } from '../../utils/StyleUtils';
 
 class Test extends Component {
   constructor(props) {
@@ -15,38 +15,33 @@ class Test extends Component {
         [
           {
             Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
+            Commodity_type: 'PS/AI',
+            user_id: 'asd',
             router: '',
           },
           {
             Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
+            Commodity_type: 'PS/AI',
             router: '',
           },
           {
             Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
+            Commodity_type: 'PS/AI',
             router: '',
           },
           {
             Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
+            Commodity_type: 'PS/AI',
             router: '',
           },
           {
             Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
+            Commodity_type: 'PS/AI',
             router: '',
           },
           {
             Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
+            Commodity_type: 'PS/AI',
             router: '',
           },
         ],
@@ -89,7 +84,9 @@ class Test extends Component {
                   type={1}
                   Title={item.Title}
                   prince={item.prince}
-                  router={v.router}
+                  user_id={item.user_id}
+                  Commodity_type={item.Commodity_type}
+                  router={item.router}
                   style={{ ...padding(20, 0, 20, 0) }}
                 />
               )}
