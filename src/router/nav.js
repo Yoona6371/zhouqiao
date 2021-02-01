@@ -25,6 +25,9 @@ import SettingIndex from '../pages/personal/setting';
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
 
+// 案例/商品 详情页
+import CommodityDetail from '../pages/commodity/detail';
+
 // 测试
 import Test from '../pages/test';
 
@@ -46,7 +49,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="CommodityDetail" headerMode={'none'}>
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -61,6 +64,7 @@ class Nav extends React.Component {
           <Stack.Screen name="DemandSet" component={DemandSet} />
           <Stack.Screen name="DadaEdit" component={DadaEdit} />
           <Stack.Screen name="Feedback" component={Feedback} />
+          <Stack.Screen name="CommodityDetail" component={CommodityDetail} />
         </Stack.Navigator>
       </NavigationContainer>
     );

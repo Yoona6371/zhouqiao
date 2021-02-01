@@ -3,14 +3,6 @@ import { colors } from './index.style';
 import { deviceWidthDp, pxToDp } from '../../../../utils/pxToDp';
 
 const IS_IOS = true;
-const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
-  'window',
-);
-
-function wp(percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
 
 const slideHeight = pxToDp(320);
 const slideWidth = pxToDp(660);
@@ -25,7 +17,10 @@ export default StyleSheet.create({
     width: itemWidth,
     height: slideHeight,
   },
-
+  slideInnerContainer2: {
+    width: pxToDp(691),
+    height: pxToDp(361),
+  },
   imageContainer: {
     flex: 1,
     marginBottom: IS_IOS ? 0 : -1, // Prevent a random Android rendering issue
