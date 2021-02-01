@@ -1,16 +1,14 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/home';
 import Personal from '../pages/personal';
-import { deviceWidthDp, pxToDp } from '../utils/pxToDp';
+import Design from '../pages/design';
+import Message from '../pages/message';
+import Demand from '../pages/demand';
+
+import { pxToDp } from '../utils/pxToDp';
+
 import {
   flexColumnCenter,
   flexRowSpb,
@@ -151,9 +149,9 @@ function Tabs() {
   return (
     <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
       <Tab.Screen name="首页" component={Home} />
-      <Tab.Screen name="设计师" component={Home} />
-      <Tab.Screen name="发布" component={Home} />
-      <Tab.Screen name="消息" component={Home} />
+      <Tab.Screen name="设计师" component={Design} />
+      <Tab.Screen name="发布" component={Demand} />
+      <Tab.Screen name="消息" component={Message} />
       <Tab.Screen name="我的" component={Personal} />
     </Tab.Navigator>
   );

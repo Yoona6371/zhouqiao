@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   CommodityCard__typeThreeContainer: {
     width: pxToDp(330),
     height: pxToDp(482),
+    marginRight: pxToDp(20),
   },
   CommodityCard__shoppingImageBox: {
     width: pxToDp(330),
@@ -146,7 +147,9 @@ const styles = StyleSheet.create({
     width: pxToDp(325),
     height: pxToDp(520),
     backgroundColor: '#FFFFFF',
-    marginRight: pxToDp(32),
+    // marginRight: pxToDp(32),
+    marginTop:pxToDp(30),
+
   },
   CommodityCard__typeOneTpyeBox: {
     width: pxToDp(110),
