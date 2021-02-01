@@ -17,13 +17,13 @@ class Index extends Component {
           title: '个人资料',
           text_more: '去完善',
           svg: file2,
-          router: '',
+          router: 'DataEdit',
         },
         {
           title: '地址管理',
           text_more: '',
           svg: position,
-          router: '',
+          router: 'MyAddress',
         },
         {
           title: '账户安全',
@@ -37,7 +37,7 @@ class Index extends Component {
           title: '问题反馈',
           text_more: '去吐槽',
           svg: security,
-          router: '',
+          router: 'Feedback',
         },
         {
           title: '新版本检测',

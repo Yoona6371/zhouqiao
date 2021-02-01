@@ -72,6 +72,7 @@ class Test extends Component {
         >
           {name.map((v, i) => (
             <FlatList
+              key={i}
               style={{
                 backgroundColor: '#fff',
                 alignSelf: 'center',
@@ -87,7 +88,7 @@ class Test extends Component {
                   user_id={item.user_id}
                   Commodity_type={item.Commodity_type}
                   router={item.router}
-                  style={{ ...padding(20, 0, 20, 0) }}
+                  style={{ ...padding(25, 0, 25, 0) }}
                 />
               )}
             />

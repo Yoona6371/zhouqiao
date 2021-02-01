@@ -91,7 +91,8 @@ class Index extends Component {
             }}
             title="服务列表"
             showBtn={false}
-            style={{ backgroundColor: 'transparent' }}
+            bgColor={'transparent'}
+            color={'#fff'}
           />
           <LinearGradient
             start={{ x: 0, y: 0 }}
@@ -195,7 +196,13 @@ class Index extends Component {
             colors={['#fe9e0e', '#fd7609']}
             style={styles.button_linear}
           >
-            <Text style={styles.button_text}>确认发布</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('DemandDetails');
+              }}
+            >
+              <Text style={styles.button_text}>确认发布</Text>
+            </TouchableOpacity>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>

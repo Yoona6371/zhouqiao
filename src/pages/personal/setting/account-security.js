@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import Icon from '../../components/common/Icon';
-import Option from '../../components/bussiness/Options';
-import { pxToDp } from '../../utils/pxToDp';
-import { margin } from '../../utils/StyleUtils';
-import TopTitle from '../../components/common/TopTitle';
+import Icon from '../../../components/common/Icon';
+import Option from '../../../components/bussiness/Options';
+import { pxToDp } from '../../../utils/pxToDp';
+import { margin } from '../../../utils/StyleUtils';
+import TopTitle from '../../../components/common/TopTitle';
 
 class Index extends Component {
   constructor(props) {
