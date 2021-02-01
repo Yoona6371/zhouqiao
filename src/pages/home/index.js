@@ -115,12 +115,16 @@ class Index extends Component {
     this.state = {
       pages: [
         {
-          name: 'Home',
-          component: HomeTabCase,
+          name: '关注',
+          component: <HomeTabCase />,
         },
         {
-          name: 'Settings',
-          component: HomeTabCase,
+          name: 'Ps',
+          component: <HomeTabCase />,
+        },
+        {
+          name: 'AI',
+          component: <HomeTabCase />,
         },
       ],
       hotData: [1, 2, 3, 4, 5],
@@ -170,7 +174,12 @@ class Index extends Component {
     let { pages } = this.state;
     const name = ['关注', 'ps', 'AI'];
     return (
-      <TopTabNavigator type={3} name={name} itemWidth={deviceWidthDp}>
+      <TopTabNavigator
+        ifScrollEnabled={false}
+        type={3}
+        name={name}
+        itemWidth={deviceWidthDp / 3}
+      >
         {pages.map((v, i) => v.component)}
       </TopTabNavigator>
     );
@@ -268,10 +277,6 @@ class Index extends Component {
           <Text style={styles.commodity_header_title}>精彩案例</Text>
         </ImageBackground>
         {this.MyTabs()}
-        <Pagination
-          navigation={this.props.navigation}
-          pages={this.state.pages}
-        />
         <View
           style={{
             width: pxToDp(690),

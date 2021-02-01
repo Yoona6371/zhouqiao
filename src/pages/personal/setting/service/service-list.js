@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
-import Option from '../../../components/bussiness/Options';
+import Option from '../../../../components/bussiness/Options';
 
 class Index extends Component {
   constructor(props) {
