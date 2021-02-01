@@ -61,6 +61,7 @@ class UserXCard extends Component {
         ...flexColumnSpb,
         ...padding(0, 43, 0, 30),
         backgroundColor: this.state.bgColor,
+        ...margin(30, 30, 0, 0),
       };
     } else {
       return {
@@ -71,6 +72,7 @@ class UserXCard extends Component {
         ...padding(22, 23, 29, 23),
         backgroundColor: '#fff',
         ...styles.shallow,
+        ...margin(30, 30, 30, 0),
       };
     }
   }
@@ -154,7 +156,6 @@ export default UserXCard;
 const styles = StyleSheet.create({
   userCard__wrap: {
     borderRadius: pxToDp(10),
-    ...margin(30, 30, 0, 0),
   },
   userCard__Avatar: {},
   userCard__footer: {

@@ -62,7 +62,7 @@ const Data = [
 ];
 class MyFocus extends Component {
   _renderItem({ item }) {
-    return <UserXCard image={item} />;
+    return <UserXCard type={1} image={item} />;
   }
 
   render() {
