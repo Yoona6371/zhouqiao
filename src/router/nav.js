@@ -29,12 +29,10 @@ import DemandSet from '../pages/demand';
 import AccountSecurity from '../pages/personal/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service-list';
-import SettinsIndex from '../pages/personal/setting';
 import SettingIndex from '../pages/personal/setting';
 
 import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
-
 // 商品
 import Commodity from '../pages/commodity';
 
