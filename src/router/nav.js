@@ -64,7 +64,7 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="CommodityDetail" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
           {/*用户*/}
           {/*登录*/}
 
