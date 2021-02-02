@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { pxToDp } from '../../utils/pxToDp';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  StatusBar,
-  FlatList,
-} from 'react-native';
+import { View, StyleSheet, StatusBar, FlatList } from 'react-native';
 import WelfareCard from '../../components/bussiness/welfareCard';
 import { padding } from '../../utils/StyleUtils';
 
@@ -21,20 +13,20 @@ class Welfare extends Component {
           topImage: require('../../asserts/images/WelfareCard_image.png'),
           timeRemin: '5天',
           title: '超简单的英文字体设计套路超简单的英文字体 设计套路',
+          welfareFund: 200,
+          userNumber: 219,
+        },
+        {
+          topImage: require('../../asserts/images/WelfareCard_image.png'),
+          timeRemin: '5天',
+          title: '亲恭喜',
           welfareFund: 500,
           userNumber: 219,
         },
         {
           topImage: require('../../asserts/images/WelfareCard_image.png'),
           timeRemin: '5天',
-          title: '超简单的英文字体设计套路超简单的英文字体 设计套路',
-          welfareFund: 500,
-          userNumber: 219,
-        },
-        {
-          topImage: require('../../asserts/images/WelfareCard_image.png'),
-          timeRemin: '5天',
-          title: '超简单的英文字体设计套路超简单的英文字体 设计套路',
+          title: '方志敏',
           welfareFund: 500,
           userNumber: 219,
         },
@@ -72,7 +64,16 @@ class Welfare extends Component {
             data={this.state.list}
             initialNumToRender={3}
             renderItem={({ item }) => {
-              return <WelfareCard />;
+              return (
+                <WelfareCard
+                  topImage={item.topImage}
+                  userNumber={item.userNumber}
+                  timeRemin={item.timeRemin}
+                  title={item.title}
+                  welfareFund={item.welfareFund}
+                  userNumber={item.userNumber}
+                />
+              );
             }}
           />
         </View>

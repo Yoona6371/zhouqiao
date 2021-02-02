@@ -35,10 +35,12 @@ import DadaEdit from '../pages/personal/setting/data-edit';
 import Feedback from '../pages/personal/setting/feedback';
 // 商品
 import Commodity from '../pages/commodity';
-
+//登录注册
+import FindPassword from '../pages/users/findPassword';
+import LoginAndRegister from '../pages/users/loginAndRegister';
 // 测试
 import Test from '../pages/test';
-
+import Welfare from '../pages/home/welfare';
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -57,7 +59,8 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode="none">
+        <Stack.Navigator initialRouteName="Welfare" headerMode="none">
+          <Stack.Screen name="Welfare" component={Welfare} />
           <Stack.Screen name="Index" component={Index} />
           <Stack.Screen name="MyFocus" component={MyFocus} />
           <Stack.Screen name="Test" component={Test} />
@@ -75,6 +78,8 @@ class Nav extends React.Component {
           <Stack.Screen name="Commodity" component={Commodity} />
           <Stack.Screen name="Design" component={Design} />
           <Stack.Screen name="Message" component={Message} />
+          <Stack.Screen name="FindPassword" component={FindPassword} />
+          <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
         </Stack.Navigator>
       </NavigationContainer>
     );
