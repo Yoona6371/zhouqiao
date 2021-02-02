@@ -7,9 +7,10 @@ import {
   StyleSheet,
   ImageBackground,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { deviceWidthDp, pxToDp } from '../../../utils/pxToDp';
 import SliderEntry from './SliderEntry';
+import { deviceWidthDp, pxToDp } from '../../../utils/pxToDp';
 
 const ENTRIES1 = [
   {
@@ -60,8 +61,27 @@ export default class MyCarousel extends Component {
     };
   }
 
+  static propTypes = {
+    type: PropTypes.number,
+  };
+  static defaultProps = {
+    type: 1,
+  };
+
   _renderItem({ item, index }) {
-    return <SliderEntry data={item} even={false} />;
+    return <SliderEntry data={item} even={false} type={1} />;
+  }
+
+  _renderItemWithParallax({ item, index }, parallaxProps) {
+    return (
+      <SliderEntry
+        type={2}
+        data={item}
+        even={(index + 1) % 2 === 0}
+        parallax={true}
+        parallaxProps={parallaxProps}
+      />
+    );
   }
 
   layoutExample(type) {
@@ -102,9 +122,45 @@ export default class MyCarousel extends Component {
     );
   }
 
-  render() {
-    const example3 = this.layoutExample('stack');
+  mainExample(number) {
+    const { slider1ActiveSlide } = this.state;
 
+    return (
+      <View style={{ ...styles.exampleContainer, width: pxToDp(691) }}>
+        <Carousel
+          ref={(c) => (this._slider1Ref = c)}
+          data={ENTRIES1}
+          renderItem={this._renderItemWithParallax}
+          sliderWidth={pxToDp(691)}
+          sliderHeight={pxToDp(361)}
+          itemWidth={pxToDp(691)}
+          itemHeight={pxToDp(361)}
+          hasParallaxImages={true}
+          firstItem={SLIDER_1_FIRST_ITEM}
+          containerCustomStyle={styles.slider}
+          contentContainerCustomStyle={styles.sliderContentContainer}
+          loop={true}
+          autoplay={true}
+          onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
+        />
+        <Pagination
+          dotsLength={ENTRIES1.length}
+          activeDotIndex={slider1ActiveSlide}
+          containerStyle={styles.paginationContainer2}
+          dotColor={'#FE9E0E'}
+          dotContainerStyle={{ padding: 0 }}
+          dotStyle={styles.paginationDot2}
+          inactiveDotColor={'#DDDDDD'}
+          inactiveDotOpacity={0.4}
+          inactiveDotScale={0.6}
+          carouselRef={this._slider1Ref}
+          tappableDots={!!this._slider1Ref}
+        />
+      </View>
+    );
+  }
+
+  render() {
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
@@ -113,7 +169,9 @@ export default class MyCarousel extends Component {
             scrollEventThrottle={200}
             directionalLockEnabled={true}
           >
-            {example3}
+            {this.props.type === 1
+              ? this.layoutExample('stack')
+              : this.mainExample(1)}
           </ScrollView>
         </View>
       </SafeAreaView>
@@ -124,6 +182,7 @@ export default class MyCarousel extends Component {
 const styles = StyleSheet.create({
   exampleContainer: {
     width: deviceWidthDp,
+    position: 'relative',
   },
   paginationContainer: {
     height: 15,
@@ -131,5 +190,18 @@ const styles = StyleSheet.create({
   paginationDot: {
     width: 16,
     height: 4,
+    margin: pxToDp(10),
+  },
+  paginationContainer2: {
+    position: 'absolute',
+    zIndex: 10,
+    bottom: pxToDp(30),
+    right: pxToDp(0),
+    height: 15,
+  },
+  paginationDot2: {
+    width: pxToDp(10),
+    height: pxToDp(10),
+    margin: pxToDp(8),
   },
 });

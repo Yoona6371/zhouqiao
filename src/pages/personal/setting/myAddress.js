@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import { pxToDp } from '../../utils/pxToDp';
-import AddressList from '../../components/bussiness/addressList';
-import Icon from '../../components/common/Icon';
+import { pxToDp } from '../../../utils/pxToDp';
+import AddressList from '../../../components/bussiness/addressList';
+import Icon from '../../../components/common/Icon';
 
 class Index extends Component {
   constructor(props) {

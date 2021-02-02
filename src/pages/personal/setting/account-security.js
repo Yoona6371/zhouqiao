@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import Icon from '../../components/common/Icon';
-import Option from '../../components/bussiness/Options';
-import { pxToDp } from '../../utils/pxToDp';
+import Icon from '../../../components/common/Icon';
+import Option from '../../../components/bussiness/Options';
+import { pxToDp } from '../../../utils/pxToDp';
+import { margin } from '../../../utils/StyleUtils';
+import TopTitle from '../../../components/common/TopTitle';
 
 class Index extends Component {
   constructor(props) {
@@ -51,32 +53,31 @@ class Index extends Component {
   render() {
     let { list } = this.state;
     return (
-      <ScrollView style={styles.option__wrap}>
+      <ScrollView>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="账户安全"
+          showBtn={false}
+        />
         {list.map((v, i) => (
           <Option
             key={i}
             title={v.title}
             text={v.text}
             type={2}
-            style={styles.option}
             svg={v.svg}
             router={v.router}
             colors={v.colors}
             navigation={this.props.navigation}
+            style={{ ...margin(30, 20, 30, 0) }}
           />
         ))}
       </ScrollView>
     );
   }
 }
-let styles = StyleSheet.create({
-  option__wrap: {
-    marginLeft: pxToDp(30),
-    marginRight: pxToDp(30),
-  },
-  option: {
-    // marginTop: pxToDp(20),
-  },
-});
+let styles = StyleSheet.create({});
 
 export default Index;

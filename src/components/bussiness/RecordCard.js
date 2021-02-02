@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: pxToDp(200),
     flexDirection: 'row',
+    marginTop:pxToDp(20)
   },
   RecordCard__mainBox: {
     width: pxToDp(690),

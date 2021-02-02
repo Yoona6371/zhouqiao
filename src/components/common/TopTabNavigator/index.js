@@ -56,7 +56,11 @@ export class index extends Component {
     const { scrollEnabled, itemWidth } = this.state;
     const { type } = this.props;
     return (
-      <View style={{ flex: 1 }}>
+      <View
+        style={{
+          flex: 1,
+        }}
+      >
         <Tab.Navigator
           backBehavior="history"
           tabBarPosition="top"
@@ -64,6 +68,7 @@ export class index extends Component {
             scrollEnabled: scrollEnabled,
             labelStyle: {
               fontSize: pxToDp(24),
+              fontWeight: '500',
             },
             activeTintColor:
               type === 1
