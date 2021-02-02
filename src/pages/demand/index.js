@@ -75,25 +75,42 @@ class Index extends Component {
       ],
       images: [],
       textLength: 0,
+      bgColor: 'transparent',
+      color: '#fff',
     };
   }
+  asd = (e) => {
+    if (e.nativeEvent.contentOffset.y > 65) {
+      this.setState({ bgColor: '#feaa2c' });
+    } else {
+      this.setState({ bgColor: 'transparent', color: '#fff' });
+    }
+  };
   render() {
-    const { list_1, list_2, list_3, images, textLength } = this.state;
+    const {
+      list_1,
+      list_2,
+      list_3,
+      images,
+      textLength,
+      bgColor,
+      color,
+    } = this.state;
     return (
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[0]} onScroll={this.asd}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="发布需求"
+          showBtn={false}
+          bgColor={bgColor}
+          color={color}
+        />
         <ImageBackground
           style={styles.title_background}
           source={require('../../asserts/images/demand_back.png')}
         >
-          <TopTitle
-            returnBack={() => {
-              this.props.navigation.goBack();
-            }}
-            title="服务列表"
-            showBtn={false}
-            bgColor={'transparent'}
-            color={'#fff'}
-          />
           <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
@@ -214,14 +231,10 @@ const styles = StyleSheet.create({
   title_background: {
     width: deviceWidthDp,
     height: pxToDp(421),
-  },
-  title_wrap: {
-    ...margin(30, 116, 30, 0),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginTop: pxToDp(-178),
   },
   title: {
-    ...margin(30, 30, 30, 0),
+    ...margin(30, 188, 30, 0),
     height: pxToDp(83),
     flexDirection: 'row',
   },

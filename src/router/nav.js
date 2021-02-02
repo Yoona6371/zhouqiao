@@ -39,6 +39,9 @@ import OrderLists from '../pages/personal/order-list';
 // 商品列表页
 import CommodityList from '../pages/commodity';
 
+// 消息
+import MessageNotice from '../pages/message/notice';
+
 // 测试
 import Test from '../pages/test';
 
@@ -129,6 +132,9 @@ class Nav extends React.Component {
           <Stack.Screen name="CommodityDetail" component={CommodityDetail} />
           {/*商品列表*/}
           <Stack.Screen name="CommodityList" component={CommodityList} />
+
+          {/* 消息 */}
+          <Stack.Screen name="MessageNotice" component={MessageNotice} />
         </Stack.Navigator>
       </NavigationContainer>
     );

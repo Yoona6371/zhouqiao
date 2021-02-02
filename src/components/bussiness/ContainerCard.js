@@ -41,7 +41,7 @@ class Index extends Component {
             <Icon name={'right2'} width={pxToDp(32)} height={pxToDp(20)} />
           </TouchableOpacity>
         </View>
-        <View style={styles.children}>{this.props.children}</View>
+        <View>{this.props.children}</View>
       </View>
     );
   }
@@ -66,10 +66,6 @@ var styles = StyleSheet.create({
     marginLeft: pxToDp(10),
     fontSize: pxToDp(10),
     lineHeight: pxToDp(35),
-  },
-  children: {
-    marginLeft: pxToDp(30),
-    marginRight: pxToDp(30),
   },
 });
 
