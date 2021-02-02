@@ -37,4 +37,5 @@ export default {
   camera: '\ue628',
   welfare_people: '\ue64c',
   hot: '\ue64d',
+  search2:'\ue650'
 };
