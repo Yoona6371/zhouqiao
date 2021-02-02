@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+zimport React, { Component } from 'react';
 import { View, Text, Image, ImageBackground, StyleSheet } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Svg from 'react-native-svg-uri';

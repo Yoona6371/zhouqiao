@@ -3,7 +3,7 @@ import { pxToDp } from '../../utils/pxToDp';
 import { View, StyleSheet, StatusBar, FlatList } from 'react-native';
 import WelfareCard from '../../components/bussiness/welfareCard';
 import { padding } from '../../utils/StyleUtils';
-
+import TopTitle from '../../components/common/TopTitle';
 class Welfare extends Component {
   constructor() {
     super();
@@ -50,13 +50,20 @@ class Welfare extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="公益设计"
+          showBtn={false}
+        />
         <StatusBar
           backgroundColor="transparent"
           translucent={true}
           barStyle="dark-content"
         />
         {/*Topstatus 开始*/}
-        <View style={styles.topStatus} />
+        {/*<View style={styles.topStatus} />*/}
         {/*Topstatus 结束*/}
         {/*card 开始*/}
         <View style={styles.card__box}>

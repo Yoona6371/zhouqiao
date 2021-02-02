@@ -30,15 +30,6 @@ import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
 
-// 商品
-import Commodity from '../pages/commodity';
-//登录注册
-import FindPassword from '../pages/users/findPassword';
-import LoginAndRegister from '../pages/users/loginAndRegister';
-// 测试
-import Test from '../pages/test';
-import Welfare from '../pages/home/welfare';
-
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
 import Evaluate from '../pages/personal/evaluate';
@@ -50,7 +41,8 @@ import CommodityList from '../pages/commodity';
 
 // 测试
 import Test from '../pages/test';
-
+//登录
+import LoginAndRegister from '../pages/users/loginAndRegister';
 // Tab
 import Tab from '../router/tab';
 // 工具
@@ -74,14 +66,9 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welfare" headerMode="none">
-          <Stack.Screen name="Welfare" component={Welfare} />
-          <Stack.Screen name="Index" component={Index} />
-          <Stack.Screen name="MyFocus" component={MyFocus} />
-          <Stack.Screen name="Test" component={Test} />
+        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
           {/*用户*/}
           {/*登录*/}
-          <Stack.Screen name="FindPassword" component={FindPassword} />
           <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           {/*首页*/}
           <Stack.Screen name="Tab" component={Tab} />
@@ -131,10 +118,6 @@ class Nav extends React.Component {
           <Stack.Screen name="history" component={history} />
           {/*反馈*/}
           <Stack.Screen name="Feedback" component={Feedback} />
-          <Stack.Screen name="Commodity" component={Commodity} />
-          <Stack.Screen name="Design" component={Design} />
-          <Stack.Screen name="Message" component={Message} />
-
           {/*商品评价列表*/}
           <Stack.Screen name="Evaluate" component={Evaluate} />
           {/*商品售后列表*/}
