@@ -41,7 +41,8 @@ import CommodityList from '../pages/commodity';
 
 // 测试
 import Test from '../pages/test';
-
+//登录
+import LoginAndRegister from '../pages/users/loginAndRegister';
 // Tab
 import Tab from '../router/tab';
 // 工具
@@ -68,7 +69,7 @@ class Nav extends React.Component {
         <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
           {/*用户*/}
           {/*登录*/}
-
+          <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           {/*首页*/}
           <Stack.Screen name="Tab" component={Tab} />
 
