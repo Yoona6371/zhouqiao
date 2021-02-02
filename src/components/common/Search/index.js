@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import { pxToDp } from '../../../utils/pxToDp'
 import Icon from '../../common/Icon';
@@ -8,14 +8,27 @@ export class index extends Component {
     //     prop: PropTypes
     // }
 
+    state = {
+        txt: ''
+    }
+    setTxt = (txt) => {
+        this.setState({ txt });
+        this.props.callBack(txt);
+    }
     render() {
+        const { onPress, onEndEditing } = this.props;
         return (
             <View style={styles.border}>
-                <Icon name='back' style={{
-                    marginTop: pxToDp(106),
-                }}></Icon>
+                <TouchableOpacity onPress={onPress}>
+                    <Icon name='back' style={{
+                        marginTop: pxToDp(106),
+                    }}></Icon>
+                </TouchableOpacity>
+
                 <View style={{ marginLeft: pxToDp(30) }}>
                     <TextInput
+                        onEndEditing={onEndEditing}
+                        onChangeText={this.setTxt.bind(this)}
                         placeholder="请输入搜索的关键词"
                         style={styles.input}>
                     </TextInput>
@@ -29,7 +42,7 @@ export class index extends Component {
                 <View>
 
                 </View>
-            </View>
+            </View >
         )
     }
 }
