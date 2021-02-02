@@ -4,9 +4,10 @@ import PropTypes from 'prop-types'
 import { pxToDp } from '../../../utils/pxToDp'
 import Icon from '../../common/Icon';
 export class index extends Component {
-    // static propTypes = {
-    //     prop: PropTypes
-    // }
+    static propTypes = {
+        onEndEditing: PropTypes.func.isRequired,
+        onPress: PropTypes.func.isRequired
+    }
 
     state = {
         txt: ''
