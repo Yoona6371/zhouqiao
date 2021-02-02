@@ -5,12 +5,15 @@ import { pxToDp } from '../../../utils/pxToDp'
 import SvgUri from 'react-native-svg-uri'
 import { like } from '../../../constants/svg'
 export class rankCardTop3 extends Component {
-    // static propTypes = {
-    //     prop: PropTypes
-    // }
+    static propTypes = {
+        top3: PropTypes.array.isRequired,
+        onPressChampion: PropTypes.func.isRequired,
+        onPressRunner_up: PropTypes.func.isRequired,
+        onPressThird_place: PropTypes.func.isRequired,
+    }
 
     render() {
-        const { top3,onPressChampion,onPressRunner_up, onPressThird_place} = this.props;
+        const { top3, onPressChampion, onPressRunner_up, onPressThird_place } = this.props;
         return (
             <View>
                 <ImageBackground style={styles.bg} source={require('../../../asserts/images/rankCardBg.png')}>
@@ -143,7 +146,7 @@ const styles = StyleSheet.create({
         marginLeft: pxToDp(6),
     },
     rank2Name: {
-        maxWidth:pxToDp(180),
+        maxWidth: pxToDp(180),
         fontSize: pxToDp(28),
         fontWeight: '700',
         color: '#333333',
