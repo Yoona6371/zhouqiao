@@ -28,6 +28,8 @@ import myDemand from '../pages/personal/myDemand';
 import myCollect from '../pages/personal/myCollect';
 import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
+import MyAddress from '../pages/personal/setting/myAddress';
+
 // 商品
 import Commodity from '../pages/commodity';
 //登录注册
@@ -36,7 +38,6 @@ import LoginAndRegister from '../pages/users/loginAndRegister';
 // 测试
 import Test from '../pages/test';
 import Welfare from '../pages/home/welfare';
-import MyAddress from '../pages/personal/setting/myAddress';
 
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
@@ -80,7 +81,8 @@ class Nav extends React.Component {
           <Stack.Screen name="Test" component={Test} />
           {/*用户*/}
           {/*登录*/}
-
+          <Stack.Screen name="FindPassword" component={FindPassword} />
+          <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           {/*首页*/}
           <Stack.Screen name="Tab" component={Tab} />
 
@@ -132,8 +134,7 @@ class Nav extends React.Component {
           <Stack.Screen name="Commodity" component={Commodity} />
           <Stack.Screen name="Design" component={Design} />
           <Stack.Screen name="Message" component={Message} />
-          <Stack.Screen name="FindPassword" component={FindPassword} />
-          <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
+
           {/*商品评价列表*/}
           <Stack.Screen name="Evaluate" component={Evaluate} />
           {/*商品售后列表*/}
