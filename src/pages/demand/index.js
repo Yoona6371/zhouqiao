@@ -79,25 +79,17 @@ class Index extends Component {
       color: '#fff',
     };
   }
-  asd = (e) => {
-    if (e.nativeEvent.contentOffset.y > 65) {
+  titleFixed = (e) => {
+    if (e.nativeEvent.contentOffset.y > 30) {
       this.setState({ bgColor: '#feaa2c' });
     } else {
-      this.setState({ bgColor: 'transparent', color: '#fff' });
+      this.setState({ bgColor: 'transparent' });
     }
   };
   render() {
-    const {
-      list_1,
-      list_2,
-      list_3,
-      images,
-      textLength,
-      bgColor,
-      color,
-    } = this.state;
+    const { list_1, list_2, list_3, images, textLength, bgColor } = this.state;
     return (
-      <ScrollView stickyHeaderIndices={[0]} onScroll={this.asd}>
+      <ScrollView stickyHeaderIndices={[0]} onScroll={this.titleFixed}>
         <TopTitle
           returnBack={() => {
             this.props.navigation.goBack();
@@ -105,7 +97,7 @@ class Index extends Component {
           title="发布需求"
           showBtn={false}
           bgColor={bgColor}
-          color={color}
+          color={'#fff'}
         />
         <ImageBackground
           style={styles.title_background}
