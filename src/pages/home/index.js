@@ -6,9 +6,9 @@ import {
   ImageBackground,
   Text,
   FlatList,
+  TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import CommodityCard from '../../components/bussiness/CommodityCard';
 import Banner from '../../components/bussiness/banner';
 import SearchInput from '../../components/bussiness/searchInput';
 import Icon from '../../components/common/Icon';
@@ -123,7 +123,12 @@ class Index extends Component {
     );
   };
 
+  onFocus(navigation) {
+    navigation.navigate('search');
+  }
+
   render() {
+    const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground
@@ -135,7 +140,7 @@ class Index extends Component {
               style={styles.header_logo}
               source={require('../../asserts/images/logo.jpg')}
             />
-            <SearchInput />
+            <SearchInput onFocus={() => this.onFocus(navigation)} />
             <Icon name={'earphone'} style={{ fontSize: pxToDp(36) }} />
           </View>
         </ImageBackground>
@@ -149,7 +154,10 @@ class Index extends Component {
           {/*最新通知*/}
           <View style={styles.home_information}>
             <View style={{ ...flexRowSpb, justifyContent: 'flex-start' }}>
-              <View style={styles.information_text1_container}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('meassge')}
+                style={styles.information_text1_container}
+              >
                 <Icon
                   name={'information'}
                   style={{ fontSize: pxToDp(28), paddingBottom: pxToDp(2) }}
@@ -165,7 +173,7 @@ class Index extends Component {
                 <Text style={{ ...styles.information_text1, color: '#FE9E0E' }}>
                   通知
                 </Text>
-              </View>
+              </TouchableOpacity>
               <Text style={styles.information_text2}>
                 舟桥之家APP即将上线啦！
               </Text>
@@ -174,13 +182,16 @@ class Index extends Component {
           </View>
           {/*四个模块*/}
           <View style={styles.home_module}>
-            <View style={styles.module_container}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CommodityList')}
+              style={styles.module_container}
+            >
               <Image
                 source={require('../../asserts/icons/原创设计.png')}
                 style={{ width: pxToDp(62), height: pxToDp(66) }}
               />
               <Text style={styles.module_text}>原创设计</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.module_container}>
               <Image
                 source={require('../../asserts/icons/精彩活动.png')}
@@ -209,7 +220,9 @@ class Index extends Component {
             <FlatList
               horizontal={true}
               data={this.state.hotData}
-              renderItem={({ item }) => <HotCard key={item} />}
+              renderItem={({ item }) => (
+                <HotCard navigation={this.props.navigation} key={item} />
+              )}
             />
             {/*热门列表结束*/}
           </ContainerCard>

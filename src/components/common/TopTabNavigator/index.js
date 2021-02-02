@@ -65,6 +65,7 @@ export class index extends Component {
           backBehavior="history"
           tabBarPosition="top"
           tabBarOptions={{
+            style: { backgroundColor: '#fff' },
             scrollEnabled: scrollEnabled,
             labelStyle: {
               fontSize: pxToDp(24),

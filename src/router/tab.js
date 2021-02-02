@@ -1,5 +1,12 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from '../pages/home';
 import Personal from '../pages/personal';
@@ -145,16 +152,66 @@ function tabIcon(isFocused, index) {
   }
 }
 
-function Tabs() {
-  return (
-    <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
-      <Tab.Screen name="首页" component={Home} />
-      <Tab.Screen name="设计师" component={Design} />
-      <Tab.Screen name="发布" component={Demand} />
-      <Tab.Screen name="消息" component={Message} />
-      <Tab.Screen name="我的" component={Personal} />
-    </Tab.Navigator>
-  );
+class Tabs extends Component {
+  constructor(props) {
+    super(props);
+    this.keyboardDidShowListener = null;
+    this.keyboardDidHideListener = null;
+    this.state = { KeyboardShown: true };
+  }
+
+  componentDidMount() {
+    //监听键盘弹出事件
+    this.keyboardDidShowListener = Keyboard.addListener(
+      'keyboardWillShow',
+      this.keyboardDidShowHandler.bind(this),
+    );
+    //监听键盘隐藏事件
+    this.keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      this.keyboardDidHideHandler.bind(this),
+    );
+  }
+
+  componentWillUnmount() {
+    //卸载键盘弹出事件监听
+    if (this.keyboardDidShowListener != null) {
+      this.keyboardDidShowListener.remove();
+    }
+    //卸载键盘隐藏事件监听
+    if (this.keyboardDidHideListener != null) {
+      this.keyboardDidHideListener.remove();
+    }
+  }
+
+  //键盘弹出事件响应
+  keyboardDidShowHandler(event) {
+    this.setState({ KeyboardShown: false });
+  }
+
+  //键盘隐藏事件响应
+  keyboardDidHideHandler(event) {
+    this.setState({ KeyboardShown: true });
+  }
+
+  render() {
+    return (
+      <Tab.Navigator
+        tabBarOptions={{
+          keyboardHidesTabBar: true,
+        }}
+        tabBar={(props) =>
+          this.state.KeyboardShown ? <MyTabBar {...props} /> : null
+        }
+      >
+        <Tab.Screen name="首页" component={Home} />
+        <Tab.Screen name="设计师" component={Design} />
+        <Tab.Screen name="发布" component={Demand} />
+        <Tab.Screen name="消息" component={Message} />
+        <Tab.Screen name="我的" component={Personal} />
+      </Tab.Navigator>
+    );
+  }
 }
 
 export default Tabs;

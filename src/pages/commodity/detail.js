@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Banner from '../../components/bussiness/banner';
 import Icon from '../../components/common/Icon';
 import UserXCard from '../../components/bussiness/UserXCard';
+import TopTitle from '../../components/common/TopTitle';
 
 import {
   flexColumnCenter,
@@ -26,9 +27,17 @@ import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import { activeOpacity } from '../../constants/config';
 
 class CommodityDetail extends Component {
+  returnBack() {
+    this.props.navigation.goBack();
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <TopTitle
+          title={'案例详情'}
+          returnBack={this.returnBack.bind(this)}
+          showBtn={false}
+        />
         <ScrollView style={{ backgroundColor: '#fff' }}>
           <View style={styles.banner_wrap}>
             <Banner type={2} />

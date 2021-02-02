@@ -38,6 +38,9 @@ import OrderLists from '../pages/personal/order-list';
 // 商品列表页
 import CommodityList from '../pages/commodity';
 
+// 搜索
+import Search from '../pages/search';
+
 // 测试
 import Test from '../pages/test';
 
@@ -120,12 +123,15 @@ class Nav extends React.Component {
           <Stack.Screen name="AfterSales" component={AfterSales} />
           {/*我的订单列表*/}
           <Stack.Screen name="OrderLists" component={OrderLists} />
-          {/*商品列表*/}
-          <Stack.Screen name="CommodityList" component={CommodityList} />
 
           {/*商品*/}
           {/*商品详情页*/}
           <Stack.Screen name="CommodityDetail" component={CommodityDetail} />
+          {/*商品列表*/}
+          <Stack.Screen name="CommodityList" component={CommodityList} />
+
+          {/*搜索页*/}
+          <Stack.Screen name="search" component={Search} />
         </Stack.Navigator>
       </NavigationContainer>
     );
