@@ -45,7 +45,7 @@ import Test from '../pages/test';
 import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
-
+import RankCardTop3 from '../components/bussiness/rankCard/rankCardTop3'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -64,7 +64,9 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="CommodityDetail" headerMode={'none'}>
+        <Stack.Navigator initialRouteName="Test" headerMode={'none'}>
+        <Stack.Screen name="RankCardTop3" component={RankCardTop3} />
+
           {/*用户*/}
           {/*登录*/}
 
