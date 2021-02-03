@@ -67,13 +67,6 @@ var styles = StyleSheet.create({
     fontSize: pxToDp(10),
     lineHeight: pxToDp(35),
   },
-<<<<<<< HEAD
-  children: {
-    // marginLeft: pxToDp(30),
-    // marginRight: pxToDp(30),
-  },
-=======
->>>>>>> efcd46c4d28091ccab5b85543b1c4bc9d7b7e168
 });
 
 export default Index;
