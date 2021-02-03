@@ -19,6 +19,8 @@ export default class CommodityCard extends React.PureComponent {
     user_image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
     Commodity_type: PropTypes.string,
     user_id: PropTypes.string,
+    navigation: PropTypes.object,
+    router: PropTypes.string,
   };
   static defaultProps = {
     type: 1, //1:案例 2.取消案例收藏 3.商品案例
@@ -27,6 +29,9 @@ export default class CommodityCard extends React.PureComponent {
   constructor(props) {
     super(props);
   }
+  Press = () => {
+    this.props.navigation.navigate(this.props.router);
+  };
   render() {
     const {
       type,
@@ -46,78 +51,80 @@ export default class CommodityCard extends React.PureComponent {
        */
     }
     return (
-      <View style={{ ...style }}>
-        {this.props.type === 3 ? (
-          <View style={styles.CommodityCard__typeThreeContainer}>
-            <View style={styles.CommodityCard__shoppingImageBox}>
-              <Image
-                source={require('../../asserts/images/shopping_Image.png')}
-                style={styles.CommodityCard__shoppingImage}
-              />
-            </View>
-            <View style={styles.CommodityCard__typeThreeShoppingTitleBox}>
-              <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
-                {Title}
-              </Text>
-            </View>
-            <View style={{ marginTop: pxToDp(24) }}>
-              <Text style={{ color: '#FE9E0E', fontSize: pxToDp(26) }}>
-                ¥{this.props.prince}
-              </Text>
-            </View>
-          </View>
-        ) : (
-          <View style={styles.CommodityCard__typeOneCaseBox}>
-            {/*案例图片开始*/}
-            <View>
-              <ImageBackground
-                source={require('../../asserts/images/CommodityCard_background.png')}
-                style={{ width: pxToDp(325), height: pxToDp(325) }}
-              >
-                <View style={styles.CommodityCard__typeOneTpyeBox}>
-                  <Text style={styles.CommodityCard__typeOneTpyeText}>
-                    {this.props.Commodity_type}
-                  </Text>
-                </View>
-              </ImageBackground>
-            </View>
-            {/*案例图片结束*/}
-            {/*案例描述开始*/}
-            <View>
-              <View style={styles.CommodityCard__typeOneTitleBox}>
-                <Text styel={styles.CommodityCard__typeOneTitle}>
-                  {this.props.Title}
+      <TouchableOpacity onPress={this.Press}>
+        <View style={{ ...style }}>
+          {this.props.type === 3 ? (
+            <View style={styles.CommodityCard__typeThreeContainer}>
+              <View style={styles.CommodityCard__shoppingImageBox}>
+                <Image
+                  source={require('../../asserts/images/shopping_Image.png')}
+                  style={styles.CommodityCard__shoppingImage}
+                />
+              </View>
+              <View style={styles.CommodityCard__typeThreeShoppingTitleBox}>
+                <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
+                  {Title}
                 </Text>
               </View>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {/*用户头像开始*/}
-                <View style={styles.CommodityCard__typeOneUserImage}>
-                  <Image
-                    source={require('../../asserts/images/CommodityCard_userImage.png')}
-                    // styel={{ width: pxToDp(50), height: pxToDp(50) }}
-                  />
-                </View>
-                {/*用户头像结束*/}
-                {this.props.type === 1 ? (
-                  <View style={styles.CommodityCard__typeOneUserIdBox}>
-                    <Text style={styles.CommodityCard__typeOneUserId}>
-                      {this.props.user_id}
-                    </Text>
-                  </View>
-                ) : (
-                  <View style={styles.CommodityCard__typeTwoBtnBox}>
-                    <TouchableOpacity>
-                      <Text style={styles.CommodityCard__typeTwoBtnText}>
-                        取消收藏
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )}
+              <View style={{ marginTop: pxToDp(24) }}>
+                <Text style={{ color: '#FE9E0E', fontSize: pxToDp(26) }}>
+                  ¥{this.props.prince}
+                </Text>
               </View>
             </View>
-          </View>
-        )}
-      </View>
+          ) : (
+            <View style={styles.CommodityCard__typeOneCaseBox}>
+              {/*案例图片开始*/}
+              <View>
+                <ImageBackground
+                  source={require('../../asserts/images/CommodityCard_background.png')}
+                  style={{ width: pxToDp(325), height: pxToDp(325) }}
+                >
+                  <View style={styles.CommodityCard__typeOneTypeBox}>
+                    <Text style={styles.CommodityCard__typeOneTpyeText}>
+                      {this.props.Commodity_type}
+                    </Text>
+                  </View>
+                </ImageBackground>
+              </View>
+              {/*案例图片结束*/}
+              {/*案例描述开始*/}
+              <View>
+                <View style={styles.CommodityCard__typeOneTitleBox}>
+                  <Text styel={styles.CommodityCard__typeOneTitle}>
+                    {this.props.Title}
+                  </Text>
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  {/*用户头像开始*/}
+                  <View style={styles.CommodityCard__typeOneUserImage}>
+                    <Image
+                      source={require('../../asserts/images/CommodityCard_userImage.png')}
+                      // styel={{ width: pxToDp(50), height: pxToDp(50) }}
+                    />
+                  </View>
+                  {/*用户头像结束*/}
+                  {this.props.type === 1 ? (
+                    <View style={styles.CommodityCard__typeOneUserIdBox}>
+                      <Text style={styles.CommodityCard__typeOneUserId}>
+                        {this.props.user_id}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.CommodityCard__typeTwoBtnBox}>
+                      <TouchableOpacity>
+                        <Text style={styles.CommodityCard__typeTwoBtnText}>
+                          取消收藏
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                </View>
+              </View>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
     );
   }
 }
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
     // marginRight: pxToDp(32),
     marginTop: pxToDp(30),
   },
-  CommodityCard__typeOneTpyeBox: {
+  CommodityCard__typeOneTypeBox: {
     width: pxToDp(110),
     height: pxToDp(40),
     borderBottomRightRadius: pxToDp(20),

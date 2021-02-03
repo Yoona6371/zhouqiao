@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/stack';
 
 // 路由
-
+import Index from '../pages/home';
 // 大图浏览
 import ImageShow from '../pages/ImageShow';
 
@@ -44,7 +44,7 @@ import CommodityList from '../pages/commodity';
 import GoodsList from '../pages/commodity/goodsList';
 
 // 搜索
-import Search from '../pages/Search';
+import Search from '../pages/search';
 
 // 公益
 import Welfare from '../pages/home/welfare';
@@ -90,9 +90,11 @@ class Nav extends React.Component {
           }}
         >
           {/*用户*/}
+          <Stack.Screen name="Index" component={Index} />
           {/*登录*/}
           <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           {/*首页*/}
+
           <Stack.Screen name="Tab" component={Tab} />
 
           {/*大图浏览*/}
