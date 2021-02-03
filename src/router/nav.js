@@ -63,7 +63,6 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 // 排行榜页面/
 import Rank from '../pages/rank/index'
-import Search from '../pages/Search/index'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -83,7 +82,7 @@ class Nav extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="CommodityList"
+          initialRouteName="myCollect"
           headerMode={'none'}
           mode={'card'}
           screenOptions={{
