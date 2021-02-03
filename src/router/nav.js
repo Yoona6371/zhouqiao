@@ -49,9 +49,13 @@ import Search from '../pages/search';
 // 公益
 import Welfare from '../pages/home/welfare';
 
+// 消息
+import MessageNotice from '../pages/message/notice';
+
 // 测试
 import Test from '../pages/test';
-
+//登录
+import LoginAndRegister from '../pages/users/loginAndRegister';
 // Tab
 import Tab from '../router/tab';
 // 工具
@@ -85,7 +89,7 @@ class Nav extends React.Component {
         >
           {/*用户*/}
           {/*登录*/}
-
+          <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           {/*首页*/}
           <Stack.Screen name="Tab" component={Tab} />
 
@@ -152,6 +156,9 @@ class Nav extends React.Component {
 
           {/*公益列表*/}
           <Stack.Screen name="Welfare" component={Welfare} />
+
+          {/* 消息 */}
+          <Stack.Screen name="MessageNotice" component={MessageNotice} />
         </Stack.Navigator>
       </NavigationContainer>
     );
