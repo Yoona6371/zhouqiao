@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import OrderCard from '../../components/bussiness/OrderCard';
 import { pxToDp } from '../../utils/pxToDp';
+import TopTopNavigator from '../../components/common/TopTabNavigator';
 class Evaluate extends React.Component {
   static navigationOptions = { title: null };
 
@@ -45,4 +46,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default Evaluate;
+// export default Evaluate;
+
+class Index extends React.Component {
+  static navigationOptions = { title: null };
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    return <View />;
+  }
+}
+
+export default Index;
