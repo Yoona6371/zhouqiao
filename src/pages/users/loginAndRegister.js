@@ -14,7 +14,6 @@ import SvgUri from 'react-native-svg-uri';
 import { qq, WeChat } from '../../constants/svg';
 import Icon from '../../components/common/Icon';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { itemWidth } from '../../components/bussiness/banner/styles/SliderEntry.style';
 const Tab = createMaterialTopTabNavigator();
 
 class LoginTab extends Component {
@@ -145,14 +144,7 @@ class Index extends Component {
           labelStyle: {
             fontSize: pxToDp(30),
           },
-          style: {
-            width: pxToDp(460),
-            alignSelf: 'center',
-            borderRadius: pxToDp(40),
-            borderWidth: pxToDp(1),
-            borderColor: '#fec165',
-            backgroundColor: '#FE9E0E',
-          },
+          style: styles.tabBarOptions,
         }}
       >
         {pages.map((v, i) => (
@@ -354,5 +346,13 @@ const styles = StyleSheet.create({
     marginTop: pxToDp(70),
     justifyContent: 'space-evenly',
     height: pxToDp(30),
+  },
+  tabBarOptions: {
+    width: pxToDp(460),
+    alignSelf: 'center',
+    borderRadius: pxToDp(40),
+    borderWidth: pxToDp(1),
+    borderColor: '#fec165',
+    backgroundColor: '#FE9E0E',
   },
 });

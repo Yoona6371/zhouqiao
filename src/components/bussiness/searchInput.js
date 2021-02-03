@@ -25,6 +25,7 @@ export default class SearchInput extends Component {
         }}
       >
         <TextInput
+          onFocus={this.props.onFocus}
           onChangeText={this.props.onChangeText}
           onSubmitEditing={this.props.onSubmitEditing}
           value={value}

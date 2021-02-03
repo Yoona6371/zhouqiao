@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import OrderCard from '../../components/bussiness/OrderCard';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import TopTopNavigator from '../../components/common/TopTabNavigator';
+import TopTitle from '../../components/common/TopTitle';
 class Evaluate extends React.Component {
   static navigationOptions = { title: null };
 
@@ -21,7 +22,7 @@ class Evaluate extends React.Component {
   render() {
     const { evaluateData } = this.state;
     return (
-      <ScrollView style={{ width: '100%', height: pxToDp(1000) }}>
+      <ScrollView style={{ width: '100%' }}>
         <View style={styles.evaluate_box}>
           <FlatList
             data={evaluateData}
@@ -46,18 +47,65 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-// export default Evaluate;
 
 class Index extends React.Component {
   static navigationOptions = { title: null };
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      pages: [
+        {
+          key: '待付款',
+          title: '待付款',
+          component: Evaluate,
+        },
+        {
+          key: '进行中',
+          title: '进行中',
+          component: Evaluate,
+        },
+        {
+          key: '待收货',
+          title: '待收货',
+          component: Evaluate,
+        },
+        {
+          key: '已完成',
+          title: '已完成',
+          component: Evaluate,
+        },
+        {
+          key: '已取消',
+          title: '已取消',
+          component: Evaluate,
+        },
+      ],
+    };
   }
-
+  MyTabs = () => {
+    let { pages } = this.state;
+    return (
+      <TopTopNavigator
+        ifScrollEnabled={true}
+        itemWidth={deviceWidthDp / 5}
+        type={3}
+        routes={pages}
+      />
+    );
+  };
   render() {
-    return <View />;
+    const { navigation } = this.props;
+    return (
+      <ScrollView>
+        <TopTitle
+          returnBack={console.log('进入订单页面')}
+          title={'我的订单'}
+          showBtn={false}
+        />
+        {this.MyTabs()}
+      </ScrollView>
+    );
   }
 }
 

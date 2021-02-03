@@ -10,6 +10,7 @@ export default class SliderEntry extends Component {
     even: PropTypes.bool,
     parallax: PropTypes.bool,
     parallaxProps: PropTypes.object,
+    type: PropTypes.number,
   };
 
   get image() {
@@ -58,7 +59,11 @@ export default class SliderEntry extends Component {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        style={styles.slideInnerContainer}
+        style={
+          this.props.type === 1
+            ? styles.slideInnerContainer
+            : styles.slideInnerContainer2
+        }
         onPress={() => {
           alert(`You've clicked '${title}'`);
         }}

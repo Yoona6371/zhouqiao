@@ -1,129 +1,90 @@
-import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  ScrollView,
-} from 'react-native';
-import TopTab from '../../components/common/TopTabNavigator';
-import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
-import CommodityCard from '../../components/bussiness/CommodityCard';
+import React, { PureComponent } from 'react';
+import { View, InteractionManager } from 'react-native';
+import TopTitle from '../../components/common/TopTitle';
+import HomeTabCase from '../home/HomeTabCase';
+import TopTabNavigator from '../../components/common/TopTabNavigator';
+import BlankPage from '../../utils/blankPage';
+import { deviceWidthDp } from '../../utils/pxToDp';
 
-class Test extends Component {
+class CommodityList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      name: ['关注', 'PS/AI', '平面', 'CAD', 'UI设计', '工业设计'],
-      caseData: [
-        [
-          {
-            Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
-          },
-          {
-            Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
-          },
-          {
-            Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
-          },
-          {
-            Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
-          },
-          {
-            Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
-          },
-          {
-            Title: '冯泽明的买卖',
-            Commodity_type: 'Man',
-            user_id: 'Agan的故事',
-          },
-        ],
+      renderPlaceholderOnly: true, //交互管理器延时控制标识
+      pages: [
+        {
+          key: '全部',
+          title: '全部',
+          component: HomeTabCase,
+        },
+        {
+          key: 'Ps',
+          title: 'Ps',
+          component: HomeTabCase,
+        },
+        {
+          key: 'AI',
+          title: 'AI',
+          component: HomeTabCase,
+        },
+        {
+          key: 'CAD',
+          title: 'CAD',
+          component: HomeTabCase,
+        },
+        {
+          key: 'UI设计',
+          title: 'UI设计',
+          component: HomeTabCase,
+        },
+        {
+          key: '工业设计',
+          title: '工业设计',
+          component: HomeTabCase,
+        },
       ],
+      caseData: [],
     };
   }
 
-  // 请求数据在这里请求获取tab栏数据，以及渲染第一个页面的值
-  // componentWillMount() {
-  // }
+  componentDidMount() {
+    //转场动画完成之后改变标记值，重新渲染dom
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ renderPlaceholderOnly: false });
+    });
+  }
+
+  _render() {
+    //首先渲染空视图
+    const { renderPlaceholderOnly, pages } = this.state;
+    if (renderPlaceholderOnly) {
+      return <BlankPage />;
+    } else {
+      return (
+        <TopTabNavigator
+          ifScrollEnabled={true}
+          type={3}
+          itemWidth={deviceWidthDp / 5}
+          routes={pages}
+        />
+      );
+    }
+  }
 
   render() {
-    const { name, caseData, flatList } = this.state;
-    let length = name.length;
     return (
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <TopTab
-          name={name}
-          ifScrollEnabled={true}
-          itemWidth={deviceWidthDp / 4}
-          type={3}
-        >
-          {name.map((v, i) => (
-            <FlatList
-              data={caseData[i]}
-              numColumns={2}
-              renderItem={({ item, index }) => (
-                <CommodityCard
-                  type={1}
-                  Title={item.Title}
-                  prince={item.prince}
-                />
-              )}
-            />
-          ))}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-          {/*<FlatList*/}
-          {/*  data={caseData[0]}*/}
-          {/*  numColumns={2}*/}
-          {/*  columnWrapperStyle={{ marginLeft: pxToDp(32) }}*/}
-          {/*  renderItem={({ item, index }) => (*/}
-          {/*    <CommodityCard type={1} Title={item.Title} prince={item.prince} />*/}
-          {/*  )}*/}
-          {/*/>*/}
-        </TopTab>
+      <View style={{ flex: 1 }}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="设计案例"
+          showBtn={false}
+        />
+        {this._render()}
       </View>
     );
   }
 }
 
-export default Test;
+export default CommodityList;

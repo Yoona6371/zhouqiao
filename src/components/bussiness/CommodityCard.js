@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 
-export default class CommodityCard extends React.Component {
+export default class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
     prince: PropTypes.number,
@@ -37,6 +37,7 @@ export default class CommodityCard extends React.Component {
       Commodity_type,
       user_id,
       shopping_Img,
+      style,
     } = this.props;
     {
       /* type:3 -> 商品组件
@@ -45,7 +46,7 @@ export default class CommodityCard extends React.Component {
        */
     }
     return (
-      <View>
+      <View style={{ ...style }}>
         {this.props.type === 3 ? (
           <View style={styles.CommodityCard__typeThreeContainer}>
             <View style={styles.CommodityCard__shoppingImageBox}>
@@ -129,6 +130,7 @@ const styles = StyleSheet.create({
   CommodityCard__shoppingImageBox: {
     width: pxToDp(330),
     height: pxToDp(300),
+    marginTop: pxToDp(40),
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: { width: 4, height: 4 },
@@ -147,7 +149,8 @@ const styles = StyleSheet.create({
     width: pxToDp(325),
     height: pxToDp(520),
     backgroundColor: '#FFFFFF',
-    marginRight: pxToDp(32),
+    // marginRight: pxToDp(32),
+    marginTop: pxToDp(30),
   },
   CommodityCard__typeOneTpyeBox: {
     width: pxToDp(110),
