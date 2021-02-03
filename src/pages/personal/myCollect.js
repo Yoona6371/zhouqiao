@@ -5,81 +5,281 @@ import { ScrollView } from 'react-native-gesture-handler';
 import TopTabNavigator from '../../components/common/TopTabNavigator';
 import { pxToDp } from '../../utils/pxToDp';
 import CommodityCard from '../../components/bussiness/CommodityCard';
+class Drawing extends Component {
+  render() {
+    return (
+      <View >
+        <ScrollView>
+          <View style={{
+            paddingBottom: pxToDp(40),
+            paddingTop: pxToDp(10),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
+          }}>
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+class PS_AI extends Component {
+  render() {
+    return (
+      <View>
+        <ScrollView>
+          <View style={{
+            paddingBottom: pxToDp(40),
+            paddingTop: pxToDp(10),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
+          }}>
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+class cartoon extends Component {
+  render() {
+    return (
+      <View>
+        <ScrollView>
+          <View style={{
+            paddingBottom: pxToDp(40),
+            paddingTop: pxToDp(10),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
+          }}>
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+class plane extends Component {
+  render() {
+    return (
+      <View>
+        <ScrollView>
+        <View style={{
+            paddingBottom: pxToDp(40),
+            paddingTop: pxToDp(10),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
+          }}>
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+class CAD extends Component {
+  render() {
+    return (
+      <View>
+        <ScrollView>
+        <View style={{
+            paddingBottom: pxToDp(40),
+            paddingTop: pxToDp(10),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
+          }}>
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+class UI extends Component {
+  render() {
+    return (
+      <View>
+        <ScrollView>
+        <View style={{
+            paddingBottom: pxToDp(40),
+            paddingTop: pxToDp(10),
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-evenly',
+          }}>
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+            <CommodityCard
+              Commodity_type="PS/AI"
+              type={2}
+              Title="朗艺装饰企业网站建设 定制开发制作网页"
+            />
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
 export class detail extends Component {
-  // 第1个标签下的内容
-  firstModel = () => {
+  state = {
+    pages: [
+      {
+        key: '手绘',
+        title: '手绘',
+        component: Drawing,
+      },
+      {
+        key: 'PS/AI',
+        title: 'PS/AI',
+        component: PS_AI,
+      },
+      {
+        key: '漫画/插画',
+        title: '漫画/插画',
+        component: cartoon,
+      },
+      {
+        key: '平面',
+        title: '平面',
+        component: plane,
+      },
+      {
+        key: 'CAD',
+        title: 'CAD',
+        component: CAD,
+      },
+      {
+        key: 'UI',
+        title: 'UI',
+        component: UI,
+      }
+    ],
+  }
+  MyTabs = () => {
+    const widthPhone = Dimensions.get('window').width
+    let { pages } = this.state;
     return (
-      <ScrollView>
-        <View style={styles.containerBox}>
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-        </View>
-      </ScrollView>
+      <TopTabNavigator
+        ifScrollEnabled={true}
+        type={1}
+        itemWidth={widthPhone / 3.5}
+        routes={pages}
+      />
     );
-  };
-  // 第2个标签下的内容
-  secondModel = () => {
-    return (
-      <ScrollView>
-        <View style={styles.containerBox}>
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-          <CommodityCard
-            Commodity_type="PS/AI"
-            type={2}
-            Title="朗艺装饰企业网站建设 定制开发制作网页"
-          />
-        </View>
-      </ScrollView>
-    );
-  };
-  // 第3个标签下的内容
-  thirdModel = () => {
-    return <Text>asd</Text>;
-  };
-  // 第4个标签下的内容
-  fourthModel = () => {
-    return <Text>asd</Text>;
-  };
-  // 第5个标签下的内容
-  fifthdModel = () => {
-    return <Text>asd</Text>;
-  };
-  // 第6个标签下的内容
-  sixthdModel = () => {
-    return <Text>asd</Text>;
-  };
+  }
   render() {
     const width = Dimensions.get('window').width;
     return (
@@ -96,19 +296,7 @@ export class detail extends Component {
           }}
         />
         <View style={{ flex: 1 }}>
-          <TopTabNavigator
-            itemWidth={width / 6}
-            ifScrollEnabled={false}
-            type={1}
-            name={['手绘', 'PS/AI', '漫画', '平面', 'CAD', 'UI']}
-          >
-            {this.firstModel()}
-            {this.secondModel()}
-            {this.thirdModel()}
-            {this.fourthModel()}
-            {this.fifthdModel()}
-            {this.sixthdModel()}
-          </TopTabNavigator>
+          {this.MyTabs()}
         </View>
       </View>
     );

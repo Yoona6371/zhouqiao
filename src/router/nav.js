@@ -44,7 +44,7 @@ import CommodityList from '../pages/commodity';
 import GoodsList from '../pages/commodity/goodsList';
 
 // 搜索
-import Search from '../pages/search';
+import Search from '../pages/Search';
 
 // 公益
 import Welfare from '../pages/home/welfare';
@@ -63,7 +63,6 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 // 排行榜页面/
 import Rank from '../pages/rank/index'
-import Search from '../pages/Search/index'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -83,7 +82,7 @@ class Nav extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Tab"
+          initialRouteName="myCollect"
           headerMode={'none'}
           mode={'card'}
           screenOptions={{
