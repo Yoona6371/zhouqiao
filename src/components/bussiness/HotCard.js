@@ -17,6 +17,7 @@ class HotCard extends Component {
     imageUri: PropTypes.string,
     title: PropTypes.string,
     number: PropTypes.number,
+    navigation: PropTypes.object,
   };
   static defaultProps = {
     imageUri:
@@ -50,7 +51,7 @@ class HotCard extends Component {
     );
   }
   handleClick() {
-    console.log('路由跳转');
+    this.props.navigation.navigate('CommodityDetail');
   }
 }
 

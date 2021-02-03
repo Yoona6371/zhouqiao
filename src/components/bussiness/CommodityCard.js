@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,7 @@ import {
 import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 
-export default class CommodityCard extends React.Component {
+export default class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
     prince: PropTypes.number,
@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
   CommodityCard__shoppingImageBox: {
     width: pxToDp(330),
     height: pxToDp(300),
+    marginTop: pxToDp(40),
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: { width: 4, height: 4 },

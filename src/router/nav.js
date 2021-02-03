@@ -1,6 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 
 // 路由
 
@@ -38,6 +41,13 @@ import OrderLists from '../pages/personal/order-list';
 
 // 商品列表页
 import CommodityList from '../pages/commodity';
+import GoodsList from '../pages/commodity/goodsList';
+
+// 搜索
+import Search from '../pages/search';
+
+// 公益
+import Welfare from '../pages/home/welfare';
 
 // 消息
 import MessageNotice from '../pages/message/notice';
@@ -69,7 +79,14 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+        <Stack.Navigator
+          initialRouteName="Tab"
+          headerMode={'none'}
+          mode={'card'}
+          screenOptions={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        >
           {/*用户*/}
           {/*登录*/}
           <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
@@ -84,7 +101,6 @@ class Nav extends React.Component {
           <Stack.Screen name="Design" component={Design} />
 
           {/*消息*/}
-          <Stack.Screen name="Message" component={Message} />
 
           {/*需求
             需求详情页
@@ -133,6 +149,13 @@ class Nav extends React.Component {
           <Stack.Screen name="CommodityDetail" component={CommodityDetail} />
           {/*商品列表*/}
           <Stack.Screen name="CommodityList" component={CommodityList} />
+          <Stack.Screen name="GoodsList" component={GoodsList} />
+
+          {/*搜索页*/}
+          <Stack.Screen name="search" component={Search} />
+
+          {/*公益列表*/}
+          <Stack.Screen name="Welfare" component={Welfare} />
 
           {/* 消息 */}
           <Stack.Screen name="MessageNotice" component={MessageNotice} />
