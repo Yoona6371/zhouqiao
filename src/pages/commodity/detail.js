@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   StyleSheet,
+  InteractionManager,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -27,6 +28,18 @@ import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import { activeOpacity } from '../../constants/config';
 
 class CommodityDetail extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      renderPlaceholderOnly: true, //交互管理器延时控制标识
+    };
+  }
+  componentDidMount() {
+    //转场动画完成之后改变标记值，重新渲染dom
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({ renderPlaceholderOnly: false });
+    });
+  }
   returnBack() {
     this.props.navigation.goBack();
   }
@@ -46,7 +59,7 @@ class CommodityDetail extends Component {
           }}
         >
           <View style={styles.banner_wrap}>
-            <Banner type={2} />
+            {this.state.renderPlaceholderOnly ? null : <Banner type={2} />}
             <LinearGradient
               colors={['rgba(255, 255, 255, 0.3)', 'rgba(34,34,34,1)']}
               style={styles.banner_footer}
@@ -169,6 +182,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
     alignSelf: 'center',
+    backgroundColor: '#999',
   },
   banner_footer: {
     width: pxToDp(690),
