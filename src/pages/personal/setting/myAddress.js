@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
-import { pxToDp } from '../../utils/pxToDp';
-import AddressList from '../../components/bussiness/addressList';
-import Icon from '../../components/common/Icon';
+import { pxToDp } from '../../../utils/pxToDp';
+import AddressList from '../../../components/bussiness/addressList';
+import Icon from '../../../components/common/Icon';
+import TopTitle from '../../../components/common/TopTitle';
+import { padding } from '../../../utils/StyleUtils';
 
 class Index extends Component {
   constructor(props) {
@@ -71,55 +73,64 @@ class Index extends Component {
   render() {
     const { list } = this.state;
     return (
-      <ScrollView style={styles.address__wrap}>
-        {list.map((v, i) => (
-          <AddressList
-            style={{ marginBottom: pxToDp(20) }}
-            key={i}
-            user={v.user}
-            defaultShow={v.defaultShow}
-            jumPage={v.jumPage}
-          />
-        ))}
-        {/*button start*/}
-        <View
-          style={{
-            marginTop: pxToDp(110),
-            alignItems: 'center',
+      <View>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
           }}
-        >
-          <TouchableOpacity
+          title="地址管理"
+          showBtn={false}
+        />
+        <ScrollView style={styles.address__wrap}>
+          {list.map((v, i) => (
+            <AddressList
+              style={{ marginBottom: pxToDp(20) }}
+              key={i}
+              user={v.user}
+              defaultShow={v.defaultShow}
+              jumPage={v.jumPage}
+            />
+          ))}
+          {/*button start*/}
+          <View
             style={{
-              width: pxToDp(461),
-              height: pxToDp(88),
-              borderRadius: pxToDp(44),
-              backgroundColor: '#FD840B',
-              justifyContent: 'center',
+              marginTop: pxToDp(110),
               alignItems: 'center',
-              flexDirection: 'row',
             }}
           >
-            <Icon
-              name="add"
+            <TouchableOpacity
               style={{
-                fontSize: pxToDp(33),
-                color: '#FFFFFF',
-                marginRight: pxToDp(19),
-              }}
-            />
-            <Text
-              style={{
-                alignSelf: 'center',
-                fontSize: pxToDp(31),
-                color: '#FFFFFF',
+                width: pxToDp(461),
+                height: pxToDp(88),
+                borderRadius: pxToDp(44),
+                backgroundColor: '#FD840B',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
               }}
             >
-              新建收货地址
-            </Text>
-          </TouchableOpacity>
-        </View>
-        {/*button  end*/}
-      </ScrollView>
+              <Icon
+                name="add"
+                style={{
+                  fontSize: pxToDp(33),
+                  color: '#FFFFFF',
+                  marginRight: pxToDp(19),
+                }}
+              />
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  fontSize: pxToDp(31),
+                  color: '#FFFFFF',
+                }}
+              >
+                新建收货地址
+              </Text>
+            </TouchableOpacity>
+          </View>
+          {/*button  end*/}
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -127,7 +138,7 @@ const styles = StyleSheet.create({
   address__wrap: {
     width: '100%',
     height: pxToDp(1624),
-    padding: pxToDp(30),
+    ...padding(30, 20, 30, 0),
     backgroundColor: '#f8f8f8',
   },
   address__list: {

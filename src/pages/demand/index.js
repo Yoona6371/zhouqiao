@@ -8,12 +8,13 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LinearGradient from 'react-native-linear-gradient';
 import { fontStyle, margin } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
+import TopTitle from '../../components/common/TopTitle';
 
 class Index extends Component {
   constructor(props) {
@@ -74,12 +75,30 @@ class Index extends Component {
       ],
       images: [],
       textLength: 0,
+      bgColor: 'transparent',
+      color: '#fff',
     };
   }
+  titleFixed = (e) => {
+    if (e.nativeEvent.contentOffset.y > 30) {
+      this.setState({ bgColor: '#feaa2c' });
+    } else {
+      this.setState({ bgColor: 'transparent' });
+    }
+  };
   render() {
-    const { list_1, list_2, list_3, images, textLength } = this.state;
+    const { list_1, list_2, list_3, images, textLength, bgColor } = this.state;
     return (
-      <ScrollView>
+      <ScrollView stickyHeaderIndices={[0]} onScroll={this.titleFixed}>
+        <TopTitle
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
+          title="发布需求"
+          showBtn={false}
+          bgColor={bgColor}
+          color={'#fff'}
+        />
         <ImageBackground
           style={styles.title_background}
           source={require('../../asserts/images/demand_back.png')}
@@ -186,7 +205,13 @@ class Index extends Component {
             colors={['#fe9e0e', '#fd7609']}
             style={styles.button_linear}
           >
-            <Text style={styles.button_text}>确认发布</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('DemandDetails');
+              }}
+            >
+              <Text style={styles.button_text}>确认发布</Text>
+            </TouchableOpacity>
           </LinearGradient>
         </TouchableOpacity>
       </ScrollView>
@@ -196,16 +221,12 @@ class Index extends Component {
 
 const styles = StyleSheet.create({
   title_background: {
-    width: pxToDp(750),
+    width: deviceWidthDp,
     height: pxToDp(421),
-  },
-  title_wrap: {
-    ...margin(30, 116, 30, 0),
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    marginTop: pxToDp(-178),
   },
   title: {
-    ...margin(30, 207, 30, 0),
+    ...margin(30, 188, 30, 0),
     height: pxToDp(83),
     flexDirection: 'row',
   },

@@ -41,12 +41,18 @@ class Index extends Component {
       avatar,
       last,
       svgRemove,
+      router,
     } = this.props;
     return (
       <TouchableOpacity
         style={
-          type === 2 ? { backgroundColor: '#fff', marginTop: pxToDp(20) } : {}
+          type === 2
+            ? { backgroundColor: '#fff', marginTop: pxToDp(20), ...style }
+            : { ...style }
         }
+        onPress={() => {
+          this.props.navigation.navigate(router);
+        }}
       >
         <View
           style={

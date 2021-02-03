@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
 import { View, InteractionManager } from 'react-native';
 import TopTitle from '../../components/common/TopTitle';
-import HomeTabCase from '../home/HomeTabCase';
+import HomeTabShop from '../home/HomeTabShop';
 import TopTabNavigator from '../../components/common/TopTabNavigator';
 import BlankPage from '../../utils/blankPage';
 import { deviceWidthDp } from '../../utils/pxToDp';
 
-class CommodityList extends PureComponent {
+class GoodsList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,32 +15,32 @@ class CommodityList extends PureComponent {
         {
           key: '全部',
           title: '全部',
-          component: HomeTabCase,
+          component: HomeTabShop,
         },
         {
           key: 'Ps',
           title: 'Ps',
-          component: HomeTabCase,
+          component: HomeTabShop,
         },
         {
           key: 'AI',
           title: 'AI',
-          component: HomeTabCase,
+          component: HomeTabShop,
         },
         {
           key: 'CAD',
           title: 'CAD',
-          component: HomeTabCase,
+          component: HomeTabShop,
         },
         {
           key: 'UI设计',
           title: 'UI设计',
-          component: HomeTabCase,
+          component: HomeTabShop,
         },
         {
           key: '工业设计',
           title: '工业设计',
-          component: HomeTabCase,
+          component: HomeTabShop,
         },
       ],
       caseData: [],
@@ -87,4 +87,4 @@ class CommodityList extends PureComponent {
   }
 }
 
-export default CommodityList;
+export default GoodsList;

@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Banner from '../../components/bussiness/banner';
 import Icon from '../../components/common/Icon';
 import UserXCard from '../../components/bussiness/UserXCard';
+import TopTitle from '../../components/common/TopTitle';
 
 import {
   flexColumnCenter,
@@ -26,10 +27,24 @@ import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import { activeOpacity } from '../../constants/config';
 
 class CommodityDetail extends Component {
+  returnBack() {
+    this.props.navigation.goBack();
+  }
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView style={{ backgroundColor: '#fff' }}>
+        <TopTitle
+          title={'案例详情'}
+          returnBack={this.returnBack.bind(this)}
+          showBtn={false}
+        />
+        <ScrollView
+          style={{
+            backgroundColor: '#fff',
+            paddingTop: pxToDp(20),
+            paddingBottom: pxToDp(100),
+          }}
+        >
           <View style={styles.banner_wrap}>
             <Banner type={2} />
             <LinearGradient
@@ -79,7 +94,7 @@ class CommodityDetail extends Component {
               </View>
             </View>
             <Text style={styles.case_text}>
-              化开发具有较高的通用性。无论是前端渲染的单页面应用，
+              {'     '}化开发具有较高的通用性。无论是前端渲染的单页面应用，
               还是后端模板渲染的多页面应用，组件化开发的概念都能适用。
               组件化开发具有较高的通用性。无论是前端渲染的单页面应用
               还是后端模板渲染的多页面应用，组件化开发的概念都能适用
@@ -133,7 +148,7 @@ class CommodityDetail extends Component {
                 ￥6000
               </Text>
             </View>
-            <Text style={{ ...styles.but2_text, marginTop: pxToDp(15) }}>
+            <Text style={{ ...styles.but2_text, marginTop: pxToDp(12) }}>
               立即购买
             </Text>
           </TouchableOpacity>
@@ -201,6 +216,7 @@ const styles = StyleSheet.create({
     fontSize: pxToDp(24),
     lineHeight: pxToDp(40),
     color: '#666',
+    marginBottom: pxToDp(50),
   },
   pages_wrap: {
     borderTopWidth: pxToDp(16),
@@ -242,6 +258,6 @@ const styles = StyleSheet.create({
     ...fontStyle(28, 32, 32, 'bold', '#fff', 'center'),
   },
   but3_text: {
-    ...fontStyle(24, 28, 28, 'bold', '#fff', 'center'),
+    ...fontStyle(28, 32, 32, 'bold', '#fff', 'center'),
   },
 });

@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ImageBackground,
+} from 'react-native';
 import Option from '../../../components/bussiness/Options';
 import { margin } from '../../../utils/StyleUtils';
 import { pxToDp } from '../../../utils/pxToDp';
+import TopTitle from '../../../components/common/TopTitle';
 
 class Test extends Component {
   constructor(props) {
@@ -57,20 +64,30 @@ class Test extends Component {
   render() {
     let { list } = this.state;
     return (
-      <View style={styles.edit__wrap}>
+      <View>
         <ScrollView>
-          {list.map((v, i) => (
-            <Option
-              key={i}
-              title={v.title}
-              type={v.type}
-              navigation={this.props.navigation}
-              text_more={v.text_more}
-              text_more_status={v.text_more_status}
-              last={v.last}
-              svgRemove={true}
-            />
-          ))}
+          <TopTitle
+            returnBack={() => {
+              this.props.navigation.goBack();
+            }}
+            title="资料编辑"
+            showBtn={false}
+            style={{ marginBottom: pxToDp(30) }}
+          />
+          <View style={styles.edit__wrap}>
+            {list.map((v, i) => (
+              <Option
+                key={i}
+                title={v.title}
+                type={v.type}
+                navigation={this.props.navigation}
+                text_more={v.text_more}
+                text_more_status={v.text_more_status}
+                last={v.last}
+                svgRemove={true}
+              />
+            ))}
+          </View>
         </ScrollView>
       </View>
     );
@@ -79,7 +96,7 @@ class Test extends Component {
 const styles = StyleSheet.create({
   edit__wrap: {
     backgroundColor: '#fff',
-    ...margin(30, 196, 30, 0),
+    ...margin(30, 0, 30, 0),
   },
 });
 
