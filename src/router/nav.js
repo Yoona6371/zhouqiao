@@ -62,8 +62,6 @@ import Tab from '../router/tab';
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 
 // 排行榜页面/
-import Rank from '../pages/rank/index'
-import Search from '../pages/Search/index'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
