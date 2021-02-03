@@ -63,7 +63,6 @@ export default class TopTabNavigator extends PureComponent {
   }
 
   renderTabBar = (props) => {
-    console.log(props);
     const { type, itemWidth, ifScrollEnabled } = this.props;
     return (
       <TabBar

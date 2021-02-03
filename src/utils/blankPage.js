@@ -17,7 +17,7 @@ export default class BlankPage extends PureComponent {
       >
         <Image
           style={{ width: 150, height: 150, backgroundColor: '#f5f5f5' }}
-          source={require('../asserts/images/demand_backRight.png')}
+          source={require('../asserts/images/loading.gif')}
         />
       </View>
     );

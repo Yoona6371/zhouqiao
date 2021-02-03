@@ -73,10 +73,6 @@ export default class Avatar extends Component {
             width: pxToDp(size),
             height: pxToDp(size),
             borderRadius: pxToDp(size) / 2,
-<<<<<<< HEAD
-=======
-            // overflow: 'hidden',
->>>>>>> efcd46c4d28091ccab5b85543b1c4bc9d7b7e168
           }}
         >
           <Image
