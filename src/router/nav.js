@@ -80,7 +80,7 @@ class Nav extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="OrderLists"
+          initialRouteName="CommodityList"
           headerMode={'none'}
           mode={'card'}
           screenOptions={{

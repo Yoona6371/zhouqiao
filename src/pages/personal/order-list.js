@@ -4,7 +4,7 @@ import OrderCard from '../../components/bussiness/OrderCard';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import TopTopNavigator from '../../components/common/TopTabNavigator';
 import TopTitle from '../../components/common/TopTitle';
-class Evaluate extends React.Component {
+class OrderList extends React.Component {
   static navigationOptions = { title: null };
 
   constructor(props) {
@@ -58,27 +58,27 @@ class Index extends React.Component {
         {
           key: '待付款',
           title: '待付款',
-          component: Evaluate,
+          component: OrderList,
         },
         {
           key: '进行中',
           title: '进行中',
-          component: Evaluate,
+          component: OrderList,
         },
         {
           key: '待收货',
           title: '待收货',
-          component: Evaluate,
+          component: OrderList,
         },
         {
           key: '已完成',
           title: '已完成',
-          component: Evaluate,
+          component: OrderList,
         },
         {
           key: '已取消',
           title: '已取消',
-          component: Evaluate,
+          component: OrderList,
         },
       ],
     };
