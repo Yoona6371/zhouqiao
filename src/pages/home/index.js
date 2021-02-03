@@ -32,8 +32,8 @@ import {
 class HomeAvatar extends Component {
   render() {
     return (
-      <View style={{ ...margin(0, 36, 40, 46) }}>
-        <Avatar size={130} image={this.props.image} />
+      <View style={{ ...margin(25, 36, 25, 46) }}>
+        <Avatar size={130} image={this.props.image} isVip={true} />
         <Text
           style={{
             marginTop: pxToDp(15),
@@ -53,20 +53,52 @@ class Index extends Component {
     this.state = {
       pages: [
         {
-          name: '关注',
-          component: <HomeTabCase />,
+          key: '关注',
+          title: '关注',
+          component: HomeTabCase,
         },
         {
-          name: 'Ps',
-          component: <HomeTabCase />,
+          key: 'Ps',
+          title: 'Ps',
+          component: HomeTabCase,
         },
         {
-          name: 'AI',
-          component: <HomeTabCase />,
+          key: 'AI',
+          title: 'AI',
+          component: HomeTabCase,
+        },
+        {
+          key: 'CAD',
+          title: 'CAD',
+          component: HomeTabCase,
+        },
+        {
+          key: 'UI设计',
+          title: 'UI设计',
+          component: HomeTabCase,
+        },
+        {
+          key: '工业设计',
+          title: '工业设计',
+          component: HomeTabCase,
         },
       ],
       hotData: [1, 2, 3, 4, 5],
       headerPhoto: [
+        {
+          name: 'ggg',
+          image: {
+            uri:
+              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
+          },
+        },
+        {
+          name: 'ggg',
+          image: {
+            uri:
+              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
+          },
+        },
         {
           name: 'ggg',
           image: {
@@ -110,16 +142,13 @@ class Index extends Component {
   }
   MyTabs = () => {
     let { pages } = this.state;
-    const name = ['关注', 'ps', 'AI'];
     return (
       <TopTabNavigator
-        ifScrollEnabled={false}
+        ifScrollEnabled={true}
         type={3}
-        name={name}
-        itemWidth={deviceWidthDp / 3}
-      >
-        {pages.map((v, i) => v.component)}
-      </TopTabNavigator>
+        itemWidth={deviceWidthDp / 5}
+        routes={pages}
+      />
     );
   };
 
@@ -144,7 +173,11 @@ class Index extends Component {
             <Icon name={'earphone'} style={{ fontSize: pxToDp(36) }} />
           </View>
         </ImageBackground>
-        <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+        <ScrollView
+          style={{
+            backgroundColor: '#fff',
+          }}
+        >
           <ImageBackground
             source={require('../../asserts/images/home_header_bg.png')}
             style={styles.home_header2}
@@ -155,12 +188,16 @@ class Index extends Component {
           <View style={styles.home_information}>
             <View style={{ ...flexRowSpb, justifyContent: 'flex-start' }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('meassge')}
+                onPress={() => navigation.navigate('消息')}
                 style={styles.information_text1_container}
               >
                 <Icon
                   name={'information'}
-                  style={{ fontSize: pxToDp(28), paddingBottom: pxToDp(2) }}
+                  style={{
+                    fontSize: pxToDp(28),
+                    paddingBottom: pxToDp(6),
+                    color: '#FE9E0E',
+                  }}
                 />
                 <Text
                   style={{
@@ -192,30 +229,44 @@ class Index extends Component {
               />
               <Text style={styles.module_text}>原创设计</Text>
             </TouchableOpacity>
-            <View style={styles.module_container}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Welfare')}
+              style={styles.module_container}
+            >
               <Image
                 source={require('../../asserts/icons/精彩活动.png')}
                 style={{ width: pxToDp(66), height: pxToDp(65) }}
               />
               <Text style={styles.module_text}>精彩活动</Text>
-            </View>
-            <View style={styles.module_container}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CommodityList')}
+              style={styles.module_container}
+            >
               <Image
                 source={require('../../asserts/icons/大咖设计.png')}
                 style={{ width: pxToDp(80), height: pxToDp(66) }}
               />
               <Text style={styles.module_text}>大咖设计</Text>
-            </View>
-            <View style={styles.module_container}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('设计师')}
+              style={styles.module_container}
+            >
               <Image
                 source={require('../../asserts/icons/设计榜单.png')}
                 style={{ width: pxToDp(64), height: pxToDp(64) }}
               />
               <Text style={styles.module_text}>设计榜单</Text>
-            </View>
+            </TouchableOpacity>
           </View>
           {/*热门案例*/}
-          <ContainerCard title={'热门案例'} style={styles.hot_container}>
+          <ContainerCard
+            title={'热门案例'}
+            navigation={navigation}
+            router={'CommodityList'}
+            style={styles.hot_container}
+          >
             {/*热门列表开始*/}
             <FlatList
               horizontal={true}
@@ -234,7 +285,8 @@ class Index extends Component {
             <Text style={styles.commodity_header_title}>精彩案例</Text>
           </ImageBackground>
           {this.MyTabs()}
-          <View
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CommodityList')}
             style={{
               width: pxToDp(690),
               height: pxToDp(72),
@@ -249,9 +301,14 @@ class Index extends Component {
             >
               点击查看更多
             </Text>
-          </View>
+          </TouchableOpacity>
           {/*设计师*/}
-          <ContainerCard title={'设计师'} style={styles.hot_container}>
+          <ContainerCard
+            title={'设计师'}
+            navigation={navigation}
+            router={'设计师'}
+            style={styles.hot_container}
+          >
             {/*热门列表开始*/}
             <FlatList
               horizontal={true}
@@ -262,7 +319,12 @@ class Index extends Component {
             />
             {/*热门列表结束*/}
           </ContainerCard>
-          <ContainerCard title={'周边产品'} style={styles.shop_container}>
+          <ContainerCard
+            navigation={navigation}
+            router={'GoodsList'}
+            title={'周边产品'}
+            style={styles.shop_container}
+          >
             {/*商品列表开始*/}
             <HomeTabShop />
             {/*商品列表结束*/}

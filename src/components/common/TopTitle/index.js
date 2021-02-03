@@ -1,17 +1,25 @@
-// 需要四个参数 例如  <TopTitle returnBack={this.sss} onPress={this.hello} title="购物列表" showBtn={true}></TopTitle>
-// returnBack是返回按钮得参数，onpress是右侧详情按钮得函数，title是中间得文字，showBtn是右侧按钮是否展示
+{
+  /* <TopTitle bgColor="#FFF" color="#000"  returnBack={this.sss} onPress={this.hello} title="购物列表" showBtn={true}></TopTitle> */
+}
+// returnBack是返回按钮得参数，onpress是右侧详情按钮得函数，title是中间得文字，showBtn是右侧按钮是否展示 bgColor背景色 color字的颜色  只有#FFF和#000两种
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { pxToDp } from '../../../utils/pxToDp';
 import PropTypes from 'prop-types';
 import SvgUri from 'react-native-svg-uri';
-import { goBack } from '../../../constants/svg';
+import { goBack, goBackWhite } from '../../../constants/svg';
 export class index extends Component {
   static propTypes = {
     returnBack: PropTypes.func.isRequired,
     onPress: PropTypes.func,
     title: PropTypes.string.isRequired,
     showBtn: PropTypes.bool.isRequired,
+    color: PropTypes.string,
+    bgColor: PropTypes.string,
+  };
+  static defaultProps = {
+    color: '#000',
+    bgColor: '#FFF',
   };
   ifShowBtn = () => {
     if (this.props.showBtn === false) {
@@ -64,12 +72,20 @@ export class index extends Component {
       );
     }
   };
+  showBackSvg = () => {
+    const { color } = this.props;
+    if (color === '#000') {
+      return <SvgUri svgXmlData={goBack} width={26} height={30} />;
+    } else if (color === '#FFF') {
+      return <SvgUri svgXmlData={goBackWhite} width={26} height={30} />;
+    }
+  };
   render() {
-    const { title } = this.props;
+    const { title, color, bgColor } = this.props;
     return (
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: bgColor,
           alignItems: 'center',
         }}
       >
@@ -91,7 +107,7 @@ export class index extends Component {
             }}
           >
             <TouchableOpacity onPress={this.props.returnBack}>
-              <SvgUri svgXmlData={goBack} width={26} height={30} />
+              {this.showBackSvg()}
             </TouchableOpacity>
           </View>
           <View
@@ -107,7 +123,7 @@ export class index extends Component {
               style={{
                 fontSize: pxToDp(38),
                 fontWeight: 'bold',
-                color: '#222222',
+                color: color,
               }}
             >
               {title}

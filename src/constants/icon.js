@@ -37,4 +37,9 @@ export default {
   camera: '\ue628',
   welfare_people: '\ue64c',
   hot: '\ue64d',
+  position2: '\ue64f',
+  search2: '\ue650',
+  horn: '\ue62b',
+  love: '\ue62e',
+  like2: '\ue62f',
 };

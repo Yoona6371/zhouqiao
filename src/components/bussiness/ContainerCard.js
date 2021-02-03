@@ -11,13 +11,13 @@ class Index extends Component {
   }
   static propTypes = {
     title: PropTypes.string.isRequired,
-    navigation: PropTypes.object.isRequired,
+    navigation: PropTypes.object,
     router: PropTypes.string,
     rightRemove: PropTypes.bool,
-    IconRempve: PropTypes.bool,
+    IconRemove: PropTypes.bool,
   };
   press = () => {
-    this.props.navigation.navigate('Index');
+    this.props.navigation.navigate(this.props.router);
   };
   render() {
     return (
@@ -68,8 +68,8 @@ var styles = StyleSheet.create({
     lineHeight: pxToDp(35),
   },
   children: {
-    marginLeft: pxToDp(30),
-    marginRight: pxToDp(30),
+    // marginLeft: pxToDp(30),
+    // marginRight: pxToDp(30),
   },
 });
 

@@ -11,11 +11,18 @@ import {
 } from 'react-native';
 import WelfareCard from '../../components/bussiness/welfareCard';
 import { padding } from '../../utils/StyleUtils';
+import TopTitle from '../../components/common/TopTitle';
 
 class Welfare extends Component {
   constructor() {
     super();
     this.state = {
+      list: [],
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
       list: [
         {
           topImage: require('../../asserts/images/WelfareCard_image.png'),
@@ -53,18 +60,22 @@ class Welfare extends Component {
           userNumber: 219,
         },
       ],
-    };
+    });
   }
+
+  returnBack() {
+    this.props.navigation.goBack();
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar
-          backgroundColor="transparent"
-          translucent={true}
-          barStyle="dark-content"
-        />
         {/*Topstatus 开始*/}
-        <View style={styles.topStatus} />
+        <TopTitle
+          title={'公益设计'}
+          returnBack={this.returnBack.bind(this)}
+          showBtn={false}
+        />
         {/*Topstatus 结束*/}
         {/*card 开始*/}
         <View style={styles.card__box}>

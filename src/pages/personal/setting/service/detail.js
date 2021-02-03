@@ -16,16 +16,15 @@ export class detail extends Component {
         <TopTitle
           title="隐私协议"
           showBtn={false}
-          returnBack={() => alert('asd')}
+          returnBack={() => {
+            this.props.navigation.goBack();
+          }}
         />
         <ScrollView>
           <View style={styles.border}>
             <Text style={styles.title}>用户使用隐私协议</Text>
             <Text style={styles.date}>2020-01-21 11:51:36</Text>
-            <Image
-              style={styles.img}
-              source={require('../../../../asserts/images/Vline.png')}
-            />
+            <View style={styles.line} />
             <Text style={styles.contents}>
               1、如果客户端发现或收到他人举报或投诉用户违反本协议约定的，客户端有权不经通知随时对相关内容，包括但不限于用户资料、发贴记录进行审查、删除，并视情节轻重对违规账号处以包括但不限于警告、账号封禁、设备封禁、功能封禁的处罚，且通知用户处理结果。
             </Text>
@@ -49,6 +48,14 @@ export class detail extends Component {
 }
 
 const styles = StyleSheet.create({
+  line: {
+    borderColor: '#000',
+    borderRadius: 0.5,
+    height: 1,
+    borderWidth: 1,
+    borderStyle: 'dotted',
+    marginTop: pxToDp(20),
+  },
   title: {
     fontSize: pxToDp(34),
     fontWeight: 'bold',

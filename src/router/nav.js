@@ -1,6 +1,9 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 
 // 路由
 
@@ -18,7 +21,7 @@ import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 
 // 个人中心
-import AccountSecurity from '../pages/personal/account-security';
+import AccountSecurity from '../pages/personal/setting/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service/service-list';
 import SettingIndex from '../pages/personal/setting';
@@ -28,6 +31,7 @@ import myDemand from '../pages/personal/myDemand';
 import myCollect from '../pages/personal/myCollect';
 import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
+import MyAddress from '../pages/personal/setting/myAddress';
 
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
@@ -37,9 +41,13 @@ import OrderLists from '../pages/personal/order-list';
 
 // 商品列表页
 import CommodityList from '../pages/commodity';
+import GoodsList from '../pages/commodity/goodsList';
 
 // 搜索
 import Search from '../pages/search';
+
+// 公益
+import Welfare from '../pages/home/welfare';
 
 // 测试
 import Test from '../pages/test';
@@ -67,7 +75,14 @@ class Nav extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Tab" headerMode={'none'}>
+        <Stack.Navigator
+          initialRouteName="Tab"
+          headerMode={'none'}
+          mode={'card'}
+          screenOptions={{
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+          }}
+        >
           {/*用户*/}
           {/*登录*/}
 
@@ -82,7 +97,6 @@ class Nav extends React.Component {
           <Stack.Screen name="Design" component={Design} />
 
           {/*消息*/}
-          <Stack.Screen name="Message" component={Message} />
 
           {/*需求
             需求详情页
@@ -107,6 +121,8 @@ class Nav extends React.Component {
           <Stack.Screen name="SettingIndex" component={SettingIndex} />
           {/*个人资料修改页*/}
           <Stack.Screen name="DataEdit" component={DataEdit} />
+          {/*地址管理*/}
+          <Stack.Screen name="MyAddress" component={MyAddress} />
           {/*服务协议详情页*/}
           <Stack.Screen name="ServiceDetail" component={ServiceDetail} />
           {/*我的需求页*/}
@@ -129,9 +145,13 @@ class Nav extends React.Component {
           <Stack.Screen name="CommodityDetail" component={CommodityDetail} />
           {/*商品列表*/}
           <Stack.Screen name="CommodityList" component={CommodityList} />
+          <Stack.Screen name="GoodsList" component={GoodsList} />
 
           {/*搜索页*/}
           <Stack.Screen name="search" component={Search} />
+
+          {/*公益列表*/}
+          <Stack.Screen name="Welfare" component={Welfare} />
         </Stack.Navigator>
       </NavigationContainer>
     );
