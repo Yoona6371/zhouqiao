@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import OrderCard from '../../components/bussiness/OrderCard';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
+import TopTopNavigator from '../../components/common/TopTabNavigator';
+import TopTitle from '../../components/common/TopTitle';
 class Evaluate extends React.Component {
   static navigationOptions = { title: null };
 
@@ -20,7 +22,7 @@ class Evaluate extends React.Component {
   render() {
     const { evaluateData } = this.state;
     return (
-      <ScrollView style={{ width: '100%', height: pxToDp(1000) }}>
+      <ScrollView style={{ width: '100%' }}>
         <View style={styles.evaluate_box}>
           <FlatList
             data={evaluateData}
@@ -45,4 +47,52 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default Evaluate;
+// export default Evaluate;
+
+class Index extends React.Component {
+  static navigationOptions = { title: null };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      pages: [
+        {
+          key: '待评价',
+          title: '待评价',
+          component: Evaluate,
+        },
+        {
+          key: '已评价/追评',
+          title: '已评价/追评',
+          component: Evaluate,
+        },
+      ],
+    };
+  }
+  MyTabs = () => {
+    let { pages } = this.state;
+    return (
+      <TopTopNavigator
+        ifScrollEnabled={true}
+        itemWidth={deviceWidthDp / 2}
+        type={3}
+        routes={pages}
+      />
+    );
+  };
+  render() {
+    const { navigation } = this.props;
+    return (
+      <ScrollView>
+        <TopTitle
+          returnBack={console.log('进入评价中心')}
+          title={'评价中心'}
+          showBtn={false}
+        />
+        {this.MyTabs()}
+      </ScrollView>
+    );
+  }
+}
+
+export default Index;
