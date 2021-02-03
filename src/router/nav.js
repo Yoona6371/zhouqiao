@@ -6,7 +6,7 @@ import {
 } from '@react-navigation/stack';
 
 // 路由
-
+import Index from '../pages/home';
 // 大图浏览
 import ImageShow from '../pages/ImageShow';
 
@@ -83,7 +83,7 @@ class Nav extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Tab"
+          initialRouteName="CommodityList"
           headerMode={'none'}
           mode={'card'}
           screenOptions={{
@@ -91,9 +91,11 @@ class Nav extends React.Component {
           }}
         >
           {/*用户*/}
+          <Stack.Screen name="Index" component={Index} />
           {/*登录*/}
           <Stack.Screen name="LoginAndRegister" component={LoginAndRegister} />
           {/*首页*/}
+
           <Stack.Screen name="Tab" component={Tab} />
 
           {/*大图浏览*/}
