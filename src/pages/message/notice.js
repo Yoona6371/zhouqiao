@@ -15,6 +15,12 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      list: [],
+    };
+  }
+
+  componentDidMount() {
+    this.setState({
       list: [
         {
           type: 1,
@@ -45,7 +51,7 @@ class Index extends Component {
           time: '2021-02-01 10:18',
         },
       ],
-    };
+    });
   }
 
   render() {

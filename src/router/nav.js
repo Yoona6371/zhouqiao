@@ -13,9 +13,6 @@ import ImageShow from '../pages/ImageShow';
 // 设计
 import Design from '../pages/design';
 
-// 消息
-import Message from '../pages/message';
-
 // 需求
 import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
@@ -51,6 +48,7 @@ import Welfare from '../pages/home/welfare';
 
 // 消息
 import MessageNotice from '../pages/message/notice';
+import MessageDetail from '../pages/message/detail';
 
 // 测试
 import Test from '../pages/test';
@@ -80,7 +78,7 @@ class Nav extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="search"
+          initialRouteName="Tab"
           headerMode={'none'}
           mode={'card'}
           screenOptions={{
@@ -161,6 +159,7 @@ class Nav extends React.Component {
 
           {/* 消息 */}
           <Stack.Screen name="MessageNotice" component={MessageNotice} />
+          <Stack.Screen name="MessageDetail" component={MessageDetail} />
         </Stack.Navigator>
       </NavigationContainer>
     );
