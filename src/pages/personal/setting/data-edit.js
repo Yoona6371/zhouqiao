@@ -67,9 +67,6 @@ class Test extends Component {
       <View>
         <ScrollView>
           <TopTitle
-            returnBack={() => {
-              this.props.navigation.goBack();
-            }}
             title="资料编辑"
             showBtn={false}
             style={{ marginBottom: pxToDp(30) }}
@@ -80,7 +77,6 @@ class Test extends Component {
                 key={i}
                 title={v.title}
                 type={v.type}
-                navigation={this.props.navigation}
                 text_more={v.text_more}
                 text_more_status={v.text_more_status}
                 last={v.last}

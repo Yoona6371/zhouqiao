@@ -3,6 +3,7 @@ import { View, FlatList, StyleSheet } from 'react-native';
 import UserXCard from '../../components/bussiness/UserXCard';
 import { pxToDp } from '../../utils/pxToDp';
 import { bgColor } from '../../constants/config';
+import TopTitle from '../../components/common/TopTitle';
 const Data = [
   {
     id: 1,
@@ -68,6 +69,7 @@ class MyFocus extends Component {
   render() {
     return (
       <View style={styles.contentContainer}>
+        <TopTitle title="我的需求" showBtn={false} />
         <FlatList
           numColumns={2}
           data={Data}

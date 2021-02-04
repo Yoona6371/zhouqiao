@@ -40,17 +40,10 @@ class CommodityDetail extends Component {
       this.setState({ renderPlaceholderOnly: false });
     });
   }
-  returnBack() {
-    this.props.navigation.goBack();
-  }
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <TopTitle
-          title={'案例详情'}
-          returnBack={this.returnBack.bind(this)}
-          showBtn={false}
-        />
+        <TopTitle title={'案例详情'} showBtn={false} />
         <ScrollView
           style={{
             backgroundColor: '#fff',

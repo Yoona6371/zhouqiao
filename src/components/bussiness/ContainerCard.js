@@ -11,13 +11,12 @@ class Index extends Component {
   }
   static propTypes = {
     title: PropTypes.string.isRequired,
-    navigation: PropTypes.object,
     router: PropTypes.string,
     rightRemove: PropTypes.bool,
     IconRemove: PropTypes.bool,
   };
   press = () => {
-    this.props.navigation.navigate(this.props.router);
+    NavigationHelper.navigate(this.props.router);
   };
   render() {
     return (

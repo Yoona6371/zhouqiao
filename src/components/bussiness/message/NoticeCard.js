@@ -68,7 +68,7 @@ class Index extends Component {
             <TouchableOpacity
               style={{ flexDirection: 'row' }}
               onPress={() => {
-                this.props.navigation.navigate(router);
+                NavigationHelper.navigate(router);
               }}
             >
               <Text style={{ ...fontStyle(28, 30, 30, 'bold', '#999') }}>

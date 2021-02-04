@@ -16,7 +16,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('ServiceList');
+            NavigationHelper.navigate('ServiceList');
           }}
         >
           服务列表协议
@@ -24,7 +24,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('SettingIndex');
+            NavigationHelper.navigate('SettingIndex');
           }}
         >
           设置
@@ -32,7 +32,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('myDemand');
+            NavigationHelper.navigate('myDemand');
           }}
         >
           我的需求
@@ -40,7 +40,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('myCollect');
+            NavigationHelper.navigate('myCollect');
           }}
         >
           我的收藏
@@ -48,7 +48,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('history');
+            NavigationHelper.navigate('history');
           }}
         >
           浏览历史
@@ -56,7 +56,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('Evaluate');
+            NavigationHelper.navigate('Evaluate');
           }}
         >
           评价中心
@@ -64,7 +64,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('AfterSales');
+            NavigationHelper.navigate('AfterSales');
           }}
         >
           售后
@@ -72,7 +72,7 @@ class Index extends Component {
         <Text
           style={{ marginTop: pxToDp(80) }}
           onPress={() => {
-            this.props.navigation.navigate('OrderLists');
+            NavigationHelper.navigate('OrderLists');
           }}
         >
           订单列表

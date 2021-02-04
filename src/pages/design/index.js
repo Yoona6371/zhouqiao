@@ -32,13 +32,7 @@ export class index extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={{ position: 'absolute', top: 0, zIndex: 999 }}>
-          <TopTitle
-            returnBack={() => alert('111')}
-            title="设计师榜"
-            showBtn={false}
-            color="#FFF"
-            bgColor=""
-          />
+          <TopTitle title="设计师榜" showBtn={false} color="#FFF" bgColor="" />
         </View>
         <RankCardTop3
           onPressChampion={() => alert(1111)}

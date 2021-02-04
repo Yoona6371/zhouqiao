@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import OrderCard from '../../components/bussiness/OrderCard';
-import { pxToDp } from '../../utils/pxToDp';
-class Evaluate extends React.Component {
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
+// import TopTopNavigator from '../../components/common/TopTabNavigator';
+import TopTitle from '../../components/common/TopTitle';
+
+class AfterSales extends React.Component {
   static navigationOptions = { title: null };
 
   constructor(props) {
@@ -20,7 +23,10 @@ class Evaluate extends React.Component {
   render() {
     const { evaluateData } = this.state;
     return (
-      <ScrollView style={{ width: '100%', height: pxToDp(1000) }}>
+      <ScrollView style={{ width: '100%' }}>
+        <View>
+          <TopTitle title={'退款/售后'} showBtn={false} />
+        </View>
         <View style={styles.evaluate_box}>
           <FlatList
             data={evaluateData}
@@ -45,4 +51,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default Evaluate;
+export default AfterSales;

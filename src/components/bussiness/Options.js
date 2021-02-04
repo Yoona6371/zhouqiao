@@ -21,7 +21,6 @@ class Index extends Component {
     text_right: PropTypes.string,
     text: PropTypes.string,
     router: PropTypes.string,
-    navigation: PropTypes.object.isRequired,
     colors: PropTypes.array,
     text_more_status: PropTypes.bool,
     avatar: PropTypes.string,
@@ -51,7 +50,7 @@ class Index extends Component {
             : { ...style }
         }
         onPress={() => {
-          this.props.navigation.navigate(router);
+          NavigationHelper.navigate(router);
         }}
       >
         <View
