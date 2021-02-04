@@ -74,13 +74,7 @@ class Index extends Component {
     const { list } = this.state;
     return (
       <View>
-        <TopTitle
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-          title="地址管理"
-          showBtn={false}
-        />
+        <TopTitle title="地址管理" showBtn={false} />
         <ScrollView style={styles.address__wrap}>
           {list.map((v, i) => (
             <AddressList

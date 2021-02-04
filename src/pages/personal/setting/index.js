@@ -72,13 +72,7 @@ class Index extends Component {
     let { listIndividual, listSystem } = this.state;
     return (
       <ScrollView>
-        <TopTitle
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-          title="设置"
-          showBtn={false}
-        />
+        <TopTitle title="设置" showBtn={false} />
         <View style={styles.individual}>
           {listIndividual.map((v, i) => (
             <Option
@@ -86,7 +80,6 @@ class Index extends Component {
               title={v.title}
               type={1}
               text_more={v.text_more}
-              navigation={this.props.navigation}
               router={v.router}
               svg={v.svg}
             />
@@ -99,7 +92,6 @@ class Index extends Component {
               title={v.title}
               type={1}
               text_more={v.text_more}
-              navigation={this.props.navigation}
               router={v.router}
               svg={v.svg}
             />

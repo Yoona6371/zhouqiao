@@ -25,11 +25,7 @@ class AfterSales extends React.Component {
     return (
       <ScrollView style={{ width: '100%' }}>
         <View>
-          <TopTitle
-            returnBack={console.log('进入退款售后')}
-            title={'退款/售后'}
-            showBtn={false}
-          />
+          <TopTitle title={'退款/售后'} showBtn={false} />
         </View>
         <View style={styles.evaluate_box}>
           <FlatList

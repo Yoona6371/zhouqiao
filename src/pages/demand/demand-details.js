@@ -17,17 +17,10 @@ class DemandDetails extends Component {
   constructor(props) {
     super(props);
   }
-  returnBack() {
-    this.props.navigation.goBack();
-  }
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <TopTitle
-          title={'需求详情'}
-          returnBack={this.returnBack.bind(this)}
-          showBtn={false}
-        />
+        <TopTitle title={'需求详情'} showBtn={false} />
         <ScrollView style={{ backgroundColor: '#fff', paddingTop: pxToDp(20) }}>
           {/*demand卡片开始*/}
           <DemandCard
@@ -144,7 +137,7 @@ class DemandDetails extends Component {
             }}
           >
             <TouchableOpacity
-              onPress={() => this.props.navigation.replace('myDemand')}
+              onPress={() => NavigationHelper.replace('myDemand')}
             >
               <View style={styles.bottom_btn}>
                 <Text style={{ color: '#FFFFFF' }}>确定</Text>

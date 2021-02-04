@@ -91,9 +91,6 @@ class Index extends Component {
     return (
       <ScrollView stickyHeaderIndices={[0]} onScroll={this.titleFixed}>
         <TopTitle
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
           title="发布需求"
           showBtn={false}
           bgColor={bgColor}
@@ -207,7 +204,7 @@ class Index extends Component {
           >
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('DemandDetails');
+                NavigationHelper.navigate('DemandDetails');
               }}
             >
               <Text style={styles.button_text}>确认发布</Text>

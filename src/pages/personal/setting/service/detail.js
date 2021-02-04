@@ -13,13 +13,7 @@ export class detail extends Component {
           flex: 1,
         }}
       >
-        <TopTitle
-          title="隐私协议"
-          showBtn={false}
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-        />
+        <TopTitle title="隐私协议" showBtn={false} />
         <ScrollView>
           <View style={styles.border}>
             <Text style={styles.title}>用户使用隐私协议</Text>

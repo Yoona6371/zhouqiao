@@ -13,7 +13,7 @@ export default class TopTabNavigator extends PureComponent {
   }
 
   static propTypes = {
-    ifScrollEnabled: PropTypes.number.isRequired,
+    ifScrollEnabled: PropTypes.bool.isRequired,
     itemWidth: PropTypes.number.isRequired,
     type: PropTypes.number.isRequired,
     routes: PropTypes.array.isRequired,
@@ -136,7 +136,7 @@ export default class TopTabNavigator extends PureComponent {
         indicatorStyle={this.bottomLine}
         tabStyle={{ width: itemWidth }}
         lazy={true}
-        lazyPreloadDistance={1}
+        lazyPreloadDistance={0}
         renderLazyPlaceholder={() => <Text>加载中....</Text>}
       />
     );

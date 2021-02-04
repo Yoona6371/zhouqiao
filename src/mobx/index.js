@@ -41,7 +41,9 @@ class GlobalStore {
     this.allData = data;
   }
   // 方法
-  // @action
+  @action setNavigation(navigation) {
+    this.allData.navigation = navigation;
+  }
 }
 
 export default new RootStore();
