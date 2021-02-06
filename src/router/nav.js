@@ -82,7 +82,7 @@ class Nav extends React.Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="search"
+          initialRouteName="Tab"
           headerMode={'none'}
           mode={'card'}
           screenOptions={{
