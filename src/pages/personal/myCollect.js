@@ -8,15 +8,17 @@ import CommodityCard from '../../components/bussiness/CommodityCard';
 class Drawing extends Component {
   render() {
     return (
-      <View >
+      <View>
         <ScrollView>
-          <View style={{
-            paddingBottom: pxToDp(40),
-            paddingTop: pxToDp(10),
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          }}>
+          <View
+            style={{
+              paddingBottom: pxToDp(40),
+              paddingTop: pxToDp(10),
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <CommodityCard
               Commodity_type="PS/AI"
               type={2}
@@ -40,7 +42,7 @@ class Drawing extends Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class PS_AI extends Component {
@@ -48,13 +50,15 @@ class PS_AI extends Component {
     return (
       <View>
         <ScrollView>
-          <View style={{
-            paddingBottom: pxToDp(40),
-            paddingTop: pxToDp(10),
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          }}>
+          <View
+            style={{
+              paddingBottom: pxToDp(40),
+              paddingTop: pxToDp(10),
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <CommodityCard
               Commodity_type="PS/AI"
               type={2}
@@ -78,7 +82,7 @@ class PS_AI extends Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class cartoon extends Component {
@@ -86,13 +90,15 @@ class cartoon extends Component {
     return (
       <View>
         <ScrollView>
-          <View style={{
-            paddingBottom: pxToDp(40),
-            paddingTop: pxToDp(10),
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          }}>
+          <View
+            style={{
+              paddingBottom: pxToDp(40),
+              paddingTop: pxToDp(10),
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <CommodityCard
               Commodity_type="PS/AI"
               type={2}
@@ -116,7 +122,7 @@ class cartoon extends Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class plane extends Component {
@@ -124,13 +130,15 @@ class plane extends Component {
     return (
       <View>
         <ScrollView>
-        <View style={{
-            paddingBottom: pxToDp(40),
-            paddingTop: pxToDp(10),
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          }}>
+          <View
+            style={{
+              paddingBottom: pxToDp(40),
+              paddingTop: pxToDp(10),
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <CommodityCard
               Commodity_type="PS/AI"
               type={2}
@@ -154,7 +162,7 @@ class plane extends Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class CAD extends Component {
@@ -162,13 +170,15 @@ class CAD extends Component {
     return (
       <View>
         <ScrollView>
-        <View style={{
-            paddingBottom: pxToDp(40),
-            paddingTop: pxToDp(10),
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          }}>
+          <View
+            style={{
+              paddingBottom: pxToDp(40),
+              paddingTop: pxToDp(10),
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <CommodityCard
               Commodity_type="PS/AI"
               type={2}
@@ -192,7 +202,7 @@ class CAD extends Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class UI extends Component {
@@ -200,13 +210,15 @@ class UI extends Component {
     return (
       <View>
         <ScrollView>
-        <View style={{
-            paddingBottom: pxToDp(40),
-            paddingTop: pxToDp(10),
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            justifyContent: 'space-evenly',
-          }}>
+          <View
+            style={{
+              paddingBottom: pxToDp(40),
+              paddingTop: pxToDp(10),
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'space-evenly',
+            }}
+          >
             <CommodityCard
               Commodity_type="PS/AI"
               type={2}
@@ -230,7 +242,7 @@ class UI extends Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 export class detail extends Component {
@@ -265,11 +277,11 @@ export class detail extends Component {
         key: 'UI',
         title: 'UI',
         component: UI,
-      }
+      },
     ],
-  }
+  };
   MyTabs = () => {
-    const widthPhone = Dimensions.get('window').width
+    const widthPhone = Dimensions.get('window').width;
     let { pages } = this.state;
     return (
       <TopTabNavigator
@@ -279,7 +291,7 @@ export class detail extends Component {
         routes={pages}
       />
     );
-  }
+  };
   render() {
     const width = Dimensions.get('window').width;
     return (
@@ -288,16 +300,8 @@ export class detail extends Component {
           flex: 1,
         }}
       >
-        <TopTitle
-          title="我的收藏"
-          showBtn={false}
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-        />
-        <View style={{ flex: 1 }}>
-          {this.MyTabs()}
-        </View>
+        <TopTitle title="我的收藏" showBtn={false} />
+        <View style={{ flex: 1 }}>{this.MyTabs()}</View>
       </View>
     );
   }

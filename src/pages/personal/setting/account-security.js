@@ -54,13 +54,7 @@ class Index extends Component {
     let { list } = this.state;
     return (
       <ScrollView>
-        <TopTitle
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-          title="账户安全"
-          showBtn={false}
-        />
+        <TopTitle title="账户安全" showBtn={false} />
         {list.map((v, i) => (
           <Option
             key={i}
@@ -70,7 +64,6 @@ class Index extends Component {
             svg={v.svg}
             router={v.router}
             colors={v.colors}
-            navigation={this.props.navigation}
             style={{ ...margin(30, 20, 30, 0) }}
           />
         ))}

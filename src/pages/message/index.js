@@ -24,7 +24,7 @@ class Test extends Component {
         </View>
         <TouchableOpacity
           style={styles.message_list_wrap}
-          onPress={() => this.props.navigation.navigate('MessageNotice')}
+          onPress={() => NavigationHelper.navigate('MessageNotice')}
         >
           <View style={styles.message_list}>
             <View style={{ alignSelf: 'center' }}>

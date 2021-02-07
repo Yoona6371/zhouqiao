@@ -11,7 +11,6 @@ import { goBack, goBackWhite } from '../../../constants/svg';
 export class index extends Component {
   static propTypes = {
     returnBack: PropTypes.func.isRequired,
-    onPress: PropTypes.func,
     title: PropTypes.string.isRequired,
     showBtn: PropTypes.bool.isRequired,
     color: PropTypes.string,
@@ -106,7 +105,7 @@ export class index extends Component {
               alignItems: 'flex-start',
             }}
           >
-            <TouchableOpacity onPress={this.props.returnBack}>
+            <TouchableOpacity onPress={() => NavigationHelper.goBack()}>
               {this.showBackSvg()}
             </TouchableOpacity>
           </View>

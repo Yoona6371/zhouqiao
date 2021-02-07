@@ -25,9 +25,6 @@ class Test extends Component {
     return (
       <ScrollView style={styles.feedback__wrap}>
         <TopTitle
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
           title="资料编辑"
           showBtn={false}
           style={{ marginBottom: pxToDp(30) }}
