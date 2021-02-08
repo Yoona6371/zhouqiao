@@ -25,7 +25,7 @@ class Index extends Component {
         <View style={styles.message_list_wrap}>
           <TouchableOpacity
             style={styles.message_list}
-            onPress={() => this.props.navigation.navigate('MessageNotice')}
+            onPress={() => NavigationHelper.navigate('MessageNotice')}
           >
             <View style={{ alignSelf: 'center' }}>
               <Avatar
@@ -65,7 +65,7 @@ class Index extends Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.message_list}
-            onPress={() => this.props.navigation.navigate('MessageDetail')}
+            onPress={() => NavigationHelper.navigate('MessageDetail')}
           >
             <View style={{ alignSelf: 'center' }}>
               <Avatar

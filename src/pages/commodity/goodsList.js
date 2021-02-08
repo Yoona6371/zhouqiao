@@ -74,13 +74,7 @@ class GoodsList extends PureComponent {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <TopTitle
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-          title="设计案例"
-          showBtn={false}
-        />
+        <TopTitle title="设计案例" showBtn={false} />
         {this._render()}
       </View>
     );

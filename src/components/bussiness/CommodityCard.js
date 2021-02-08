@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
+import { activeOpacity } from '../../constants/config';
 
-export default class CommodityCard extends React.PureComponent {
+class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
     prince: PropTypes.number,
@@ -19,7 +20,6 @@ export default class CommodityCard extends React.PureComponent {
     user_image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
     Commodity_type: PropTypes.string,
     user_id: PropTypes.string,
-    navigation: PropTypes.object,
     router: PropTypes.string,
   };
   static defaultProps = {
@@ -28,9 +28,10 @@ export default class CommodityCard extends React.PureComponent {
 
   constructor(props) {
     super(props);
+    this.state = {};
   }
   Press = () => {
-    this.props.navigation.navigate(this.props.router);
+    NavigationHelper.navigate('CommodityDetail');
   };
   render() {
     const {
@@ -51,7 +52,10 @@ export default class CommodityCard extends React.PureComponent {
        */
     }
     return (
-      <TouchableOpacity onPress={this.Press}>
+      <TouchableOpacity
+        activeOpacity={activeOpacity}
+        onPress={this.Press.bind(this)}
+      >
         <View style={{ ...style }}>
           {this.props.type === 3 ? (
             <View style={styles.CommodityCard__typeThreeContainer}>
@@ -128,6 +132,9 @@ export default class CommodityCard extends React.PureComponent {
     );
   }
 }
+
+export default CommodityCard;
+
 const styles = StyleSheet.create({
   CommodityCard__typeThreeContainer: {
     width: pxToDp(330),

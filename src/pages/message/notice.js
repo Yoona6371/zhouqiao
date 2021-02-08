@@ -61,7 +61,7 @@ class Index extends Component {
         <View style={{ backgroundColor: '#fff' }}>
           <TouchableOpacity
             style={styles.notice__wrap}
-            onPress={() => this.props.navigation.goBack()}
+            onPress={() => NavigationHelper.goBack()}
           >
             <Icon name={'back'} />
             <Text style={styles.notice_title}>通知消息</Text>

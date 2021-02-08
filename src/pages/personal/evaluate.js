@@ -81,14 +81,9 @@ class Index extends React.Component {
     );
   };
   render() {
-    const { navigation } = this.props;
     return (
       <ScrollView>
-        <TopTitle
-          returnBack={console.log('进入评价中心')}
-          title={'评价中心'}
-          showBtn={false}
-        />
+        <TopTitle title={'评价中心'} showBtn={false} />
         {this.MyTabs()}
       </ScrollView>
     );

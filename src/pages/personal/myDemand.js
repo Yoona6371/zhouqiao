@@ -11,15 +11,15 @@ class all extends Component {
     return (
       <View>
         <ScrollView>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class wait extends Component {
@@ -27,15 +27,15 @@ class wait extends Component {
     return (
       <View>
         <ScrollView>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class already extends Component {
@@ -43,15 +43,15 @@ class already extends Component {
     return (
       <View>
         <ScrollView>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class done extends Component {
@@ -59,15 +59,15 @@ class done extends Component {
     return (
       <View>
         <ScrollView>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
-          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03"></DemandList>
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
+          <DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 export class detail extends Component {
@@ -92,11 +92,11 @@ export class detail extends Component {
         key: '已完结',
         title: '已完结',
         component: done,
-      }
+      },
     ],
-  }
+  };
   MyTabs = () => {
-    const widthPhone = Dimensions.get('window').width
+    const widthPhone = Dimensions.get('window').width;
     let { pages } = this.state;
     return (
       <TopTabNavigator
@@ -106,7 +106,7 @@ export class detail extends Component {
         routes={pages}
       />
     );
-  }
+  };
   render() {
     const width = Dimensions.get('window').width;
     return (
@@ -115,13 +115,7 @@ export class detail extends Component {
           flex: 1,
         }}
       >
-        <TopTitle
-          title="我的需求"
-          showBtn={false}
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
-        />
+        <TopTitle title="我的需求" showBtn={false} />
         <View style={{ flex: 1 }}>
           {this.MyTabs()}
           {/* <TopTabNavigator

@@ -52,7 +52,7 @@ class Welfare extends Component {
       <View style={{ flex: 1 }}>
         <TopTitle
           returnBack={() => {
-            this.props.navigation.goBack();
+            NavigationHelper.goBack();
           }}
           title="公益设计"
           showBtn={false}

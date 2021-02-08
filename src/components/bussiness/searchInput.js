@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput } from 'react-native';
+import { TouchableOpacity, View, TextInput } from 'react-native';
 import Icon from '../common/Icon';
 import { pxToDp } from '../../utils/pxToDp';
-
+import { activeOpacity } from '../../constants/config';
 // style 样式
 //onChangeText
 //onSubmitEditing 提交方法
@@ -15,7 +15,9 @@ export default class SearchInput extends Component {
   render() {
     const { value } = this.props;
     return (
-      <View
+      <TouchableOpacity
+        activeOpacity={activeOpacity}
+        onPress={this.props.onFocus}
         style={{
           width: pxToDp(484),
           height: pxToDp(74),
@@ -25,7 +27,7 @@ export default class SearchInput extends Component {
         }}
       >
         <TextInput
-          onFocus={this.props.onFocus}
+          editable={false}
           onChangeText={this.props.onChangeText}
           onSubmitEditing={this.props.onSubmitEditing}
           value={value}
@@ -43,7 +45,7 @@ export default class SearchInput extends Component {
             color: '#999999',
           }}
         />
-      </View>
+      </TouchableOpacity>
     );
   }
 }

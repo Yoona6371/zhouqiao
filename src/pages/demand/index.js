@@ -109,21 +109,6 @@ class Index extends Component {
           { useNativeDriver: false },
         )}
       >
-        {/*<LinearGradient*/}
-        {/*  start={{ x: 0, y: 0 }}*/}
-        {/*  end={{ x: 1, y: 0 }}*/}
-        {/*  // colors={[`rgba(254,153,13,${asd})`, `rgba(253,123,10,${asd})`]}*/}
-        {/*  colors={['rgba(254,153,13,0.5)', 'rgba(253,123,10,0.5)']}*/}
-        {/*>*/}
-        {/*  <Text*/}
-        {/*    style={{*/}
-        {/*      ...fontStyle(38, 42, 42, 'bold', '#fff', 'center'),*/}
-        {/*      ...margin(0, 80, 0, 54),*/}
-        {/*    }}*/}
-        {/*  >*/}
-        {/*    发布需求*/}
-        {/*  </Text>*/}
-        {/*</LinearGradient>*/}
         <Animated.View
           style={{
             height: pxToDp(138),
@@ -252,7 +237,7 @@ class Index extends Component {
           >
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('DemandDetails');
+                NavigationHelper.navigate('DemandDetails');
               }}
             >
               <Text style={styles.button_text}>确认发布</Text>

@@ -36,7 +36,7 @@ class Drawing extends Component {
           />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class PS_AI extends Component {
@@ -70,7 +70,7 @@ class PS_AI extends Component {
           />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class cartoon extends Component {
@@ -104,7 +104,7 @@ class cartoon extends Component {
           />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class plane extends Component {
@@ -138,7 +138,7 @@ class plane extends Component {
           />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class CAD extends Component {
@@ -172,7 +172,7 @@ class CAD extends Component {
           />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 class UI extends Component {
@@ -206,12 +206,11 @@ class UI extends Component {
           />
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 
 export class detail extends Component {
-
   state = {
     pages: [
       {
@@ -243,11 +242,11 @@ export class detail extends Component {
         key: 'UI',
         title: 'UI',
         component: UI,
-      }
+      },
     ],
-  }
+  };
   MyTabs = () => {
-    const widthPhone = Dimensions.get('window').width
+    const widthPhone = Dimensions.get('window').width;
     let { pages } = this.state;
     return (
       <TopTabNavigator
@@ -257,7 +256,7 @@ export class detail extends Component {
         routes={pages}
       />
     );
-  }
+  };
   render() {
     const width = Dimensions.get('window').width;
     return (
@@ -269,14 +268,9 @@ export class detail extends Component {
         <TopTitle
           title="浏览记录"
           showBtn={true}
-          returnBack={() => {
-            this.props.navigation.goBack();
-          }}
           onPress={() => alert('别动我')}
         />
-        <View style={{ flex: 1 }}>
-          {this.MyTabs()}
-        </View>
+        <View style={{ flex: 1 }}>{this.MyTabs()}</View>
       </View>
     );
   }

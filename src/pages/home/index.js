@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+
 import Banner from '../../components/bussiness/banner';
 import SearchInput from '../../components/bussiness/searchInput';
 import Icon from '../../components/common/Icon';
@@ -18,7 +19,6 @@ import Avatar from '../../components/common/Avatar';
 import TopTabNavigator from '../../components/common/TopTabNavigator';
 import HomeTabCase from './HomeTabCase';
 import HomeTabShop from './HomeTabShop';
-import io from 'socket.io-client';
 
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import {
@@ -29,29 +29,6 @@ import {
   margin,
   padding,
 } from '../../utils/StyleUtils';
-
-class HomeAvatar extends Component {
-  render() {
-    const socket = io('http://327k3v6279.zicp.vip');
-    console.log('aaaaaa');
-    socket.emit('connection', () => {
-      console.log('asd');
-    });
-    return (
-      <View style={{ ...margin(25, 36, 25, 46) }}>
-        <Avatar size={130} image={this.props.image} isVip={true} />
-        <Text
-          style={{
-            marginTop: pxToDp(15),
-            ...fontStyle(28, 36, 36, 'normal', '#333', 'center'),
-          }}
-        >
-          {this.props.name}
-        </Text>
-      </View>
-    );
-  }
-}
 
 class Index extends Component {
   constructor(props) {
@@ -158,12 +135,11 @@ class Index extends Component {
     );
   };
 
-  onFocus(navigation) {
-    navigation.navigate('search');
+  onFocus() {
+    NavigationHelper.navigate('search');
   }
 
   render() {
-    const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground
@@ -175,7 +151,7 @@ class Index extends Component {
               style={styles.header_logo}
               source={require('../../asserts/images/logo.jpg')}
             />
-            <SearchInput onFocus={() => this.onFocus(navigation)} />
+            <SearchInput onFocus={this.onFocus} />
             <Icon name={'earphone'} style={{ fontSize: pxToDp(36) }} />
           </View>
         </ImageBackground>
@@ -194,7 +170,7 @@ class Index extends Component {
           <View style={styles.home_information}>
             <View style={{ ...flexRowSpb, justifyContent: 'flex-start' }}>
               <TouchableOpacity
-                onPress={() => navigation.navigate('消息')}
+                onPress={() => NavigationHelper.navigate('消息')}
                 style={styles.information_text1_container}
               >
                 <Icon
@@ -226,7 +202,7 @@ class Index extends Component {
           {/*四个模块*/}
           <View style={styles.home_module}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('CommodityList')}
+              onPress={() => NavigationHelper.navigate('CommodityList')}
               style={styles.module_container}
             >
               <Image
@@ -236,7 +212,7 @@ class Index extends Component {
               <Text style={styles.module_text}>原创设计</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Welfare')}
+              onPress={() => NavigationHelper.navigate('Welfare')}
               style={styles.module_container}
             >
               <Image
@@ -246,7 +222,7 @@ class Index extends Component {
               <Text style={styles.module_text}>精彩活动</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate('CommodityList')}
+              onPress={() => NavigationHelper.navigate('CommodityList')}
               style={styles.module_container}
             >
               <Image
@@ -256,7 +232,7 @@ class Index extends Component {
               <Text style={styles.module_text}>大咖设计</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => navigation.navigate('设计师')}
+              onPress={() => NavigationHelper.navigate('设计师')}
               style={styles.module_container}
             >
               <Image
@@ -269,7 +245,6 @@ class Index extends Component {
           {/*热门案例*/}
           <ContainerCard
             title={'热门案例'}
-            navigation={navigation}
             router={'CommodityList'}
             style={styles.hot_container}
           >
@@ -277,9 +252,7 @@ class Index extends Component {
             <FlatList
               horizontal={true}
               data={this.state.hotData}
-              renderItem={({ item }) => (
-                <HotCard navigation={this.props.navigation} key={item} />
-              )}
+              renderItem={({ item }) => <HotCard key={item} />}
             />
             {/*热门列表结束*/}
           </ContainerCard>
@@ -292,7 +265,7 @@ class Index extends Component {
           </ImageBackground>
           {this.MyTabs()}
           <TouchableOpacity
-            onPress={() => navigation.navigate('CommodityList')}
+            onPress={() => NavigationHelper.navigate('CommodityList')}
             style={{
               width: pxToDp(690),
               height: pxToDp(72),
@@ -311,7 +284,6 @@ class Index extends Component {
           {/*设计师*/}
           <ContainerCard
             title={'设计师'}
-            navigation={navigation}
             router={'设计师'}
             style={styles.hot_container}
           >
@@ -326,7 +298,6 @@ class Index extends Component {
             {/*热门列表结束*/}
           </ContainerCard>
           <ContainerCard
-            navigation={navigation}
             router={'GoodsList'}
             title={'周边产品'}
             style={styles.shop_container}
@@ -341,6 +312,23 @@ class Index extends Component {
   }
 }
 export default Index;
+class HomeAvatar extends Component {
+  render() {
+    return (
+      <View style={{ ...margin(25, 36, 25, 46) }}>
+        <Avatar size={130} image={this.props.image} isVip={true} />
+        <Text
+          style={{
+            marginTop: pxToDp(15),
+            ...fontStyle(28, 36, 36, 'normal', '#333', 'center'),
+          }}
+        >
+          {this.props.name}
+        </Text>
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   home_header1: {

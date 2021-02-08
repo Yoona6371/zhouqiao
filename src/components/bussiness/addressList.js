@@ -19,7 +19,7 @@ export default class AddressList extends Component {
   delete = () => {};
 
   editor = (jumPage) => {
-    this.props.navigation.navigate(jumPage);
+    NavigationHelper.navigate(jumPage);
     console.log('asd');
   };
   render() {
