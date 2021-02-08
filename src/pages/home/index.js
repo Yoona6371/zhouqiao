@@ -18,6 +18,7 @@ import Avatar from '../../components/common/Avatar';
 import TopTabNavigator from '../../components/common/TopTabNavigator';
 import HomeTabCase from './HomeTabCase';
 import HomeTabShop from './HomeTabShop';
+import io from 'socket.io-client';
 
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import {
@@ -31,6 +32,11 @@ import {
 
 class HomeAvatar extends Component {
   render() {
+    const socket = io('http://327k3v6279.zicp.vip');
+    console.log('aaaaaa');
+    socket.emit('connection', () => {
+      console.log('asd');
+    });
     return (
       <View style={{ ...margin(25, 36, 25, 46) }}>
         <Avatar size={130} image={this.props.image} isVip={true} />
