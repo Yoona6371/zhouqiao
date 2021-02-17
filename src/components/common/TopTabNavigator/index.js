@@ -136,7 +136,7 @@ export default class TopTabNavigator extends PureComponent {
         indicatorStyle={this.bottomLine}
         tabStyle={{ width: itemWidth }}
         lazy={true}
-        lazyPreloadDistance={0}
+        lazyPreloadDistance={1}
         renderLazyPlaceholder={() => <Text>加载中....</Text>}
       />
     );

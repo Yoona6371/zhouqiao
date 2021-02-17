@@ -220,12 +220,12 @@ export default Tabs;
 const styles = StyleSheet.create({
   tab_home_wrap: {
     width: pxToDp(750),
-    height: pxToDp(114),
+    height: pxToDp(110),
     position: 'relative',
   },
   tab_home_bg: {
     width: pxToDp(750),
-    height: pxToDp(156),
+    height: pxToDp(162),
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
   tab_home: {
     width: pxToDp(750),
-    height: pxToDp(114),
+    height: pxToDp(124),
     ...padding(48, 0, 48, 0),
     ...flexRowSpb,
     alignItems: 'flex-end',

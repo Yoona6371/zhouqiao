@@ -10,7 +10,6 @@ import SvgUri from 'react-native-svg-uri';
 import { goBack, goBackWhite } from '../../../constants/svg';
 export class index extends Component {
   static propTypes = {
-    returnBack: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     showBtn: PropTypes.bool.isRequired,
     color: PropTypes.string,

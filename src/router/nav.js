@@ -33,7 +33,7 @@ import MyAddress from '../pages/personal/setting/myAddress';
 
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
-import Evaluate from '../pages/personal/evaluate';
+import EvaluateList from '../pages/personal/evaluate/evaluate-list';
 import AfterSales from '../pages/personal/after-sales';
 import OrderLists from '../pages/personal/order-list';
 
@@ -81,7 +81,7 @@ class Nav extends React.Component {
         onStateChange={(state: NavigationState) => {
           //加入该行
           //这个是跳转了才去回调，所以不能利用routes来判断路由栈
-          global.NavigationHelper.navRouters = state.routes;
+          NavigationHelper.navRouters = state.routes;
         }}
       >
         <Stack.Navigator
@@ -246,8 +246,8 @@ class Nav extends React.Component {
           />
           {/*商品评价列表*/}
           <Stack.Screen
-            name="Evaluate"
-            component={Evaluate}
+            name="EvaluateList"
+            component={EvaluateList}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

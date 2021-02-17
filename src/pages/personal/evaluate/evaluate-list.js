@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
-import OrderCard from '../../components/bussiness/OrderCard';
-import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
-import TopTopNavigator from '../../components/common/TopTabNavigator';
-import TopTitle from '../../components/common/TopTitle';
+import OrderCard from '../../../components/bussiness/OrderCard';
+import { deviceWidthDp, pxToDp } from '../../../utils/pxToDp';
+import TopTopNavigator from '../../../components/common/TopTabNavigator';
+import TopTitle from '../../../components/common/TopTitle';
 class Evaluate extends React.Component {
   static navigationOptions = { title: null };
 
