@@ -34,6 +34,7 @@ import MyAddress from '../pages/personal/setting/myAddress';
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
 import Evaluate from '../pages/personal/evaluate';
+import EvaluateRelease from '../pages/personal/evaluate/evaluate-release';
 import AfterSales from '../pages/personal/after-sales';
 import OrderLists from '../pages/personal/order-list';
 
@@ -85,7 +86,7 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="Tab"
+          initialRouteName="EvaluateRelease"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
@@ -97,6 +98,13 @@ class Nav extends React.Component {
           <Stack.Screen
             name="LoginAndRegister"
             component={LoginAndRegister}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          <Stack.Screen
+            name="EvaluateRelease"
+            component={EvaluateRelease}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
