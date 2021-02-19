@@ -86,7 +86,7 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="EvaluateRelease"
+          initialRouteName="Test"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
@@ -102,13 +102,7 @@ class Nav extends React.Component {
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
-          <Stack.Screen
-            name="EvaluateRelease"
-            component={EvaluateRelease}
-            options={{
-              ...TransitionPresets.SlideFromRightIOS,
-            }}
-          />
+
           {/*首页*/}
 
           <Stack.Screen
@@ -256,6 +250,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="Evaluate"
             component={Evaluate}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*商品评价页面*/}
+          <Stack.Screen
+            name="EvaluateRelease"
+            component={EvaluateRelease}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
