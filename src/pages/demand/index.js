@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,12 +15,13 @@ import { fontStyle, margin } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
-import TopTitle from '../../components/common/TopTitle';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      scrollY: new Animated.Value(0),
+      titleOpacity: new Animated.Value(0),
       list_1: [
         {
           title: '预算金额',
@@ -80,22 +82,53 @@ class Index extends Component {
     };
   }
   titleFixed = (e) => {
-    if (e.nativeEvent.contentOffset.y > 30) {
-      this.setState({ bgColor: '#feaa2c' });
-    } else {
-      this.setState({ bgColor: 'transparent' });
-    }
+    // this.setState({ titleOpacity: (e.nativeEvent.contentOffset.y - 50) / 100 });
+    // if (e.nativeEvent.contentOffset.y > 30) {
+    //   this.setState({ bgColor: '#feaa2c' });
+    // } else {
+    //   this.setState({ bgColor: 'transparent' });
+    // }
+  };
+  asd = () => {
+    const { scrollY } = this.state;
+    return scrollY.interpolate({
+      inputRange: [0, 100, 200],
+      outputRange: [0, 0.5, 1],
+      extrapolate: 'clamp',
+    });
   };
   render() {
-    const { list_1, list_2, list_3, images, textLength, bgColor } = this.state;
+    const { list_1, list_2, list_3, images, textLength } = this.state;
+    const asd = this.asd();
     return (
-      <ScrollView stickyHeaderIndices={[0]} onScroll={this.titleFixed}>
-        <TopTitle
-          title="发布需求"
-          showBtn={false}
-          bgColor={bgColor}
-          color={'#fff'}
+      <ScrollView
+        stickyHeaderIndices={[0, 1]}
+        showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+          { useNativeDriver: false },
+        )}
+      >
+        <Animated.View
+          style={{
+            height: pxToDp(138),
+            opacity: asd,
+            backgroundColor: '#FE990D',
+            width: '100%',
+            position: 'relative',
+          }}
         />
+        <Text
+          style={{
+            alignSelf: 'center',
+            paddingTop: pxToDp(80),
+            position: 'absolute',
+          }}
+        >
+          <Text style={{ ...fontStyle(34, 36, 36, 'bold'), color: '#fff' }}>
+            发布需求
+          </Text>
+        </Text>
         <ImageBackground
           style={styles.title_background}
           source={require('../../asserts/images/demand_back.png')}
@@ -217,6 +250,7 @@ class Index extends Component {
 }
 
 const styles = StyleSheet.create({
+  title__wrap: {},
   title_background: {
     width: deviceWidthDp,
     height: pxToDp(421),
