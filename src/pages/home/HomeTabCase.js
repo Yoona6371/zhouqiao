@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
-import { FlatList, ScrollView } from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import CommodityCard from '../../components/bussiness/CommodityCard';
 
-import { pxToDp } from '../../utils/pxToDp';
 import { flexColumnSpb, padding } from '../../utils/StyleUtils';
 
 export default class HomeTabCase extends PureComponent {
   state = {
     caseData: [],
+    refreshing: false,
   };
 
   componentDidMount() {
@@ -23,11 +23,29 @@ export default class HomeTabCase extends PureComponent {
     });
   }
 
+  _onRefresh = () => {
+    this.setState({
+      refreshing: true,
+    });
+    setTimeout(() => {
+      this.setState((prevState) => {
+        return {
+          refreshing: false,
+          caseData: prevState.caseData.concat(
+            this.state.caseData.slice(
+              prevState.caseData.length,
+              prevState.caseData.length + 50,
+            ),
+          ),
+        };
+      });
+    }, 3000);
+  };
+
   render() {
     const { caseData } = this.state;
     return (
-      <ScrollView>
-        {/*案例列表开始*/}
+      <SafeAreaView>
         <FlatList
           data={caseData}
           numColumns={2}
@@ -41,8 +59,7 @@ export default class HomeTabCase extends PureComponent {
             />
           )}
         />
-        {/*案例列表结束*/}
-      </ScrollView>
+      </SafeAreaView>
     );
   }
 }

@@ -71,7 +71,13 @@ class CommodityCard extends React.PureComponent {
                 </Text>
               </View>
               <View style={{ marginTop: pxToDp(24) }}>
-                <Text style={{ color: '#FE9E0E', fontSize: pxToDp(26) }}>
+                <Text
+                  style={{
+                    color: '#FE9E0E',
+                    fontSize: pxToDp(26),
+                    marginBottom: pxToDp(38),
+                  }}
+                >
                   ¥{this.props.prince}
                 </Text>
               </View>
@@ -138,19 +144,20 @@ export default CommodityCard;
 const styles = StyleSheet.create({
   CommodityCard__typeThreeContainer: {
     width: pxToDp(330),
-    height: pxToDp(482),
+    // height: pxToDp(482),
     marginRight: pxToDp(20),
   },
   CommodityCard__shoppingImageBox: {
     width: pxToDp(330),
     height: pxToDp(300),
-    marginTop: pxToDp(40),
+    borderRadius: pxToDp(10),
     backgroundColor: '#FFFFFF',
     shadowColor: '#000',
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.8,
     shadowRadius: 6,
-    elevation: 8,
+    elevation: 10,
+    overflow: 'hidden',
   },
   CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
   CommodityCard__typeThreeShoppingTitleBox: {
