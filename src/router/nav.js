@@ -86,7 +86,7 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="Test"
+          initialRouteName="LoginAndRegister"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
