@@ -20,8 +20,13 @@
     "@react-navigation/stack": "^5.13.0",
     "aurora-imui-react-native": "^0.14.0",
     "axios": "^0.21.1",
+<<<<<<< HEAD
+    "guide": "^1.1.0",
+    "installation": "^0.2.18",
+=======
     "lottie-ios": "3.1.8",
     "lottie-react-native": "^3.5.0",
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca
     "mobx": "^6.0.4",
     "mobx-react": "^7.0.5",
     "moment": "^2.29.1",
@@ -39,10 +44,13 @@
     "react-native-screens": "^2.16.1",
     "react-native-smart-refresh": "^1.1.5",
     "react-native-snap-carousel": "^3.9.1",
+    "react-native-star-rating": "^1.1.0",
     "react-native-svg": "^12.1.0",
     "react-native-svg-uri": "^1.2.3",
     "react-native-tab-navigator": "^0.3.4",
     "react-native-tab-view": "^2.15.2",
+    "react-native-textarea": "^1.0.4",
+    "react-native-vector-icons": "^8.0.0",
     "react-native-video": "^5.1.1",
     "react-native-wechat-lib": "^1.1.26",
     "socket.io-client": "^3.1.1"

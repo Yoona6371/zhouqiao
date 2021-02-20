@@ -42,6 +42,11 @@ export default {
   horn: '\ue62b',
   love: '\ue62e',
   like2: '\ue62f',
+<<<<<<< HEAD
+  mid_evaluate: '\ue65a',
+  good_evaluate: '\ue638',
+  bad_evaluate: '\ue631',
+=======
   hot2: '\ue652',
   settings2: '\ue60b',
   personal_focus: '\ue6df',
@@ -94,4 +99,5 @@ export default {
   voice: '\ue694',
   plus: '\ue696',
   account: '\ue697',
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca
 };

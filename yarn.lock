@@ -4403,6 +4403,9 @@ jest-validate@^25.5.0:
 
 jest-watcher@^25.5.0:
   version "25.5.0"
+<<<<<<< HEAD
+  resolved "https://registry.npm.taobao.org/jest-watcher/download/jest-watcher-25.5.0.tgz?cache=0&sync_timestamp=1607352895595&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjest-watcher%2Fdownload%2Fjest-watcher-25.5.0.tgz#d6110d101df98ba
+=======
   resolved "https://registry.npm.taobao.org/jest-watcher/download/jest-watcher-25.5.0.tgz?cache=0&sync_timestamp=1607352895595&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjest-watcher%2Fdownload%2Fjest-watcher-25.5.0.tgz#d6110d101df98badebe435003956fd4a465e8456"
   integrity sha1-1hENEB35i63r5DUAOVb9SkZehFY=
   dependencies:
@@ -7639,3 +7642,4 @@ yeast@0.1.2:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/yeast/download/yeast-0.1.2.tgz#008e06d8094320c372dbc2f8ed76a0ca6c8ac419"
   integrity sha1-AI4G2AlDIMNy28L47XagymyKxBk=
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca

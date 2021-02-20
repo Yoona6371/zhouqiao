@@ -33,7 +33,12 @@ import OthersPersonal from '../pages/design/others';
 
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
+<<<<<<< HEAD
+import Evaluate from '../pages/personal/evaluate';
+import EvaluateRelease from '../pages/personal/evaluate/evaluate-release';
+=======
 import EvaluateList from '../pages/personal/evaluate/evaluate-list';
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca
 import AfterSales from '../pages/personal/after-sales';
 import OrderLists from '../pages/personal/order-list';
 
@@ -86,7 +91,7 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="Tab"
+          initialRouteName="Test"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
@@ -102,6 +107,9 @@ class Nav extends React.Component {
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
+<<<<<<< HEAD
+
+=======
           {/*他人中心*/}
           <Stack.Screen
             name="OthersPersonal"
@@ -110,6 +118,7 @@ class Nav extends React.Component {
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca
           {/*首页*/}
 
           <Stack.Screen
@@ -257,6 +266,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="EvaluateList"
             component={EvaluateList}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*商品评价页面*/}
+          <Stack.Screen
+            name="EvaluateRelease"
+            component={EvaluateRelease}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
