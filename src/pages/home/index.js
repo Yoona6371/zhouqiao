@@ -263,7 +263,9 @@ class Index extends Component {
           >
             <Text style={styles.commodity_header_title}>精彩案例</Text>
           </ImageBackground>
-          {this.MyTabs()}
+          <View style={{ height: pxToDp(1800), overflow: 'hidden' }}>
+            {this.MyTabs()}
+          </View>
           <TouchableOpacity
             onPress={() => NavigationHelper.navigate('CommodityList')}
             style={{

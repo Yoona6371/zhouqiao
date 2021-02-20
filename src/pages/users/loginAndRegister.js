@@ -167,7 +167,7 @@ class Index extends Component {
             source={require('../../asserts/images/Login_top.png')}
           >
             {/*close 图标*/}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => NavigationHelper.goBack()}>
               <Icon name="close" style={styles.Icon__close} />
             </TouchableOpacity>
             {/*logo*/}

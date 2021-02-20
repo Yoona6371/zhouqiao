@@ -2,11 +2,12 @@ import axios from 'axios';
 import server from './api';
 // 拿taken，在请求拦截器中添加
 import RootStore from '../mobx';
+import navigationHelper from '../utils/navigationHelper';
 
 // server 循环遍历输出不同的请求方法
 const instance = axios.create({
   //基础路径
-  baseURL: 'https://www.baidu.com',
+  baseURL: 'http://www.zhouqiao.art:8080',
   // 请求限时
   timeout: 10000,
 });
@@ -84,3 +85,6 @@ instance.interceptors.response.use(
   },
 );
 export default Http;
+Http.init = function (helper, name = 'Http') {
+  global[name] = helper;
+};

@@ -131,6 +131,6 @@ export default class Avatar extends Component {
   }
 
   handleClick() {
-    console.log('点击头像');
+    NavigationHelper.navigate('OthersPersonal');
   }
 }
