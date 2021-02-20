@@ -31,6 +31,9 @@ import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
 
+// 他人中心
+import OthersPersonal from '../pages/design/others';
+
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
 import EvaluateList from '../pages/personal/evaluate/evaluate-list';
@@ -97,6 +100,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="LoginAndRegister"
             component={LoginAndRegister}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*他人中心*/}
+          <Stack.Screen
+            name="OthersPersonal"
+            component={OthersPersonal}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

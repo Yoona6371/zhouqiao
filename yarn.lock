@@ -2351,7 +2351,7 @@ data-urls@^1.1.0:
     whatwg-mimetype "^2.2.0"
     whatwg-url "^7.0.0"
 
-dayjs@^1.8.15:
+dayjs@^1.8.15, dayjs@^1.9.8:
   version "1.10.4"
   resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.10.4.tgz#8e544a9b8683f61783f570980a8a80eaf54ab1e2"
   integrity sha1-jlRKm4aD9heD9XCYCoqA6vVKseI=
@@ -2379,6 +2379,11 @@ decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.npm.taobao.org/decode-uri-component/download/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
   integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+
+dedent@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npm.taobao.org/dedent/download/dedent-0.6.0.tgz?cache=0&sync_timestamp=1608580825991&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fdedent%2Fdownload%2Fdedent-0.6.0.tgz#0e6da8f0ce52838ef5cec5c8f9396b0c1b64a3cb"
+  integrity sha1-Dm2o8M5Sg471zsXI+TlrDBtko8s=
 
 deep-assign@^3.0.0:
   version "3.0.0"
@@ -3621,7 +3626,7 @@ internal-slot@^1.0.2:
     has "^1.0.3"
     side-channel "^1.0.2"
 
-invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.npm.taobao.org/invariant/download/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
@@ -4654,6 +4659,26 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   integrity sha1-ce5R+nvkyuwaY4OffmgtgTLTDK8=
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
+
+lottie-ios@3.1.8:
+  version "3.1.8"
+  resolved "https://registry.npm.taobao.org/lottie-ios/download/lottie-ios-3.1.8.tgz#2e9b1f4eae0dfc10bf4c0b3ab6b402c1d590d0fa"
+  integrity sha1-LpsfTq4N/BC/TAs6trQCwdWQ0Po=
+
+lottie-ios@^3.1.8:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/lottie-ios/download/lottie-ios-3.2.0.tgz#0a0f229e065833c3b54169f5ee6a2624b8fd9c94"
+  integrity sha1-Cg8ingZYM8O1QWn17momJLj9nJQ=
+
+lottie-react-native@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.npm.taobao.org/lottie-react-native/download/lottie-react-native-3.5.0.tgz#749fed964bdc9fabfae24ef81696f90f4d758f59"
+  integrity sha1-dJ/tlkvcn6v64k74Fpb5D011j1k=
+  dependencies:
+    invariant "^2.2.2"
+    lottie-ios "^3.1.8"
+    prop-types "^15.5.10"
+    react-native-safe-modules "^1.0.0"
 
 lru-cache@^4.0.1:
   version "4.1.5"
@@ -5872,10 +5897,26 @@ react-native-safe-area-context@^3.1.9:
   resolved "https://registry.npm.taobao.org/react-native-safe-area-context/download/react-native-safe-area-context-3.1.9.tgz#48864ea976b0fa57142a2cc523e1fd3314e7247e"
   integrity sha1-SIZOqXaw+lcUKizFI+H9MxTnJH4=
 
+react-native-safe-modules@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-safe-modules/download/react-native-safe-modules-1.0.0.tgz#10a918adf97da920adb1e33e0c852b1e80123b65"
+  integrity sha1-EKkYrfl9qSCtseM+DIUrHoASO2U=
+  dependencies:
+    dedent "^0.6.0"
+
 react-native-screens@^2.16.1:
   version "2.16.1"
   resolved "https://registry.npm.taobao.org/react-native-screens/download/react-native-screens-2.16.1.tgz#b105a127378d90018a46daf0c2f6518fca60c06f"
   integrity sha1-sQWhJzeNkAGKRtrwwvZRj8pgwG8=
+
+react-native-smart-refresh@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.npm.taobao.org/react-native-smart-refresh/download/react-native-smart-refresh-1.1.5.tgz#d056d83f1f16b7c2324140d7a582fb9f267b0c90"
+  integrity sha1-0FbYPx8Wt8IyQUDXpYL7nyZ7DJA=
+  dependencies:
+    dayjs "^1.9.8"
+    lottie-react-native "^3.5.0"
+    prop-types "^15.7.2"
 
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"

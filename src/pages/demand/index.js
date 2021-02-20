@@ -16,9 +16,14 @@ import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
 import TopTitle from '../../components/common/TopTitle';
 
+import { inject } from 'mobx-react';
+@inject('RootStore')
 class Index extends Component {
   constructor(props) {
     super(props);
+    if (this.props.RootStore.userStore.allData.token === null) {
+      NavigationHelper.navigate('LoginAndRegister');
+    }
     this.state = {
       list_1: [
         {
