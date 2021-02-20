@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import { fontStyle, margin, padding } from '../../utils/StyleUtils';
-import TopTitle from '../../components/common/TopTitle';
 import Icon from '../../components/common/Icon';
 import Avatar from '../../components/common/Avatar';
 
-class Test extends Component {
+import { inject } from 'mobx-react';
+@inject('RootStore')
+class Index extends Component {
   constructor(props) {
     super(props);
+    if (this.props.RootStore.userStore.allData.token === null) {
+      NavigationHelper.navigate('LoginAndRegister');
+    }
   }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -22,11 +27,11 @@ class Test extends Component {
             18
           </Text>
         </View>
-        <TouchableOpacity
-          style={styles.message_list_wrap}
-          onPress={() => NavigationHelper.navigate('MessageNotice')}
-        >
-          <View style={styles.message_list}>
+        <View style={styles.message_list_wrap}>
+          <TouchableOpacity
+            style={styles.message_list}
+            onPress={() => NavigationHelper.navigate('MessageNotice')}
+          >
             <View style={{ alignSelf: 'center' }}>
               <Avatar
                 image={{
@@ -62,8 +67,48 @@ class Test extends Component {
                 18
               </Text>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.message_list}
+            onPress={() => NavigationHelper.navigate('MessageDetail')}
+          >
+            <View style={{ alignSelf: 'center' }}>
+              <Avatar
+                image={{
+                  uri:
+                    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202101%2F15%2F20210115170419_ed8cd.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614850704&t=612446e233692bedd314d255c7faeff3',
+                }}
+                size={90}
+              />
+            </View>
+            <View>
+              <Text style={{ ...fontStyle(30, 64, 64, 'bold', '#333') }}>
+                通知
+              </Text>
+              <Text style={{ ...fontStyle(24, 64, 64, '500', '#999') }}>
+                尊敬的用户，您收到一条新的消息
+              </Text>
+            </View>
+            <View>
+              <Text
+                style={{
+                  ...fontStyle(24, 64, 64, '500', '#999', 'right'),
+                }}
+              >
+                一小时前
+              </Text>
+              <Text
+                style={{
+                  ...styles.message_tips,
+                  marginTop: pxToDp(16),
+                  marginLeft: pxToDp(92),
+                }}
+              >
+                18
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -108,11 +153,13 @@ const styles = StyleSheet.create({
   message_list_wrap: {
     backgroundColor: '#fff',
     ...padding(30, 0, 30, 0),
+    paddingBottom: pxToDp(44),
   },
   message_list: {
+    marginTop: pxToDp(20),
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
 });
 
-export default Test;
+export default Index;

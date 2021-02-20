@@ -11,9 +11,6 @@ import ImageShow from '../pages/ImageShow';
 // 设计
 import Design from '../pages/design';
 
-// 消息
-import Message from '../pages/message';
-
 // 需求
 import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
@@ -31,10 +28,17 @@ import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
 
+// 他人中心
+import OthersPersonal from '../pages/design/others';
+
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
+<<<<<<< HEAD
 import Evaluate from '../pages/personal/evaluate';
 import EvaluateRelease from '../pages/personal/evaluate/evaluate-release';
+=======
+import EvaluateList from '../pages/personal/evaluate/evaluate-list';
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca
 import AfterSales from '../pages/personal/after-sales';
 import OrderLists from '../pages/personal/order-list';
 
@@ -50,6 +54,7 @@ import Welfare from '../pages/home/welfare';
 
 // 消息
 import MessageNotice from '../pages/message/notice';
+import MessageDetail from '../pages/message/detail';
 
 // 测试
 import Test from '../pages/test';
@@ -82,7 +87,7 @@ class Nav extends React.Component {
         onStateChange={(state: NavigationState) => {
           //加入该行
           //这个是跳转了才去回调，所以不能利用routes来判断路由栈
-          global.NavigationHelper.navRouters = state.routes;
+          NavigationHelper.navRouters = state.routes;
         }}
       >
         <Stack.Navigator
@@ -102,7 +107,18 @@ class Nav extends React.Component {
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
+<<<<<<< HEAD
 
+=======
+          {/*他人中心*/}
+          <Stack.Screen
+            name="OthersPersonal"
+            component={OthersPersonal}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+>>>>>>> 7a5a368ea49dea1a51706595ca2b0e70c8345fca
           {/*首页*/}
 
           <Stack.Screen
@@ -248,8 +264,8 @@ class Nav extends React.Component {
           />
           {/*商品评价列表*/}
           <Stack.Screen
-            name="Evaluate"
-            component={Evaluate}
+            name="EvaluateList"
+            component={EvaluateList}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
@@ -323,6 +339,7 @@ class Nav extends React.Component {
           />
 
           {/* 消息 */}
+          <Stack.Screen name="MessageDetail" component={MessageDetail} />
           <Stack.Screen
             name="MessageNotice"
             component={MessageNotice}

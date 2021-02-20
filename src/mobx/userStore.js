@@ -1,5 +1,5 @@
 const userStore = {
-  token: '',
+  token: null,
   userId: '',
   name: 'dsadasdsa',
   age: '',

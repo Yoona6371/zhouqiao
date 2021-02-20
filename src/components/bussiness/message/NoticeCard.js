@@ -86,7 +86,7 @@ class Index extends Component {
           <View>
             <Text
               style={{
-                ...fontStyle(32, 34, 34, 'bold', '#333'),
+                ...fontStyle(32, 36, 36, 'bold', '#333'),
                 marginTop: pxToDp(45),
               }}
             >
