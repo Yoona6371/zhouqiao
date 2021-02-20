@@ -49,7 +49,7 @@ class TradeCard extends Component {
           marginLeft: pxToDp(30),
           ...padding(28, 0, 30, 0),
           ...flexRowSpb,
-          position:'relative',
+          position: 'relative',
         }}
       >
         <Image

@@ -204,6 +204,8 @@ dependencies {
     // 如果只需要支持WebP格式而不需要动图
     implementation 'com.facebook.fresco:webpsupport:2.0.0'
 
+    implementation project(':aurora-imui-react-native')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
