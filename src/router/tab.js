@@ -33,6 +33,7 @@ import {
   tabbar_mine,
 } from '../constants/svg';
 import Svg from 'react-native-svg-uri';
+import RootStore from '../mobx/index';
 
 const tabSelectedArray = [
   tabbar_home_selected,
@@ -69,6 +70,15 @@ function MyTabBar({ state, descriptors, navigation }) {
 
           // 点击事件
           const onPress = () => {
+            if (
+              RootStore.userStore.allData.token === null &&
+              (route.name === '消息' ||
+                route.name === '我的' ||
+                route.name === '发布')
+            ) {
+              NavigationHelper.navigate('LoginAndRegister');
+              return;
+            }
             //给当前点击的标签发送```tabPress```事件
             const event = navigation.emit({
               type: 'tabPress',

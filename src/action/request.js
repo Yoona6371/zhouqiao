@@ -17,7 +17,12 @@ let Http = {};
 for (let key in server) {
   let api = server[key]; // url method
 
-  Http[key] = async (params, isFormData = false, config = {}) => {
+  Http[key] = async (
+    params,
+    supplyUrl = '',
+    isFormData = false,
+    config = {},
+  ) => {
     let url = api.url;
     let newParams = {};
 
@@ -31,20 +36,25 @@ for (let key in server) {
     }
     let response;
     if (
-      api.method === 'get' ||
+      api.method === 'post' ||
       api.method === 'put' ||
       api.method === 'patch'
     ) {
       try {
-        response = await instance[api.method](api.url, newParams, config);
+        response = await instance[api.method](
+          `${api.url}${supplyUrl}`,
+          newParams,
+          config,
+        );
       } catch (e) {
-        console.log(e);
+        response = e;
       }
     } else {
+      config.params = newParams;
       try {
-        response = await instance[api.method](api.url, config);
+        response = await instance[api.method](`${api.url}${supplyUrl}`, config);
       } catch (e) {
-        console.log(e);
+        response = e;
       }
     }
     return response;
@@ -56,7 +66,7 @@ instance.interceptors.request.use(
     // 加入token
     let token = RootStore.userStore.allData.token;
     if (token) {
-      config.headers.token = `${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -66,24 +76,9 @@ instance.interceptors.request.use(
 );
 
 // 相应拦截器
-instance.interceptors.response.use(
-  (res) => {
-    return res;
-  },
-  (err) => {
-    if (err.response) {
-      switch (err.response.status) {
-        case 401:
-        /*
-         * 返回401 表示前端的token 已经失效
-         * 状态码 前后端统一
-         * 清除token
-         */
-      }
-    }
-    return Promise.reject(err);
-  },
-);
+instance.interceptors.response.use((res) => {
+  return res;
+});
 export default Http;
 Http.init = function (helper, name = 'Http') {
   global[name] = helper;
