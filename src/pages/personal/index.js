@@ -17,9 +17,6 @@ import DemandList from '../../components/bussiness/DemandList';
 class Index extends Component {
   constructor(props) {
     super(props);
-    if (this.props.RootStore.userStore.allData.token === null) {
-      NavigationHelper.navigate('LoginAndRegister');
-    }
     this.state = {
       myOrderNum: 9,
       awaitPayNum: 1,
