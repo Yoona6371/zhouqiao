@@ -125,6 +125,7 @@ class Index extends Component {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
+                onPress={() => NavigationHelper.navigate('SettingIndex')}
               >
                 <Icon
                   name={'sets'}

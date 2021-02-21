@@ -24,6 +24,10 @@ const api = {
     url: '/',
     method: 'get',
   },
+  designCase_list: {
+    url: '/api/designCase/stylist/design_cases/category',
+    method: 'get',
+  },
 };
 
 export default api;

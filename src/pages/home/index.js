@@ -116,16 +116,25 @@ class Index extends Component {
   }
 
   async componentDidMount() {
+    let hotDesignCaseList = await Http.designCase_list({
+      category_id: 3,
+      page: 1,
+      size: 12,
+    });
+    this.setState({
+      hotData: hotDesignCaseList.data.data.records,
+    });
+    console.log(hotDesignCaseList);
     //eg 全局数据调用，需要修改数据则需要添加obsever装饰器
     // console.log('全局数据调用：', this.props.RootStore);
     //eg 调用接口
     // this.props.RootStore.globalStore.allData.Http.test().then((res) => {
     //   console.log('get请求返回值：', res);
     // });
-    let res = await Http.test(); // 直接get接口类型
-    let res2 = await Http.test({ page: 1, size: 2 }); // get需要参数型
-    let res3 = await Http.test({ number: 123, password: 111 }); // post发送参数型
-    let res4 = await Http.test({ file: 'filr' }, true, { params: { type: 1 } }); // post发送文件型
+    // let res = await Http.test(); // 直接get接口类型
+    // let res2 = await Http.test({ page: 1, size: 2 }); // get需要参数型
+    // let res3 = await Http.test({ number: 123, password: 111 }); // post发送参数型
+    // let res4 = await Http.test({ file: 'filr' }, true, { params: { type: 1 } }); // post发送文件型
   }
   MyTabs = () => {
     let { pages } = this.state;
@@ -256,7 +265,9 @@ class Index extends Component {
             <FlatList
               horizontal={true}
               data={this.state.hotData}
-              renderItem={({ item }) => <HotCard key={item} />}
+              renderItem={({ item }) => (
+                <HotCard key={item.case_id} item={item} />
+              )}
             />
             {/*热门列表结束*/}
           </ContainerCard>

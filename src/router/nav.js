@@ -63,6 +63,7 @@ import LoginAndRegister from '../pages/users/loginAndRegister';
 import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
+import CodePushPage from '../pages/CodePushPage';
 
 const Stack = createStackNavigator();
 
@@ -110,6 +111,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="OthersPersonal"
             component={OthersPersonal}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*CodePushPage*/}
+          <Stack.Screen
+            name="CodePushPage"
+            component={CodePushPage}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

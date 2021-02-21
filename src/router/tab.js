@@ -72,9 +72,7 @@ function MyTabBar({ state, descriptors, navigation }) {
           const onPress = () => {
             if (
               RootStore.userStore.allData.token === null &&
-              (route.name === '消息' ||
-                route.name === '我的' ||
-                route.name === '发布')
+              (route.name === '消息' || route.name === '发布')
             ) {
               NavigationHelper.navigate('LoginAndRegister');
               return;
