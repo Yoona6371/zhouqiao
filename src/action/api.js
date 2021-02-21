@@ -24,6 +24,9 @@ const api = {
     url: '/',
     method: 'get',
   },
+  myRequirements: {
+    ur,
+  },
 };
 
 export default api;
