@@ -6154,6 +6154,11 @@ react-native-orientation-locker@^1.1.8:
   resolved "https://registry.npm.taobao.org/react-native-orientation-locker/download/react-native-orientation-locker-1.2.0.tgz#9fa51b3aade9b847e63066b6fd60509371940a7e"
   integrity sha1-n6UbOq3puEfmMGa2/WBQk3GUCn4=
 
+react-native-picker@^4.3.7:
+  version "4.3.7"
+  resolved "https://registry.npm.taobao.org/react-native-picker/download/react-native-picker-4.3.7.tgz#9842e8c62ff0d8b676e9514d9f9172413c0518a8"
+  integrity sha1-mELoxi/w2LZ26VFNn5FyQTwFGKg=
+
 react-native-reanimated@^1.13.2:
   version "1.13.2"
   resolved "https://registry.npm.taobao.org/react-native-reanimated/download/react-native-reanimated-1.13.2.tgz#1ae5457b24b4913d173a5a064bb28eae7783d293"

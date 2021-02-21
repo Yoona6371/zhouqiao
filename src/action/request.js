@@ -68,8 +68,8 @@ instance.interceptors.request.use(
 
 // 相应拦截器
 instance.interceptors.response.use((res) => {
-  console.log(res);
-  console.log(2323);
+  // console.log(res);
+  // console.log(2323);
   return res;
 });
 export default Http;

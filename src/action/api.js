@@ -20,8 +20,32 @@ const api = {
     url: '/info/delete',
     method: 'delete',
   },
-  test: {
-    url: '/',
+  demandSet: {
+    url: '/api/client/requirement',
+    method: 'post',
+  },
+  demandUpdate: {
+    url: '/api/client/my/requirement',
+    method: 'post',
+  },
+  demandDelete: {
+    url: '/api/client/my/requirement\n',
+    method: 'post',
+  },
+  myRequirements: {
+    url: '/api/client/my/requirements',
+    method: 'post',
+  },
+  requirementDetail: {
+    url: '/api/requirement',
+    method: 'post',
+  },
+  fileUpdate: {
+    url: '/api/resource/file',
+    method: 'post',
+  },
+  requirementCategories: {
+    url: '/api/requirement/categories',
     method: 'get',
   },
 };
