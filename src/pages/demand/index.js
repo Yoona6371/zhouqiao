@@ -16,14 +16,9 @@ import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { inject } from 'mobx-react';
-@inject('RootStore')
 class Index extends Component {
   constructor(props) {
     super(props);
-    if (this.props.RootStore.userStore.allData.token === null) {
-      NavigationHelper.navigate('LoginAndRegister');
-    }
     this.state = {
       scrollY: new Animated.Value(0),
       titleOpacity: new Animated.Value(0),
