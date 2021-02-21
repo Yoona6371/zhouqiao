@@ -47,6 +47,7 @@ export default class LoginInput extends Component {
   //密码
   passwordSubmitEditing = () => {
     this.setState({ password });
+    
     this.setState({ errShow: true });
   };
   passwordChangeText = () => {
