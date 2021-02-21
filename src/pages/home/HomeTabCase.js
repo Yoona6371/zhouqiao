@@ -5,6 +5,7 @@ import RefreshListView, {
   RefreshState,
 } from '../../components/common/RefreshListView';
 import { flexColumnSpb, padding } from '../../utils/StyleUtils';
+import axios from 'axios';
 
 export default class HomeTabCase extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class HomeTabCase extends Component {
     };
   }
 
-  componentDidMount() {
+  componentDidMount = async () => {
     this.setState({
       dataList: [
         { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
@@ -26,12 +27,12 @@ export default class HomeTabCase extends Component {
         { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
       ],
     });
-  }
+  };
 
-  onHeaderRefresh = () => {
+  onHeaderRefresh = async () => {
     this.setState({ refreshState: RefreshState.HeaderRefreshing });
 
-    // 模拟网络请求
+    // 模拟网络请求;
     setTimeout(() => {
       // 模拟网络加载失败的情况
 

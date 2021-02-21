@@ -25,6 +25,7 @@ class App extends Component {
           <Nav />
         </Provider>
       </View>
+
     );
   }
 }

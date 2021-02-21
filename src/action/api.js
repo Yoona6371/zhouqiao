@@ -21,7 +21,11 @@ const api = {
     method: 'delete',
   },
   test: {
-    url: '/',
+    url: '/api/client/baseInfo',
+    method: 'get',
+  },
+  categoryCase: {
+    url: '/api/designCase/stylist/design_cases/category/0001',
     method: 'get',
   },
 };
