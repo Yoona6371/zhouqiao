@@ -33,7 +33,11 @@ import OthersPersonal from '../pages/design/others';
 
 // 案例/商品 详情页 评价页 售后页 订单列表
 import CommodityDetail from '../pages/commodity/detail';
+
+// import Evaluate from '../pages/personal/evaluate';
+import EvaluateRelease from '../pages/personal/evaluate/evaluate-release';
 import EvaluateList from '../pages/personal/evaluate/evaluate-list';
+
 import AfterSales from '../pages/personal/after-sales';
 import OrderLists from '../pages/personal/order-list';
 
@@ -257,6 +261,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="EvaluateList"
             component={EvaluateList}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*商品评价页面*/}
+          <Stack.Screen
+            name="EvaluateRelease"
+            component={EvaluateRelease}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
