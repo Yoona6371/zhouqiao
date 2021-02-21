@@ -49,6 +49,7 @@ export default {
   settings2: '\ue60b',
   personal_focus: '\ue6df',
   personal_collection: '\ue630',
+  personal_history: '\ue637',
   footprint: '\ue65b',
   goodEvaluate: '\ue638',
   badEvaluate: '\ue631',
