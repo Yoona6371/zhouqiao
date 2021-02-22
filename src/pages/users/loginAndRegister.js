@@ -14,29 +14,64 @@ import SvgUri from 'react-native-svg-uri';
 import { qq, WeChat } from '../../constants/svg';
 import Icon from '../../components/common/Icon';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import Toast from '../../components/common/Toast/Toast';
+import RootStore from '../../mobx/index';
+import LocalStorageUtils from '../../utils/LocalStorageUtils';
+import navigationHelper from '../../utils/navigationHelper';
 const Tab = createMaterialTopTabNavigator();
 
 @inject('RootStore')
+@observer
 class LoginTab extends Component {
   constructor() {
     super();
     this.state = {
       phoneNumber: '',
       password: '',
+      userId: '',
+      accessToken: '',
+      refreshToken: '',
+      name: '',
+      img: '',
     };
   }
-  login = async () => {
-    await Http.login({
+  forgetPassword = () => {};
+  login = () => {
+    Http.login({
       account: this.state.phoneNumber,
       password: this.state.password,
     }).then((res) => {
-      console.log(res);
       if (res.data.code === 0) {
         Toast.success(res.data.msg, 1000, 'center');
-        NavigationHelper.navigation.goBack();
-        this;
+        NavigationHelper.goBack();
+        console.log(res);
+        this.state.userId = res.data.data.userId;
+        this.state.accessToken = res.data.data.accessToken;
+        this.state.refreshToken = res.data.data.refreshToken;
+
+        //存储信息至mobox
+        RootStore.userStore.allData.accessToken = this.state.accessToken;
+        RootStore.userStore.allData.userId = this.state.userId;
+        RootStore.userStore.allData.refreshToken = this.state.refreshToken;
+        RootStore.userStore.allData.password = this.state.password;
+
+        //获取个人信息
+        Http.getMyInfo().then((answer) => {
+          console.log(answer);
+          this.state.name = answer.data.data.nickName;
+          RootStore.userStore.allData.name = this.state.name;
+          this.state.img = answer.data.data.userAvatar;
+          RootStore.userStore.allData.img = this.state.img;
+        });
+
+        //存储信息至本地
+        LocalStorageUtils.set('refreshToken', this.state.refreshToken);
+        LocalStorageUtils.set('accessToken', this.state.accessToken);
+        LocalStorageUtils.set('userId', this.state.userId);
+        LocalStorageUtils.set('name', this.state.name);
+        LocalStorageUtils.set('img', this.state.img);
+        console.log(LocalStorageUtils.get('name'));
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }

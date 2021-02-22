@@ -4,6 +4,10 @@ const api = {
     url: '/api/auth/password',
     method: 'post',
   },
+  getMyInfo: {
+    url: '/api/client/my/baseInfo',
+    method: 'get',
+  },
   getGroup: {
     url: '/group/all',
     method: 'get',
