@@ -48,11 +48,11 @@ class Others extends Component {
     userId: PropTypes.string.isRequired,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // 获取他人基本信息
-    this.getOthersDetail();
+    await this.getOthersDetail();
     // 获取他人关注列表
-    this.getOthersFocusList();
+    await this.getOthersFocusList();
   }
 
   // 获取他人基本信息

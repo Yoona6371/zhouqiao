@@ -33,7 +33,7 @@ export default {
   /**
    * 设置登录验证信息
    */
-  setAuthInfo(token, userId) {
+  setAuthInfo(item, userId) {
     LocalStorageUtils.set('token', 'token');
   },
 

@@ -34,103 +34,62 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pages: [
-        {
-          key: '0',
-          title: '关注',
-          component: HomeTabCase,
-        },
-        {
-          key: '1',
-          title: 'Ps',
-          component: HomeTabCase,
-        },
-        {
-          key: '2',
-          title: 'AI',
-          component: HomeTabCase,
-        },
-        {
-          key: '3',
-          title: 'CAD',
-          component: HomeTabCase,
-        },
-        {
-          key: '4',
-          title: 'UI设计',
-          component: HomeTabCase,
-        },
-        {
-          key: '5',
-          title: '工业设计',
-          component: HomeTabCase,
-        },
-      ],
-      hotData: [1, 2, 3, 4, 5],
-      headerPhoto: [
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-      ],
+      pages: [],
+      hotData: [],
+      headerPhoto: [],
     };
-    // console.log('this.props:', this.props);
   }
 
   async componentDidMount() {
-    let res = await Http.test(); // 直接get接口类型
-    let res2 = await Http.test({ page: 1, size: 2 }); // get需要参数型
-    let res3 = await Http.test({ number: 123, password: 111 }); // post发送参数型
-    let res4 = await Http.test({ file: 'filr' }, true, { params: { type: 1 } }); // post发送文件型
+    let hotDesignCaseList = await Http.designCase_list({
+      category_id: 3,
+      page: 1,
+      size: 12,
+    });
+    let rankingListRes = await Http.rankingList({
+      page: 1,
+      size: 8,
+    });
+    let rankingList = [];
+    rankingListRes.data.data.dataList.forEach((item) => {
+      rankingList.push({
+        name: item.nickName,
+        image: {
+          uri: item.userAvatar,
+        },
+      });
+    });
+    //获取案例类别
+    let res = await Http.caseType();
+    let arrCaseType = [];
+    res.data.data.forEach((item) => {
+      arrCaseType.push({
+        key: item.categoryId,
+        title: item.category,
+        component: HomeTabCase,
+      });
+    });
+
+    this.setState({
+      hotData: hotDesignCaseList.data.data.records,
+      pages: arrCaseType,
+      headerPhoto: rankingList,
+    });
   }
   MyTabs = () => {
     let { pages } = this.state;
-    return (
-      <TopTabNavigator
-        ifScrollEnabled={true}
-        type={3}
-        itemWidth={deviceWidthDp / 5}
-        routes={pages}
-      />
-    );
+    if (pages.length === 0) {
+      return;
+    } else {
+      return (
+        <TopTabNavigator
+          ifScrollEnabled={true}
+          type={3}
+          itemWidth={deviceWidthDp / 5}
+          routes={pages}
+        />
+      );
+    }
   };
 
   onFocus() {
@@ -250,7 +209,9 @@ class Index extends Component {
             <FlatList
               horizontal={true}
               data={this.state.hotData}
-              renderItem={({ item }) => <HotCard key={item} />}
+              renderItem={({ item }) => (
+                <HotCard key={item.case_id} item={item} />
+              )}
             />
             {/*热门列表结束*/}
           </ContainerCard>

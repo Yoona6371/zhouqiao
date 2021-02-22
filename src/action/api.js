@@ -1,5 +1,9 @@
 // 封装接口
 const api = {
+  designCase_list: {
+    url: '/api/designCase/stylist/design_cases/category',
+    method: 'get',
+  },
   login: {
     url: '/api/auth/password',
     method: 'post',
@@ -8,21 +12,13 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'get',
   },
-  getGroup: {
-    url: '/group/all',
+  caseType: {
+    url: '/designCase/designCaseCategory/client/design_cases/category/list',
     method: 'get',
   },
-  postInfo: {
-    url: '/info/submit',
-    method: 'post',
-  },
-  patchInfo: {
-    url: '/info/patch',
-    method: 'patch',
-  },
-  deleteInfo: {
-    url: '/info/delete',
-    method: 'delete',
+  rankingList: {
+    url: '/api/stylist/RankingList',
+    method: 'get',
   },
   demandSet: {
     url: '/api/client/requirement',
@@ -102,12 +98,6 @@ const api = {
     method: 'delete',
   },
 
-  // 获取我的基本信息
-  myInfo: {
-    url: '/api/client/my/baseInfo',
-    method: 'get',
-  },
-
   // 我的关注列表
   // const message = await request.myFocusList(
   //  { page: 1, size: 1 });
@@ -121,6 +111,10 @@ const api = {
   //  { page: 1, size: 1 });
   myFansList: {
     url: 'api/my/fans',
+    method: 'get',
+  },
+  goodsList: {
+    url: '/api/client/commodities',
     method: 'get',
   },
 };

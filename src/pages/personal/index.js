@@ -36,11 +36,14 @@ class Index extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // 获取我的基本信息
-    this.getMyInfo();
+    await this.getMyInfo();
     // 我的关注列表
-    this.getMyFocusList();
+    await this.getMyFocusList();
+    // 我的发布拿两个数据
+    let res = await Http.myRequirements({ page: 1, size: 2 });
+    this.setState({ myRequirements: res.data.data.dataList });
   }
 
   // ——————————————————————————昵称、关注数渲染开始——————————————————————
@@ -49,7 +52,7 @@ class Index extends Component {
     // 获取token的方法
     // this.props.RootStore.userStore.allData.token
     const request = this.props.RootStore.globalStore.allData.Http;
-    const message = await request.myInfo();
+    const message = await request.getMyInfo();
     // "data": {
     // 	"birthday": [Array],
     // 	"createTime": [Array],
@@ -89,13 +92,6 @@ class Index extends Component {
   };
   // ——————————————————————————昵称、关注数渲染结束——————————————————————
 
-    // 我的发布拿两个数据
-    Http.myRequirements({ page: 1, size: 2 }).then((res) => {
-      this.setState({ myRequirements: res.data.data.dataList });
-    });
-  }
-
-
   render() {
     const {
       myOrderNum,
@@ -110,7 +106,9 @@ class Index extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => NavigationHelper.navigate('DataEdit')}
+          >
             <View style={styles.section1_NamePhotoBorder}>
               <Image
                 style={styles.photo}
@@ -270,7 +268,7 @@ class Index extends Component {
             <View style={styles.ItemIcon}>
               <TouchableOpacity
                 onPress={() => {
-                  NavigationHelper.navigate('OrderLists');
+                  NavigationHelper.navigate('myWallet');
                 }}
                 style={{
                   justifyContent: 'center',
@@ -315,7 +313,7 @@ class Index extends Component {
                   }}
                   source={require('../../asserts/images/wallet.png')}
                 />
-                <Text style={styles.ItemiconText3}>待付款</Text>
+                <Text style={styles.ItemiconText3}>我的钱包</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.ItemIcon}>
