@@ -29,12 +29,12 @@ const api = {
     method: 'post',
   },
   demandDelete: {
-    url: '/api/client/my/requirement\n',
-    method: 'post',
+    url: '/api/client/my/requirement',
+    method: 'delete',
   },
   myRequirements: {
     url: '/api/client/my/requirements',
-    method: 'post',
+    method: 'get',
   },
   requirementDetail: {
     url: '/api/requirement',

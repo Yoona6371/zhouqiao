@@ -16,14 +16,9 @@ import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
 
-import { inject } from 'mobx-react';
-@inject('RootStore')
 class Index extends Component {
   constructor(props) {
     super(props);
-    if (this.props.RootStore.userStore.allData.token === null) {
-      NavigationHelper.navigate('LoginAndRegister');
-    }
     this.state = {
       scrollY: new Animated.Value(0),
       titleOpacity: new Animated.Value(0),
@@ -36,20 +31,20 @@ class Index extends Component {
             this.setState({
               data: {
                 ...this.state.data,
-                expectedPrice: data,
+                expectedPrice: parseInt(data),
               },
             });
           },
         },
         {
           title: '项目周期',
-          tips: '请输入项目周期',
+          tips: '请输入项目周期(天)',
           type: 0,
           inputUpdate: (data) => {
             this.setState({
               data: {
                 ...this.state.data,
-                expectedTime: data,
+                expectedTime: parseInt(data),
               },
             });
           },
@@ -71,20 +66,23 @@ class Index extends Component {
       list_2: [
         {
           title: '聊天人数',
-          tips: '最大可以聊天人数，上限是8',
+          tips: '最大可以聊天人数，上限8，默认2',
           type: 0,
           inputUpdate: (data) => {
+            if (data > 8) {
+              data = 8;
+            }
             this.setState({
               data: {
                 ...this.state.data,
-                phoneNum: data,
+                communityNumber: parseInt(data),
               },
             });
           },
         },
         {
           title: '面向设计',
-          tips: '请选择类别 新手/老手',
+          tips: '请选择类别 新手/老手 默认新手',
           type: 1,
           category: 1,
           inputUpdate: (data) => {
@@ -147,7 +145,11 @@ class Index extends Component {
       color: '#fff',
 
       // 提交数据
-      data: {},
+      // 赋默认值
+      data: {
+        urgent: 0,
+        communityNumber: 2,
+      },
     };
   }
 
@@ -160,7 +162,13 @@ class Index extends Component {
     });
   };
 
-  demandSet = () => {};
+  demandSet = () => {
+    Http.demandSet(this.state.data).then((res) => {
+      if (res.status === 200) {
+        NavigationHelper.navigate('DemandDetails');
+      }
+    });
+  };
 
   render() {
     const { list_1, list_2, list_3, textLength } = this.state;
@@ -293,27 +301,30 @@ class Index extends Component {
             placeholder={'\ue639 请输入详细信息'}
             placeholderTextColor="#999"
             onChangeText={(e) => {
-              this.setState({ textLength: e.length });
+              this.setState({
+                textLength: e.length,
+                data: {
+                  ...this.state.data,
+                  requirementContent: e,
+                  requirementContentHtml: e,
+                },
+              });
             }}
           />
           <Text style={styles.textLengthLimit}>{textLength}/300</Text>
         </View>
-        <TouchableOpacity style={styles.button} onPress={this.demandSet}>
+        <View style={styles.button}>
           <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={['#fe9e0e', '#fd7609']}
             style={styles.button_linear}
           >
-            <TouchableOpacity
-              onPress={() => {
-                NavigationHelper.navigate('DemandDetails');
-              }}
-            >
+            <TouchableOpacity onPress={this.demandSet}>
               <Text style={styles.button_text}>确认发布</Text>
             </TouchableOpacity>
           </LinearGradient>
-        </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -408,4 +419,5 @@ const styles = StyleSheet.create({
     ...fontStyle(28, 88, 88, 'bold', '#fff', 'center'),
   },
 });
+
 export default Index;

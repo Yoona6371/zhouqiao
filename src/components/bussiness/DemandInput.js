@@ -12,14 +12,18 @@ import { pxToDp, deviceWidthDp } from '../../utils/pxToDp';
 import Icon from '../common/Icon';
 import Picker from 'react-native-picker';
 import DocumentPicker from 'react-native-document-picker';
+// import axios from 'axios';
+// import RNFS from 'react-native-fs';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       input: '',
-      urgent: false,
+      urgent: 0,
       data: {},
+      input_category: '',
+      input_proficiency: '',
     };
   }
   // type
@@ -45,30 +49,56 @@ class Index extends Component {
         const res = await DocumentPicker.pick({
           type: [DocumentPicker.types.docx],
         });
-        console.log(
-          res.uri,
-          res.type, // mime type
-          res.name,
-          res.size,
-        );
-        console.log(
-          11111111111,
-          await Http.fileUpdate(
-            {
-              file: {
-                uri: res.uri,
-                type: 'multipart/form-data',
-                name: res.name,
-                size: res.size,
-              },
-            },
-            true,
-            {
-              type: 5,
-            },
-          ),
-        ),
-          console.log('success');
+        console.log(res);
+        // console.log(
+        //   res.uri,
+        //   res.type, // mime type
+        //   res.name,
+        //   res.size,
+        // );
+        // let formData = new FormData();
+        // formData.append('name', res.name);
+        // formData.append('uri', res.uri);
+        // formData.append('type', res.type);
+        // formData.append('size', res.size);
+        // console.log(formData);
+        // axios
+        //   .post(
+        //     'http://www.zhouqiao.art:8080/api/resource/file',
+        //     { file: formData, type: 6 },
+        //     {
+        //       headers: {
+        //         'Content-Type': 'multiple/form-data',
+        //       },
+        //     },
+        //   )
+        //   .then((res) => {
+        //     console.log(res);
+        //   });
+        // console.log(
+        //   11111111111,
+        //   await Http.fileUpdate(
+        //     {
+        //       file: {
+        //         uri: res.uri,
+        //         name: res.name,
+        //         size: res.size,
+        //         type: res.type,
+        //       },
+        //     },
+        //     '',
+        //     true,
+        //     {
+        //       headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //       },
+        //       prarms: {
+        //         type: 6,
+        //       },
+        //     },
+        //   ),
+        // ),
+        console.log('success');
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           console.log('cancleErr', err);
@@ -95,14 +125,20 @@ class Index extends Component {
         pickerCancelBtnColor: [254, 158, 14, 1],
         pickerCancelBtnText: '取消',
         pickerTitleText: '选择类别',
-        pickerToolBarBg: [255, 255, 255, 1], // ps ai 室内设计 室外设计 插画 平滑 cad
+        pickerToolBarBg: [255, 255, 255, 1],
         pickerBg: [255, 255, 255, 1],
         onPickerConfirm: (data) => {
-          this.props.inputUpdate(this.listBind(data[0]));
+          this.confirm(data[0]);
         },
       });
       Picker.show();
     }
+  };
+
+  confirm = (data) => {
+    this.state.input_category = data;
+    this.state.input_proficiency = data;
+    this.props.inputUpdate(this.listBind(data));
   };
 
   listBind = (data) => {
@@ -132,8 +168,7 @@ class Index extends Component {
 
   render() {
     let { title, tips, type, hint, last } = this.props;
-    let { input, urgent } = this.state;
-    let input_category = '';
+    let { input, urgent, input_category, input_proficiency } = this.state;
     return (
       <View
         style={
@@ -154,7 +189,7 @@ class Index extends Component {
             <TouchableOpacity
               style={{ alignSelf: 'center', marginRight: pxToDp(28) }}
               onPress={() => {
-                this.setState({ urgent: true });
+                this.setState({ urgent: 1 });
                 this.props.inputUpdate(this.state.urgent);
               }}
             >
@@ -167,7 +202,7 @@ class Index extends Component {
             <TouchableOpacity
               style={{ alignSelf: 'center' }}
               onPress={() => {
-                this.setState({ urgent: false });
+                this.setState({ urgent: 0 });
                 this.props.inputUpdate(this.state.urgent);
               }}
             >
@@ -187,7 +222,9 @@ class Index extends Component {
               disabled={true}
               placeholder={tips}
               editable={false}
-              value={input_category}
+              value={
+                this.props.category === 1 ? input_proficiency : input_category
+              }
               style={
                 type === 1
                   ? {

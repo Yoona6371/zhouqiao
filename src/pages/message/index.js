@@ -5,14 +5,9 @@ import { fontStyle, margin, padding } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import Avatar from '../../components/common/Avatar';
 
-import { inject } from 'mobx-react';
-@inject('RootStore')
 class Index extends Component {
   constructor(props) {
     super(props);
-    if (this.props.RootStore.userStore.allData.token === null) {
-      NavigationHelper.navigate('LoginAndRegister');
-    }
   }
 
   render() {

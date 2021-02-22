@@ -36,32 +36,32 @@ class Index extends Component {
     this.state = {
       pages: [
         {
-          key: '关注',
+          key: '0',
           title: '关注',
           component: HomeTabCase,
         },
         {
-          key: 'Ps',
+          key: '1',
           title: 'Ps',
           component: HomeTabCase,
         },
         {
-          key: 'AI',
+          key: '2',
           title: 'AI',
           component: HomeTabCase,
         },
         {
-          key: 'CAD',
+          key: '3',
           title: 'CAD',
           component: HomeTabCase,
         },
         {
-          key: 'UI设计',
+          key: '4',
           title: 'UI设计',
           component: HomeTabCase,
         },
         {
-          key: '工业设计',
+          key: '5',
           title: '工业设计',
           component: HomeTabCase,
         },
@@ -115,13 +115,11 @@ class Index extends Component {
     // console.log('this.props:', this.props);
   }
 
-  componentDidMount() {
-    //eg 全局数据调用，需要修改数据则需要添加obsever装饰器
-    // console.log('全局数据调用：', this.props.RootStore);
-    //eg 调用接口
-    // this.props.RootStore.globalStore.allData.Http.test().then((res) => {
-    //   console.log('get请求返回值：', res);
-    // });
+  async componentDidMount() {
+    let res = await Http.test(); // 直接get接口类型
+    let res2 = await Http.test({ page: 1, size: 2 }); // get需要参数型
+    let res3 = await Http.test({ number: 123, password: 111 }); // post发送参数型
+    let res4 = await Http.test({ file: 'filr' }, true, { params: { type: 1 } }); // post发送文件型
   }
   MyTabs = () => {
     let { pages } = this.state;

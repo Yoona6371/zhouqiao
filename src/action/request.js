@@ -17,7 +17,12 @@ let Http = {};
 for (let key in server) {
   let api = server[key]; // url method
 
-  Http[key] = async (params, isFormData = false, config = {}) => {
+  Http[key] = async (
+    params,
+    supplyUrl = '',
+    isFormData = false,
+    config = {},
+  ) => {
     let url = api.url;
     let newParams = {};
 
@@ -36,14 +41,18 @@ for (let key in server) {
       api.method === 'patch'
     ) {
       try {
-        response = await instance[api.method](api.url, newParams, config);
+        response = await instance[api.method](
+          `${api.url}${supplyUrl}`,
+          newParams,
+          config,
+        );
       } catch (e) {
         response = e;
       }
     } else {
       config.params = newParams;
       try {
-        response = await instance[api.method](api.url, config);
+        response = await instance[api.method](`${api.url}${supplyUrl}`, config);
       } catch (e) {
         response = e;
       }
@@ -68,8 +77,6 @@ instance.interceptors.request.use(
 
 // 相应拦截器
 instance.interceptors.response.use((res) => {
-  // console.log(res);
-  // console.log(2323);
   return res;
 });
 export default Http;
