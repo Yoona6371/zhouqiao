@@ -46,8 +46,7 @@ export default class HomeTabShop extends PureComponent {
 
   // 获取测试数据
   async getList(isReload: boolean, currentPage = 1): Array<Object> {
-    let res = await Http.designCase_list({
-      category_id: 3,
+    let res = await Http.goodsList({
       page: currentPage,
       size: 12,
     });

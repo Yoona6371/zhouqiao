@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, InteractionManager } from 'react-native';
+import { View, ScrollView, InteractionManager } from 'react-native';
 import TopTitle from '../../components/common/TopTitle';
 import HomeTabShop from '../home/HomeTabShop';
 import TopTabNavigator from '../../components/common/TopTabNavigator';
@@ -75,7 +75,9 @@ class GoodsList extends PureComponent {
     return (
       <View style={{ flex: 1 }}>
         <TopTitle title="设计案例" showBtn={false} />
-        {this._render()}
+        <ScrollView>
+          <HomeTabShop />
+        </ScrollView>
       </View>
     );
   }

@@ -12,66 +12,54 @@ export default class HomeTabCase extends Component {
     this.state = {
       dataList: [],
       refreshState: RefreshState.Idle,
+      totalPage: 0,
+      currentPage: 1,
     };
   }
 
-  componentDidMount() {
-    this.setState({
-      dataList: [
-        { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
-        { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
-        { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
-        { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
-        { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
-        { Title: '冯泽明的买卖', Commodity_type: 'Man', user_id: 'Agan的故事' },
-      ],
-    });
+  async componentDidMount() {
+    await this.onHeaderRefresh();
   }
 
-  onHeaderRefresh = () => {
+  onHeaderRefresh = async () => {
     this.setState({ refreshState: RefreshState.HeaderRefreshing });
 
-    // 模拟网络请求
-    setTimeout(() => {
-      // 模拟网络加载失败的情况
+    let dataList = await this.getList(true);
 
-      //获取测试数据
-      let dataList = this.getList(true);
-
-      this.setState({
-        dataList: dataList,
-        refreshState:
-          dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
-      });
-    }, 2000);
+    this.setState({
+      dataList: dataList,
+      refreshState:
+        dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
+    });
   };
 
-  onFooterRefresh = () => {
+  onFooterRefresh = async () => {
     this.setState({ refreshState: RefreshState.FooterRefreshing });
+    const { totalPage, currentPage } = this.state;
 
-    // 模拟网络请求
-    setTimeout(() => {
-      // 模拟网络加载失败的情况
-
-      //获取测试数据
-      let dataList = this.getList(false);
-
-      this.setState({
-        dataList: dataList,
-        refreshState:
-          dataList.length > 50 ? RefreshState.NoMoreData : RefreshState.Idle,
-      });
-    }, 2000);
+    let dataList = await this.getList(false, currentPage + 1);
+    this.setState({
+      dataList: dataList,
+      refreshState:
+        dataList.length === totalPage
+          ? RefreshState.NoMoreData
+          : RefreshState.Idle,
+    });
   };
 
   // 获取测试数据
-  getList(isReload: boolean): Array<Object> {
-    let newList = this.state.dataList;
-    return isReload
-      ? Math.random() < 0.2
-        ? []
-        : newList
-      : [...this.state.dataList, ...newList];
+  async getList(isReload: boolean, currentPage = 1): Array<Object> {
+    let res = await Http.categoryCase({
+      category_id: this.props.route.key,
+      page: currentPage,
+      size: 12,
+    });
+    const newList = res.data.data.records;
+    this.setState({
+      totalPage: res.data.data.total,
+      currentPage: res.data.data.current,
+    });
+    return isReload ? newList : [...this.state.dataList, ...newList];
   }
 
   keyExtractor = (item: any, index: number) => {
@@ -88,9 +76,11 @@ export default class HomeTabCase extends Component {
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard
-            Title={item.Title}
-            user_id={item.user_id}
-            Commodity_type={item.Commodity_type}
+            Title={item.case_name}
+            user_id={item.case_author}
+            Commodity_type={this.props.route.title}
+            image={item.picture}
+            user_image={item.case_author_avatar}
             style={{ ...padding(25, 0, 25, 0) }}
           />
         )}

@@ -36,19 +36,9 @@ class Index extends Component {
     this.state = {
       pages: [],
       hotData: [],
-      headerPhoto: [
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-      ],
+      headerPhoto: [],
     };
   }
-
-  async UNSAFE_componentWillMount() {}
 
   async componentDidMount() {
     let hotDesignCaseList = await Http.designCase_list({
@@ -69,11 +59,12 @@ class Index extends Component {
         },
       });
     });
-    let arrSpecies = [];
-    let res = await Http.designCase_species();
+    //获取案例类别
+    let res = await Http.caseType();
+    let arrCaseType = [];
     res.data.data.forEach((item) => {
-      arrSpecies.push({
-        key: item.category,
+      arrCaseType.push({
+        key: item.categoryId,
         title: item.category,
         component: HomeTabCase,
       });
@@ -81,20 +72,9 @@ class Index extends Component {
 
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
-      pages: arrSpecies,
+      pages: arrCaseType,
       headerPhoto: rankingList,
     });
-
-    //eg 全局数据调用，需要修改数据则需要添加obsever装饰器
-    // console.log('全局数据调用：', this.props.RootStore);
-    //eg 调用接口
-    // this.props.RootStore.globalStore.allData.Http.test().then((res) => {
-    //   console.log('get请求返回值：', res);
-    // });
-    // let res = await Http.test(); // 直接get接口类型
-    // let res2 = await Http.test({ page: 1, size: 2 }); // get需要参数型
-    // let res3 = await Http.test({ number: 123, password: 111 }); // post发送参数型
-    // let res4 = await Http.test({ file: 'filr' }, true, { params: { type: 1 } }); // post发送文件型
   }
   MyTabs = () => {
     let { pages } = this.state;
