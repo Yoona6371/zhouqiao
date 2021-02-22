@@ -25,7 +25,11 @@ const api = {
     method: 'get',
   },
   categoryCase: {
-    url: '/api/designCase/stylist/design_cases/category/0001',
+    url: '/api/designCase/stylist/design_cases/category',
+    method: 'get',
+  },
+  caseType: {
+    url: '/designCase/designCaseCategory/client/design_cases/category/list',
     method: 'get',
   },
 };

@@ -115,14 +115,30 @@ class Index extends Component {
     // console.log('this.props:', this.props);
   }
 
-  componentDidMount() {
-    //eg 全局数据调用，需要修改数据则需要添加obsever装饰器
-    // console.log('全局数据调用：', this.props.RootStore);
-    //eg 调用接口
-    // this.props.RootStore.globalStore.allData.Http.test().then((res) => {
-    //   console.log('get请求返回值：', res);
-    // });
-  }
+  componentDidMount = async () => {
+    //获取热门案例
+    let hotDesignCaseList = await Http.categoryCase({
+      category_id: '3',
+      page: 1,
+      size: 12,
+    });
+    //获取案例类别
+    let res = await Http.caseType();
+    let arrCaseType = [];
+    res.data.data.forEach((item) => {
+      arrCaseType.push({
+        key: item.categoryId,
+        title: item.category,
+        component: HomeTabCase,
+      });
+    });
+    // console.log(arrCaseType);
+    this.setState({
+      hotData: hotDesignCaseList.data.data.records,
+      pages: arrCaseType,
+    });
+  };
+
   MyTabs = () => {
     let { pages } = this.state;
     return (
@@ -252,7 +268,14 @@ class Index extends Component {
             <FlatList
               horizontal={true}
               data={this.state.hotData}
-              renderItem={({ item }) => <HotCard key={item} />}
+              renderItem={({ item }) => (
+                <HotCard
+                  key={item}
+                  imageUri={item.picture}
+                  title={item.case_name}
+                  number={item.collect_num}
+                />
+              )}
             />
             {/*热门列表结束*/}
           </ContainerCard>
