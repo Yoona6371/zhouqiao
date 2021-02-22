@@ -1,8 +1,12 @@
 // 封装接口
 const api = {
   login: {
-    url: '/users/login',
-    method: 'put',
+    url: '/api/auth/password',
+    method: 'post',
+  },
+  getMyInfo: {
+    url: '/api/client/my/baseInfo',
+    method: 'get',
   },
   getGroup: {
     url: '/group/all',
