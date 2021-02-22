@@ -1,6 +1,6 @@
 const moment = require('moment');
 moment.locale('zh-CN');
-
+import LocalStorageUtils from './LocalStorageUtils';
 export default {
   /**
    * 格式化时间
@@ -32,68 +32,15 @@ export default {
   },
   /**
    * 设置登录验证信息
-   * @param {object} ctx - 服务端传入context 客户端传入this
-   * @param {object} res - 登录验证信息
    */
-  setAuthInfo(ctx, res) {
-    let $cookies, $store;
-    // 客户端
-    if (process.client) {
-      $cookies = ctx.$cookies;
-      $store = ctx.$store;
-    }
-
-    // 服务端
-    if (process.server) {
-      $cookies = ctx.app.$cookies;
-      $store = ctx.store;
-    }
-
-    if ($cookies && $store) {
-      // 过期时长 new Date(Date.now() + 8.64e7 * 365 * 10)
-      const expires = $store.state.auth.cookieMaxExpires;
-
-      // 设置cookie
-      $cookies.set('userId', res.userId, { expires });
-      $cookies.set('clientId', res.clientId, { expires });
-      $cookies.set('token', res.token, { expires });
-      $cookies.set('userInfo', res.user, { expires });
-
-      // 设置vuex
-      $store.commit('auth/UPDATE_USERINFO', res.user);
-      $store.commit('auth/UPDATE_CLIENTID', res.clientId);
-      $store.commit('auth/UPDATE_TOKEN', res.token);
-      $store.commit('auth/UPDATE_USERID', res.userId);
-    }
+  setAuthInfo(token, userId) {
+    LocalStorageUtils.set('token', 'token');
   },
 
   /**
    * 移除登录验证信息
-   * @param {object} ctx - 服务端传入context 客户端传入this
    */
-  removeAuthInfo(ctx) {
-    let $cookies, $store;
-    // 客户端
-    if (process.client) {
-      $cookies = ctx.$cookies;
-      $store = ctx.$store;
-    }
-    // 服务端
-    if (process.server) {
-      $cookies = ctx.app.$cookies;
-      $store = ctx.store;
-    }
-    if ($cookies && $store) {
-      $cookies.remove('userInfo');
-      $cookies.remove('clientId');
-      $cookies.remove('token');
-      $cookies.remove('userId');
-      $store.commit('auth/UPDATE_USERINFO', null);
-      $store.commit('auth/UPDATE_CLIENTID', '');
-      $store.commit('auth/UPDATE_TOKEN', '');
-      $store.commit('auth/UPDATE_USERID', '');
-    }
-  },
+  removeAuthInfo(ctx) {},
 
   // 检测手机号
   checkPhone(phone) {

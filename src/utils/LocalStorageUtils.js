@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export default {
   constructor() {},
-  get(key) {
+  async get(key) {
     if (!key) {
       return null;
     }
     key = key.toString();
-    return AsyncStorage.getItem(key)
+    return await AsyncStorage.getItem(key)
       .then((value) => {
         if (value) {
           return JSON.parse(value);
@@ -17,12 +17,12 @@ export default {
         return null;
       });
   },
-  set(key, value) {
+  async set(key, value) {
     if (!key) {
       return;
     }
     key = key.toString();
-    AsyncStorage.setItem(
+    await AsyncStorage.setItem(
       key,
       JSON.stringify({
         value,
@@ -34,18 +34,18 @@ export default {
    * @param key
    * @returns {Promise<string>}
    */
-  deleteItem(key) {
+  async deleteItem(key) {
     if (!key) {
       return;
     }
-    return AsyncStorage.removeItem(key);
+    return await AsyncStorage.removeItem(key);
   },
 
   /**
    * 删除所有配置数据
    * @returns {Promise<string>}
    */
-  clear() {
-    return AsyncStorage.clear();
+  async clear() {
+    return await AsyncStorage.clear();
   },
 };

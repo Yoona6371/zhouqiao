@@ -7,5 +7,6 @@ module.exports = {
   "globals": {
     //添加这一行，添加全局对象
     "NavigationHelper": true,
+    "Http": true
   }
 };

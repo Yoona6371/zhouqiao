@@ -1,8 +1,12 @@
 // 封装接口
 const api = {
   login: {
-    url: '/users/login',
-    method: 'put',
+    url: '/api/auth/password',
+    method: 'post',
+  },
+  getMyInfo: {
+    url: '/api/client/my/baseInfo',
+    method: 'get',
   },
   getGroup: {
     url: '/group/all',
@@ -20,8 +24,32 @@ const api = {
     url: '/info/delete',
     method: 'delete',
   },
-  test: {
-    url: '/',
+  demandSet: {
+    url: '/api/client/requirement',
+    method: 'post',
+  },
+  demandUpdate: {
+    url: '/api/client/my/requirement',
+    method: 'post',
+  },
+  demandDelete: {
+    url: '/api/client/my/requirement',
+    method: 'delete',
+  },
+  myRequirements: {
+    url: '/api/client/my/requirements',
+    method: 'get',
+  },
+  requirementDetail: {
+    url: '/api/requirement',
+    method: 'post',
+  },
+  fileUpdate: {
+    url: '/api/resource/file',
+    method: 'post',
+  },
+  requirementCategories: {
+    url: '/api/requirement/categories',
     method: 'get',
   },
   // 获取他人信息
