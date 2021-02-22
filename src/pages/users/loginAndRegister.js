@@ -71,7 +71,7 @@ class LoginTab extends Component {
         LocalStorageUtils.set('userId', this.state.userId);
         LocalStorageUtils.set('name', this.state.name);
         LocalStorageUtils.set('img', this.state.img);
-        console.log(LocalStorageUtils.get('name'));
+        console.log(LocalStorageUtils.get());
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }
