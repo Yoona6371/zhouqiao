@@ -36,7 +36,9 @@ class Index extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => NavigationHelper.navigate('DataEdit')}
+          >
             <View style={styles.section1_NamePhotoBorder}>
               <Image
                 style={styles.photo}
@@ -70,7 +72,9 @@ class Index extends Component {
           <View style={styles.fourIconBorder}>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('myCollect') }}
+                onPress={() => {
+                  NavigationHelper.navigate('myCollect');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -88,7 +92,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('history') }}
+                onPress={() => {
+                  NavigationHelper.navigate('history');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -106,7 +112,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('MyFocus') }}
+                onPress={() => {
+                  NavigationHelper.navigate('MyFocus');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -124,12 +132,13 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('SettingIndex') }}
+                onPress={() => {
+                  NavigationHelper.navigate('SettingIndex');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
-                onPress={() => NavigationHelper.navigate('SettingIndex')}
               >
                 <Icon
                   name={'settings2'}
@@ -145,7 +154,9 @@ class Index extends Component {
           <View style={styles.mySaleBorder}>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('OrderLists') }}
+                onPress={() => {
+                  NavigationHelper.navigate('OrderLists');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -161,7 +172,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -186,7 +197,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('OrderLists') }}
+                onPress={() => {
+                  NavigationHelper.navigate('myWallet');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -202,7 +215,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -222,13 +235,22 @@ class Index extends Component {
                     fontSize: pxToDp(50),
                   }}
                 /> */}
-                <Image style={{width:pxToDp(45),height:pxToDp(38),marginTop:pxToDp(8 )}} source={require('../../asserts/images/wallet.png')}></Image>
-                <Text style={styles.ItemiconText3}>待付款</Text>
+                <Image
+                  style={{
+                    width: pxToDp(45),
+                    height: pxToDp(38),
+                    marginTop: pxToDp(8),
+                  }}
+                  source={require('../../asserts/images/wallet.png')}
+                />
+                <Text style={styles.ItemiconText3}>我的钱包</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('OrderLists') }}
+                onPress={() => {
+                  NavigationHelper.navigate('OrderLists');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -244,7 +266,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -269,7 +291,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('EvaluateRelease') }}
+                onPress={() => {
+                  NavigationHelper.navigate('EvaluateRelease');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -285,7 +309,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -310,7 +334,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('AfterSales') }}
+                onPress={() => {
+                  NavigationHelper.navigate('AfterSales');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -326,7 +352,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -372,7 +398,9 @@ class Index extends Component {
         </View>
         <View style={styles.btnView}>
           <TouchableOpacity
-            onPress={() => { NavigationHelper.navigate('myDemand') }}
+            onPress={() => {
+              NavigationHelper.navigate('myDemand');
+            }}
           >
             <View style={styles.btn}>
               <Text style={styles.btnText}>查看更多</Text>

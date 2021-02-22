@@ -34,75 +34,9 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      pages: [
-        {
-          key: '关注',
-          title: '关注',
-          component: HomeTabCase,
-        },
-        {
-          key: 'Ps',
-          title: 'Ps',
-          component: HomeTabCase,
-        },
-        {
-          key: 'AI',
-          title: 'AI',
-          component: HomeTabCase,
-        },
-        {
-          key: 'CAD',
-          title: 'CAD',
-          component: HomeTabCase,
-        },
-        {
-          key: 'UI设计',
-          title: 'UI设计',
-          component: HomeTabCase,
-        },
-        {
-          key: '工业设计',
-          title: '工业设计',
-          component: HomeTabCase,
-        },
-      ],
-      hotData: [1, 2, 3, 4, 5],
+      pages: [],
+      hotData: [],
       headerPhoto: [
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
-        {
-          name: 'ggg',
-          image: {
-            uri:
-              'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F03%2F20190203161419_yerng.jpg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614417723&t=5907bf967350d3d3230702a176ec8381',
-          },
-        },
         {
           name: 'ggg',
           image: {
@@ -112,8 +46,9 @@ class Index extends Component {
         },
       ],
     };
-    // console.log('this.props:', this.props);
   }
+
+  async UNSAFE_componentWillMount() {}
 
   async componentDidMount() {
     let hotDesignCaseList = await Http.designCase_list({
@@ -121,10 +56,35 @@ class Index extends Component {
       page: 1,
       size: 12,
     });
+    let rankingListRes = await Http.rankingList({
+      page: 1,
+      size: 8,
+    });
+    let rankingList = [];
+    rankingListRes.data.data.dataList.forEach((item) => {
+      rankingList.push({
+        name: item.nickName,
+        image: {
+          uri: item.userAvatar,
+        },
+      });
+    });
+    let arrSpecies = [];
+    let res = await Http.designCase_species();
+    res.data.data.forEach((item) => {
+      arrSpecies.push({
+        key: item.category,
+        title: item.category,
+        component: HomeTabCase,
+      });
+    });
+
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
+      pages: arrSpecies,
+      headerPhoto: rankingList,
     });
-    console.log(hotDesignCaseList);
+
     //eg 全局数据调用，需要修改数据则需要添加obsever装饰器
     // console.log('全局数据调用：', this.props.RootStore);
     //eg 调用接口
@@ -138,14 +98,18 @@ class Index extends Component {
   }
   MyTabs = () => {
     let { pages } = this.state;
-    return (
-      <TopTabNavigator
-        ifScrollEnabled={true}
-        type={3}
-        itemWidth={deviceWidthDp / 5}
-        routes={pages}
-      />
-    );
+    if (pages.length === 0) {
+      return;
+    } else {
+      return (
+        <TopTabNavigator
+          ifScrollEnabled={true}
+          type={3}
+          itemWidth={deviceWidthDp / 5}
+          routes={pages}
+        />
+      );
+    }
   };
 
   onFocus() {
