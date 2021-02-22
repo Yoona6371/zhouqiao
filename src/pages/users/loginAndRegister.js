@@ -14,15 +14,49 @@ import SvgUri from 'react-native-svg-uri';
 import { qq, WeChat } from '../../constants/svg';
 import Icon from '../../components/common/Icon';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { inject } from 'mobx-react';
+import Toast from '../../components/common/Toast/Toast';
 const Tab = createMaterialTopTabNavigator();
 
+@inject('RootStore')
 class LoginTab extends Component {
+  constructor() {
+    super();
+    this.state = {
+      phoneNumber: '',
+      password: '',
+    };
+  }
+  login = async () => {
+    await Http.login({
+      account: this.state.phoneNumber,
+      password: this.state.password,
+    }).then((res) => {
+      console.log(res);
+      if (res.data.code === 0) {
+        Toast.success(res.data.msg, 1000, 'center');
+        NavigationHelper.navigation.goBack();
+        this;
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
+  };
+
   render() {
     return (
       <View style={{ alignItems: 'center', backgroundColor: '#FFFFFF' }}>
         {/*登录 start*/}
         <View style={{ marginTop: pxToDp(90) }}>
-          <LoginInput type={1} />
+          <LoginInput
+            type={1}
+            phoneNumberGet={(value) => {
+              this.setState({ phoneNumber: value });
+            }}
+            passwordGet={(value) => {
+              this.setState({ password: value });
+            }}
+          />
           {/*forgetPassword start*/}
           <View style={{ marginTop: pxToDp(45) }}>
             <Text
@@ -43,6 +77,7 @@ class LoginTab extends Component {
                 backgroundColor: '#FD840B',
                 justifyContent: 'center',
               }}
+              onPress={this.login}
             >
               <Text
                 style={{
@@ -167,7 +202,12 @@ class Index extends Component {
             source={require('../../asserts/images/Login_top.png')}
           >
             {/*close 图标*/}
-            <TouchableOpacity onPress={() => NavigationHelper.goBack()}>
+            <TouchableOpacity
+              style={styles.TouchableOpacity__close}
+              onPress={() => {
+                NavigationHelper.navigate('Tab');
+              }}
+            >
               <Icon name="close" style={styles.Icon__close} />
             </TouchableOpacity>
             {/*logo*/}
@@ -316,10 +356,17 @@ const styles = StyleSheet.create({
 
   Icon__close: {
     position: 'absolute',
-    left: pxToDp(29),
-    top: pxToDp(80),
+    left: pxToDp(10),
+    top: pxToDp(10),
     color: 'white',
     fontSize: pxToDp(36),
+  },
+  TouchableOpacity__close: {
+    width: pxToDp(60),
+    height: pxToDp(60),
+    marginTop: pxToDp(80),
+    marginLeft: pxToDp(29),
+    position: 'relative',
   },
   logo: {
     alignItems: 'center',

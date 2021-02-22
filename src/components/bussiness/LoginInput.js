@@ -32,41 +32,46 @@ export default class LoginInput extends Component {
     phoneNumber: '',
     password: '',
     verificationCode: '',
-    errShow: false,
+    phoneNumberErrShow: false,
+    passwordErrShow: false,
   };
   //电话号码
   phoneNumberChangeText = (phoneNumber) => {
     this.setState({ phoneNumber });
+    this.props.phoneNumberGet(phoneNumber);
   };
   phoneNumberSubmitEditing = () => {
-    const { phoneNumber } = this.state;
-    this.setState({ errShow: true });
+    // const { phoneNumber } = this.state;
     // console.log(utils.checkPhone(phoneNumber));
   };
 
   //密码
   passwordSubmitEditing = () => {
-    this.setState({ password });
-
-    this.setState({ errShow: true });
+    this.props.passwordGet(this.state.password);
   };
-  passwordChangeText = () => {
-    const { password } = this.state;
-
+  passwordChangeText = (password) => {
+    this.setState({ password });
+    this.props.passwordGet(password);
     // console.log(utils.checkPassword(password));
   };
 
   //申请验证码
   verificationCodeRequest = () => {};
   verificationCodeSubmitEditing = () => {
-    this.setState(verificationCode);
+    // this.setState(verificationCode);
     this.setState({ errShow: true });
   };
   verificationCodeChangeText = () => {
     const { verificationCode } = this.state;
   };
   render() {
-    const { phoneNumber, password, verificationCode, errShow } = this.state;
+    const {
+      phoneNumber,
+      password,
+      verificationCode,
+      phoneNumberErrShow,
+      passwordErrShow,
+    } = this.state;
     const { type } = this.props;
 
     return (
@@ -83,10 +88,16 @@ export default class LoginInput extends Component {
                   onChangeText={this.phoneNumberChangeText}
                   keyboardType="phone-pad"
                   style={{ fontSize: pxToDp(24) }}
+                  onFocus={() => {
+                    this.setState({ phoneNumberErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ phoneNumberErrShow: true });
+                  }}
                 />
                 <Icon name="phone" style={styles.icon__type12} />
               </View>
-              {errShow ? (
+              {phoneNumberErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkPhone(phoneNumber)}
                 </Text>
@@ -104,10 +115,16 @@ export default class LoginInput extends Component {
                   secureTextEntry={true}
                   onSubmitEditing={this.passwordSubmitEditing}
                   onChangeText={this.passwordChangeText}
+                  onFocus={() => {
+                    this.setState({ passwordErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ passwordErrShow: true });
+                  }}
                 />
                 <Icon name="lock" style={styles.icon__type12} />
               </View>
-              {errShow ? (
+              {passwordErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkPassword(password)}
                 </Text>
@@ -128,10 +145,16 @@ export default class LoginInput extends Component {
                   onChangeText={this.phoneNumberChangeText}
                   keyboardType="phone-pad"
                   style={{ fontSize: pxToDp(24) }}
+                  onFocus={() => {
+                    this.setState({ phoneNumberErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ phoneNumberErrShow: true });
+                  }}
                 />
                 <Icon name="phone" style={styles.icon__type12} />
               </View>
-              {errShow ? (
+              {phoneNumberErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkPhone(phoneNumber)}
                 </Text>
@@ -149,10 +172,16 @@ export default class LoginInput extends Component {
                   secureTextEntry={true}
                   onSubmitEditing={this.passwordSubmitEditing}
                   onChangeText={this.passwordChangeText}
+                  onFocus={() => {
+                    this.setState({ passwordErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ passwordErrShow: true });
+                  }}
                 />
                 <Icon name="lock" style={styles.icon__type12} />
               </View>
-              {errShow ? (
+              {passwordErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkPassword(password)}
                 </Text>
@@ -170,10 +199,16 @@ export default class LoginInput extends Component {
                   secureTextEntry={true}
                   onSubmitEditing={this.passwordSubmitEditing}
                   onChangeText={this.passwordChangeText}
+                  onFocus={() => {
+                    this.setState({ passwordErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ passwordErrShow: true });
+                  }}
                 />
                 <Icon name="lock" style={styles.icon__type12} />
               </View>
-              {errShow ? (
+              {passwordErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkPassword(password)}
                 </Text>
@@ -195,10 +230,16 @@ export default class LoginInput extends Component {
                   onChangeText={this.phoneNumberChangeText}
                   keyboardType="phone-pad"
                   style={{ fontSize: pxToDp(24) }}
+                  onFocus={() => {
+                    this.setState({ phoneNumberErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ phoneNumberErrShow: true });
+                  }}
                 />
               </View>
             </View>
-            {errShow ? (
+            {phoneNumberErrShow ? (
               <Text style={styles.errorText}>
                 {utils.checkPhone(phoneNumber)}
               </Text>
@@ -232,7 +273,7 @@ export default class LoginInput extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              {errShow ? (
+              {passwordErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkVerification(verificationCode)}
                 </Text>
@@ -251,9 +292,15 @@ export default class LoginInput extends Component {
                   secureTextEntry={true}
                   onSubmitEditing={this.passwordSubmitEditing}
                   onChangeText={this.passwordChangeText}
+                  onFocus={() => {
+                    this.setState({ passwordErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ passwordErrShow: true });
+                  }}
                 />
               </View>
-              {errShow ? (
+              {passwordErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkPassword(password)}
                 </Text>
