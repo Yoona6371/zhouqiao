@@ -27,34 +27,88 @@ class Index extends Component {
           title: '预算金额',
           tips: '请输入预算金额(元)',
           type: 0,
+          inputUpdate: (data) => {
+            this.setState({
+              data: {
+                ...this.state.data,
+                expectedPrice: parseInt(data),
+              },
+            });
+          },
         },
         {
           title: '项目周期',
-          tips: '请输入项目周期',
+          tips: '请输入项目周期(天)',
           type: 0,
+          inputUpdate: (data) => {
+            this.setState({
+              data: {
+                ...this.state.data,
+                expectedTime: parseInt(data),
+              },
+            });
+          },
         },
         {
           title: '是否加急',
           type: 4,
           last: true,
+          inputUpdate: (data) => {
+            this.setState({
+              data: {
+                ...this.state.data,
+                urgent: data,
+              },
+            });
+          },
         },
       ],
       list_2: [
         {
-          title: '联系电话',
-          tips: '请输入联系电话',
+          title: '聊天人数',
+          tips: '最大可以聊天人数，上限8，默认2',
           type: 0,
+          inputUpdate: (data) => {
+            if (data > 8) {
+              data = 8;
+            }
+            this.setState({
+              data: {
+                ...this.state.data,
+                communityNumber: parseInt(data),
+              },
+            });
+          },
         },
         {
-          title: '联系人',
-          tips: '请选择类别',
+          title: '面向设计',
+          tips: '请选择类别 新手/老手 默认新手',
           type: 1,
+          category: 1,
+          inputUpdate: (data) => {
+            this.setState({
+              data: {
+                ...this.state.data,
+                proficiency: data,
+              },
+            });
+          },
         },
         {
           title: '类别',
           tips: '请选择类别',
           type: 1,
+          category: 2,
           last: true,
+          inputUpdate: (data) => {
+            console.log(data);
+            this.setState({
+              data: {
+                ...this.state.data,
+                categoryId: data,
+              },
+            });
+          },
         },
       ],
       list_3: [
@@ -62,34 +116,44 @@ class Index extends Component {
           title: '订单名字',
           tips: '请输入订单名字',
           type: 3,
+          inputUpdate: (data) => {
+            this.setState({
+              data: {
+                ...this.state.data,
+                requirementTitle: data,
+              },
+            });
+          },
         },
         {
           title: '附件',
           hint: '(非必须)',
           type: 2,
-        },
-        {
-          title: '图片',
-          hint: '(非必须)',
-          type: 5,
           last: true,
+          category: 3,
         },
+        // {
+        //   title: '图片',
+        //   hint: '(非必须)',
+        //   type: 5,
+        //   last: true,
+        // },
       ],
       images: [],
       textLength: 0,
       bgColor: 'transparent',
       color: '#fff',
+
+      // 提交数据
+      // 赋默认值
+      data: {
+        urgent: 0,
+        communityNumber: 2,
+      },
     };
   }
-  titleFixed = (e) => {
-    // this.setState({ titleOpacity: (e.nativeEvent.contentOffset.y - 50) / 100 });
-    // if (e.nativeEvent.contentOffset.y > 30) {
-    //   this.setState({ bgColor: '#feaa2c' });
-    // } else {
-    //   this.setState({ bgColor: 'transparent' });
-    // }
-  };
-  asd = () => {
+
+  titleFixed = () => {
     const { scrollY } = this.state;
     return scrollY.interpolate({
       inputRange: [0, 100, 200],
@@ -97,9 +161,18 @@ class Index extends Component {
       extrapolate: 'clamp',
     });
   };
+
+  demandSet = () => {
+    Http.demandSet(this.state.data).then((res) => {
+      if (res.status === 200) {
+        NavigationHelper.navigate('DemandDetails');
+      }
+    });
+  };
+
   render() {
-    const { list_1, list_2, list_3, images, textLength } = this.state;
-    const asd = this.asd();
+    const { list_1, list_2, list_3, textLength } = this.state;
+    const opacity_title = this.titleFixed();
     return (
       <ScrollView
         stickyHeaderIndices={[0, 1]}
@@ -112,7 +185,7 @@ class Index extends Component {
         <Animated.View
           style={{
             height: pxToDp(138),
-            opacity: asd,
+            opacity: opacity_title,
             backgroundColor: '#FE990D',
             width: '100%',
             position: 'relative',
@@ -159,6 +232,7 @@ class Index extends Component {
               title={v.title}
               tips={v.tips}
               last={v.last}
+              inputUpdate={v.inputUpdate}
             />
           ))}
         </View>
@@ -170,6 +244,8 @@ class Index extends Component {
               title={v.title}
               tips={v.tips}
               last={v.last}
+              inputUpdate={v.inputUpdate}
+              category={v.category}
             />
           ))}
         </View>
@@ -182,36 +258,38 @@ class Index extends Component {
               hint={v.hint}
               tips={v.tips}
               last={v.last}
+              inputUpdate={v.inputUpdate}
+              category={v.category}
             />
           ))}
-          <View style={styles.picture}>
-            {images.map((v, i) => (
-              <Image
-                key={i}
-                source={{ uri: v.url }}
-                style={{
-                  width: pxToDp(140),
-                  height: pxToDp(120),
-                  marginRight: pxToDp(20),
-                  marginBottom: pxToDp(30),
-                }}
-              />
-            ))}
-            <TouchableOpacity>
-              <Icon
-                name={'camera'}
-                style={{
-                  width: pxToDp(140),
-                  height: pxToDp(120),
-                  backgroundColor: '#f0eeeb',
-                  lineHeight: pxToDp(120),
-                  textAlign: 'center',
-                  marginBottom: pxToDp(30),
-                  color: '#b9b6b1',
-                }}
-              />
-            </TouchableOpacity>
-          </View>
+          {/*<View style={styles.picture}>*/}
+          {/*{images.map((v, i) => (*/}
+          {/*  <Image*/}
+          {/*    key={i}*/}
+          {/*    source={{ uri: v.url }}*/}
+          {/*    style={{*/}
+          {/*      width: pxToDp(140),*/}
+          {/*      height: pxToDp(120),*/}
+          {/*      marginRight: pxToDp(20),*/}
+          {/*      marginBottom: pxToDp(30),*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*))}*/}
+          {/*<TouchableOpacity>*/}
+          {/*  <Icon*/}
+          {/*    name={'camera'}*/}
+          {/*    style={{*/}
+          {/*      width: pxToDp(140),*/}
+          {/*      height: pxToDp(120),*/}
+          {/*      backgroundColor: '#f0eeeb',*/}
+          {/*      lineHeight: pxToDp(120),*/}
+          {/*      textAlign: 'center',*/}
+          {/*      marginBottom: pxToDp(30),*/}
+          {/*      color: '#b9b6b1',*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*</TouchableOpacity>*/}
+          {/*</View>*/}
         </View>
         <View style={styles.detailInfo}>
           <DemandInput title={'详细信息'} type={5} last={true} />
@@ -223,27 +301,30 @@ class Index extends Component {
             placeholder={'\ue639 请输入详细信息'}
             placeholderTextColor="#999"
             onChangeText={(e) => {
-              this.setState({ textLength: e.length });
+              this.setState({
+                textLength: e.length,
+                data: {
+                  ...this.state.data,
+                  requirementContent: e,
+                  requirementContentHtml: e,
+                },
+              });
             }}
           />
           <Text style={styles.textLengthLimit}>{textLength}/300</Text>
         </View>
-        <TouchableOpacity style={styles.button}>
+        <View style={styles.button}>
           <LinearGradient
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             colors={['#fe9e0e', '#fd7609']}
             style={styles.button_linear}
           >
-            <TouchableOpacity
-              onPress={() => {
-                NavigationHelper.navigate('DemandDetails');
-              }}
-            >
+            <TouchableOpacity onPress={this.demandSet}>
               <Text style={styles.button_text}>确认发布</Text>
             </TouchableOpacity>
           </LinearGradient>
-        </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -328,7 +409,7 @@ const styles = StyleSheet.create({
     top: pxToDp(380),
   },
   button: {
-    ...margin(30, 100, 30, 156),
+    ...margin(30, 100, 30, 100),
   },
   button_linear: {
     height: pxToDp(88),
@@ -338,4 +419,5 @@ const styles = StyleSheet.create({
     ...fontStyle(28, 88, 88, 'bold', '#fff', 'center'),
   },
 });
+
 export default Index;

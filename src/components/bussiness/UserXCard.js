@@ -5,6 +5,10 @@ import Avatar from '../common/Avatar';
 import PropTypes from 'prop-types';
 import { pxToDp } from '../../utils/pxToDp';
 import utils from '../../utils/utils';
+// import request from '../../action/request';
+import Toast from '../common/Toast/Toast';
+import { inject, observer } from 'mobx-react';
+
 import {
   flexColumnSpb,
   flexRowCenter,
@@ -27,6 +31,8 @@ const COLORARRAY = [
   '#03C9A9',
 ];
 
+@inject('RootStore')
+@observer
 class UserXCard extends Component {
   static propTypes = {
     image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
@@ -53,6 +59,58 @@ class UserXCard extends Component {
     };
   }
 
+  // ——————————————————————————点击关注按钮部分开始————————————————————————————
+  // 关注用户
+  focusUser = async () => {
+    const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await request.focusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
+
+    if (message.status === 200) {
+      this.setState({
+        follow: true,
+      });
+      Toast.smile('关注成功');
+    } else {
+      Toast.sad('关注失败');
+    }
+  };
+
+  // 取消关注用户
+  unfocusUser = async () => {
+    const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await request.unfocusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
+
+    if (message.status === 200) {
+      this.setState({
+        follow: false,
+      });
+      Toast.smile('取消成功');
+    } else {
+      Toast.sad('取消失败');
+    }
+  };
+
+  handleClick() {
+    const token = this.props.RootStore.userStore.allData.token;
+    if (!token) {
+      Toast.message('您尚未登录');
+      return;
+    }
+
+    if (!this.state.follow) {
+      // 如果没有关注，点击之后关注
+      this.focusUser();
+    } else {
+      this.unfocusUser();
+    }
+  }
+  // ——————————————————————————点击关注按钮部分结束————————————————————————————
   get userCard__wrap_style() {
     if (this.props.type === 1) {
       return {
@@ -99,7 +157,14 @@ class UserXCard extends Component {
           }}
         >
           <View style={[styles.footer_left]}>
-            <Text style={{ ...styles.left_title, color: this.fontColor[0] }}>
+            <Text
+              style={{
+                ...styles.left_title,
+                color: this.fontColor[0],
+                lineHeight: pxToDp(40),
+                height: pxToDp(40),
+              }}
+            >
               {name}
             </Text>
             <View style={styles.left_text__container}>
@@ -143,11 +208,6 @@ class UserXCard extends Component {
         </View>
       </View>
     );
-  }
-  handleClick() {
-    this.setState({
-      follow: !this.state.follow,
-    });
   }
 }
 

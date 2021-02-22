@@ -211,7 +211,7 @@
     "@babel/helper-create-class-features-plugin" "^7.12.13"
     "@babel/helper-plugin-utils" "^7.12.13"
 
-"@babel/plugin-proposal-decorators@^7.12.12":
+"@babel/plugin-proposal-decorators@^7.12.13":
   version "7.12.13"
   resolved "https://registry.npm.taobao.org/@babel/plugin-proposal-decorators/download/@babel/plugin-proposal-decorators-7.12.13.tgz#d4c89b40c2b7a526b0d394de4f4def36191e413e"
   integrity sha1-1MibQMK3pSaw05TeT03vNhkeQT4=
@@ -6102,6 +6102,11 @@ react-native-button@^2.3.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-document-picker@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-document-picker/download/react-native-document-picker-5.0.0.tgz#15c2557edd6c3ebc129b529e52556ec378c99853"
+  integrity sha1-FcJVft1sPrwSm1KeUlVuw3jJmFM=
+
 react-native-fs@^2.16.6:
   version "2.16.6"
   resolved "https://registry.npm.taobao.org/react-native-fs/download/react-native-fs-2.16.6.tgz#2901789a43210a35a0ef0a098019bbef3af395fd"
@@ -6153,6 +6158,11 @@ react-native-orientation-locker@^1.1.8:
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/react-native-orientation-locker/download/react-native-orientation-locker-1.2.0.tgz#9fa51b3aade9b847e63066b6fd60509371940a7e"
   integrity sha1-n6UbOq3puEfmMGa2/WBQk3GUCn4=
+
+react-native-picker@^4.3.7:
+  version "4.3.7"
+  resolved "https://registry.npm.taobao.org/react-native-picker/download/react-native-picker-4.3.7.tgz#9842e8c62ff0d8b676e9514d9f9172413c0518a8"
+  integrity sha1-mELoxi/w2LZ26VFNn5FyQTwFGKg=
 
 react-native-reanimated@^1.13.2:
   version "1.13.2"

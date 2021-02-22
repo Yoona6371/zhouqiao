@@ -64,7 +64,7 @@ for (let key in server) {
 instance.interceptors.request.use(
   (config) => {
     // 加入token
-    let token = RootStore.userStore.allData.token;
+    let token = RootStore.userStore.allData.accessToken;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
