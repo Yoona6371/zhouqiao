@@ -14,7 +14,12 @@ class DynamicList extends React.Component {
       CollectionNum: props.CollectionNum,
       CommentNum: props.CommentNum,
       FabulousNum: props.FabulousNum,
-      isFollow: props.isFollowProps,
+      //是否关注
+      isFollow: false,
+      //是否喜欢
+      isLove: false,
+      //是否点赞
+      isLike: false,
     };
   }
   static propTypes = {
@@ -65,19 +70,19 @@ class DynamicList extends React.Component {
             </View>
           </View>
           <View style={styles.Avatar_right}>
-            <Text style={styles.Avatar_name}>冯意锦</Text>
-            <Text style={styles.Avatar_phone}>IPhone 11在线</Text>
             <Text style={styles.Avatar_name}>{DynamicUserName}</Text>
             <Text style={styles.Avatar_phone}>{DynamicPhone}在线</Text>
           </View>
-          <TouchableOpacity onPress={this.changFollowBtn}>
-            <View style={styles.Avatar_followBox}>
-              {isFollow ? (
+          <TouchableOpacity activeOpacity={0.8} onPress={this.changFollowBtn}>
+            {isFollow ? (
+              <View style={styles.Avatar_followBox}>
                 <Text style={styles.Avatar_followText}>已关注</Text>
-              ) : (
-                <Text style={styles.Avatar_followText}>关注</Text>
-              )}
-            </View>
+              </View>
+            ) : (
+              <View style={styles.Avatar_unfollowBox}>
+                <Text style={styles.Avatar_unfollowText}>关注</Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
         {/*上部结束*/}
@@ -117,16 +122,21 @@ class DynamicList extends React.Component {
         {/*收藏点赞评论和发布时间开始*/}
         <View style={styles.Icon_Box}>
           <TouchableOpacity
+            activeOpacity={0.8}
             style={styles.IconStyle}
             onPress={() => this.changeCollectionNum()}
           >
             <Icon
               name={'love'}
-              style={{ marginRight: pxToDp(19), color: '#D4D9E1FF' }}
+              style={{
+                marginRight: pxToDp(19),
+                color: this.state.isLove ? '#FE9E0EFF' : '#D4D9E1FF',
+              }}
             />
             <Text style={styles.IconFont}>{CollectionNum}</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             style={styles.IconStyle}
             onPress={() => this.changeCommentNum()}
           >
@@ -137,12 +147,16 @@ class DynamicList extends React.Component {
             <Text style={styles.IconFont}>{CommentNum}</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            activeOpacity={0.8}
             style={styles.IconStyle}
             onPress={() => this.changeFabulousNum()}
           >
             <Icon
               name={'like2'}
-              style={{ marginRight: pxToDp(19), color: '#D4D9E1FF' }}
+              style={{
+                marginRight: pxToDp(19),
+                color: this.state.isLike ? '#FE9E0EFF' : '#D4D9E1FF',
+              }}
             />
             <Text style={styles.IconFont}>{FabulousNum}</Text>
           </TouchableOpacity>
@@ -154,7 +168,17 @@ class DynamicList extends React.Component {
   }
   //点爱心
   changeCollectionNum = () => {
-    this.setState({ CollectionNum: this.state.CollectionNum + 1 });
+    if (!this.state.isLove) {
+      this.setState({ CollectionNum: this.state.CollectionNum + 1 });
+      this.setState({
+        isLove: true,
+      });
+    } else {
+      this.setState({ CollectionNum: this.state.CollectionNum - 1 });
+      this.setState({
+        isLove: false,
+      });
+    }
   };
   //点评论
   changeCommentNum = () => {
@@ -162,8 +186,20 @@ class DynamicList extends React.Component {
   };
   //点棒棒
   changeFabulousNum = () => {
-    this.setState({ FabulousNum: this.state.FabulousNum + 1 });
+    if (!this.state.isLike) {
+      this.setState({ FabulousNum: this.state.FabulousNum + 1 });
+      this.setState({
+        isLike: true,
+      });
+    } else {
+      this.setState({ FabulousNum: this.state.FabulousNum - 1 });
+      this.setState({
+        isLike: false,
+      });
+    }
   };
+
+  // 关注按钮
   changFollowBtn = () => {
     this.setState({ isFollow: !this.state.isFollow });
   };
@@ -197,11 +233,12 @@ const styles = StyleSheet.create({
     marginLeft: pxToDp(24),
   },
   Avatar_name: {
-    ...fontStyle(30, 32, 32, 'bold', '#333333FF'),
+    marginTop: pxToDp(15),
+    ...fontStyle(30, 38, 38, 'bold', '#333333FF'),
   },
   Avatar_phone: {
     marginTop: pxToDp(16),
-    ...fontStyle(24, 26, 26, 'normal', '#999999FF'),
+    ...fontStyle(24, 27, 27, 'normal', '#999999FF'),
   },
   Avatar_followBox: {
     width: pxToDp(130),
@@ -212,10 +249,26 @@ const styles = StyleSheet.create({
     borderWidth: pxToDp(1),
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: pxToDp(300),
+    marginLeft: pxToDp(275),
+    backgroundColor: '#FE9E0EFF',
+  },
+  Avatar_unfollowBox: {
+    width: pxToDp(130),
+    height: pxToDp(60),
+    borderRadius: pxToDp(30),
+    borderColor: '#FE9E0EFF',
+    borderStyle: 'solid',
+    borderWidth: pxToDp(1),
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: pxToDp(275),
   },
   Avatar_followText: {
-    ...fontStyle(28, 30, 30, 'bold', '#FE9E0EFF'),
+    ...fontStyle(28, 40, 40, 'bold', 'white'),
+  },
+
+  Avatar_unfollowText: {
+    ...fontStyle(28, 40, 40, 'bold', '#FE9E0EFF'),
   },
   Dynamic_TextBox: {
     width: pxToDp(688),
@@ -252,6 +305,9 @@ const styles = StyleSheet.create({
     marginTop: pxToDp(31),
     position: 'relative',
     width: pxToDp(688),
+    borderBottomColor: '#dddddd',
+    borderBottomWidth: pxToDp(1),
+    paddingBottom: pxToDp(40),
   },
   IconStyle: { marginRight: pxToDp(49), flexDirection: 'row' },
   IconFont: {
@@ -294,7 +350,7 @@ class DynamicLabel extends React.Component {
           }}
         >
           <Text style={{ ...fontStyle(22, 24, 24, 'normal', '#33D5A0FF') }}>
-            #{text}
+            # {text}
           </Text>
         </View>
       </View>
