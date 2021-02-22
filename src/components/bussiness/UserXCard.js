@@ -5,10 +5,9 @@ import Avatar from '../common/Avatar';
 import PropTypes from 'prop-types';
 import { pxToDp } from '../../utils/pxToDp';
 import utils from '../../utils/utils';
-import request from '../../action/request';
+// import request from '../../action/request';
 import Toast from '../common/Toast/Toast';
-import RootStore from '../../mobx/index';
-
+import { inject, observer } from 'mobx-react';
 
 import {
   flexColumnSpb,
@@ -32,6 +31,8 @@ const COLORARRAY = [
   '#03C9A9',
 ];
 
+@inject('RootStore')
+@observer
 class UserXCard extends Component {
   static propTypes = {
     image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
@@ -61,9 +62,11 @@ class UserXCard extends Component {
   // ——————————————————————————点击关注按钮部分开始————————————————————————————
   // 关注用户
   focusUser = async () => {
-    const message = await request.focusUser({}, false, {
-      userId: 'a64bbe91e048638e09ef6b7213f02d32',
-    });
+    const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await request.focusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
 
     if (message.status === 200) {
       this.setState({
@@ -77,13 +80,15 @@ class UserXCard extends Component {
 
   // 取消关注用户
   unfocusUser = async () => {
-    const message = await request.unfocusUser({}, false, {
-      userId: 'a64bbe91e048638e09ef6b7213f02d32',
-    });
+    const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await request.unfocusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
 
     if (message.status === 200) {
       this.setState({
-        follow: true,
+        follow: false,
       });
       Toast.smile('取消成功');
     } else {
@@ -92,7 +97,7 @@ class UserXCard extends Component {
   };
 
   handleClick() {
-    const token = RootStore.userStore.allData.token;
+    const token = this.props.RootStore.userStore.allData.token;
     if (!token) {
       Toast.message('您尚未登录');
       return;
