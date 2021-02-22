@@ -12,8 +12,12 @@ import { inject, observer } from 'mobx-react';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon/index';
 import DemandList from '../../components/bussiness/DemandList';
+
 @inject('RootStore')
 @observer
+/**
+ * 目前渲染了昵称和关注数
+ */
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -23,8 +27,66 @@ class Index extends Component {
       payingNum: 2,
       commentNum: 3,
       serviceNum: 1,
+
+      //昵称
+      nickname: '',
+      //关注数
+      numFocus: 0,
     };
   }
+
+  componentDidMount() {
+    // 获取我的基本信息
+    this.getMyInfo();
+    // 我的关注列表
+    this.getMyFocusList();
+  }
+
+  // ——————————————————————————昵称、关注数渲染开始——————————————————————
+  // 获取我的基本信息
+  getMyInfo = async () => {
+    // 获取token的方法
+    // this.props.RootStore.userStore.allData.token
+    const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await request.myInfo();
+    // "data": {
+    // 	"birthday": [Array],
+    // 	"createTime": [Array],
+    // 	"email": null,
+    // 	"gender": 1,
+    // 	"introduction": "七月初七 淮水竹亭",
+    // 	"mobile": "19834422405",
+    // 	"nickName": "DAOKO",
+    // 	"status": 0,
+    // 	"updateTime": [Array],
+    // 	"userAvatar": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/avatar/a9975b68-54ea-4220-9573-b041efdf6cc7.jpg",
+    // 	"userId": "cfc241796dc3f8d4a86150a1131789d3"
+    // },
+    const userInfo = message.data.data;
+    this.setState({
+      nickname: userInfo.introduction,
+    });
+  };
+
+  getMyFocusList = async () => {
+    const request = this.props.RootStore.globalStore.allData.Http;
+    // {
+    //   "dataList": [{
+    //     "avatar": "1.jpg",
+    //     "followedUser": true,
+    //     "userId": "44515a6a1c25b33ceb259f9d080d7348",
+    //     "userNick": "解亚伟最帅"
+    //   }],
+    //   "pageSize": 1,
+    //   "totalPage": 1,
+    //   "totalRecords": 1
+    // }
+    const message = await request.myFocusList({ page: 1, size: 1 });
+    this.setState({
+      numFocus: message.data.data.totalPage,
+    });
+  };
+  // ——————————————————————————昵称、关注数渲染结束——————————————————————
   render() {
     const {
       myOrderNum,
@@ -32,6 +94,8 @@ class Index extends Component {
       payingNum,
       commentNumv,
       serviceNum,
+      nickname,
+      numFocus,
     } = this.state;
     return (
       <View style={{ flex: 1 }}>
@@ -46,9 +110,9 @@ class Index extends Component {
                 }}
               />
               <View style={styles.name_attention}>
-                <Text style={styles.name}>硕硕爱老虎</Text>
+                <Text style={styles.name}>{nickname}</Text>
                 <View style={styles.attentionBorder}>
-                  <Text style={styles.attentionNumber}>关注数:7894</Text>
+                  <Text style={styles.attentionNumber}>关注数:{numFocus}</Text>
                 </View>
               </View>
               <View
