@@ -6102,6 +6102,11 @@ react-native-button@^2.3.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-document-picker@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npm.taobao.org/react-native-document-picker/download/react-native-document-picker-5.0.0.tgz#15c2557edd6c3ebc129b529e52556ec378c99853"
+  integrity sha1-FcJVft1sPrwSm1KeUlVuw3jJmFM=
+
 react-native-fs@^2.16.6:
   version "2.16.6"
   resolved "https://registry.npm.taobao.org/react-native-fs/download/react-native-fs-2.16.6.tgz#2901789a43210a35a0ef0a098019bbef3af395fd"

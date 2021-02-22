@@ -132,6 +132,7 @@ class Index extends Component {
           hint: '(非必须)',
           type: 2,
           last: true,
+          category: 3,
         },
         // {
         //   title: '图片',
@@ -250,6 +251,7 @@ class Index extends Component {
               tips={v.tips}
               last={v.last}
               inputUpdate={v.inputUpdate}
+              category={v.category}
             />
           ))}
           {/*<View style={styles.picture}>*/}

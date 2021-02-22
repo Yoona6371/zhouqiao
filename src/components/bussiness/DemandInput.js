@@ -11,6 +11,7 @@ import { fontStyle, padding } from '../../utils/StyleUtils';
 import { pxToDp, deviceWidthDp } from '../../utils/pxToDp';
 import Icon from '../common/Icon';
 import Picker from 'react-native-picker';
+import DocumentPicker from 'react-native-document-picker';
 
 class Index extends Component {
   constructor(props) {
@@ -38,30 +39,70 @@ class Index extends Component {
 
   setCategory = async () => {
     Picker.hide();
-    let list = [];
-    if (this.props.category === 1) {
-      list = ['新手', '老手'];
+    if (this.props.category === 3) {
+      // Pick a single file
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.docx],
+        });
+        console.log(
+          res.uri,
+          res.type, // mime type
+          res.name,
+          res.size,
+        );
+        console.log(
+          11111111111,
+          await Http.fileUpdate(
+            {
+              file: {
+                uri: res.uri,
+                type: 'multipart/form-data',
+                name: res.name,
+                size: res.size,
+              },
+            },
+            true,
+            {
+              type: 5,
+            },
+          ),
+        ),
+          console.log('success');
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          console.log('cancleErr', err);
+          // User cancelled the picker, exit any dialogs or menus and move on
+        } else {
+          throw err;
+        }
+      }
     } else {
-      let res = await Http.requirementCategories();
-      res.data.data.map((v, i) => {
-        list.push(v.category);
+      let list = [];
+      if (this.props.category === 1) {
+        list = ['新手', '老手'];
+      } else {
+        let res = await Http.requirementCategories();
+        res.data.data.map((v, i) => {
+          list.push(v.category);
+        });
+      }
+      Picker.init({
+        pickerData: list,
+        selectedValue: [0],
+        pickerConfirmBtnText: '确定',
+        pickerConfirmBtnColor: [254, 158, 14, 1],
+        pickerCancelBtnColor: [254, 158, 14, 1],
+        pickerCancelBtnText: '取消',
+        pickerTitleText: '选择类别',
+        pickerToolBarBg: [255, 255, 255, 1], // ps ai 室内设计 室外设计 插画 平滑 cad
+        pickerBg: [255, 255, 255, 1],
+        onPickerConfirm: (data) => {
+          this.props.inputUpdate(this.listBind(data[0]));
+        },
       });
+      Picker.show();
     }
-    Picker.init({
-      pickerData: list,
-      selectedValue: [0],
-      pickerConfirmBtnText: '确定',
-      pickerConfirmBtnColor: [254, 158, 14, 1],
-      pickerCancelBtnColor: [254, 158, 14, 1],
-      pickerCancelBtnText: '取消',
-      pickerTitleText: '选择类别',
-      pickerToolBarBg: [255, 255, 255, 1], // ps ai 室内设计 室外设计 插画 平滑 cad
-      pickerBg: [255, 255, 255, 1],
-      onPickerConfirm: (data) => {
-        this.props.inputUpdate(this.listBind(data[0]));
-      },
-    });
-    Picker.show();
   };
 
   listBind = (data) => {
