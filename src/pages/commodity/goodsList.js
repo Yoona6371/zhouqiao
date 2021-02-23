@@ -75,9 +75,7 @@ class GoodsList extends PureComponent {
     return (
       <View style={{ flex: 1 }}>
         <TopTitle title="周边产品" showBtn={false} />
-        <ScrollView>
-          <HomeTabShop />
-        </ScrollView>
+        <HomeTabShop />
       </View>
     );
   }

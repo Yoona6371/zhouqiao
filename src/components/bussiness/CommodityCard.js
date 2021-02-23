@@ -174,7 +174,6 @@ const styles = StyleSheet.create({
   CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
   CommodityCard__typeThreeShoppingTitleBox: {
     width: pxToDp(306),
-    height: pxToDp(69),
     marginTop: pxToDp(25),
   },
   CommodityCard__typeOThreeShoppingTitle: { fontSize: pxToDp(30) },
@@ -209,7 +208,6 @@ const styles = StyleSheet.create({
   CommodityCard__typeOneTitle: {
     fontSize: pxToDp(28),
     width: pxToDp(289),
-    height: pxToDp(68),
   },
   CommodityCard__typeOneUserImage: {
     width: pxToDp(50),
