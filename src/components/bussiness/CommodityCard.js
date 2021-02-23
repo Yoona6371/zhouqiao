@@ -121,6 +121,7 @@ class CommodityCard extends React.PureComponent {
                     <Avatar
                       image={{ uri: user_image }}
                       size={50}
+                      userId={this.props.userId}
                       // source={require('../../asserts/images/CommodityCard_userImage.png')}
                       // styel={{ width: pxToDp(50), height: pxToDp(50) }}
                     />

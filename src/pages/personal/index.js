@@ -22,7 +22,15 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userInfo: {},
+      userInfo: {
+        clientStatistics: {
+          followedNum: 0,
+          orderNum: 2,
+          orderInProgressNum: 0,
+          orderRemainEvaluateNum: 0,
+          orderAfterSaleNum: 0,
+        },
+      },
       myRequirements: [],
     };
   }
