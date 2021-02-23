@@ -41,6 +41,8 @@ class UserXCard extends Component {
     text: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     name: PropTypes.string,
     type: PropTypes.number,
+    // 默认是否关注
+    focus: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -48,7 +50,14 @@ class UserXCard extends Component {
     text: 121312312312,
     name: '夏允',
     type: 2,
+    focus: false,
   };
+
+  componentDidMount() {
+    if (this.props.RootStore.userStore.allData.token && this.props.focus) {
+      this.focusUser();
+    }
+  }
 
   constructor(props) {
     super(props);
@@ -72,7 +81,9 @@ class UserXCard extends Component {
       this.setState({
         follow: true,
       });
-      Toast.smile('关注成功');
+      if (!this.props.focus) {
+        Toast.smile('关注成功');
+      }
     } else {
       Toast.sad('关注失败');
     }
