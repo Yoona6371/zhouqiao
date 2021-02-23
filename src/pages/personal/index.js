@@ -40,7 +40,10 @@ class Index extends Component {
     // 获取我的基本信息
     this.getMyInfo();
     // 我的关注列表
-    this.getMyFocusList();
+    this.getMyFocusList(); // 我的发布拿两个数据
+    Http.myRequirements({ page: 1, size: 2 }).then((res) => {
+      this.setState({ myRequirements: res.data.data.dataList });
+    });
   }
 
   // ——————————————————————————昵称、关注数渲染开始——————————————————————
@@ -88,13 +91,6 @@ class Index extends Component {
     });
   };
   // ——————————————————————————昵称、关注数渲染结束——————————————————————
-
-    // 我的发布拿两个数据
-    Http.myRequirements({ page: 1, size: 2 }).then((res) => {
-      this.setState({ myRequirements: res.data.data.dataList });
-    });
-  }
-
 
   render() {
     const {

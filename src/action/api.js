@@ -34,7 +34,8 @@ const api = {
   },
   caseType: {
     url: '/designCase/designCaseCategory/client/design_cases/category/list',
-
+    method: 'get',
+  },
   demandSet: {
     url: '/api/client/requirement',
     method: 'post',
