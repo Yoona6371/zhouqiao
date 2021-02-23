@@ -17,6 +17,7 @@ export default class HomeTabShop extends PureComponent {
 
   async componentDidMount() {
     await this.onHeaderRefresh(); // 进来之前自动请求一次数据
+    this.props.onRef(this);
   }
   onHeaderRefresh = async () => {
     this.setState({ refreshState: RefreshState.HeaderRefreshing });
@@ -31,8 +32,6 @@ export default class HomeTabShop extends PureComponent {
   };
 
   onFooterRefresh = async () => {
-    this.props.onEnableScroll(false);
-
     this.setState({ refreshState: RefreshState.FooterRefreshing });
     const { totalPage, currentPage } = this.state;
 
@@ -44,9 +43,6 @@ export default class HomeTabShop extends PureComponent {
           ? RefreshState.NoMoreData
           : RefreshState.Idle,
     });
-    if (dataList.length === totalPage) {
-      this.props.onEnableScroll(true);
-    }
   };
 
   // 获取测试数据
@@ -58,7 +54,7 @@ export default class HomeTabShop extends PureComponent {
     const newList = res.data.data.dataList;
     this.setState({
       totalPage: res.data.data.totalRecords,
-      currentPage: res.data.data.current,
+      currentPage: res.data.data.currentPage,
     });
     return isReload ? newList : [...this.state.dataList, ...newList];
   }
@@ -69,7 +65,7 @@ export default class HomeTabShop extends PureComponent {
         key={2}
         data={dataList}
         numColumns={2}
-        contentContainerStyle={{ ...flexColumnSpb, backgroundColor: '#fff' }}
+        contentContainerStyle={{ backgroundColor: '#fff' }}
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard

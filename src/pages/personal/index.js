@@ -22,16 +22,15 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myOrderNum: 9,
-      awaitPayNum: 1,
-      payingNum: 2,
-      commentNum: 3,
-      serviceNum: 1,
-
-      //昵称
-      nickname: '',
-      //关注数
-      numFocus: 0,
+      userInfo: {
+        clientStatistics: {
+          followedNum: 0,
+          orderNum: 2,
+          orderInProgressNum: 0,
+          orderRemainEvaluateNum: 0,
+          orderAfterSaleNum: 0,
+        },
+      },
       myRequirements: [],
     };
   }
@@ -39,8 +38,6 @@ class Index extends Component {
   async componentDidMount() {
     // 获取我的基本信息
     await this.getMyInfo();
-    // 我的关注列表
-    await this.getMyFocusList();
     // 我的发布拿两个数据
     let res = await Http.myRequirements({ page: 1, size: 2 });
     this.setState({ myRequirements: res.data.data.dataList });
@@ -50,9 +47,7 @@ class Index extends Component {
   // 获取我的基本信息
   getMyInfo = async () => {
     // 获取token的方法
-    // this.props.RootStore.userStore.allData.token
-    const request = this.props.RootStore.globalStore.allData.Http;
-    const message = await request.getMyInfo();
+    const res = await Http.getMyInfo();
     // "data": {
     // 	"birthday": [Array],
     // 	"createTime": [Array],
@@ -66,43 +61,17 @@ class Index extends Component {
     // 	"userAvatar": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/avatar/a9975b68-54ea-4220-9573-b041efdf6cc7.jpg",
     // 	"userId": "cfc241796dc3f8d4a86150a1131789d3"
     // },
-    const userInfo = message.data.data;
+    const userInfo = res.data.data;
+    console.log(res);
     this.setState({
-      nickname: userInfo.introduction,
+      userInfo,
     });
   };
 
-  getMyFocusList = async () => {
-    const request = this.props.RootStore.globalStore.allData.Http;
-    // {
-    //   "dataList": [{
-    //     "avatar": "1.jpg",
-    //     "followedUser": true,
-    //     "userId": "44515a6a1c25b33ceb259f9d080d7348",
-    //     "userNick": "解亚伟最帅"
-    //   }],
-    //   "pageSize": 1,
-    //   "totalPage": 1,
-    //   "totalRecords": 1
-    // }
-    const message = await request.myFocusList({ page: 1, size: 1 });
-    this.setState({
-      numFocus: message.data.data.totalPage,
-    });
-  };
   // ——————————————————————————昵称、关注数渲染结束——————————————————————
 
   render() {
-    const {
-      myOrderNum,
-      awaitPayNum,
-      payingNum,
-      commentNum,
-      serviceNum,
-      nickname,
-      numFocus,
-      myRequirements,
-    } = this.state;
+    const { clientStatistics, nickName, userAvatar } = this.state.userInfo;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
@@ -113,14 +82,15 @@ class Index extends Component {
               <Image
                 style={styles.photo}
                 source={{
-                  uri:
-                    'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=384029267,1578774283&fm=26&gp=0.jpg',
+                  uri: userAvatar,
                 }}
               />
               <View style={styles.name_attention}>
-                <Text style={styles.name}>{nickname}</Text>
+                <Text style={styles.name}>{nickName}</Text>
                 <View style={styles.attentionBorder}>
-                  <Text style={styles.attentionNumber}>关注数:{numFocus}</Text>
+                  <Text style={styles.attentionNumber}>
+                    关注数:{clientStatistics.followedNum}
+                  </Text>
                 </View>
               </View>
               <View
@@ -252,7 +222,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {myOrderNum}
+                    {clientStatistics.orderNum}
                   </Text>
                 </View>
                 <Icon
@@ -275,29 +245,6 @@ class Index extends Component {
                   alignItems: 'center',
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 2,
-                    height: pxToDp(17),
-                    width: pxToDp(28),
-                    backgroundColor: '#ff2d4b',
-                    borderRadius: pxToDp(10),
-                    alignItems: 'center',
-                    zIndex: 999,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: '#FFF',
-                      fontSize: pxToDp(16),
-                      lineHeight: pxToDp(17),
-                    }}
-                  >
-                    {awaitPayNum}
-                  </Text>
-                </View>
                 {/* <Icon
                   name={'wallet'}
                   style={{
@@ -346,7 +293,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {payingNum}
+                    {clientStatistics.orderInProgressNum}
                   </Text>
                 </View>
                 <Icon
@@ -389,7 +336,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {commentNum}
+                    {clientStatistics.orderRemainEvaluateNum}
                   </Text>
                 </View>
                 <Icon
@@ -432,7 +379,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {serviceNum}
+                    {clientStatistics.orderAfterSaleNum}
                   </Text>
                 </View>
                 <Icon

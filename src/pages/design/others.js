@@ -18,7 +18,6 @@ import DynamicList from '../../components/bussiness/DynamicList';
 import Avatar from '../../components/common/Avatar/index';
 import Icon from '../../components/common/Icon/index';
 import Toast from '../../components/common/Toast/Toast';
-import { inject, observer } from 'mobx-react';
 
 import {
   flexColumnCenter,
@@ -41,8 +40,6 @@ const screenHeight = Math.round(Dimensions.get('window').height);
  * 目前完成了昵称，头像，个人简介，他的关注头像接口
  */
 
-@inject('RootStore')
-@observer
 class Others extends Component {
   static propTypes = {
     userId: PropTypes.string.isRequired,
@@ -57,8 +54,7 @@ class Others extends Component {
 
   // 获取他人基本信息
   getOthersDetail = async () => {
-    const request = this.props.RootStore.globalStore.allData.Http;
-    const detail = await request.getOthersDetail(
+    const detail = await Http.getOthersDetail(
       {},
       `/${this.props.userId}/baseInfo`,
     );
@@ -282,12 +278,13 @@ class Others extends Component {
               <View style={{ height: pxToDp(60) }} />
 
               {/* 更换背景那一栏 */}
-              <View
+              <TouchableOpacity
                 style={{
                   height: pxToDp(143),
                   ...flexRowSpb,
                   ...padding(30, 0, 30, 0),
                 }}
+                onPress={() => NavigationHelper.goBack()}
               >
                 <Icon
                   name={'left'}
@@ -320,7 +317,7 @@ class Others extends Component {
                     更换背景
                   </Text>
                 </View>
-              </View>
+              </TouchableOpacity>
               {/* 我的空间和头像那部分 */}
               <View
                 style={{

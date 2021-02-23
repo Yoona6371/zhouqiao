@@ -26,6 +26,7 @@ export default class Avatar extends Component {
     textSize: PropTypes.number,
     borderRadius: PropTypes.number,
     isVip: PropTypes.bool,
+    userId: PropTypes.isRequired,
   };
 
   static defaultProps = {
@@ -62,6 +63,7 @@ export default class Avatar extends Component {
       text,
       textSize,
       isVip,
+      userId,
     } = this.props;
 
     if (image) {
@@ -131,6 +133,10 @@ export default class Avatar extends Component {
   }
 
   handleClick() {
-    NavigationHelper.navigate('OthersPersonal');
+    NavigationHelper.navigate('OthersPersonal', {
+      params: {
+        userId: this.props.userId,
+      },
+    });
   }
 }

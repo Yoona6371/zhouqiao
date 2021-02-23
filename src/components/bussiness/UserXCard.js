@@ -5,9 +5,7 @@ import Avatar from '../common/Avatar';
 import PropTypes from 'prop-types';
 import { pxToDp } from '../../utils/pxToDp';
 import utils from '../../utils/utils';
-// import request from '../../action/request';
 import Toast from '../common/Toast/Toast';
-import { inject, observer } from 'mobx-react';
 
 import {
   flexColumnSpb,
@@ -31,8 +29,6 @@ const COLORARRAY = [
   '#03C9A9',
 ];
 
-@inject('RootStore')
-@observer
 class UserXCard extends Component {
   static propTypes = {
     image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
@@ -41,6 +37,9 @@ class UserXCard extends Component {
     text: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     name: PropTypes.string,
     type: PropTypes.number,
+    // 默认是否关注
+    focus: PropTypes.bool,
+    userId: PropTypes.isRequired,
   };
 
   static defaultProps = {
@@ -48,6 +47,7 @@ class UserXCard extends Component {
     text: 121312312312,
     name: '夏允',
     type: 2,
+    focus: false,
   };
 
   constructor(props) {
@@ -59,11 +59,16 @@ class UserXCard extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.RootStore.userStore.allData.token && this.props.focus) {
+      this.focusUser();
+    }
+  }
+
   // ——————————————————————————点击关注按钮部分开始————————————————————————————
   // 关注用户
   focusUser = async () => {
-    const request = this.props.RootStore.globalStore.allData.Http;
-    const message = await request.focusUser(
+    const message = await Http.focusUser(
       {},
       '/a64bbe91e048638e09ef6b7213f02d32/follower',
     );
@@ -72,7 +77,9 @@ class UserXCard extends Component {
       this.setState({
         follow: true,
       });
-      Toast.smile('关注成功');
+      if (!this.props.focus) {
+        Toast.smile('关注成功');
+      }
     } else {
       Toast.sad('关注失败');
     }
@@ -138,7 +145,7 @@ class UserXCard extends Component {
     return this.props.type === 1 ? ['#fff', '#fff'] : ['#333', '#666'];
   }
   render() {
-    const { image, isVip, text, name, type, avatarText } = this.props;
+    const { image, isVip, text, name, type, avatarText, userId } = this.props;
     const { follow } = this.state;
     return (
       <View
@@ -148,7 +155,13 @@ class UserXCard extends Component {
         }}
       >
         <View style={styles.userCard__Avatar}>
-          <Avatar isVip={isVip} image={image} size={160} text={avatarText} />
+          <Avatar
+            isVip={isVip}
+            image={image}
+            size={160}
+            text={avatarText}
+            userId={userId}
+          />
         </View>
         <View
           style={{
