@@ -64,7 +64,9 @@ class CommodityCard extends React.PureComponent {
             <View style={styles.CommodityCard__typeThreeContainer}>
               <View style={styles.CommodityCard__shoppingImageBox}>
                 <Image
-                  source={image}
+                  source={{
+                    uri: image,
+                  }}
                   style={styles.CommodityCard__shoppingImage}
                 />
               </View>

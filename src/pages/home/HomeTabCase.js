@@ -31,6 +31,7 @@ export default class HomeTabCase extends Component {
       refreshState:
         dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
+    console.log(dataList);
   };
 
   onFooterRefresh = async () => {

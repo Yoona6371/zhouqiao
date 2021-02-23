@@ -1,6 +1,6 @@
 // 封装接口
 const api = {
-  designCase_list: {
+  categoryCase: {
     url: '/api/designCase/stylist/design_cases/category',
     method: 'get',
   },
@@ -110,7 +110,7 @@ const api = {
   // const message = await request.myFansList(
   //  { page: 1, size: 1 });
   myFansList: {
-    url: 'api/my/fans',
+    url: '/api/my/fans',
     method: 'get',
   },
   goodsList: {

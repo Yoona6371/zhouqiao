@@ -37,11 +37,12 @@ class Index extends Component {
       pages: [],
       hotData: [],
       headerPhoto: [],
+      enableScrollViewScroll: true,
     };
   }
 
   async componentDidMount() {
-    let hotDesignCaseList = await Http.designCase_list({
+    let hotDesignCaseList = await Http.categoryCase({
       category_id: 3,
       page: 1,
       size: 12,
@@ -69,7 +70,7 @@ class Index extends Component {
         component: HomeTabCase,
       });
     });
-
+    console.log(rankingListRes);
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
       pages: arrCaseType,
@@ -96,6 +97,11 @@ class Index extends Component {
     NavigationHelper.navigate('search');
   }
 
+  onEnableScroll = (value) => {
+    this.setState({
+      enableScrollViewScroll: value,
+    });
+  };
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -116,6 +122,7 @@ class Index extends Component {
           style={{
             backgroundColor: '#fff',
           }}
+          scrollEnabled={this.state.enableScrollViewScroll}
         >
           <ImageBackground
             source={require('../../asserts/images/home_header_bg.png')}
@@ -264,7 +271,7 @@ class Index extends Component {
             style={styles.shop_container}
           >
             {/*商品列表开始*/}
-            <HomeTabShop />
+            <HomeTabShop onEnableScroll={this.onEnableScroll} />
             {/*商品列表结束*/}
           </ContainerCard>
         </ScrollView>
