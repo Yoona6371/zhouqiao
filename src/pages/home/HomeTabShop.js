@@ -31,6 +31,8 @@ export default class HomeTabShop extends PureComponent {
   };
 
   onFooterRefresh = async () => {
+    this.props.onEnableScroll(false);
+
     this.setState({ refreshState: RefreshState.FooterRefreshing });
     const { totalPage, currentPage } = this.state;
 
@@ -42,6 +44,9 @@ export default class HomeTabShop extends PureComponent {
           ? RefreshState.NoMoreData
           : RefreshState.Idle,
     });
+    if (dataList.length === totalPage) {
+      this.props.onEnableScroll(true);
+    }
   };
 
   // 获取测试数据
@@ -50,9 +55,9 @@ export default class HomeTabShop extends PureComponent {
       page: currentPage,
       size: 12,
     });
-    const newList = res.data.data.records;
+    const newList = res.data.data.dataList;
     this.setState({
-      totalPage: res.data.data.total,
+      totalPage: res.data.data.totalRecords,
       currentPage: res.data.data.current,
     });
     return isReload ? newList : [...this.state.dataList, ...newList];
@@ -61,6 +66,7 @@ export default class HomeTabShop extends PureComponent {
     const { dataList } = this.state;
     return (
       <RefreshListView
+        key={2}
         data={dataList}
         numColumns={2}
         contentContainerStyle={{ ...flexColumnSpb, backgroundColor: '#fff' }}
@@ -68,8 +74,10 @@ export default class HomeTabShop extends PureComponent {
         renderItem={({ item, index }) => (
           <CommodityCard
             type={3}
-            Title={item.Title}
-            prince={item.prince}
+            Title={item.commodityName}
+            user_id={item.commodityAuthor}
+            image={item.cover}
+            prince={item.price}
             style={{ ...padding(25, 25, 0, 0) }}
           />
         )}
