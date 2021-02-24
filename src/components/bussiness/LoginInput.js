@@ -10,6 +10,7 @@ import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 import Icon from '../common/Icon';
 import utils from '../../utils/utils';
+import { position } from '../../constants/svg';
 
 export default class LoginInput extends Component {
   static propTypes = {
@@ -27,14 +28,17 @@ export default class LoginInput extends Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      phoneNumber: '',
+      password: '',
+      verificationCode: '',
+      phoneNumberErrShow: false,
+      passwordErrShow: false,
+      verificationCodeErrShow: false,
+  
+    };
   }
-  state = {
-    phoneNumber: '',
-    password: '',
-    verificationCode: '',
-    phoneNumberErrShow: false,
-    passwordErrShow: false,
-  };
+
   //电话号码
   phoneNumberChangeText = (phoneNumber) => {
     this.setState({ phoneNumber });
@@ -58,11 +62,11 @@ export default class LoginInput extends Component {
   //申请验证码
   verificationCodeRequest = () => {};
   verificationCodeSubmitEditing = () => {
-    // this.setState(verificationCode);
     this.setState({ errShow: true });
   };
-  verificationCodeChangeText = () => {
-    const { verificationCode } = this.state;
+  verificationCodeChangeText = (verificationCode) => {
+    this.setState({verificationCode});
+
   };
   render() {
     const {
@@ -71,6 +75,7 @@ export default class LoginInput extends Component {
       verificationCode,
       phoneNumberErrShow,
       passwordErrShow,
+      verificationCodeErrShow
     } = this.state;
     const { type } = this.props;
 
@@ -162,8 +167,48 @@ export default class LoginInput extends Component {
                 <View />
               )}
             </View>
+            <View style={[styles.input__box__type2__fix,{ marginTop: pxToDp(30) }] }>
+                {/* <Icon name="verification" style={styles.icon__type3} /> */}
+                <TextInput
+                  placeholder="请输入验证码"
+                  style={{ fontSize: pxToDp(24) }}
+                  placeholderTextColor="#918D87"
+                  onSubmitEditing={this.verificationCodeSubmitEditing}
+                  onChangeText={this.verificationCodeChangeText}
+                  onFocus={() => {
+                    this.setState({ verificationCodeErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ verificationCodeErrShow: true });
+                  }}
+                />
+                <View style={styles.touchableOpacity__type3}>
+                  <TouchableOpacity
+                    style={{ justifyContent: 'center' }}
+                    onPress={this.verificationCodeRequest}
+                  >
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: pxToDp(21),
+                        alignSelf: 'center',
+                        justifyContent:"center"
+                      }}
+                    >
+                      获取验证码
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              {verificationCodeErrShow ? (
+                <Text style={styles.errorText}>
+                  {utils.checkVerification(verificationCode)}
+                </Text>
+              ) : (
+                <View />
+              )}
             <View>
-              <View style={[styles.input_box, { marginTop: pxToDp(50) }]}>
+              <View style={[styles.input_box, { marginTop: pxToDp(30) }]}>
                 <TextInput
                   placeholder="请输入密码"
                   style={{ fontSize: pxToDp(24) }}
@@ -183,34 +228,7 @@ export default class LoginInput extends Component {
               </View>
               {passwordErrShow ? (
                 <Text style={styles.errorText}>
-                  {utils.checkPassword(password)}
-                </Text>
-              ) : (
-                <View />
-              )}
-            </View>
-            <View>
-              <View style={[styles.input_box, { marginTop: pxToDp(50) }]}>
-                <TextInput
-                  placeholder="请确认密码"
-                  style={{ fontSize: pxToDp(24) }}
-                  placeholderTextColor="#918D87"
-                  maxLength={16}
-                  secureTextEntry={true}
-                  onSubmitEditing={this.passwordSubmitEditing}
-                  onChangeText={this.passwordChangeText}
-                  onFocus={() => {
-                    this.setState({ passwordErrShow: false });
-                  }}
-                  onBlur={() => {
-                    this.setState({ passwordErrShow: true });
-                  }}
-                />
-                <Icon name="lock" style={styles.icon__type12} />
-              </View>
-              {passwordErrShow ? (
-                <Text style={styles.errorText}>
-                  {utils.checkPassword(password)}
+                  {utils.checkPassword(verificationCode)}
                 </Text>
               ) : (
                 <View />
@@ -255,6 +273,12 @@ export default class LoginInput extends Component {
                   placeholderTextColor="#918D87"
                   onSubmitEditing={this.verificationCodeSubmitEditing}
                   onChangeText={this.verificationCodeChangeText}
+                  onFocus={() => {
+                    this.setState({ passwordErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ passwordErrShow: true });
+                  }}
                 />
                 <View style={styles.touchableOpacity__type3}>
                   <TouchableOpacity
@@ -273,7 +297,7 @@ export default class LoginInput extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              {passwordErrShow ? (
+              {verificationCodeErrShow ? (
                 <Text style={styles.errorText}>
                   {utils.checkVerification(verificationCode)}
                 </Text>
@@ -352,6 +376,16 @@ const styles = StyleSheet.create({
     borderRadius: pxToDp(16),
     position: 'relative',
     paddingLeft: pxToDp(40),
+  },
+  input__box__type2__fix:{
+    width: pxToDp(610),
+    height: pxToDp(88),
+    position:'relative',
+    flexDirection:"row",
+    alignItems:"center",
+    paddingLeft: pxToDp(40),
+    backgroundColor: '#F6F3EF',
+    borderRadius: pxToDp(16),
   },
   input_box_margin: {
     marginTop: pxToDp(60),
