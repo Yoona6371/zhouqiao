@@ -117,6 +117,12 @@ const api = {
     url: '/api/client/commodities',
     method: 'get',
   },
+
+  // 获取设计案例
+  getDesignExample: {
+    url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  }
 };
 
 export default api;

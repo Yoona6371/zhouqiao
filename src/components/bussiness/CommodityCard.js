@@ -59,7 +59,7 @@ class CommodityCard extends React.PureComponent {
         activeOpacity={activeOpacity}
         onPress={this.Press.bind(this)}
       >
-        <View style={{ ...style }}>
+        <View style={{ ...style, marginRight: pxToDp(35) }}>
           {this.props.type === 3 ? (
             <View style={styles.CommodityCard__typeThreeContainer}>
               <View style={styles.CommodityCard__shoppingImageBox}>

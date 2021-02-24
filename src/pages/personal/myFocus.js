@@ -4,12 +4,12 @@ import UserXCard from '../../components/bussiness/UserXCard';
 import { pxToDp } from '../../utils/pxToDp';
 import { bgColor } from '../../constants/config';
 import TopTitle from '../../components/common/TopTitle';
-import { inject, observer } from 'mobx-react';
 import Toast from '../../components/common/Toast/Toast';
+import RefreshListView, { RefreshState } from 'react-native-refresh-list-view';
 
-import RefreshListView, {
-  RefreshState,
-} from '../../components/common/RefreshListView';
+// import RefreshListView, {
+//   RefreshState,
+// } from '../../components/common/RefreshListView';
 
 import {
   flexColumnSpb,

@@ -11,13 +11,17 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import { pxToDp } from '../../utils/pxToDp';
+import { pxToDp, deviceHeightDp } from '../../utils/pxToDp';
 import LinearGradient from 'react-native-linear-gradient';
 import { activeOpacity } from '../../constants/config';
 import DynamicList from '../../components/bussiness/DynamicList';
 import Avatar from '../../components/common/Avatar/index';
 import Icon from '../../components/common/Icon/index';
 import Toast from '../../components/common/Toast/Toast';
+import { inject, observer } from 'mobx-react';
+import CommodityCard from '../../components/bussiness/CommodityCard';
+import RefreshListView, { RefreshState } from 'react-native-refresh-list-view';
+
 
 import {
   flexColumnCenter,
@@ -36,10 +40,9 @@ const screenHeight = Math.round(Dimensions.get('window').height);
  * 使用时得传入用户的userId
  * 例如：
  * <Others userId={'cfc241796dc3f8d4a86150a1131789d3'}/>
- *
- * 目前完成了昵称，头像，个人简介，他的关注头像接口
  */
-
+@inject('RootStore')
+@observer
 class Others extends Component {
   static propTypes = {
     userId: PropTypes.string.isRequired,
@@ -50,6 +53,11 @@ class Others extends Component {
     await this.getOthersDetail();
     // 获取他人关注列表
     await this.getOthersFocusList();
+    // 获取关注数，粉丝数，成交订单，积分
+    await this.getFourInfo();
+  
+    // 分页刚开始刷新
+    await this.onHeaderRefresh();
   }
 
   // 获取他人基本信息
@@ -90,8 +98,7 @@ class Others extends Component {
   //   }
   // }
   getOthersFocusList = async () => {
-    const request = this.props.RootStore.globalStore.allData.Http;
-    const detail = await request.getOthersFocusList(
+    const detail = await Http.getOthersFocusList(
       { page: 1, size: 8 },
       `/${this.props.userId}/follower`,
     );
@@ -110,21 +117,143 @@ class Others extends Component {
       this.setState({
         followsAvatar: focus,
       });
-
-      console.log(this.state.followsAvatar);
     } else {
       Toast.sad('加载失败');
     }
   };
 
+  // 获取关注数，粉丝数，成交订单，积分
+  getFourInfo = async () => {
+    const focus = await Http.myFocusList({ page: 1, size: 1 });
+    const fans = await Http.myFansList({ page: 1, size: 1 });
+    if(!(focus.status === 200 && fans.status === 200)) {
+      Toast.sad('加载失败');
+      return;
+    }
+    const answer = [
+      {
+        num: focus.data.data.totalPage,
+        des: '关注数',
+      },
+      {
+        num: fans.data.data.totalPage,
+        des: '粉丝数',
+      },
+      {
+        num: 6592,
+        des: '成交订单',
+      },
+      {
+        num: 6592,
+        des: '积分',
+      },
+    ];
+    this.setState({ personDetail: answer });
+  };
+
+  // ——————————————————————————————分页相关开始————————————————————————————
+  onHeaderRefresh = async () => {
+    this.setState({ refreshState: RefreshState.HeaderRefreshing });
+    let dataList = await this.getList(true);
+
+    this.setState({
+      dataList: dataList,
+      refreshState:
+        dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
+    });
+
+  };
+
+  onFooterRefresh = async () => {
+    this.setState({ refreshState: RefreshState.FooterRefreshing });
+    const { totalPage, currentPage } = this.state;
+    let dataList = await this.getList(false, currentPage + 1);
+    this.setState({
+      dataList: dataList,
+      refreshState:
+        dataList.length === totalPage
+          ? RefreshState.NoMoreData
+          : RefreshState.Idle,
+    });
+  };
+
+  // 获取她的设计案例
+  // {
+  //   "currentPage": 1,
+  //   "dataList": [{
+  //     "caseAuthor": "DAOKO",
+  //     "caseAuthorAvatar": "https://homesitetask.zbjimg.com/homesite%2Ftask%2F%E5%9B%BE%E5%B1%82-3.jpg%2Forigine%2Feededdb2-45fc-4f89-82ed-1c2ec1d6d93b",
+  //     "caseAuthorId": "573e31ca621f8eb0dc7e55939c6b4236",
+  //     "caseId": 16,
+  //     "caseLink": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/requirement/zip/db4db1c0-7e8c-4f7c-aae3-a3d00709ee3f.zip",
+  //     "caseName": "文旅集团品牌茶叶礼盒包装设计插画包装年货包装",
+  //     "category": "PPT设计",
+  //     "categoryId": 2,
+  //     "collectNum": 0,
+  //     "cover": "https://homesitetask.zbjimg.com/homesite%2Ftask%2F7.jpg%2Forigine%2F6ca488d9-77ff-4fde-b3a6-715489bc8b40",
+  //     "createTime": [Array],
+  //     "picture": "https://homesitetask.zbjimg.com/homesite%2Ftask%2F1.jpg%2Forigine%2Fe0bb08bb-14a2-4f0d-ab93-03aaa295ea02",
+  //     "price": 20000,
+  //     "purchaseNum": 0,
+  //     "updateTime": [Array]
+  //   }],
+  //   "pageSize": 6,
+  //   "totalPage": 5,
+  //   "totalRecords": 29
+  // }
+  async getList(isReload: Boolean, currentPage = 1): Array<Object> {
+    const message = await Http.getDesignExample({page: currentPage
+      ,size: 4
+      ,userId: '573e31ca621f8eb0dc7e55939c6b4236'});
+
+    if (!message || !message.status === 200) {
+      Toast.sad('信息获取失败');
+      return;
+    }
+    
+    const newList = message.data.data.dataList;
+    let ans = [];
+    for (let i = 0; i < newList.length; i++) {
+      ans.push({
+        image: newList[i].picture,
+        Title: newList[i].caseName,
+        user_image: newList[i].caseAuthorAvatar,
+        user_id: newList[i].caseAuthor,
+        Commodity_type: 'PS / AI',
+        id: this.state.id + 1,
+      });
+      this.setState({ id: this.state.id + 1 });
+    }
+    
+    this.setState({
+      totalPage: message.data.data.totalPage,
+      currentPage: message.data.data.currentPage,
+    });
+
+    return isReload ? ans : [...this.state.dataList, ...ans];
+  }
+
+  _renderItem(item) {
+    return (
+      <CommodityCard
+        image={item.item.image}
+        Title={item.item.Title}
+        user_image={item.item.user_image}
+        user_id={item.item.user_id}
+        Commodity_type={item.item.Commodity_type}
+      />
+    );
+  }
+
+  // ——————————————————————————————分页相关结束————————————————————————————
   // 一键关注按钮
   handleclick = () => {
     console.log('一键关注');
   };
 
-  // 关注他按钮
+  // 联系他按钮
   focus = () => {
-    console.log('关注他');
+    console.log('联系他');
   };
 
   constructor() {
@@ -142,128 +271,38 @@ class Others extends Component {
       seeRecentReadBooks: 'ImageShow',
       personDetail: [
         {
-          num: '6592',
+          num: 0,
           des: '关注数',
         },
         {
-          num: '6592',
+          num: 0,
           des: '粉丝数',
         },
         {
-          num: '6592',
+          num: 0,
           des: '成交订单',
         },
         {
-          num: '6592',
+          num: 0,
           des: '积分',
         },
       ],
-      // 最多8个头像
-      followsAvatar: [
-        {
-          userId: 'ImageShow',
-          avatar:
-            'https://wx2.sinaimg.cn/mw1024/cd966a9aly1gnw4r3wxl0j207i07it8p.jpg',
-        },
-      ],
-      recentReadBooks: [
-        {
-          router: 'ImageShow',
-          bookImage:
-            'https://pic1.zhimg.com/v2-e59ab0cb5246627953a0df3c3f5c534c_r.jpg',
-        },
-        {
-          router: 'ImageShow',
-          bookImage:
-            'https://pic1.zhimg.com/v2-e59ab0cb5246627953a0df3c3f5c534c_r.jpg',
-        },
-        {
-          router: 'ImageShow',
-          bookImage:
-            'https://pic1.zhimg.com/v2-e59ab0cb5246627953a0df3c3f5c534c_r.jpg',
-        },
-        {
-          router: 'ImageShow',
-          bookImage:
-            'https://pic1.zhimg.com/v2-e59ab0cb5246627953a0df3c3f5c534c_r.jpg',
-        },
-      ],
-      dynamicList: [
-        {
-          AvatarImage: {
-            uri:
-              'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-          },
-          DynamicListImages: [
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-          ],
-          DynamicUserName: '阿甘',
-          DynamicText:
-            '宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，',
-          DynamicLabel: ['突发奇想', '宋老狗'],
-          CollectionNum: 700,
-          CommentNum: 665,
-          FabulousNum: 664,
-          timeGo: '一分钟',
-          DynamicPhone: 'One Plus 7T',
-          isFollowProps: false,
-        },
-        {
-          AvatarImage: {
-            uri:
-              'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-          },
-          DynamicListImages: [
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-            {
-              uri:
-                'https://pic4.zhimg.com/v2-8f450572606c2e017dade3e4533d10bb_r.jpg',
-            },
-          ],
-          DynamicUserName: '阿甘',
-          DynamicText:
-            '宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，宋老狗，',
-          DynamicLabel: ['突发奇想', '宋老狗'],
-          CollectionNum: 700,
-          CommentNum: 665,
-          FabulousNum: 664,
-          timeGo: '一分钟',
-          DynamicPhone: 'One Plus 7T',
-          isFollowProps: false,
-        },
-      ],
+      // 他的关注数组（最多8个头像）
+      followsAvatar: [],
+      // ——————————————他的设计案例分页相关开始————————————————
+      // 设计案例
+      dataList: [],
+      refreshState: RefreshState.Idle,
+      totalPage: 0,
+      currentPage: 1,
+      id: 0,
+      // ——————————————他的设计案例分页相关结束————————————————
     };
   }
 
   render() {
     return (
-      <View style={{ flex: 1, position: 'relative' }}>
+      <View style={{ height: deviceHeightDp, position: 'relative' }}>
         <ScrollView>
           <View style={styles.others__wrap}>
             <StatusBar backgroundColor="transparent" translucent={true} />
@@ -430,13 +469,14 @@ class Others extends Component {
                   </Text>
                 </View>
                 {/* 头像展示部分 */}
-                <View style={{ ...flexRowSpb }}>
+                <View style={{ flexDirection: 'row' }}>
                   {this.state.followsAvatar.map((item, index) => {
                     return (
                       <TouchableOpacity
                         key={index}
                         activeOpacity={activeOpacity}
                         onPress={() => NavigationHelper.navigate(item.userId)}
+                        style={{ marginRight: pxToDp(23) }}
                       >
                         <Avatar
                           image={{
@@ -466,79 +506,42 @@ class Others extends Component {
                 </Text>
               </View>
               {/* —————————————————————————————————————————————————————————————————————————————————— */}
-              {/* 最近阅读模块 */}
-              <View>
-                {/* 最近阅读和查看部分 */}
-                <View style={{ ...flexRowSpb }}>
-                  <Text
-                    style={{
-                      marginTop: pxToDp(19),
-                      letterSpacing: pxToDp(2),
-                      ...fontStyle(32, 97, 97, '700', 'black', 'left'),
-                    }}
-                  >
-                    他的阅读
-                  </Text>
-                  <Text
-                    onPress={() =>
-                      NavigationHelper.navigate(this.state.seeRecentReadBooks)
-                    }
-                    style={{
-                      letterSpacing: pxToDp(2),
-                      ...fontStyle(23, 45, 45, '700', '#888888', 'left'),
-                    }}
-                  >
-                    查看 &gt;
-                  </Text>
-                </View>
-                {/* 四本书籍部分 */}
-                <View
-                  style={{
-                    ...flexRowSpb,
-                  }}
-                >
-                  {this.state.recentReadBooks.map((item, index) => {
-                    return (
-                      <TouchableOpacity
-                        key={index}
-                        activeOpacity={activeOpacity}
-                        onPress={() => NavigationHelper.navigate(item.router)}
-                      >
-                        <Image
-                          style={{
-                            resizeMode: 'cover',
-                            height: pxToDp(190),
-                            width: pxToDp(150),
-                            borderRadius: pxToDp(7),
-                          }}
-                          source={{
-                            uri: item.bookImage,
-                          }}
-                        />
-                      </TouchableOpacity>
-                    );
-                  })}
-                </View>
-              </View>
+
               {/* —————————————————————————————————————————————————————————————————————————————————— */}
               <View>
                 <Text
                   style={{
                     letterSpacing: pxToDp(2),
                     ...fontStyle(32, 50, 50, '700', 'black', 'left'),
-                    marginTop: pxToDp(50),
-                    marginBottom: pxToDp(36),
+                    marginTop: pxToDp(20),
                   }}
                 >
-                  他的动态
+                  他的设计案例
                 </Text>
-                {this.state.dynamicList.map((item, index) => {
-                  return (
-                    <View key={index}>
-                      <DynamicList />
-                    </View>
-                  );
-                })}
+                <View
+                  style={{
+                    ...flexColumnSpb,
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                  }}
+                >
+                <RefreshListView
+                  // 如果要测试假数据，可以写data={Data}
+                  data={this.state.dataList}
+                  // data={Data}
+                  numColumns={2}
+                  // contentContainerStyle={{
+                  //   ...flexColumnSpb,
+                  //   backgroundColor: '#fff',
+                  // }}
+                  keyExtractor={(item) => item.id}
+                  renderItem={this._renderItem}
+                  refreshState={this.state.refreshState}
+                  onHeaderRefresh={this.onHeaderRefresh}
+                  onFooterRefresh={this.onFooterRefresh}
+                  footerNoMoreDataText="-我是有底线的-"
+                />
+                </View>
               </View>
             </View>
           </View>
