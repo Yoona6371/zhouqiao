@@ -26,7 +26,7 @@ const api = {
   },
   demandUpdate: {
     url: '/api/client/my/requirement',
-    method: 'post',
+    method: 'put',
   },
   demandDelete: {
     url: '/api/client/my/requirement',

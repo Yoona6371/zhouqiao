@@ -38,9 +38,9 @@ class Index extends Component {
 
   async componentDidMount() {
     // 获取我的基本信息
-    await this.getMyInfo();
+    // await this.getMyInfo();
     // 我的关注列表
-    await this.getMyFocusList();
+    // await this.getMyFocusList();
     // 我的发布拿两个数据
     let res = await Http.myRequirements({ page: 1, size: 2 });
     this.setState({ myRequirements: res.data.data.dataList });
@@ -48,48 +48,48 @@ class Index extends Component {
 
   // ——————————————————————————昵称、关注数渲染开始——————————————————————
   // 获取我的基本信息
-  getMyInfo = async () => {
-    // 获取token的方法
-    // this.props.RootStore.userStore.allData.token
-    const request = this.props.RootStore.globalStore.allData.Http;
-    const message = await request.getMyInfo();
-    // "data": {
-    // 	"birthday": [Array],
-    // 	"createTime": [Array],
-    // 	"email": null,
-    // 	"gender": 1,
-    // 	"introduction": "七月初七 淮水竹亭",
-    // 	"mobile": "19834422405",
-    // 	"nickName": "DAOKO",
-    // 	"status": 0,
-    // 	"updateTime": [Array],
-    // 	"userAvatar": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/avatar/a9975b68-54ea-4220-9573-b041efdf6cc7.jpg",
-    // 	"userId": "cfc241796dc3f8d4a86150a1131789d3"
-    // },
-    const userInfo = message.data.data;
-    this.setState({
-      nickname: userInfo.introduction,
-    });
-  };
-
-  getMyFocusList = async () => {
-    const request = this.props.RootStore.globalStore.allData.Http;
-    // {
-    //   "dataList": [{
-    //     "avatar": "1.jpg",
-    //     "followedUser": true,
-    //     "userId": "44515a6a1c25b33ceb259f9d080d7348",
-    //     "userNick": "解亚伟最帅"
-    //   }],
-    //   "pageSize": 1,
-    //   "totalPage": 1,
-    //   "totalRecords": 1
-    // }
-    const message = await request.myFocusList({ page: 1, size: 1 });
-    this.setState({
-      numFocus: message.data.data.totalPage,
-    });
-  };
+  // getMyInfo = async () => {
+  //   // 获取token的方法
+  //   // this.props.RootStore.userStore.allData.token
+  //   const request = this.props.RootStore.globalStore.allData.Http;
+  //   const message = await request.getMyInfo();
+  //   // "data": {
+  //   // 	"birthday": [Array],
+  //   // 	"createTime": [Array],
+  //   // 	"email": null,
+  //   // 	"gender": 1,
+  //   // 	"introduction": "七月初七 淮水竹亭",
+  //   // 	"mobile": "19834422405",
+  //   // 	"nickName": "DAOKO",
+  //   // 	"status": 0,
+  //   // 	"updateTime": [Array],
+  //   // 	"userAvatar": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/avatar/a9975b68-54ea-4220-9573-b041efdf6cc7.jpg",
+  //   // 	"userId": "cfc241796dc3f8d4a86150a1131789d3"
+  //   // },
+  //   const userInfo = message.data.data;
+  //   this.setState({
+  //     nickname: userInfo.introduction,
+  //   });
+  // };
+  //
+  // getMyFocusList = async () => {
+  //   const request = this.props.RootStore.globalStore.allData.Http;
+  //   // {
+  //   //   "dataList": [{
+  //   //     "avatar": "1.jpg",
+  //   //     "followedUser": true,
+  //   //     "userId": "44515a6a1c25b33ceb259f9d080d7348",
+  //   //     "userNick": "解亚伟最帅"
+  //   //   }],
+  //   //   "pageSize": 1,
+  //   //   "totalPage": 1,
+  //   //   "totalRecords": 1
+  //   // }
+  //   const message = await request.myFocusList({ page: 1, size: 1 });
+  //   this.setState({
+  //     numFocus: message.data.data.totalPage,
+  //   });
+  // };
   // ——————————————————————————昵称、关注数渲染结束——————————————————————
 
   render() {
@@ -107,7 +107,7 @@ class Index extends Component {
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
           <TouchableOpacity
-            onPress={() => NavigationHelper.navigate('DataEdit')}
+            onPress={() => NavigationHelper.navigate('DataEdit', {})}
           >
             <View style={styles.section1_NamePhotoBorder}>
               <Image
@@ -453,17 +453,24 @@ class Index extends Component {
         <View>
           {/* <ScrollView> */}
           <ScrollView style={{ paddingBottom: pxToDp(0) }}>
-            {/*<DemandList type={1} text={myRequirements} date={myRequirements} />*/}
-            <DemandList
-              type={1}
-              text="哈哈哈哈哈哈哈阿斯顿萨达萨达萨达萨达萨达萨达萨达撒"
-              date="2021-02-11"
-            />
-            <DemandList
-              type={1}
-              text="哈哈哈哈哈哈哈阿斯顿萨达萨达萨达萨达萨达萨达萨达撒"
-              date="2021-02-11"
-            />
+            {myRequirements.map((v, i) => (
+              <DemandList
+                key={i}
+                type={1}
+                text={v.requirementAbstract}
+                date={v.createTime}
+                requirementId={v.requirementId}
+                expectedPrice={v.expectedPrice}
+                expectedTime={v.expectedTime}
+                urgent={v.urgent}
+                communityNumber={v.communityNumber}
+                proficiency={v.proficiency}
+                categoryId={v.categoryId}
+                requirementTitle={v.requirementTitle}
+                requirementContentHtml={v.requirementContentHtml}
+                requirementContent={v.requirementContent}
+              />
+            ))}
           </ScrollView>
           {/* </ScrollView> */}
         </View>

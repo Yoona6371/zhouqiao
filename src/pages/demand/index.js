@@ -27,6 +27,10 @@ class Index extends Component {
           title: '预算金额',
           tips: '请输入预算金额(元)',
           type: 0,
+          input:
+            this.props.route.params !== undefined
+              ? props.route.params.expectedPrice.toString()
+              : undefined,
           inputUpdate: (data) => {
             this.setState({
               data: {
@@ -40,6 +44,10 @@ class Index extends Component {
           title: '项目周期',
           tips: '请输入项目周期(天)',
           type: 0,
+          input:
+            this.props.route.params !== undefined
+              ? props.route.params.expectedTime.toString()
+              : undefined,
           inputUpdate: (data) => {
             this.setState({
               data: {
@@ -53,6 +61,10 @@ class Index extends Component {
           title: '是否加急',
           type: 4,
           last: true,
+          urgent:
+            this.props.route.params !== undefined
+              ? props.route.params.urgent
+              : undefined,
           inputUpdate: (data) => {
             this.setState({
               data: {
@@ -68,6 +80,10 @@ class Index extends Component {
           title: '聊天人数',
           tips: '最大可以聊天人数，上限8，默认2',
           type: 0,
+          input:
+            this.props.route.params !== undefined
+              ? props.route.params.communityNumber.toString()
+              : undefined,
           inputUpdate: (data) => {
             if (data > 8) {
               data = 8;
@@ -85,6 +101,10 @@ class Index extends Component {
           tips: '请选择类别 新手/老手 默认新手',
           type: 1,
           category: 1,
+          option:
+            this.props.route.params !== undefined
+              ? props.route.params.proficiency
+              : undefined,
           inputUpdate: (data) => {
             this.setState({
               data: {
@@ -100,12 +120,16 @@ class Index extends Component {
           type: 1,
           category: 2,
           last: true,
+          option:
+            this.props.route.params !== undefined
+              ? props.route.params.categoryId + 1
+              : undefined,
           inputUpdate: (data) => {
-            console.log(data);
+            // console.log(data);
             this.setState({
               data: {
                 ...this.state.data,
-                categoryId: data,
+                categoryId: data - 1,
               },
             });
           },
@@ -116,6 +140,10 @@ class Index extends Component {
           title: '订单名字',
           tips: '请输入订单名字',
           type: 3,
+          input:
+            this.props.route.params !== undefined
+              ? props.route.params.requirementTitle
+              : undefined,
           inputUpdate: (data) => {
             this.setState({
               data: {
@@ -149,6 +177,10 @@ class Index extends Component {
       data: {
         urgent: 0,
         communityNumber: 2,
+        requirementContent:
+          this.props.route.params !== undefined
+            ? this.props.route.params.requirementContent
+            : '',
       },
     };
   }
@@ -163,11 +195,23 @@ class Index extends Component {
   };
 
   demandSet = () => {
-    Http.demandSet(this.state.data).then((res) => {
-      if (res.status === 200) {
-        NavigationHelper.navigate('DemandDetails');
-      }
-    });
+    if (this.props.route.params !== undefined) {
+      console.log('修改');
+      Http.demandUpdate(
+        this.state.data,
+        '/' + this.props.route.params.requirementId,
+      ).then((res) => {
+        if (res.status === 200) {
+          NavigationHelper.goBack();
+        }
+      });
+    } else {
+      Http.demandSet(this.state.data).then((res) => {
+        if (res.status === 200) {
+          NavigationHelper.navigate('DemandDetails');
+        }
+      });
+    }
   };
 
   render() {
@@ -233,6 +277,7 @@ class Index extends Component {
               tips={v.tips}
               last={v.last}
               inputUpdate={v.inputUpdate}
+              input={v.input}
             />
           ))}
         </View>
@@ -246,6 +291,8 @@ class Index extends Component {
               last={v.last}
               inputUpdate={v.inputUpdate}
               category={v.category}
+              input={v.input}
+              option={v.option}
             />
           ))}
         </View>
@@ -253,6 +300,7 @@ class Index extends Component {
           {list_3.map((v, i) => (
             <DemandInput
               key={i}
+              input={v.input}
               type={v.type}
               title={v.title}
               hint={v.hint}
@@ -300,13 +348,14 @@ class Index extends Component {
             textAlignVertical={'top'}
             placeholder={'\ue639 请输入详细信息'}
             placeholderTextColor="#999"
+            value={this.state.data.requirementContent}
             onChangeText={(e) => {
               this.setState({
                 textLength: e.length,
                 data: {
                   ...this.state.data,
                   requirementContent: e,
-                  requirementContentHtml: e,
+                  requirementContentHtml: e + ' ',
                 },
               });
             }}

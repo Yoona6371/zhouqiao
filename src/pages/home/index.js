@@ -70,7 +70,7 @@ class Index extends Component {
         component: HomeTabCase,
       });
     });
-    console.log(rankingListRes);
+    // console.log(rankingListRes);
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
       pages: arrCaseType,

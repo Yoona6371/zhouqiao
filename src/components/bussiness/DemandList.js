@@ -113,12 +113,25 @@ export class DemandList extends Component {
   }
 
   onEdit = () => {
-    NavigationHelper.navigate('DemandSet');
+    NavigationHelper.navigate('DemandSet', {
+      expectedPrice: this.props.expectedPrice,
+      expectedTime: this.props.expectedTime,
+      urgent: this.props.urgent,
+      communityNumber: this.props.communityNumber,
+      proficiency: this.props.proficiency,
+      categoryId: this.props.categoryId,
+      requirementTitle: this.props.requirementTitle,
+      requirementContentHtml: this.props.requirementContentHtml,
+      requirementContent: this.props.requirementContent,
+      requirementId: this.props.requirementId,
+    });
   };
 
   onDelete = () => {
-    Http.demandDelete(this.props.item.requirementId).then((res) => {
-      console.log(res);
+    Http.demandDelete({}, '/' + this.props.requirementId).then((res) => {
+      if (res.status === 200) {
+        alert('删除成功');
+      }
     });
   };
 
@@ -126,7 +139,14 @@ export class DemandList extends Component {
     const { type, text, date } = this.props;
     const { typeText } = this.state;
     return (
-      <View style={styles.container}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => {
+          NavigationHelper.navigate('DemandDetails', {
+            requirementId: this.props.requirementId,
+          });
+        }}
+      >
         {/* 1.0需求列表最小单元开始 */}
         <View style={styles.borderStyle}>
           {/* 背景图片 */}
@@ -235,7 +255,7 @@ export class DemandList extends Component {
           </View>
           {/* 5.0底部时间和按钮结束*/}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }
