@@ -12,43 +12,85 @@ import { inject, observer } from 'mobx-react';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon/index';
 import DemandList from '../../components/bussiness/DemandList';
+
 @inject('RootStore')
 @observer
+/**
+ * 目前渲染了昵称和关注数
+ */
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      myOrderNum: 9,
-      awaitPayNum: 1,
-      payingNum: 2,
-      commentNum: 3,
-      serviceNum: 1,
+      userInfo: {
+        clientStatistics: {
+          followedNum: 0,
+          orderNum: 2,
+          orderInProgressNum: 0,
+          orderRemainEvaluateNum: 0,
+          orderAfterSaleNum: 0,
+        },
+      },
+      myRequirements: [],
     };
   }
+
+  async componentDidMount() {
+    // 获取我的基本信息
+    await this.getMyInfo();
+    // 我的发布拿两个数据
+    let res = await Http.myRequirements({ page: 1, size: 2 });
+    this.setState({ myRequirements: res.data.data.dataList });
+  }
+
+  // ——————————————————————————昵称、关注数渲染开始——————————————————————
+  // 获取我的基本信息
+  getMyInfo = async () => {
+    // 获取token的方法
+    const res = await Http.getMyInfo();
+    // "data": {
+    // 	"birthday": [Array],
+    // 	"createTime": [Array],
+    // 	"email": null,
+    // 	"gender": 1,
+    // 	"introduction": "七月初七 淮水竹亭",
+    // 	"mobile": "19834422405",
+    // 	"nickName": "DAOKO",
+    // 	"status": 0,
+    // 	"updateTime": [Array],
+    // 	"userAvatar": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/avatar/a9975b68-54ea-4220-9573-b041efdf6cc7.jpg",
+    // 	"userId": "cfc241796dc3f8d4a86150a1131789d3"
+    // },
+    const userInfo = res.data.data;
+    console.log(res);
+    this.setState({
+      userInfo,
+    });
+  };
+
+  // ——————————————————————————昵称、关注数渲染结束——————————————————————
+
   render() {
-    const {
-      myOrderNum,
-      awaitPayNum,
-      payingNum,
-      commentNum,
-      serviceNum,
-    } = this.state;
+    const { clientStatistics, nickName, userAvatar } = this.state.userInfo;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => NavigationHelper.navigate('DataEdit')}
+          >
             <View style={styles.section1_NamePhotoBorder}>
               <Image
                 style={styles.photo}
                 source={{
-                  uri:
-                    'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=384029267,1578774283&fm=26&gp=0.jpg',
+                  uri: userAvatar,
                 }}
               />
               <View style={styles.name_attention}>
-                <Text style={styles.name}>硕硕爱老虎</Text>
+                <Text style={styles.name}>{nickName}</Text>
                 <View style={styles.attentionBorder}>
-                  <Text style={styles.attentionNumber}>关注数:7894</Text>
+                  <Text style={styles.attentionNumber}>
+                    关注数:{clientStatistics.followedNum}
+                  </Text>
                 </View>
               </View>
               <View
@@ -70,7 +112,9 @@ class Index extends Component {
           <View style={styles.fourIconBorder}>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('myCollect') }}
+                onPress={() => {
+                  NavigationHelper.navigate('myCollect');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -88,7 +132,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('history') }}
+                onPress={() => {
+                  NavigationHelper.navigate('history');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -106,7 +152,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('MyFocus') }}
+                onPress={() => {
+                  NavigationHelper.navigate('MyFocus');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -124,7 +172,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('SettingIndex') }}
+                onPress={() => {
+                  NavigationHelper.navigate('SettingIndex');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -144,7 +194,9 @@ class Index extends Component {
           <View style={styles.mySaleBorder}>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('OrderLists') }}
+                onPress={() => {
+                  NavigationHelper.navigate('OrderLists');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -160,7 +212,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -170,7 +222,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {myOrderNum}
+                    {clientStatistics.orderNum}
                   </Text>
                 </View>
                 <Icon
@@ -185,35 +237,14 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('OrderLists') }}
+                onPress={() => {
+                  NavigationHelper.navigate('myWallet');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
               >
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 2,
-                    height: pxToDp(17),
-                    width: pxToDp(28),
-                    backgroundColor: '#ff2d4b',
-                    borderRadius: pxToDp(10),
-                    alignItems: 'center',
-                    zIndex: 999
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: '#FFF',
-                      fontSize: pxToDp(16),
-                      lineHeight: pxToDp(17),
-                    }}
-                  >
-                    {awaitPayNum}
-                  </Text>
-                </View>
                 {/* <Icon
                   name={'wallet'}
                   style={{
@@ -221,13 +252,22 @@ class Index extends Component {
                     fontSize: pxToDp(50),
                   }}
                 /> */}
-                <Image style={{width:pxToDp(45),height:pxToDp(38),marginTop:pxToDp(8 )}} source={require('../../asserts/images/wallet.png')}></Image>
-                <Text style={styles.ItemiconText3}>待付款</Text>
+                <Image
+                  style={{
+                    width: pxToDp(45),
+                    height: pxToDp(38),
+                    marginTop: pxToDp(8),
+                  }}
+                  source={require('../../asserts/images/wallet.png')}
+                />
+                <Text style={styles.ItemiconText3}>我的钱包</Text>
               </TouchableOpacity>
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('OrderLists') }}
+                onPress={() => {
+                  NavigationHelper.navigate('OrderLists');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -243,7 +283,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -253,7 +293,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {payingNum}
+                    {clientStatistics.orderInProgressNum}
                   </Text>
                 </View>
                 <Icon
@@ -268,7 +308,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('EvaluateRelease') }}
+                onPress={() => {
+                  NavigationHelper.navigate('EvaluateRelease');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -284,7 +326,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -294,7 +336,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {commentNum}
+                    {clientStatistics.orderRemainEvaluateNum}
                   </Text>
                 </View>
                 <Icon
@@ -309,7 +351,9 @@ class Index extends Component {
             </View>
             <View style={styles.ItemIcon}>
               <TouchableOpacity
-                onPress={() => { NavigationHelper.navigate('AfterSales') }}
+                onPress={() => {
+                  NavigationHelper.navigate('AfterSales');
+                }}
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -325,7 +369,7 @@ class Index extends Component {
                     backgroundColor: '#ff2d4b',
                     borderRadius: pxToDp(10),
                     alignItems: 'center',
-                    zIndex: 999
+                    zIndex: 999,
                   }}
                 >
                   <Text
@@ -335,7 +379,7 @@ class Index extends Component {
                       lineHeight: pxToDp(17),
                     }}
                   >
-                    {serviceNum}
+                    {clientStatistics.orderAfterSaleNum}
                   </Text>
                 </View>
                 <Icon
@@ -355,7 +399,8 @@ class Index extends Component {
         </View>
         <View>
           {/* <ScrollView> */}
-          <View style={{ paddingBottom: pxToDp(0) }}>
+          <ScrollView style={{ paddingBottom: pxToDp(0) }}>
+            {/*<DemandList type={1} text={myRequirements} date={myRequirements} />*/}
             <DemandList
               type={1}
               text="哈哈哈哈哈哈哈阿斯顿萨达萨达萨达萨达萨达萨达萨达撒"
@@ -366,12 +411,14 @@ class Index extends Component {
               text="哈哈哈哈哈哈哈阿斯顿萨达萨达萨达萨达萨达萨达萨达撒"
               date="2021-02-11"
             />
-          </View>
+          </ScrollView>
           {/* </ScrollView> */}
         </View>
         <View style={styles.btnView}>
           <TouchableOpacity
-            onPress={() => { NavigationHelper.navigate('myDemand') }}
+            onPress={() => {
+              NavigationHelper.navigate('myDemand');
+            }}
           >
             <View style={styles.btn}>
               <Text style={styles.btnText}>查看更多</Text>

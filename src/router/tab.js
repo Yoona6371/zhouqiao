@@ -71,10 +71,10 @@ function MyTabBar({ state, descriptors, navigation }) {
           // 点击事件
           const onPress = () => {
             if (
-              RootStore.userStore.allData.token === null &&
+              RootStore.userStore.allData.accessToken === null &&
               (route.name === '消息' ||
-                route.name === '我的' ||
-                route.name === '发布')
+                route.name === '发布' ||
+                route.name === '我的')
             ) {
               NavigationHelper.navigate('LoginAndRegister');
               return;
