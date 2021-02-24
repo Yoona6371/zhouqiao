@@ -4,12 +4,20 @@ const api = {
     url: '/api/auth/password',
     method: 'post',
   },
+  register:{
+    utl:"/api/user/register",
+    method:'post',
+  },
   getMyInfo: {
     url: '/api/client/my/baseInfo',
     method: 'get',
   },
   getGroup: {
     url: '/group/all',
+    method: 'get',
+  },
+  getVerifyCode: {
+    url: '/api/sms/verifyCode',
     method: 'get',
   },
   postInfo: {
