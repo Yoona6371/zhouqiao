@@ -11,14 +11,135 @@ import PropTypes from 'prop-types';
 import { pxToDp } from '../../../utils/pxToDp';
 import SvgUri from 'react-native-svg-uri';
 import { like } from '../../../constants/svg';
+import Toast from '../../common/Toast/Toast';
+import { inject } from 'mobx-react';
+@inject('RootStore')
 export class rankCardTop3 extends Component {
+  state = {
+    follow: false,
+    follow1: false,
+    follow3:false,
+  }
   static propTypes = {
     top3: PropTypes.array.isRequired,
     onPressChampion: PropTypes.func.isRequired,
     onPressRunner_up: PropTypes.func.isRequired,
     onPressThird_place: PropTypes.func.isRequired,
   };
+  // ——————————————————————————点击关注按钮部分开始————————————————————————————
+  // 关注用户
+  focusUser = async (number) => {
+    const message = await Http.focusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
+    if (number === 1) {
+      if (message.status === 200) {
+        this.setState({
+          follow1: true,
+        });
+        if (!this.props.focus) {
+          Toast.smile('关注成功');
+        }
+      } else {
+        Toast.sad('关注失败');
+      }
+    } else if (number === 2) {
+      if (message.status === 200) {
+        this.setState({
+          follow: true,
+        });
+        if (!this.props.focus) {
+          Toast.smile('关注成功');
+        }
+      } else {
+        Toast.sad('关注失败');
+      }
+    } else if (number === 3) {
+      if (message.status === 200) {
+        this.setState({
+          follow3: true,
+        });
+        if (!this.props.focus) {
+          Toast.smile('关注成功');
+        }
+      } else {
+        Toast.sad('关注失败');
+      }
+    }
 
+  };
+
+  // 取消关注用户
+  unfocusUser = async (number) => {
+    // const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await Http.unfocusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
+    if (number === 1) {
+      if (message.status === 200) {
+        this.setState({
+          follow1: false,
+        });
+        Toast.smile('取消成功');
+      } else {
+        Toast.sad('取消失败');
+      }
+    } else if (number === 2) {
+      if (message.status === 200) {
+        this.setState({
+          follow: false,
+        });
+        Toast.smile('取消成功');
+      } else {
+        Toast.sad('取消失败');
+      }
+    } else if (number === 3) {
+      if (message.status === 200) {
+        this.setState({
+          follow3: false,
+        });
+        Toast.smile('取消成功');
+      } else {
+        Toast.sad('取消失败');
+      }
+    }
+
+  };
+
+  handleClick(number) {
+    const token = this.props.RootStore.userStore.allData.accessToken;
+    console.log(token)
+    if (!token) {
+      Toast.message('您尚未登录');
+      return;
+    }
+    if (number === 1) {
+      if (!this.state.follow1) {
+        // 如果没有关注，点击之后关注
+        this.focusUser(number);
+      } else {
+        this.unfocusUser(number);
+      }
+    } else if (number === 2) {
+      if (!this.state.follow) {
+        // 如果没有关注，点击之后关注
+        this.focusUser(number);
+      } else {
+        this.unfocusUser(number);
+      }
+    } else if (number === 3) {
+      if (!this.state.follow3) {
+        // 如果没有关注，点击之后关注
+        this.focusUser(number);
+      } else {
+        this.unfocusUser(number);
+      }
+    }
+
+  }
+  // ——————————————————————————点击关注按钮部分结束————————————————————————————
   render() {
     const {
       top3,
@@ -58,10 +179,10 @@ export class rankCardTop3 extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.guanzhuBtn}
-                  onPress={onPressRunner_up}
+                  onPress={() => this.handleClick(2)}
                 >
-                  <Text style={styles.rank2_add}>+ </Text>
-                  <Text style={styles.rank2_addAttention}>关注</Text>
+                  {this.state.follow === false ? <Text style={styles.rank2_add}>+ </Text> : null}
+                  <Text style={styles.rank2_addAttention}>{this.state.follow === false ? '关注' : '已关注'}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -92,10 +213,10 @@ export class rankCardTop3 extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.guanzhuBtn1}
-                  onPress={onPressChampion}
+                  onPress={() => this.handleClick(1)}
                 >
-                  <Text style={styles.rank2_add}>+ </Text>
-                  <Text style={styles.rank2_addAttention}>关注</Text>
+                  {this.state.follow1 === false ? <Text style={styles.rank2_add}>+ </Text> : null}
+                  <Text style={styles.rank2_addAttention}>{this.state.follow1 === false ? '关注' : '已关注'}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -126,10 +247,10 @@ export class rankCardTop3 extends Component {
                 </View>
                 <TouchableOpacity
                   style={styles.guanzhuBtn}
-                  onPress={onPressThird_place}
+                  onPress={() => this.handleClick(3)}
                 >
-                  <Text style={styles.rank2_add}>+ </Text>
-                  <Text style={styles.rank2_addAttention}>关注</Text>
+                   {this.state.follow3 === false ? <Text style={styles.rank2_add}>+ </Text> : null}
+                  <Text style={styles.rank2_addAttention}>{this.state.follow3 === false ? '关注' : '已关注'}</Text>
                 </TouchableOpacity>
               </View>
             </View>
