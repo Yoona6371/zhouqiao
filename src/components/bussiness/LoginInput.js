@@ -17,7 +17,7 @@ export default class LoginInput extends Component {
     type: PropTypes.number,
     phoneNumber: PropTypes.string,
     password: PropTypes.string,
-    verificationCode: PropTypes.string,
+    verifyCode: PropTypes.string,
   };
   static defaultProps = {
     type: 1,
@@ -31,10 +31,10 @@ export default class LoginInput extends Component {
     this.state = {
       phoneNumber: '',
       password: '',
-      verificationCode: '',
+      verifyCode: '',
       phoneNumberErrShow: false,
       passwordErrShow: false,
-      verificationCodeErrShow: false,
+      verifyCodeErrShow: false,
   
     };
   }
@@ -60,22 +60,24 @@ export default class LoginInput extends Component {
   };
 
   //申请验证码
-  verificationCodeRequest = () => {};
-  verificationCodeSubmitEditing = () => {
+  verifyCodeRequest = () => {
+    Http
+  };
+  verifyCodeSubmitEditing = () => {
     this.setState({ errShow: true });
   };
-  verificationCodeChangeText = (verificationCode) => {
-    this.setState({verificationCode});
+  verifyCodeChangeText = (verifyCode) => {
+    this.setState({verifyCode});
 
   };
   render() {
     const {
       phoneNumber,
       password,
-      verificationCode,
+      verifyCode,
       phoneNumberErrShow,
       passwordErrShow,
-      verificationCodeErrShow
+      verifyCodeErrShow
     } = this.state;
     const { type } = this.props;
 
@@ -168,24 +170,23 @@ export default class LoginInput extends Component {
               )}
             </View>
             <View style={[styles.input__box__type2__fix,{ marginTop: pxToDp(30) }] }>
-                {/* <Icon name="verification" style={styles.icon__type3} /> */}
                 <TextInput
                   placeholder="请输入验证码"
                   style={{ fontSize: pxToDp(24) }}
                   placeholderTextColor="#918D87"
-                  onSubmitEditing={this.verificationCodeSubmitEditing}
-                  onChangeText={this.verificationCodeChangeText}
+                  onSubmitEditing={this.verifyCodeSubmitEditing}
+                  onChangeText={this.verifyCodeChangeText}
                   onFocus={() => {
-                    this.setState({ verificationCodeErrShow: false });
+                    this.setState({ verifyCodeErrShow: false });
                   }}
                   onBlur={() => {
-                    this.setState({ verificationCodeErrShow: true });
+                    this.setState({ verifyCodeErrShow: true });
                   }}
                 />
                 <View style={styles.touchableOpacity__type3}>
                   <TouchableOpacity
                     style={{ justifyContent: 'center' }}
-                    onPress={this.verificationCodeRequest}
+                    onPress={this.verifyCodeRequest}
                   >
                     <Text
                       style={{
@@ -200,9 +201,9 @@ export default class LoginInput extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              {verificationCodeErrShow ? (
+              {verifyCodeErrShow ? (
                 <Text style={styles.errorText}>
-                  {utils.checkVerification(verificationCode)}
+                  {utils.checkVerification(verifyCode)}
                 </Text>
               ) : (
                 <View />
@@ -228,7 +229,7 @@ export default class LoginInput extends Component {
               </View>
               {passwordErrShow ? (
                 <Text style={styles.errorText}>
-                  {utils.checkPassword(verificationCode)}
+                  {utils.checkPassword(verifyCode)}
                 </Text>
               ) : (
                 <View />
@@ -271,8 +272,8 @@ export default class LoginInput extends Component {
                   placeholder="请输入验证码"
                   style={{ fontSize: pxToDp(24) }}
                   placeholderTextColor="#918D87"
-                  onSubmitEditing={this.verificationCodeSubmitEditing}
-                  onChangeText={this.verificationCodeChangeText}
+                  onSubmitEditing={this.verifyCodeSubmitEditing}
+                  onChangeText={this.verifyCodeChangeText}
                   onFocus={() => {
                     this.setState({ passwordErrShow: false });
                   }}
@@ -283,7 +284,7 @@ export default class LoginInput extends Component {
                 <View style={styles.touchableOpacity__type3}>
                   <TouchableOpacity
                     style={{ justifyContent: 'center' }}
-                    onPress={this.verificationCodeRequest}
+                    onPress={this.verifyCodeRequest}
                   >
                     <Text
                       style={{
@@ -297,9 +298,9 @@ export default class LoginInput extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              {verificationCodeErrShow ? (
+              {verifyCodeErrShow ? (
                 <Text style={styles.errorText}>
-                  {utils.checkVerification(verificationCode)}
+                  {utils.checkVerification(verifyCode)}
                 </Text>
               ) : (
                 <View />
