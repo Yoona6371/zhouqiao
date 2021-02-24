@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, View, ScrollView, Text} from 'react-native';
+import { StatusBar, View } from 'react-native';
 import Nav from './src/router/nav';
 import { Provider } from 'mobx-react';
 import RootStore from './src/mobx/index';
