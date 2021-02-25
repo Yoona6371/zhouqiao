@@ -10,7 +10,14 @@ export default class HomeTabCase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataList: [],
+      dataList: [
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+      ],
       refreshState: RefreshState.Idle,
       totalPage: 0,
       currentPage: 1,

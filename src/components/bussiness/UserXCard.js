@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { pxToDp } from '../../utils/pxToDp';
 import utils from '../../utils/utils';
 import Toast from '../common/Toast/Toast';
-
+import { inject } from 'mobx-react';
 import {
   flexColumnSpb,
   flexRowCenter,
@@ -28,7 +28,7 @@ const COLORARRAY = [
   '#F9BF3B',
   '#03C9A9',
 ];
-
+@inject('RootStore')
 class UserXCard extends Component {
   static propTypes = {
     image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
