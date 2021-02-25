@@ -238,7 +238,7 @@ export default class LoginInput extends Component {
               </View>
               {passwordErrShow ? (
                 <Text style={styles.errorText}>
-                  {utils.checkPassword(verifyCode)}
+                  {utils.checkPassword(password)}
                 </Text>
               ) : (
                 <View />

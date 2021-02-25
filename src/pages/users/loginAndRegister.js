@@ -36,7 +36,9 @@ class LoginTab extends Component {
       img: '',
     };
   }
-  forgetPassword = () => {};
+  forgetPassword = () => {
+    NavigationHelper.navigate('FindPassword');
+  };
   login = () => {
     Http.login({
       account: this.state.phoneNumber,
@@ -157,6 +159,11 @@ class RegisterTab extends Component {
       )
       .then((res) => {
         console.log(res);
+        if (res.data.code === 0) {
+          Toast.success(res.data.msg, 1000, 'center');
+        } else {
+          Toast.fail(res.data.msg, 1000, 'center');
+        }
       });
   };
   render() {

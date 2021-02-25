@@ -91,8 +91,8 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="LoginAndRegister"
-          headerMode={'none'}
+          initialRouteName="Tab"
+          headerMode={'none'} 
           mode={'card'}
           screenOptions={(navigation) => {
             NavigationHelper.navigation = navigation.navigation;
