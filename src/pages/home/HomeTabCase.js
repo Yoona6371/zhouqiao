@@ -10,7 +10,14 @@ export default class HomeTabCase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataList: [],
+      dataList: [
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+      ],
       refreshState: RefreshState.Idle,
       totalPage: 0,
       currentPage: 1,
@@ -32,6 +39,7 @@ export default class HomeTabCase extends Component {
         dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
     // console.log(dataList);
+
   };
 
   onFooterRefresh = async () => {
@@ -74,7 +82,7 @@ export default class HomeTabCase extends Component {
       <RefreshListView
         data={dataList}
         numColumns={2}
-        contentContainerStyle={{ ...flexColumnSpb, backgroundColor: '#fff' }}
+        contentContainerStyle={{ backgroundColor: '#fff' }}
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard

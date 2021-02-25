@@ -11,6 +11,7 @@ import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 import { activeOpacity } from '../../constants/config';
 import Avatar from '../common/Avatar';
+import Shimmer from 'react-native-shimmer';
 class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
@@ -63,15 +64,47 @@ class CommodityCard extends React.PureComponent {
           {this.props.type === 3 ? (
             <View style={styles.CommodityCard__typeThreeContainer}>
               <View style={styles.CommodityCard__shoppingImageBox}>
+
                 <Image
                   source={image}
                   style={styles.CommodityCard__shoppingImage}
                 />
+
+                {image === '' ? (
+                  <Shimmer>
+                    <Image
+                      source={{
+                        uri: image,
+                      }}
+                      style={styles.CommodityCard__shoppingImage}
+                    />
+                  </Shimmer>
+                ) : (
+                  <Image
+                    source={{
+                      uri: image,
+                    }}
+                    style={styles.CommodityCard__shoppingImage}
+                  />
+                )}
+
               </View>
               <View style={styles.CommodityCard__typeThreeShoppingTitleBox}>
-                <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
-                  {Title}
-                </Text>
+                {Title === '' ? (
+                  <Shimmer style={{ marginTop: pxToDp(10) }}>
+                    <View
+                      style={{
+                        height: pxToDp(25),
+                        width: pxToDp(230),
+                        backgroundColor: '#eae8e8',
+                      }}
+                    />
+                  </Shimmer>
+                ) : (
+                  <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
+                    {Title}
+                  </Text>
+                )}
               </View>
               <View style={{ marginTop: pxToDp(24) }}>
                 <Text
@@ -89,29 +122,66 @@ class CommodityCard extends React.PureComponent {
             <View style={styles.CommodityCard__typeOneCaseBox}>
               {/*案例图片开始*/}
               <View>
-                <ImageBackground
-                  source={{
-                    uri: image,
-                  }}
-                  style={{ width: pxToDp(325), height: pxToDp(325) }}
-                >
-                  <View style={styles.CommodityCard__typeOneTypeBox}>
-                    <Text style={styles.CommodityCard__typeOneTpyeText}>
-                      {this.props.Commodity_type}
-                    </Text>
-                  </View>
-                </ImageBackground>
+                {image === '' ? (
+                  <Shimmer>
+                    <ImageBackground
+                      source={{
+                        uri: image,
+                      }}
+                      style={{
+                        width: pxToDp(325),
+                        height: pxToDp(325),
+                        backgroundColor: '#eae8e8',
+                      }}
+                    >
+                      <View style={styles.CommodityCard__typeOneTypeBox}>
+                        <Text style={styles.CommodityCard__typeOneTpyeText}>
+                          {this.props.Commodity_type}
+                        </Text>
+                      </View>
+                    </ImageBackground>
+                  </Shimmer>
+                ) : (
+                  <ImageBackground
+                    source={{
+                      uri: image,
+                    }}
+                    style={{
+                      width: pxToDp(325),
+                      height: pxToDp(325),
+                      backgroundColor: '#eae8e8',
+                    }}
+                  >
+                    <View style={styles.CommodityCard__typeOneTypeBox}>
+                      <Text style={styles.CommodityCard__typeOneTpyeText}>
+                        {this.props.Commodity_type}
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                )}
               </View>
               {/*案例图片结束*/}
               {/*案例描述开始*/}
               <View>
                 <View style={styles.CommodityCard__typeOneTitleBox}>
-                  <Text
-                    styel={styles.CommodityCard__typeOneTitle}
-                    numberOfLines={2}
-                  >
-                    {this.props.Title}
-                  </Text>
+                  {Title === '' ? (
+                    <Shimmer style={{ marginTop: pxToDp(10) }}>
+                      <View
+                        style={{
+                          height: pxToDp(25),
+                          width: pxToDp(230),
+                          backgroundColor: '#eae8e8',
+                        }}
+                      />
+                    </Shimmer>
+                  ) : (
+                    <Text
+                      styel={styles.CommodityCard__typeOneTitle}
+                      numberOfLines={2}
+                    >
+                      {this.props.Title}
+                    </Text>
+                  )}
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {/*用户头像开始*/}
@@ -119,6 +189,7 @@ class CommodityCard extends React.PureComponent {
                     <Avatar
                       image={{ uri: user_image }}
                       size={50}
+                      userId={this.props.userId}
                       // source={require('../../asserts/images/CommodityCard_userImage.png')}
                       // styel={{ width: pxToDp(50), height: pxToDp(50) }}
                     />
@@ -169,10 +240,13 @@ const styles = StyleSheet.create({
     elevation: 10,
     overflow: 'hidden',
   },
-  CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
+  CommodityCard__shoppingImage: {
+    width: pxToDp(330),
+    height: pxToDp(300),
+    backgroundColor: '#eae8e8',
+  },
   CommodityCard__typeThreeShoppingTitleBox: {
     width: pxToDp(306),
-    height: pxToDp(69),
     marginTop: pxToDp(25),
   },
   CommodityCard__typeOThreeShoppingTitle: { fontSize: pxToDp(30) },
@@ -207,7 +281,6 @@ const styles = StyleSheet.create({
   CommodityCard__typeOneTitle: {
     fontSize: pxToDp(28),
     width: pxToDp(289),
-    height: pxToDp(68),
   },
   CommodityCard__typeOneUserImage: {
     width: pxToDp(50),
@@ -215,7 +288,6 @@ const styles = StyleSheet.create({
     marginTop: pxToDp(24),
     marginLeft: pxToDp(9),
     borderRadius: pxToDp(25),
-    backgroundColor: '#FE9E0E',
     justifyContent: 'center',
     overflow: 'hidden',
     alignItems: 'center',

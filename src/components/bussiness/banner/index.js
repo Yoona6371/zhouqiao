@@ -66,6 +66,7 @@ export default class MyCarousel extends PureComponent {
   };
   static defaultProps = {
     type: 1,
+    slideList: ENTRIES1,
   };
 
   _renderItem({ item, index }) {
@@ -91,7 +92,7 @@ export default class MyCarousel extends PureComponent {
       <View style={styles.exampleContainer}>
         <Carousel
           ref={(c) => (this._slider1Ref = c)}
-          data={ENTRIES1}
+          data={this.props.slideList}
           renderItem={this._renderItem}
           sliderWidth={deviceWidthDp}
           sliderHeight={pxToDp(320)}
@@ -103,20 +104,8 @@ export default class MyCarousel extends PureComponent {
           layout={type}
           loop={true}
           autoplay={true}
+          loopClonesPerSide={this.props.slideList.length}
           onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
-        />
-        <Pagination
-          dotsLength={ENTRIES1.length}
-          activeDotIndex={slider1ActiveSlide}
-          containerStyle={styles.paginationContainer}
-          dotContainerStyle={styles.dotContainerStyle}
-          dotColor={'#FE9E0E'}
-          dotStyle={styles.paginationDot}
-          inactiveDotColor={'#DDDDDD'}
-          inactiveDotOpacity={0.4} // 不活动点的不透明度效果的值
-          inactiveDotScale={0.6} // 比例 变换的值应用于无效点
-          carouselRef={this._slider1Ref}
-          tappableDots={!!this._slider1Ref}
         />
       </View>
     );
@@ -129,7 +118,7 @@ export default class MyCarousel extends PureComponent {
       <View style={{ ...styles.exampleContainer, width: pxToDp(691) }}>
         <Carousel
           ref={(c) => (this._slider1Ref = c)}
-          data={ENTRIES1}
+          data={this.props.slideList}
           renderItem={this._renderItemWithParallax}
           sliderWidth={pxToDp(691)}
           sliderHeight={pxToDp(361)}
@@ -141,10 +130,11 @@ export default class MyCarousel extends PureComponent {
           contentContainerCustomStyle={styles.sliderContentContainer}
           loop={true}
           autoplay={true}
+          loopClonesPerSide={this.props.slideList.length}
           onSnapToItem={(index) => this.setState({ slider1ActiveSlide: index })}
         />
         <Pagination
-          dotsLength={ENTRIES1.length}
+          dotsLength={this.props.slideList.length}
           activeDotIndex={slider1ActiveSlide}
           containerStyle={styles.paginationContainer2}
           dotColor={'#FE9E0E'}
