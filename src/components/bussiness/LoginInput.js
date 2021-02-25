@@ -75,7 +75,7 @@ export default class LoginInput extends Component {
   verifyCodeSubmitEditing = () => {};
   verifyCodeChangeText = (verifyCode) => {
     this.setState({ verifyCode });
-    this.props.getVerifyCode(verifyCode);
+    this.props.verifyCodeGet(verifyCode);
   };
   render() {
     const {

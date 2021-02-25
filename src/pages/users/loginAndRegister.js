@@ -143,13 +143,33 @@ class RegisterTab extends Component {
     };
   }
   register = () => {
-    Http.register({
-      mobile: this.state.phoneNumber,
-      password: this.state.password,
-      verifyCode: this.state.verifyCode,
-    }).then((res) => {
-        console.log(res);
+    Http.register(
+      {
+        mobile: this.state.phoneNumber,
+        password: this.state.password,
+        verifyCode: this.state.verifyCode,
+      },
+      '',
+      false,
+      { params: { role: '2' } },
+    ).then((res) => {
+      console.log(res);
     });
+    // let rr = await Http.register(
+    //     {
+    //       mobile: 'string',
+    //       password: 'string',
+    //       verifyCode: 'string',
+    //     },
+    //     '',
+    //     false,
+    //     {
+    //       params: {
+    //         role: '2',
+    //       },
+    //     },
+    //   );
+    //   console.log(rr, 'rr');
   };
   render() {
     return (

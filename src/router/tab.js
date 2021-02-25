@@ -69,7 +69,7 @@ function MyTabBar({ state, descriptors, navigation }) {
           const isFocused = state.index === index;
 
           // 点击事件
-          const onPress = () => {
+          const onPress = async() => {
             if (
               RootStore.userStore.allData.token === null &&
               (route.name === '消息' ||
@@ -88,6 +88,7 @@ function MyTabBar({ state, descriptors, navigation }) {
             if (!isFocused && !event.defaultPrevented) {
               navigation.navigate(route.name);
             }
+            
           };
 
           // 长按压

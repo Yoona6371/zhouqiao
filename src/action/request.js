@@ -42,7 +42,7 @@ for (let key in server) {
     ) {
       try {
         response = await instance[api.method](
-          `${api.url}${supplyUrl}`,
+          `${api.url}`,
           newParams,
           config,
         );

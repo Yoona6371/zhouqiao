@@ -5,7 +5,7 @@ const api = {
     method: 'post',
   },
   register:{
-    utl:"/api/user/register",
+    utl:'/api/user/register',
     method:'post',
   },
   getMyInfo: {
