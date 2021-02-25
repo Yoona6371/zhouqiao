@@ -15,6 +15,7 @@ import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { pxToDp } from '../../../utils/pxToDp';
 import Icon from '../Icon';
 import { activeOpacity } from '../../../constants/config';
+import Shimmer from 'react-native-shimmer';
 
 export default class Avatar extends Component {
   static propTypes = {
@@ -77,16 +78,33 @@ export default class Avatar extends Component {
             borderRadius: pxToDp(size) / 2,
           }}
         >
-          <Image
-            style={{
-              width: pxToDp(size),
-              height: pxToDp(size),
-              borderRadius: pxToDp(size) / 2,
-              borderColor: isVip ? '#FEF5E7' : '#fff',
-              borderWidth: pxToDp(4),
-            }}
-            source={image}
-          />
+          {image.uri === '' ? (
+            <Shimmer style={{ marginTop: pxToDp(10) }}>
+              <Image
+                style={{
+                  width: pxToDp(size),
+                  height: pxToDp(size),
+                  borderRadius: pxToDp(size) / 2,
+                  borderColor: isVip ? '#FEF5E7' : '#fff',
+                  borderWidth: pxToDp(4),
+                  backgroundColor: '#eae8e8',
+                }}
+                source={image}
+              />
+            </Shimmer>
+          ) : (
+            <Image
+              style={{
+                width: pxToDp(size),
+                height: pxToDp(size),
+                borderRadius: pxToDp(size) / 2,
+                borderColor: isVip ? '#FEF5E7' : '#fff',
+                borderWidth: pxToDp(4),
+              }}
+              source={image}
+            />
+          )}
+
           {isVip ? this.vipIcon(size) : null}
         </TouchableOpacity>
       );
