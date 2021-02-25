@@ -47,10 +47,25 @@ class CommodityList extends PureComponent {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     //转场动画完成之后改变标记值，重新渲染dom
     InteractionManager.runAfterInteractions(() => {
       this.setState({ renderPlaceholderOnly: false });
+    });
+
+    //获取案例类别
+    let res = await Http.caseType();
+    // console.log(res);
+    let arrCaseType = [];
+    res.data.data.forEach((item) => {
+      arrCaseType.push({
+        key: item.categoryId,
+        title: item.category,
+        component: HomeTabCase,
+      });
+    });
+    this.setState({
+      pages: arrCaseType,
     });
   }
 

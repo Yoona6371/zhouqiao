@@ -1,5 +1,5 @@
 const userStore = {
-  accessToken:'',
+  accessToken: '',
   refreshToken: null,
   userId: '',
   name: 'dsadasdsa',

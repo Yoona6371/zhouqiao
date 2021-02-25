@@ -10,33 +10,20 @@ import PropTypes from 'prop-types';
 import { fontStyle, padding } from '../../utils/StyleUtils';
 import { pxToDp, deviceWidthDp } from '../../utils/pxToDp';
 import Icon from '../common/Icon';
-import Overlay from '../common/Overlay/Overlay';
-
-// render() {
-//   let input = '';
-//   let hint = '(非必须)';
-//   return (
-//       <View style={{ flex: 1 }}>
-//         <DemandInput
-//             type={0}
-//             title="类萨asdasdasdasd"
-//             tips="请选择类别asdas"
-//             input={input}
-//             hint=""
-//             inputUpdate={(data) => {
-//               console.log(data);
-//             }}
-//         />
-//       </View>
-//   );
-// }
+import Picker from 'react-native-picker';
+import DocumentPicker from 'react-native-document-picker';
+// import axios from 'axios';
+// import RNFS from 'react-native-fs';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: props.input,
-      ungent: false,
+      input: '',
+      urgent: 0,
+      data: {},
+      input_category: '',
+      input_proficiency: '',
     };
   }
   // type
@@ -53,26 +40,135 @@ class Index extends Component {
     input: PropTypes.string,
     hint: PropTypes.string,
   };
-  setCategory = () => {
-    let overlayView = (
-      <Overlay.PullView side="bottom" modal={false}>
-        <View
-          style={{
-            backgroundColor: '#fff',
-            minWidth: 300,
-            minHeight: 260,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        />
-      </Overlay.PullView>
-    );
-    Overlay.show(overlayView);
+
+  setCategory = async () => {
+    Picker.hide();
+    if (this.props.category === 3) {
+      // Pick a single file
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.docx],
+        });
+        console.log(res);
+        // console.log(
+        //   res.uri,
+        //   res.type, // mime type
+        //   res.name,
+        //   res.size,
+        // );
+        // let formData = new FormData();
+        // formData.append('name', res.name);
+        // formData.append('uri', res.uri);
+        // formData.append('type', res.type);
+        // formData.append('size', res.size);
+        // console.log(formData);
+        // axios
+        //   .post(
+        //     'http://www.zhouqiao.art:8080/api/resource/file',
+        //     { file: formData, type: 6 },
+        //     {
+        //       headers: {
+        //         'Content-Type': 'multiple/form-data',
+        //       },
+        //     },
+        //   )
+        //   .then((res) => {
+        //     console.log(res);
+        //   });
+        // console.log(
+        //   11111111111,
+        //   await Http.fileUpdate(
+        //     {
+        //       file: {
+        //         uri: res.uri,
+        //         name: res.name,
+        //         size: res.size,
+        //         type: res.type,
+        //       },
+        //     },
+        //     '',
+        //     true,
+        //     {
+        //       headers: {
+        //         'Content-Type': 'multipart/form-data',
+        //       },
+        //       prarms: {
+        //         type: 6,
+        //       },
+        //     },
+        //   ),
+        // ),
+        console.log('success');
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          console.log('cancleErr', err);
+          // User cancelled the picker, exit any dialogs or menus and move on
+        } else {
+          throw err;
+        }
+      }
+    } else {
+      let list = [];
+      if (this.props.category === 1) {
+        list = ['新手', '老手'];
+      } else {
+        let res = await Http.requirementCategories();
+        res.data.data.map((v, i) => {
+          list.push(v.category);
+        });
+      }
+      Picker.init({
+        pickerData: list,
+        selectedValue: [0],
+        pickerConfirmBtnText: '确定',
+        pickerConfirmBtnColor: [254, 158, 14, 1],
+        pickerCancelBtnColor: [254, 158, 14, 1],
+        pickerCancelBtnText: '取消',
+        pickerTitleText: '选择类别',
+        pickerToolBarBg: [255, 255, 255, 1],
+        pickerBg: [255, 255, 255, 1],
+        onPickerConfirm: (data) => {
+          this.confirm(data[0]);
+        },
+      });
+      Picker.show();
+    }
   };
+
+  confirm = (data) => {
+    this.state.input_category = data;
+    this.state.input_proficiency = data;
+    this.props.inputUpdate(this.listBind(data));
+  };
+
+  listBind = (data) => {
+    switch (data) {
+      case '新手':
+        return 1;
+      case '老手':
+        return 2;
+      case '全部':
+        return 1;
+      case 'ps':
+        return 2;
+      case 'AI':
+        return 3;
+      case '室内设计':
+        return 4;
+      case '户外设计':
+        return 5;
+      case '插画':
+        return 6;
+      case '平画':
+        return 7;
+      case 'CAD':
+        return 8;
+    }
+  };
+
   render() {
     let { title, tips, type, hint, last } = this.props;
-    let { input, ungent } = this.state;
-    let input_category = '';
+    let { input, urgent, input_category, input_proficiency } = this.state;
     return (
       <View
         style={
@@ -93,11 +189,12 @@ class Index extends Component {
             <TouchableOpacity
               style={{ alignSelf: 'center', marginRight: pxToDp(28) }}
               onPress={() => {
-                this.setState({ ungent: true });
+                this.setState({ urgent: 1 });
+                this.props.inputUpdate(this.state.urgent);
               }}
             >
               <Text
-                style={ungent ? styles.button_checked : styles.button_unchecked}
+                style={urgent ? styles.button_checked : styles.button_unchecked}
               >
                 加急
               </Text>
@@ -105,11 +202,12 @@ class Index extends Component {
             <TouchableOpacity
               style={{ alignSelf: 'center' }}
               onPress={() => {
-                this.setState({ ungent: false });
+                this.setState({ urgent: 0 });
+                this.props.inputUpdate(this.state.urgent);
               }}
             >
               <Text
-                style={ungent ? styles.button_unchecked : styles.button_checked}
+                style={urgent ? styles.button_unchecked : styles.button_checked}
               >
                 普通
               </Text>
@@ -123,9 +221,10 @@ class Index extends Component {
             <TextInput
               disabled={true}
               placeholder={tips}
-              onsubmitEditing={this.props.inputUpdate}
               editable={false}
-              value={input_category}
+              value={
+                this.props.category === 1 ? input_proficiency : input_category
+              }
               style={
                 type === 1
                   ? {
@@ -169,8 +268,8 @@ class Index extends Component {
             keyboardType={type === 0 ? 'number-pad' : 'default'}
             onChangeText={(e) => {
               this.setState({ input: e });
+              this.props.inputUpdate(e);
             }}
-            onSubmitEditing={this.props.inputUpdate}
           />
         )}
       </View>

@@ -43,7 +43,7 @@ class Index extends Component {
           title: '新版本检测',
           text_more: '去吐槽',
           svg: security,
-          router: '',
+          router: 'CodePushPage',
         },
         {
           title: '关于软件',

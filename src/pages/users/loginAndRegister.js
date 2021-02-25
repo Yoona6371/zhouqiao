@@ -145,9 +145,12 @@ class RegisterTab extends Component {
   register = () => {
     Http.register(
       {
-        mobile: this.state.phoneNumber,
-        password: this.state.password,
-        verifyCode: this.state.verifyCode,
+        // mobile: this.state.phoneNumber,
+        // password: this.state.password,
+        // verifyCode: this.state.verifyCode,
+        mobile: '123456789',
+        password: 's1234567897',
+        verifyCode: '123456',
       },
       '',
       false,
@@ -157,9 +160,9 @@ class RegisterTab extends Component {
     });
     // let rr = await Http.register(
     //     {
-    //       mobile: 'string',
-    //       password: 'string',
-    //       verifyCode: 'string',
+          // mobile: 'string',
+          // password: 'string',
+          // verifyCode: 'string',
     //     },
     //     '',
     //     false,
@@ -197,7 +200,7 @@ class RegisterTab extends Component {
             </Text>
             <Text
               style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              onPress={() => this.props.navigation.navigate('LoginTab')}
+              onPress={() => NavigationHelper.navigate('LoginTab')}
             >
               立即登录
             </Text>

@@ -10,14 +10,14 @@ import {
 import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 import { activeOpacity } from '../../constants/config';
-
+import Avatar from '../common/Avatar';
 class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
     prince: PropTypes.number,
     Title: PropTypes.string,
-    image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
-    user_image: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
+    image: PropTypes.oneOfType([PropTypes.String, PropTypes.object]),
+    user_image: PropTypes.oneOfType([PropTypes.String, PropTypes.object]),
     Commodity_type: PropTypes.string,
     user_id: PropTypes.string,
     router: PropTypes.string,
@@ -51,6 +51,9 @@ class CommodityCard extends React.PureComponent {
        * type:1(默认) ->案例组件
        */
     }
+
+    // let dataImage = { uri: image };
+
     return (
       <TouchableOpacity
         activeOpacity={activeOpacity}
@@ -61,7 +64,9 @@ class CommodityCard extends React.PureComponent {
             <View style={styles.CommodityCard__typeThreeContainer}>
               <View style={styles.CommodityCard__shoppingImageBox}>
                 <Image
-                  source={require('../../asserts/images/shopping_Image.png')}
+                  source={{
+                    uri: image,
+                  }}
                   style={styles.CommodityCard__shoppingImage}
                 />
               </View>
@@ -87,7 +92,9 @@ class CommodityCard extends React.PureComponent {
               {/*案例图片开始*/}
               <View>
                 <ImageBackground
-                  source={require('../../asserts/images/CommodityCard_background.png')}
+                  source={{
+                    uri: image,
+                  }}
                   style={{ width: pxToDp(325), height: pxToDp(325) }}
                 >
                   <View style={styles.CommodityCard__typeOneTypeBox}>
@@ -101,15 +108,21 @@ class CommodityCard extends React.PureComponent {
               {/*案例描述开始*/}
               <View>
                 <View style={styles.CommodityCard__typeOneTitleBox}>
-                  <Text styel={styles.CommodityCard__typeOneTitle}>
+                  <Text
+                    styel={styles.CommodityCard__typeOneTitle}
+                    numberOfLines={2}
+                  >
                     {this.props.Title}
                   </Text>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {/*用户头像开始*/}
                   <View style={styles.CommodityCard__typeOneUserImage}>
-                    <Image
-                      source={require('../../asserts/images/CommodityCard_userImage.png')}
+                    <Avatar
+                      image={{ uri: user_image }}
+                      size={50}
+                      userId={this.props.userId}
+                      // source={require('../../asserts/images/CommodityCard_userImage.png')}
                       // styel={{ width: pxToDp(50), height: pxToDp(50) }}
                     />
                   </View>
@@ -162,7 +175,6 @@ const styles = StyleSheet.create({
   CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
   CommodityCard__typeThreeShoppingTitleBox: {
     width: pxToDp(306),
-    height: pxToDp(69),
     marginTop: pxToDp(25),
   },
   CommodityCard__typeOThreeShoppingTitle: { fontSize: pxToDp(30) },
@@ -197,7 +209,6 @@ const styles = StyleSheet.create({
   CommodityCard__typeOneTitle: {
     fontSize: pxToDp(28),
     width: pxToDp(289),
-    height: pxToDp(68),
   },
   CommodityCard__typeOneUserImage: {
     width: pxToDp(50),
