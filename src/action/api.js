@@ -8,6 +8,10 @@ const api = {
     url: '/api/auth/password',
     method: 'post',
   },
+  getVerifyCode: {
+    url: '/api/sms/verifyCode',
+    method: 'get',
+  },
   register: {
     utl: '/api/user/register',
     method: 'post',

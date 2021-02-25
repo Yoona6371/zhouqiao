@@ -6534,7 +6534,7 @@ react-native-screens@^2.16.1:
 
 react-native-shimmer@^0.6.0:
   version "0.6.0"
-  resolved "https://registry.npm.taobao.org/react-native-shimmer/download/react-native-shimmer-0.6.0.tgz#9529c4c85665827c582ebb74a285a67a450f5f2b"
+  resolved "https://registry.npm.taobao.org/react-native-shimmer/download/react-native-shimmer-0.6.0.tgz"
   integrity sha1-lSnEyFZlgnxYLrt0ooWmekUPXys=
   dependencies:
     prop-types "^15.6.0"

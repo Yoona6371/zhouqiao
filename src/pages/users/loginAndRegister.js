@@ -19,6 +19,7 @@ import Toast from '../../components/common/Toast/Toast';
 import RootStore from '../../mobx/index';
 import LocalStorageUtils from '../../utils/LocalStorageUtils';
 const Tab = createMaterialTopTabNavigator();
+import axios from 'axios';
 
 @inject('RootStore')
 @observer
@@ -142,37 +143,21 @@ class RegisterTab extends Component {
       verifyCode: '',
     };
   }
+
   register = () => {
-    Http.register(
-      {
-        // mobile: this.state.phoneNumber,
-        // password: this.state.password,
-        // verifyCode: this.state.verifyCode,
-        mobile: '123456789',
-        password: 's1234567897',
-        verifyCode: '123456',
-      },
-      '',
-      false,
-      { params: { role: '2' } },
-    ).then((res) => {
-      console.log(res);
-    });
-    // let rr = await Http.register(
-    //     {
-          // mobile: 'string',
-          // password: 'string',
-          // verifyCode: 'string',
-    //     },
-    //     '',
-    //     false,
-    //     {
-    //       params: {
-    //         role: '2',
-    //       },
-    //     },
-    //   );
-    //   console.log(rr, 'rr');
+    axios
+      .post(
+        'http://www.zhouqiao.art:8080/api/user/register',
+        {
+          mobile: this.state.phoneNumber,
+          password: this.state.password,
+          verifyCode: this.state.verifyCode,
+        },
+        { params: { role: '2' } },
+      )
+      .then((res) => {
+        console.log(res);
+      });
   };
   render() {
     return (
@@ -278,7 +263,7 @@ class Index extends Component {
       </Tab.Navigator>
     );
   };
-  forgetPassword = () => {};
+  // forgetPassword = () => {};
   render() {
     const { pages } = this.state;
     return (
