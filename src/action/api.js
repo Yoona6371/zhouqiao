@@ -8,21 +8,10 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'get',
   },
-  getGroup: {
-    url: '/group/all',
+
+  rankingList: {
+    url: '/api/stylist/RankingList',
     method: 'get',
-  },
-  postInfo: {
-    url: '/info/submit',
-    method: 'post',
-  },
-  patchInfo: {
-    url: '/info/patch',
-    method: 'patch',
-  },
-  deleteInfo: {
-    url: '/info/delete',
-    method: 'delete',
   },
   test: {
     url: '/api/client/baseInfo',
@@ -114,12 +103,6 @@ const api = {
     method: 'delete',
   },
 
-  // 获取我的基本信息
-  myInfo: {
-    url: '/api/client/my/baseInfo',
-    method: 'get',
-  },
-
   // 我的关注列表
   // const message = await request.myFocusList(
   //  { page: 1, size: 1 });
@@ -132,8 +115,26 @@ const api = {
   // const message = await request.myFansList(
   //  { page: 1, size: 1 });
   myFansList: {
-    url: 'api/my/fans',
+    url: '/api/my/fans',
     method: 'get',
+  },
+  goodsList: {
+    url: '/api/client/commodities',
+    method: 'get',
+  },
+  //案例详情
+  CaseDetails: {
+    url: '/api/designCaseExt/client/design_cases',
+    method: 'get',
+  },
+  //收藏案例
+  CollectCase: {
+    url: '/api/designCaseCollect/client/design_cases/collect/add',
+    method: 'post',
+  },
+  DeleteCase: {
+    url: '/api/designCaseCollect/client/design_cases/collect/cancel',
+    method: 'delete',
   },
 };
 

@@ -27,7 +27,7 @@ import myCollect from '../pages/personal/myCollect';
 import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
-
+import myWallet from '../pages/personal/myWallet';
 // 他人中心
 import OthersPersonal from '../pages/design/others';
 
@@ -63,6 +63,7 @@ import LoginAndRegister from '../pages/users/loginAndRegister';
 import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
+import CodePushPage from '../pages/CodePushPage';
 
 const Stack = createStackNavigator();
 
@@ -110,6 +111,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="OthersPersonal"
             component={OthersPersonal}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*CodePushPage*/}
+          <Stack.Screen
+            name="CodePushPage"
+            component={CodePushPage}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
@@ -245,6 +254,14 @@ class Nav extends React.Component {
           <Stack.Screen
             name="history"
             component={history}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/*我的qianb页*/}
+          <Stack.Screen
+            name="myWallet"
+            component={myWallet}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

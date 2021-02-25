@@ -31,7 +31,7 @@ class CommodityCard extends React.PureComponent {
     this.state = {};
   }
   Press = () => {
-    NavigationHelper.navigate('CommodityDetail');
+    NavigationHelper.navigate('CommodityDetail', { caseId: this.props.caseId });
   };
   render() {
     const {
