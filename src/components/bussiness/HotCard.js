@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import SvgUri from 'react-native-svg-uri';
+import Shimmer from 'react-native-shimmer';
 import { like } from '../../constants/svg';
 import { pxToDp } from '../../utils/pxToDp';
 import {
@@ -9,6 +10,7 @@ import {
   padding,
   flexRowCenter,
   flexRowSpb,
+  flexColumnCenter,
 } from '../../utils/StyleUtils';
 import { activeOpacity } from '../../constants/config';
 
@@ -35,7 +37,19 @@ class HotCard extends Component {
       >
         <View style={styles.HotCard__container}>
           <View style={styles.HotCard__left}>
-            <Text style={styles.HotCardTitle}>{title}</Text>
+            {title === '' ? (
+              <Shimmer style={{ marginTop: pxToDp(10) }}>
+                <View
+                  style={{
+                    height: pxToDp(25),
+                    width: pxToDp(230),
+                    backgroundColor: '#eae8e8',
+                  }}
+                />
+              </Shimmer>
+            ) : (
+              <Text style={styles.HotCardTitle}>{title}</Text>
+            )}
             <View style={styles.HotCard__leftFooter}>
               <SvgUri
                 svgXmlData={like}
@@ -45,7 +59,13 @@ class HotCard extends Component {
               <Text style={styles.leftFooter__Text}>{number}</Text>
             </View>
           </View>
-          <Image source={{ uri: imageUri }} style={styles.HotCard__right} />
+          {imageUri === '' ? (
+            <Shimmer>
+              <Image source={{ uri: imageUri }} style={styles.HotCard__right} />
+            </Shimmer>
+          ) : (
+            <Image source={{ uri: imageUri }} style={styles.HotCard__right} />
+          )}
         </View>
       </TouchableOpacity>
     );
@@ -101,7 +121,7 @@ const styles = StyleSheet.create({
     width: pxToDp(126),
     height: pxToDp(126),
     borderRadius: pxToDp(10),
-    backgroundColor: '#171717',
+    backgroundColor: '#eae8e8',
   },
 });
 
