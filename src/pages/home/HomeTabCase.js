@@ -38,6 +38,8 @@ export default class HomeTabCase extends Component {
       refreshState:
         dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
+    // console.log(dataList);
+
   };
 
   onFooterRefresh = async () => {
@@ -75,6 +77,7 @@ export default class HomeTabCase extends Component {
 
   render() {
     const { dataList } = this.state;
+
     return (
       <RefreshListView
         data={dataList}
@@ -89,6 +92,7 @@ export default class HomeTabCase extends Component {
             image={item.picture}
             user_image={item.case_author_avatar}
             style={{ ...padding(25, 0, 25, 0) }}
+            caseId={item.case_id}
           />
         )}
         refreshState={this.state.refreshState}

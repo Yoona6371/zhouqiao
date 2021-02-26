@@ -32,7 +32,7 @@ class CommodityCard extends React.PureComponent {
     this.state = {};
   }
   Press = () => {
-    NavigationHelper.navigate('CommodityDetail');
+    NavigationHelper.navigate('CommodityDetail', { caseId: this.props.caseId });
   };
   render() {
     const {
@@ -64,6 +64,12 @@ class CommodityCard extends React.PureComponent {
           {this.props.type === 3 ? (
             <View style={styles.CommodityCard__typeThreeContainer}>
               <View style={styles.CommodityCard__shoppingImageBox}>
+
+                <Image
+                  source={image}
+                  style={styles.CommodityCard__shoppingImage}
+                />
+
                 {image === '' ? (
                   <Shimmer>
                     <Image
@@ -81,6 +87,7 @@ class CommodityCard extends React.PureComponent {
                     style={styles.CommodityCard__shoppingImage}
                   />
                 )}
+
               </View>
               <View style={styles.CommodityCard__typeThreeShoppingTitleBox}>
                 {Title === '' ? (
