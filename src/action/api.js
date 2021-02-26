@@ -1,9 +1,5 @@
 // 封装接口
 const api = {
-  categoryCase: {
-    url: '/api/designCase/stylist/design_cases/category',
-    method: 'get',
-  },
   login: {
     url: '/api/auth/password',
     method: 'post',
@@ -12,12 +8,21 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'get',
   },
-  caseType: {
-    url: '/designCase/designCaseCategory/client/design_cases/category/list',
-    method: 'get',
-  },
+
   rankingList: {
     url: '/api/stylist/RankingList',
+    method: 'get',
+  },
+  test: {
+    url: '/api/client/baseInfo',
+    method: 'get',
+  },
+  categoryCase: {
+    url: '/api/designCase/stylist/design_cases/category',
+    method: 'get',
+  },
+  caseType: {
+    url: '/designCase/designCaseCategory/client/design_cases/category/list',
     method: 'get',
   },
   demandSet: {
@@ -125,19 +130,43 @@ const api = {
     url: '/api/sms/verifyCode',
     method: 'get',
   },
+  //案例详情
+  CaseDetails: {
+    url: '/api/designCaseExt/client/design_cases',
+    method: 'get',
+  },
+  //收藏案例
+  CollectCase: {
+    url: '/api/designCaseCollect/client/design_cases/collect/add',
+    method: 'post',
+  },
+  DeleteCase: {
+    url: '/api/designCaseCollect/client/design_cases/collect/cancel',
+    method: 'delete',
+  },
+  getSlideShow: {
+    url: '/api/slideShow',
+    method: 'get',
+  },
+  // 获取设计案例
+  getDesignExample: {
+    url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  },
+
   mobileSet: {
     url: '/api/user/binding/mobile',
     method: 'put',
-    getSlideShow: {
-      url: '/api/slideShow',
-      method: 'get',
-    },
-    // 获取设计案例
-    getDesignExample: {
-      url: '/api/designCase/stylist/other/design_cases',
-      method: 'get',
-    },
+  },
+  getSlideShow: {
+    url: '/api/slideShow',
+    method: 'get',
+  },
+  // 获取设计案例
+  getDesignExample: {
+    url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  },
   },
 };
-
 export default api;
