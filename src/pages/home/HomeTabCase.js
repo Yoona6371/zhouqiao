@@ -31,7 +31,6 @@ export default class HomeTabCase extends Component {
       refreshState:
         dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
-    // console.log(dataList);
   };
 
   onFooterRefresh = async () => {
@@ -73,7 +72,7 @@ export default class HomeTabCase extends Component {
       <RefreshListView
         data={dataList}
         numColumns={2}
-        contentContainerStyle={{ ...flexColumnSpb, backgroundColor: '#fff' }}
+        contentContainerStyle={{ backgroundColor: '#fff' }}
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard

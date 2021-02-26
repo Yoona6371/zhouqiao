@@ -37,8 +37,8 @@ class Index extends Component {
       pages: [],
       hotData: [],
       headerPhoto: [],
-      enableScrollViewScroll: true,
     };
+    this._contentViewScroll = this._contentViewScroll.bind(this);
   }
 
   async componentDidMount() {
@@ -70,7 +70,6 @@ class Index extends Component {
         component: HomeTabCase,
       });
     });
-    // console.log(rankingListRes);
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
       pages: arrCaseType,
@@ -97,12 +96,21 @@ class Index extends Component {
     NavigationHelper.navigate('search');
   }
 
-  onEnableScroll = (value) => {
-    this.setState({
-      enableScrollViewScroll: value,
-    });
+  onRef = (ref) => {
+    this.child = ref;
   };
+
+  _contentViewScroll(e: Object) {
+    let offsetY = e.nativeEvent.contentOffset.y; //滑动距离
+    let contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
+    let oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
+    if (offsetY + oriageScrollHeight >= contentSizeHeight) {
+      this.child.onFooterRefresh();
+    }
+  }
+
   render() {
+    let list = ['asd', 'asd'];
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground
@@ -123,6 +131,7 @@ class Index extends Component {
             backgroundColor: '#fff',
           }}
           scrollEnabled={this.state.enableScrollViewScroll}
+          onMomentumScrollEnd={this._contentViewScroll}
         >
           <ImageBackground
             source={require('../../asserts/images/home_header_bg.png')}
@@ -271,7 +280,7 @@ class Index extends Component {
             style={styles.shop_container}
           >
             {/*商品列表开始*/}
-            <HomeTabShop onEnableScroll={this.onEnableScroll} />
+            <HomeTabShop onRef={this.onRef} />
             {/*商品列表结束*/}
           </ContainerCard>
         </ScrollView>

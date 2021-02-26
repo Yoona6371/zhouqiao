@@ -117,6 +117,18 @@ const api = {
     url: '/api/client/commodities',
     method: 'get',
   },
+  infoSet: {
+    url: '/api/client/my/baseInfo',
+    method: 'put',
+  },
+  getVerifyCode: {
+    url: '/api/sms/verifyCode',
+    method: 'get',
+  },
+  mobileSet: {
+    url: '/api/user/binding/mobile',
+    method: 'put',
+  },
 };
 
 export default api;

@@ -64,9 +64,9 @@ class Index extends Component {
           router: '',
         },
       ],
+      info: {},
     };
   }
-  componentDidMount() {}
 
   render() {
     let { listIndividual, listSystem } = this.state;

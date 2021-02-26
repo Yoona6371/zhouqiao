@@ -24,7 +24,7 @@ import {
   flexRowSpb,
   margin,
 } from '../../utils/StyleUtils';
-// import PropTypes from 'prop-types'
+import Toast from '../common/Toast/Toast';
 
 export class DemandList extends Component {
   // static propTypes = {
@@ -130,7 +130,9 @@ export class DemandList extends Component {
   onDelete = () => {
     Http.demandDelete({}, '/' + this.props.requirementId).then((res) => {
       if (res.status === 200) {
-        alert('删除成功');
+        Toast.success(res.data.msg, 1000, 'center');
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
       }
     });
   };
