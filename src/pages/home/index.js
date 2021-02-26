@@ -212,6 +212,7 @@ class Index extends Component {
   }
 
   render() {
+    let list = ['asd', 'asd'];
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground

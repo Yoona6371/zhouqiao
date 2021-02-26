@@ -19,11 +19,16 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      input: '',
-      urgent: 0,
+      input: props.input === undefined ? '' : props.input.toString(),
+      urgent: props.urgent,
       data: {},
       input_category: '',
       input_proficiency: '',
+      list_category: [],
+      list_bind: [
+        { key: 0, value: '新手' },
+        { key: 1, value: '老手' },
+      ],
     };
   }
   // type
@@ -49,7 +54,7 @@ class Index extends Component {
         const res = await DocumentPicker.pick({
           type: [DocumentPicker.types.docx],
         });
-        console.log(res);
+        // console.log(res);
         // console.log(
         //   res.uri,
         //   res.type, // mime type
@@ -108,18 +113,11 @@ class Index extends Component {
         }
       }
     } else {
-      let list = [];
-      if (this.props.category === 1) {
-        list = ['新手', '老手'];
-      } else {
-        let res = await Http.requirementCategories();
-        res.data.data.map((v, i) => {
-          list.push(v.category);
-        });
-      }
       Picker.init({
-        pickerData: list,
-        selectedValue: [0],
+        pickerData:
+          this.props.category === 1
+            ? ['新手', '老手']
+            : this.state.list_category,
         pickerConfirmBtnText: '确定',
         pickerConfirmBtnColor: [254, 158, 14, 1],
         pickerCancelBtnColor: [254, 158, 14, 1],
@@ -138,33 +136,36 @@ class Index extends Component {
   confirm = (data) => {
     this.state.input_category = data;
     this.state.input_proficiency = data;
-    this.props.inputUpdate(this.listBind(data));
+    this.listBind(data);
   };
 
   listBind = (data) => {
-    switch (data) {
-      case '新手':
-        return 1;
-      case '老手':
-        return 2;
-      case '全部':
-        return 1;
-      case 'ps':
-        return 2;
-      case 'AI':
-        return 3;
-      case '室内设计':
-        return 4;
-      case '户外设计':
-        return 5;
-      case '插画':
-        return 6;
-      case '平画':
-        return 7;
-      case 'CAD':
-        return 8;
-    }
+    this.state.list_bind.forEach((v, i) => {
+      if (data === v.value) {
+        this.props.inputUpdate(v.key);
+        return;
+      }
+    });
   };
+  listBind_reverse = (data) => {
+    this.state.list_bind.forEach((v, i) => {
+      if (data === v.key) {
+        this.confirm(v.value);
+        return;
+      }
+    });
+  };
+
+  async componentDidMount() {
+    let res = await Http.requirementCategories();
+    await res.data.data.map((v, i) => {
+      this.state.list_category.push(v.category);
+      this.state.list_bind.push({ key: i + 2, value: v.category });
+    });
+    this.props.option !== undefined
+      ? this.listBind_reverse(this.props.option)
+      : null;
+  }
 
   render() {
     let { title, tips, type, hint, last } = this.props;

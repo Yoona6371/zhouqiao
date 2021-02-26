@@ -17,6 +17,11 @@ class DemandDetails extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    console.log(this.props.route.params.requirementId);
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>

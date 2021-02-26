@@ -31,7 +31,7 @@ const api = {
   },
   demandUpdate: {
     url: '/api/client/my/requirement',
-    method: 'post',
+    method: 'put',
   },
   demandDelete: {
     url: '/api/client/my/requirement',
@@ -122,6 +122,14 @@ const api = {
     url: '/api/client/commodities',
     method: 'get',
   },
+  infoSet: {
+    url: '/api/client/my/baseInfo',
+    method: 'put',
+  },
+  getVerifyCode: {
+    url: '/api/sms/verifyCode',
+    method: 'get',
+  },
   //案例详情
   CaseDetails: {
     url: '/api/designCaseExt/client/design_cases',
@@ -135,15 +143,30 @@ const api = {
   DeleteCase: {
     url: '/api/designCaseCollect/client/design_cases/collect/cancel',
     method: 'delete',
-    getSlideShow: {
-      url: '/api/slideShow',
-      method: 'get',
-    },
-    // 获取设计案例
-    getDesignExample: {
-      url: '/api/designCase/stylist/other/design_cases',
-      method: 'get',
-    },
+  },
+  getSlideShow: {
+    url: '/api/slideShow',
+    method: 'get',
+  },
+  // 获取设计案例
+  getDesignExample: {
+    url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  },
+
+  mobileSet: {
+    url: '/api/user/binding/mobile',
+    method: 'put',
+  },
+  getSlideShow: {
+    url: '/api/slideShow',
+    method: 'get',
+  },
+  // 获取设计案例
+  getDesignExample: {
+    url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  },
   },
 };
 export default api;
