@@ -128,6 +128,15 @@ const api = {
   mobileSet: {
     url: '/api/user/binding/mobile',
     method: 'put',
+    getSlideShow: {
+      url: '/api/slideShow',
+      method: 'get',
+    },
+    // 获取设计案例
+    getDesignExample: {
+      url: '/api/designCase/stylist/other/design_cases',
+      method: 'get',
+    },
   },
 };
 

@@ -9,7 +9,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { pxToDp } from '../../../utils/pxToDp';
-
+import Toast from '../../common/Toast/Toast';
+import { inject } from 'mobx-react';
+@inject('RootStore')
 export class rankCard extends Component {
   static propTypes = {
     rankNumber: PropTypes.string.isRequired,
@@ -18,7 +20,63 @@ export class rankCard extends Component {
     onPress: PropTypes.func.isRequired,
     userPhoto: PropTypes.string.isRequired,
   };
+  state = {
+    follow: false,
+  }
+  // ——————————————————————————点击关注按钮部分开始————————————————————————————
+  // 关注用户
+  focusUser = async () => {
+    const message = await Http.focusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
 
+    if (message.status === 200) {
+      this.setState({
+        follow: true,
+      });
+      if (!this.props.focus) {
+        Toast.smile('关注成功');
+      }
+    } else {
+      Toast.sad('关注失败');
+    }
+  };
+
+  // 取消关注用户
+  unfocusUser = async () => {
+    // const request = this.props.RootStore.globalStore.allData.Http;
+    const message = await Http.unfocusUser(
+      {},
+      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+    );
+
+    if (message.status === 200) {
+      this.setState({
+        follow: false,
+      });
+      Toast.smile('取消成功');
+    } else {
+      Toast.sad('取消失败');
+    }
+  };
+
+  handleClick() {
+    const token = this.props.RootStore.userStore.allData.accessToken;
+    console.log(token)
+    if (!token) {
+      Toast.message('您尚未登录');
+      return;
+    }
+
+    if (!this.state.follow) {
+      // 如果没有关注，点击之后关注
+      this.focusUser();
+    } else {
+      this.unfocusUser();
+    }
+  }
+  // ——————————————————————————点击关注按钮部分结束————————————————————————————
   render() {
     const { rankNumber, userPhoto, userName, hot, onPress } = this.props;
     return (
@@ -36,7 +94,7 @@ export class rankCard extends Component {
             source={require('../../../asserts/images/rankCardFire.png')}
           />
           <Text style={styles.clickGood}>{hot}</Text>
-          <TouchableOpacity style={styles.guanzhuBtn} onPress={onPress}>
+          <TouchableOpacity style={styles.guanzhuBtn} onPress={() => this.handleClick()}>
             <Text
               style={{
                 color: '#FFF',
@@ -44,7 +102,7 @@ export class rankCard extends Component {
                 marginTop: -2,
               }}
             >
-              +{' '}
+              {this.state.follow === false ? '+ ' : null}
             </Text>
             <Text
               style={{
@@ -53,7 +111,7 @@ export class rankCard extends Component {
                 fontWeight: '700',
               }}
             >
-              关注
+              {this.state.follow === false ? '关注' : '已关注'}
             </Text>
           </TouchableOpacity>
         </View>

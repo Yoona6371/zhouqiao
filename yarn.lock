@@ -6308,7 +6308,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.10, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npm.taobao.org/prop-types/download/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha1-UsQedbjIfnK52TYOAga5ncv/psU=
@@ -6538,6 +6538,13 @@ react-native-screens@^2.16.1:
   version "2.17.1"
   resolved "https://registry.npm.taobao.org/react-native-screens/download/react-native-screens-2.17.1.tgz#c3c0ac750af48741c5b1635511e6af2a27b74309"
   integrity sha1-w8CsdQr0h0HFsWNVEeavKie3Qwk=
+
+react-native-shimmer@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.npm.taobao.org/react-native-shimmer/download/react-native-shimmer-0.6.0.tgz#9529c4c85665827c582ebb74a285a67a450f5f2b"
+  integrity sha1-lSnEyFZlgnxYLrt0ooWmekUPXys=
+  dependencies:
+    prop-types "^15.6.0"
 
 react-native-smart-refresh@^1.1.5:
   version "1.1.5"
