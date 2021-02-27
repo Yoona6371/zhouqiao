@@ -10,13 +10,15 @@ import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 import Icon from '../common/Icon';
 import utils from '../../utils/utils';
+import { position } from '../../constants/svg';
+import Toast from '../common/Toast/Toast';
 
 export default class LoginInput extends Component {
   static propTypes = {
     type: PropTypes.number,
     phoneNumber: PropTypes.string,
     password: PropTypes.string,
-    verificationCode: PropTypes.string,
+    verifyCode: PropTypes.string,
   };
   static defaultProps = {
     type: 1,
@@ -27,14 +29,16 @@ export default class LoginInput extends Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      phoneNumber: '',
+      password: '',
+      verifyCode: '',
+      phoneNumberErrShow: false,
+      passwordErrShow: false,
+      verifyCodeErrShow: false,
+    };
   }
-  state = {
-    phoneNumber: '',
-    password: '',
-    verificationCode: '',
-    phoneNumberErrShow: false,
-    passwordErrShow: false,
-  };
+
   //电话号码
   phoneNumberChangeText = (phoneNumber) => {
     this.setState({ phoneNumber });
@@ -56,21 +60,31 @@ export default class LoginInput extends Component {
   };
 
   //申请验证码
-  verificationCodeRequest = () => {};
-  verificationCodeSubmitEditing = () => {
-    // this.setState(verificationCode);
-    this.setState({ errShow: true });
+  verifyCodeRequest = () => {
+    Http.getVerifyCode({ code: 1, mobile: this.state.phoneNumber }).then(
+      (res) => {
+        console.log(res);
+        if (res.data.code === 0) {
+          Toast.success(res.data.msg, 1000, 'center');
+        } else {
+          Toast.fail(res.data.msg, 1000, 'center');
+        }
+      },
+    );
   };
-  verificationCodeChangeText = () => {
-    const { verificationCode } = this.state;
+  verifyCodeSubmitEditing = () => {};
+  verifyCodeChangeText = (verifyCode) => {
+    this.setState({ verifyCode });
+    this.props.verifyCodeGet(verifyCode);
   };
   render() {
     const {
       phoneNumber,
       password,
-      verificationCode,
+      verifyCode,
       phoneNumberErrShow,
       passwordErrShow,
+      verifyCodeErrShow,
     } = this.state;
     const { type } = this.props;
 
@@ -162,37 +176,51 @@ export default class LoginInput extends Component {
                 <View />
               )}
             </View>
+            <View
+              style={[styles.input__box__type2__fix, { marginTop: pxToDp(30) }]}
+            >
+              <TextInput
+                placeholder="请输入验证码"
+                style={{ fontSize: pxToDp(24) }}
+                placeholderTextColor="#918D87"
+                onSubmitEditing={this.verifyCodeSubmitEditing}
+                onChangeText={this.verifyCodeChangeText}
+                onFocus={() => {
+                  this.setState({ verifyCodeErrShow: false });
+                }}
+                onBlur={() => {
+                  this.setState({ verifyCodeErrShow: true });
+                }}
+              />
+              <View style={styles.touchableOpacity__type3}>
+                <TouchableOpacity
+                  style={{ justifyContent: 'center' }}
+                  onPress={this.verifyCodeRequest}
+                >
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: pxToDp(21),
+                      alignSelf: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    获取验证码
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            {verifyCodeErrShow ? (
+              <Text style={styles.errorText}>
+                {utils.checkVerification(verifyCode)}
+              </Text>
+            ) : (
+              <View />
+            )}
             <View>
-              <View style={[styles.input_box, { marginTop: pxToDp(50) }]}>
+              <View style={[styles.input_box, { marginTop: pxToDp(30) }]}>
                 <TextInput
                   placeholder="请输入密码"
-                  style={{ fontSize: pxToDp(24) }}
-                  placeholderTextColor="#918D87"
-                  maxLength={16}
-                  secureTextEntry={true}
-                  onSubmitEditing={this.passwordSubmitEditing}
-                  onChangeText={this.passwordChangeText}
-                  onFocus={() => {
-                    this.setState({ passwordErrShow: false });
-                  }}
-                  onBlur={() => {
-                    this.setState({ passwordErrShow: true });
-                  }}
-                />
-                <Icon name="lock" style={styles.icon__type12} />
-              </View>
-              {passwordErrShow ? (
-                <Text style={styles.errorText}>
-                  {utils.checkPassword(password)}
-                </Text>
-              ) : (
-                <View />
-              )}
-            </View>
-            <View>
-              <View style={[styles.input_box, { marginTop: pxToDp(50) }]}>
-                <TextInput
-                  placeholder="请确认密码"
                   style={{ fontSize: pxToDp(24) }}
                   placeholderTextColor="#918D87"
                   maxLength={16}
@@ -253,13 +281,19 @@ export default class LoginInput extends Component {
                   placeholder="请输入验证码"
                   style={{ fontSize: pxToDp(24) }}
                   placeholderTextColor="#918D87"
-                  onSubmitEditing={this.verificationCodeSubmitEditing}
-                  onChangeText={this.verificationCodeChangeText}
+                  onSubmitEditing={this.verifyCodeSubmitEditing}
+                  onChangeText={this.verifyCodeChangeText}
+                  onFocus={() => {
+                    this.setState({ passwordErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ passwordErrShow: true });
+                  }}
                 />
                 <View style={styles.touchableOpacity__type3}>
                   <TouchableOpacity
                     style={{ justifyContent: 'center' }}
-                    onPress={this.verificationCodeRequest}
+                    onPress={this.verifyCodeRequest}
                   >
                     <Text
                       style={{
@@ -273,9 +307,9 @@ export default class LoginInput extends Component {
                   </TouchableOpacity>
                 </View>
               </View>
-              {passwordErrShow ? (
+              {verifyCodeErrShow ? (
                 <Text style={styles.errorText}>
-                  {utils.checkVerification(verificationCode)}
+                  {utils.checkVerification(verifyCode)}
                 </Text>
               ) : (
                 <View />
@@ -352,6 +386,16 @@ const styles = StyleSheet.create({
     borderRadius: pxToDp(16),
     position: 'relative',
     paddingLeft: pxToDp(40),
+  },
+  input__box__type2__fix: {
+    width: pxToDp(610),
+    height: pxToDp(88),
+    position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingLeft: pxToDp(40),
+    backgroundColor: '#F6F3EF',
+    borderRadius: pxToDp(16),
   },
   input_box_margin: {
     marginTop: pxToDp(60),

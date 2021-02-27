@@ -1,17 +1,38 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from '../common/Icon';
 import { file } from '../../constants/svg';
 import Svg from 'react-native-svg-uri';
 import { pxToDp } from '../../utils/pxToDp';
-import { fontStyle, padding } from '../../utils/StyleUtils';
+import { fontStyle, padding, margin } from '../../utils/StyleUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from '../common/Avatar';
+import Picker from 'react-native-picker';
+import DocumentPicker from 'react-native-document-picker';
+import Overlay from '../common/Overlay/Overlay';
+import DatePicker from 'react-native-datepicker';
+import Toast from '../common/Toast/Toast';
 
 class Index extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      birthday: '',
+      introduction: '',
+      gender: '',
+      nickName: '',
+      userAvatar: '',
+      mobile: '',
+      verifyCode: '',
+      userInfo: {},
+    };
   }
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -23,8 +44,180 @@ class Index extends Component {
     router: PropTypes.string,
     colors: PropTypes.array,
     text_more_status: PropTypes.bool,
-    avatar: PropTypes.string,
+    image: PropTypes.string,
   };
+
+  dataEdit = async () => {
+    if (this.props.option === 1) {
+      Picker.hide();
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.images],
+        });
+        console.log(res);
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          console.log('cancleErr', err);
+          // User cancelled the picker, exit any dialogs or menus and move on
+        } else {
+          throw err;
+        }
+      }
+    } else if (this.props.option === 2) {
+      let overlayView = (
+        <Overlay.PullView side="bottom" modal={false}>
+          <View style={styles.textSet__wrap}>
+            <View style={{ flexDirection: 'row', marginTop: pxToDp(20) }}>
+              <Text style={styles.textSet_text}>
+                {this.props.detail === 0
+                  ? '请输入昵称：'
+                  : this.props.detail === 1
+                  ? '请输入个性签名：'
+                  : '请输入'}
+              </Text>
+              <TextInput
+                placeholder="请输入"
+                onChangeText={(e) => {
+                  this.props.nick
+                    ? this.setState({ nickName: e })
+                    : this.setState({ introduction: e });
+                }}
+                style={styles.textSet_input}
+              />
+            </View>
+            <TouchableOpacity onPress={this.infoSet}>
+              <Text style={styles.textSet_button}>确定修改</Text>
+            </TouchableOpacity>
+          </View>
+        </Overlay.PullView>
+      );
+      Overlay.show(overlayView);
+    } else if (this.props.option === 3) {
+      Picker.init({
+        pickerData: ['男', '女'],
+        pickerConfirmBtnText: '确定',
+        pickerConfirmBtnColor: [254, 158, 14, 1],
+        pickerCancelBtnColor: [254, 158, 14, 1],
+        pickerCancelBtnText: '取消',
+        pickerTitleText: '选择类别',
+        pickerToolBarBg: [255, 255, 255, 1],
+        pickerBg: [255, 255, 255, 1],
+        onPickerConfirm: (data) => {
+          data === '男'
+            ? this.setState({ gender: 0 })
+            : this.setState({ gender: 1 });
+          this.infoSet();
+        },
+      });
+      Picker.show();
+    } else if (this.props.option === 6) {
+      let overlayView = (
+        <Overlay.PullView side="bottom" modal={false}>
+          <View style={{ ...styles.textSet__wrap, minHeight: pxToDp(500) }}>
+            <Text
+              style={{
+                ...fontStyle(34, 36, 36, 'bold', '#333', 'left'),
+                ...margin(30, 20, 0, 10),
+              }}
+            >
+              我当前绑定的手机号码：
+            </Text>
+            <Text style={{ ...fontStyle(46, 48, 48, '500', '#888', 'center') }}>
+              {this.props.info.mobile}
+            </Text>
+            <TextInput
+              placeholder={'请输入手机号码'}
+              onChangeText={(e) => this.setState({ mobile: e })}
+            />
+            <Text onPress={this.verifyCodeRequest}>获取验证码</Text>
+            <TextInput
+              placeholder={'验证码'}
+              onChangeText={(e) => {
+                this.setState({ verifyCode: e });
+              }}
+            />
+            <Text onPress={this.mobileSet}>确认修改</Text>
+          </View>
+        </Overlay.PullView>
+      );
+      Overlay.show(overlayView);
+    } else {
+      const res = await Http.getMyInfo();
+      const userInfo = res.data.data;
+      console.log(res);
+      this.setState({
+        userInfo,
+      });
+      NavigationHelper.navigate(this.props.router, {
+        userAvatar: this.state.userInfo.userAvatar,
+        nickName: this.state.userInfo.nickName,
+        gender: this.state.userInfo.gender,
+        introduction: this.state.userInfo.introduction,
+        birthday: this.state.userInfo.birthday,
+        mobile: this.state.userInfo.mobile,
+      });
+    }
+  };
+
+  infoSet = () => {
+    let data = {
+      birthday: this.state.birthday,
+      introduction: this.state.introduction,
+      gender: this.state.gender,
+      nickName: this.state.nickName,
+      userAvatar: this.state.userAvatar,
+    };
+    Http.infoSet(data).then((res) => {
+      if (res.status === 200) {
+        Toast.success(res.data.msg, 1000, 'center');
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
+  };
+
+  //申请验证码
+  verifyCodeRequest = () => {
+    Http.getVerifyCode({ code: 3, mobile: this.state.mobile }).then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        Toast.success(res.data.msg, 1000, 'center');
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
+  };
+
+  mobileSet = () => {
+    Http.mobileSet({
+      bindingForm: {
+        mobile: this.state.mobile,
+        verifyCode: this.state.verifyCode,
+      },
+    }).then((res) => {
+      if (res.status === 200) {
+        Toast.success(res.data.msg, 1000, 'center');
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
+  };
+
+  componentDidMount() {
+    Http.getMyInfo().then((res) => {
+      if (res.status === 200) {
+        this.setState({
+          birthday: res.data.data.birthday,
+          gender: res.data.data.gender,
+          introduction: res.data.data.introduction,
+          nickName: res.data.data.nickName,
+          userAvatar: res.data.data.userAvatar,
+          mobile: res.data.data.mobile,
+        });
+      }
+    });
+  }
+
   render() {
     let {
       type,
@@ -37,11 +230,18 @@ class Index extends Component {
       colors,
       style,
       text_more_status,
-      avatar,
+      image,
       last,
       svgRemove,
       router,
     } = this.props;
+    const currentDate =
+      new Date().getFullYear() +
+      '-' +
+      new Date().getMonth() +
+      1 +
+      '-' +
+      new Date().getDate();
     return (
       <TouchableOpacity
         style={
@@ -49,9 +249,7 @@ class Index extends Component {
             ? { backgroundColor: '#fff', marginTop: pxToDp(20), ...style }
             : { ...style }
         }
-        onPress={() => {
-          NavigationHelper.navigate(router);
-        }}
+        onPress={this.dataEdit}
       >
         <View
           style={
@@ -136,12 +334,50 @@ class Index extends Component {
                     : { ...styles.more }
                 }
               >
-                {text_more}
+                {this.props.isDate ? (
+                  <DatePicker
+                    androidMode={'spinner'}
+                    style={{ width: 200 }}
+                    date={this.state.birthday}
+                    mode="date"
+                    format="YYYY-MM-DD"
+                    minDate="1900-01-01"
+                    maxDate={currentDate}
+                    confirmBtnText="确定"
+                    cancelBtnText="取消"
+                    customStyles={{
+                      dateIcon: {
+                        display: 'none',
+                      },
+                      dateInput: {
+                        marginTop: pxToDp(42),
+                        borderWidth: 0,
+                        textAlign: 'right',
+                        alignItems: 'flex-end',
+                      },
+                      placeholderText: {
+                        ...fontStyle(24, 36, 38, '500', '#999999', 'right'),
+                      },
+                      // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(date) => {
+                      this.setState({ birthday: date });
+                      this.infoSet();
+                    }}
+                  />
+                ) : (
+                  text_more
+                )}
               </Text>
             ) : (
               // type===3
-              <View style={{ alignSelf: 'center', marginRight: pxToDp(30) }}>
-                <Avatar image={{ uri: avatar }} size={80} />
+              <View
+                style={{
+                  alignSelf: 'center',
+                  marginRight: pxToDp(30),
+                }}
+              >
+                <Avatar image={{ uri: image }} size={120} />
               </View>
             )}
             <Icon
@@ -244,6 +480,32 @@ const styles = StyleSheet.create({
     fontSize: pxToDp(24),
     marginLeft: pxToDp(29),
     marginRight: pxToDp(30),
+  },
+  textSet__wrap: {
+    backgroundColor: '#fff',
+    minWidth: pxToDp(300),
+    minHeight: pxToDp(240),
+  },
+  textSet_text: {
+    ...fontStyle(34, 36, 38, 'bold', '#333'),
+    ...margin(30, 0, 20, 0),
+    alignSelf: 'center',
+  },
+  textSet_input: {
+    borderBottomWidth: pxToDp(2),
+    borderBottomColor: '#fe9e0e',
+    ...padding(20, 10, 0, 0),
+    ...fontStyle(28, 56, 56, 'bold', '#888'),
+    width: pxToDp(420),
+  },
+  textSet_button: {
+    alignSelf: 'center',
+    fontSize: pxToDp(34),
+    color: '#fff',
+    ...padding(20, 18, 20, 18),
+    marginTop: pxToDp(30),
+    backgroundColor: '#fd7609',
+    borderRadius: pxToDp(20),
   },
 });
 export default Index;

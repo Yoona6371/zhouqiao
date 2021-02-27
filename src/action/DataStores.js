@@ -19,11 +19,11 @@ export default class DataStores {
           } catch (e) {
             // 保存的非json类型数据
             reject(e);
-            console.log(e);
+            // console.log(e);
           }
         } else {
           reject(error);
-          console.log(error);
+          // console.log(error);
         }
       });
     });

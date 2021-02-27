@@ -91,6 +91,7 @@ class All extends Component {
             Commodity_type={item.extra.category}
             image={item.cover}
             userId={item.extra.authorId}
+            caseId={item.itemId}
             user_image={item.extra.authorAvatar}
             style={{ ...padding(25, 0, 25, 0) }}
           />
@@ -185,6 +186,7 @@ class Wait extends Component {
             user_id={item.author}
             Commodity_type={item.id.itemType}
             image={item.cover}
+            caseId={item.itemId}
             prince={item.extra.price}
             style={{ ...padding(25, 25, 0, 0) }}
           />
