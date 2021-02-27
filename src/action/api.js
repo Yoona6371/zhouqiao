@@ -54,7 +54,7 @@ const api = {
   //   false,
   // )
   getOthersDetail: {
-    url: '/api/client',
+    url: '/api/stylist',
     method: 'get',
   },
 
@@ -124,6 +124,11 @@ const api = {
   // 获取设计案例
   getDesignExample: {
     url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  },
+  // 搜索
+  getSearchList: {
+    url: '/api/search',
     method: 'get',
   },
 };

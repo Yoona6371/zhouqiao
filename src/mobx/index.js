@@ -44,6 +44,10 @@ class GlobalStore {
   @action setNavigation(navigation) {
     this.allData.navigation = navigation;
   }
+
+  @action setSearch(search) {
+    this.allData.search = search;
+  }
 }
 
 export default new RootStore();
