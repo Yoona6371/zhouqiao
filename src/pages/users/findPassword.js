@@ -11,11 +11,33 @@ import {
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon';
 import LoginInput from '../../components/bussiness/LoginInput';
+import Toast from '../../components/common/Toast/Toast';
+import { NavigationHelpersContext } from '@react-navigation/native';
 
 class Index extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      phoneNumber: '',
+      password: '',
+      verifyCode: '',
+    };
   }
+  findpassword = () => {
+    Http.findPassword({
+      mobile: this.state.phoneNumber,
+      password: this.state.password,
+      verifyCode: this.state.verifyCode,
+    }).then((res) => {
+      console.log(res);
+      if (res.data.code === 0) {
+        Toast.success(res.data.msg, 1000, 'center');
+        NavigationHelper.navigate('LoginAndRegister');
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
+  };
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -52,7 +74,19 @@ class Index extends Component {
         <View>
           {/*login_input*/}
           <View style={{ alignItems: 'center', marginTop: pxToDp(90) }}>
-            <LoginInput type={3} />
+            <LoginInput
+              type={3}
+              verifyType={2}
+              phoneNumberGet={(value) => {
+                this.setState({ phoneNumber: value });
+              }}
+              passwordGet={(value) => {
+                this.setState({ password: value });
+              }}
+              verifyCodeGet={(value) => {
+                this.setState({ verifyCode: value });
+              }}
+            />
           </View>
           {/*button start*/}
           <View
@@ -61,7 +95,10 @@ class Index extends Component {
               alignItems: 'center',
             }}
           >
-            <TouchableOpacity style={styles.touchableOpacity}>
+            <TouchableOpacity
+              style={styles.touchableOpacity}
+              onPress={this.findpassword}
+            >
               <Text
                 style={{
                   alignSelf: 'center',
