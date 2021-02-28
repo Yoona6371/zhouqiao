@@ -177,6 +177,7 @@ class RegisterTab extends Component {
         <View style={{ marginTop: pxToDp(90) }}>
           <LoginInput
             type={2}
+            verifyType={1}
             phoneNumberGet={(value) => {
               this.setState({ phoneNumber: value });
             }}
@@ -194,7 +195,7 @@ class RegisterTab extends Component {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                NavigationHelper.navigate('Tab');
+                NavigationHelper.navigate();
               }}
             >
               <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
