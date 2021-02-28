@@ -9,7 +9,7 @@ import RefreshListView, {
 } from '../../components/common/RefreshListView';
 import { flexColumnSpb, padding } from '../../utils/StyleUtils';
 
-class all extends Component {
+class page extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,15 +52,20 @@ class all extends Component {
 
   // 获取测试数据
   async getList(isReload: boolean, currentPage = 1): Array<Object> {
-    let res = await Http.myRequirements({
-      requirementId: 1,
+    let key = this.props.route.key;
+    if (this.props.route.key === '0') {
+      key = null;
+    }
+    const res = await Http.myRequirements({
+      status: key,
       page: currentPage,
-      size: 12,
+      size: 8,
     });
-    const newList = res.data.data.records;
+    console.log(res);
+    const newList = res.data.data.dataList;
     this.setState({
-      totalPage: res.data.data.total,
-      currentPage: res.data.data.current,
+      totalPage: res.data.data.totalPage,
+      currentPage: res.data.data.currentPage,
     });
     return isReload ? newList : [...this.state.dataList, ...newList];
   }
@@ -68,21 +73,29 @@ class all extends Component {
   render() {
     const { dataList } = this.state;
     return (
-      <View>
-        {/*<DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />*/}
+      <View style={{ flex: 1 }}>
         {/*<DemandList type={1} text="哈哈哈哈哈哈哈哈" date="2020-12-03" />*/}
         <RefreshListView
           data={dataList}
           numColumns={1}
-          contentContainerStyle={{ ...flexColumnSpb, backgroundColor: '#fff' }}
+          contentContainerStyle={{ ...flexColumnSpb }}
           keyExtractor={this.keyExtractor}
           renderItem={({ item, index }) => (
             <DemandList
               type={1}
-              text={'asd'}
-              date={'asd'}
+              text={item.requirementAbstract}
+              date={item.createTime}
               key={index}
-              data={item}
+              requirementId={item.requirementId}
+              expectedPrice={item.expectedPrice}
+              expectedTime={item.expectedTime}
+              urgent={item.urgent}
+              communityNumber={item.communityNumber}
+              proficiency={item.proficiency}
+              categoryId={item.categoryId}
+              requirementTitle={item.requirementTitle}
+              requirementContentHtml={item.requirementContentHtml}
+              requirementContent={item.requirementContent}
             />
           )}
           refreshState={this.state.refreshState}
@@ -99,105 +112,28 @@ class all extends Component {
   }
 }
 
-class wait extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      page: [],
-    };
-  }
-  render() {
-    let { page } = this.props.route;
-    return (
-      <View>
-        <ScrollView>
-          {page.map((v, i) => (
-            <DemandList
-              type={1}
-              text={v.requirementTitle}
-              date={v.createTime[0]}
-              key={i}
-              requirementId={v.requirementId}
-            />
-          ))}
-        </ScrollView>
-      </View>
-    );
-  }
-}
-class already extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    let { page } = this.props.route;
-    return (
-      <View>
-        <ScrollView>
-          {page.map((v, i) => (
-            <DemandList
-              type={1}
-              text={v.requirementTitle}
-              date={v.createTime[0]}
-              key={i}
-              requirementId={v.requirementId}
-            />
-          ))}
-        </ScrollView>
-      </View>
-    );
-  }
-}
-class done extends Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    let { page } = this.props.route;
-    return (
-      <View>
-        <ScrollView>
-          {page.map((v, i) => (
-            <DemandList
-              type={1}
-              text={v.requirementTitle}
-              date={v.createTime[0]}
-              key={i}
-              requirementId={v.requirementId}
-            />
-          ))}
-        </ScrollView>
-      </View>
-    );
-  }
-}
-export class detail extends Component {
+class detail extends Component {
   state = {
     pages: [
       {
-        key: '全部',
+        key: '0',
         title: '全部',
-        component: all,
-        page: [],
+        component: page,
       },
       {
-        key: '待接取',
+        key: '1',
         title: '待接取',
-        component: wait,
-        page: [],
+        component: page,
       },
       {
-        key: '已选定',
+        key: '2',
         title: '已选定',
-        component: already,
-        page: [],
+        component: page,
       },
       {
-        key: '已完结',
+        key: '3',
         title: '已完结',
-        component: done,
-        page: [],
+        component: page,
       },
     ],
   };
@@ -214,19 +150,6 @@ export class detail extends Component {
       />
     );
   };
-
-  componentDidMount() {
-    Http.myRequirements({ page: 1, size: 8 }).then((res) => {
-      if (res.status === 200) {
-        let pages = this.state.pages;
-        res.data.data.dataList.forEach((v, i) => {
-          pages[v.status].page.push(v);
-          pages[0].page.push(v);
-        });
-        this.setState({ pages: pages });
-      }
-    });
-  }
 
   render() {
     const width = Dimensions.get('window').width;

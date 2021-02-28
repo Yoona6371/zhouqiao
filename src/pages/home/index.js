@@ -103,6 +103,7 @@ class Index extends Component {
       page: 1,
       size: 12,
     });
+    // console.log(hotDesignCaseList);
     let rankingListRes = await Http.rankingList({
       page: 1,
       size: 8,
@@ -127,6 +128,9 @@ class Index extends Component {
         component: HomeTabCase,
       });
     });
+
+    // console.log(rankingListRes);
+
     let slideRes = await Http.getSlideShow({
       type: 0,
     });
@@ -138,6 +142,7 @@ class Index extends Component {
         illustration: item.cover,
       });
     });
+
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
       pages: arrCaseType,
@@ -207,6 +212,7 @@ class Index extends Component {
   }
 
   render() {
+    let list = ['asd', 'asd'];
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground

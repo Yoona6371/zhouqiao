@@ -110,7 +110,7 @@ export default class TopTabNavigator extends PureComponent {
 
   render() {
     const { type, itemWidth, routes } = this.props;
-    console.log(routes, 222);
+    // console.log(routes, 222);
     const { index } = this.state;
     let obj = {};
     routes.forEach((item) => {
