@@ -104,7 +104,7 @@ class Nav extends React.Component {
           {/*登录*/}
           <Stack.Screen
             name="LoginAndRegister"
-            component={LoginAndRegister}
+            component={Tab}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
