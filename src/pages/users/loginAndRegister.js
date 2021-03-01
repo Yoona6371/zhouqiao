@@ -36,9 +36,6 @@ class LoginTab extends Component {
       img: '',
     };
   }
-  forgetPassword = () => {
-    NavigationHelper.navigate('FindPassword');
-  };
   login = () => {
     Http.login({
       account: this.state.phoneNumber,
@@ -97,12 +94,17 @@ class LoginTab extends Component {
           />
           {/*forgetPassword start*/}
           <View style={{ marginTop: pxToDp(45) }}>
-            <Text
-              style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              onPress={this.forgetPassword}
+            <TouchableOpacity
+              onPress={() => {
+                NavigationHelper.navigate('FindPassword');
+              }}
             >
-              忘记密码？
-            </Text>
+              <Text
+                style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
+              >
+                忘记密码？
+              </Text>
+            </TouchableOpacity>
           </View>
           {/*forgetPassword end*/}
           {/*button start*/}
@@ -141,7 +143,6 @@ class RegisterTab extends Component {
     this.state = {
       phoneNumber: '',
       password: '',
-      userId: '',
       verifyCode: '',
     };
   }
@@ -160,12 +161,13 @@ class RegisterTab extends Component {
       .then((res) => {
         console.log(res);
         if (res.data.code === 0) {
-          Toast.success(res.data.msg, 1000, 'center');
+          Toast.success('注册成功', 1000, 'center');
         } else {
           Toast.fail(res.data.msg, 1000, 'center');
         }
       });
   };
+
   render() {
     return (
       <View
@@ -175,6 +177,7 @@ class RegisterTab extends Component {
         <View style={{ marginTop: pxToDp(90) }}>
           <LoginInput
             type={2}
+            verifyType={1}
             phoneNumberGet={(value) => {
               this.setState({ phoneNumber: value });
             }}
@@ -190,12 +193,15 @@ class RegisterTab extends Component {
             <Text style={{ color: '#999999', fontSize: pxToDp(24) }}>
               已有帐号？
             </Text>
-            <Text
-              style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              onPress={() => NavigationHelper.navigate('LoginTab')}
+            <TouchableOpacity
+              onPress={() => {
+                NavigationHelper.navigate();
+              }}
             >
-              立即登录
-            </Text>
+              <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
+                立即登录
+              </Text>
+            </TouchableOpacity>
           </View>
           {/*forgetPassword end*/}
           {/*button start*/}
@@ -266,12 +272,11 @@ class Index extends Component {
         }}
       >
         {pages.map((v, i) => (
-          <Tab.Screen name={v.name} component={v.component} key={i} />
+          <Tab.Screen name={v.name} component={v.component} />
         ))}
       </Tab.Navigator>
     );
   };
-  // forgetPassword = () => {};
   render() {
     const { pages } = this.state;
     return (
