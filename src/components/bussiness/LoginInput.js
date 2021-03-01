@@ -19,12 +19,13 @@ export default class LoginInput extends Component {
     phoneNumber: PropTypes.string,
     password: PropTypes.string,
     verifyCode: PropTypes.string,
+    verifyType: PropTypes.number,
   };
   static defaultProps = {
     type: 1,
   };
-  /* type:3 -> 找回密码 手机号 验证码 重置密码
-   * type:2 -> 注册 手机号 密码 确认密码
+  /* type:3 -> 找回密码 手机号 验证码 重置密码  验证码接口类型类型 2
+   * type:2 -> 注册 手机号 验证码 密码          验证码接口类型类型 1
    * type:1(默认) ->登录 手机号 密码
    */
   constructor(props) {
@@ -60,17 +61,19 @@ export default class LoginInput extends Component {
   };
 
   //申请验证码
-  verifyCodeRequest = () => {
-    Http.getVerifyCode({ code: 1, mobile: this.state.phoneNumber }).then(
-      (res) => {
-        console.log(res);
-        if (res.data.code === 0) {
-          Toast.success(res.data.msg, 1000, 'center');
-        } else {
-          Toast.fail(res.data.msg, 1000, 'center');
-        }
-      },
-    );
+  //传入验证码接口类型
+  verifyCodeRequest = (verifyType) => {
+    Http.getVerifyCode({
+      code: verifyType,
+      mobile: this.state.phoneNumber,
+    }).then((res) => {
+      console.log(res);
+      if (res.data.code === 0) {
+        Toast.success(res.data.msg, 1000, 'center');
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
   };
   verifyCodeSubmitEditing = () => {};
   verifyCodeChangeText = (verifyCode) => {
@@ -86,7 +89,7 @@ export default class LoginInput extends Component {
       passwordErrShow,
       verifyCodeErrShow,
     } = this.state;
-    const { type } = this.props;
+    const { type, verifyType } = this.props;
 
     return (
       <View>
@@ -195,7 +198,7 @@ export default class LoginInput extends Component {
               <View style={styles.touchableOpacity__type3}>
                 <TouchableOpacity
                   style={{ justifyContent: 'center' }}
-                  onPress={this.verifyCodeRequest}
+                  onPress={() => this.verifyCodeRequest(verifyType)}
                 >
                   <Text
                     style={{
@@ -293,7 +296,7 @@ export default class LoginInput extends Component {
                 <View style={styles.touchableOpacity__type3}>
                   <TouchableOpacity
                     style={{ justifyContent: 'center' }}
-                    onPress={this.verifyCodeRequest}
+                    onPress={() => this.verifyCodeRequest(verifyType)}
                   >
                     <Text
                       style={{
