@@ -113,11 +113,32 @@ class CommodityDetail extends Component {
         params: { designCaseId: caseId },
       });
       this.setState({ isCollect: !this.state.isCollect });
+      Toast.message('收藏成功');
     } else {
       let j = await Http.DeleteCase({ designCaseId: caseId });
       this.setState({ isCollect: !this.state.isCollect });
+      Toast.message('取消收藏');
     }
   };
+
+  handleOrder = async () => {
+    let res;
+    if (this.props.route.params.type == 3) {
+      res = await Http.generateGoodOrder({
+        commodityId: this.props.route.params.caseId,
+        number: 1,
+      });
+    } else {
+      res = await Http.generateDesignOrder({}, this.props.route.params.caseId);
+    }
+    if (res.data.code === 0) {
+      Toast.message('生成订单成功');
+      NavigationHelper.navigate('OrderLists');
+    } else {
+      Toast.message(res.data.msg);
+    }
+  };
+
   render() {
     const { detailsData, isCollect, detailsDataList } = this.state;
     console.log('render里的list', detailsData.list);
@@ -183,6 +204,7 @@ class CommodityDetail extends Component {
             {detailsDataList.map((item) => {
               return (
                 <Image
+                  key={item.picturePath}
                   style={{ width: pxToDp(690), height: pxToDp(1000) }}
                   source={{
                     uri: item.picturePath,
@@ -228,6 +250,7 @@ class CommodityDetail extends Component {
           <TouchableOpacity
             activeOpacity={activeOpacity}
             style={styles.commodity_footer_but3}
+            onPress={this.handleOrder}
           >
             <View style={{ ...flexRowCenter }}>
               <Text style={{ ...styles.but_text, color: '#fff' }}>价格：</Text>

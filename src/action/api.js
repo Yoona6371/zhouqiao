@@ -170,5 +170,18 @@ const api = {
     url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
+  getPaymentDetail: {
+    url: '/api/wxPay/unifiedOrder',
+    method: 'get',
+  },
+  // 生成商品订单
+  generateGoodOrder: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post',
+  },
+  generateDesignOrder: {
+    url: '/api/client/orderDesignCase/',
+    method: 'post',
+  },
 };
 export default api;
