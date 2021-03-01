@@ -175,6 +175,5 @@ const api = {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
   },
-  },
 };
 export default api;

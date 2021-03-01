@@ -1,0 +1,13 @@
+{
+//配置eslint
+"eslint.autoFixOnSave": true ,
+"files.autoSave":"off",
+ "eslint.options": {
+    "plugins": ["html"]
+ },
+ //为了符合eslint的两个空格间隔原则
+"editor.tabSize": 2,
+"editor.codeActionsOnSave": {
+   "source.fixAll.eslint": true
+}
+}
