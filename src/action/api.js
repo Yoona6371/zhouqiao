@@ -67,7 +67,7 @@ const api = {
   //   false,
   // )
   getOthersDetail: {
-    url: '/api/client',
+    url: '/api/stylist',
     method: 'get',
   },
 
@@ -134,10 +134,6 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'put',
   },
-  getVerifyCode: {
-    url: '/api/sms/verifyCode',
-    method: 'get',
-  },
   //案例详情
   CaseDetails: {
     url: '/api/designCaseExt/client/design_cases',
@@ -157,22 +153,22 @@ const api = {
     method: 'get',
   },
   // 获取设计案例
-  getDesignExample: {
+  
+  : {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
   },
-
+  // 搜索
+  getSearchList: {
+    url: '/api/search',
+    method: 'get',
+  },
   mobileSet: {
     url: '/api/user/binding/mobile',
     method: 'put',
   },
-  getSlideShow: {
-    url: '/api/slideShow',
-    method: 'get',
-  },
-  // 获取设计案例
-  getDesignExample: {
-    url: '/api/designCase/stylist/other/design_cases',
+  goodsDetail: {
+    url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
 };

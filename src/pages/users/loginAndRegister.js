@@ -251,6 +251,7 @@ class Index extends Component {
       ],
     };
   }
+
   MyTabs = () => {
     let { pages } = this.state;
     return (
@@ -292,11 +293,12 @@ class Index extends Component {
             <TouchableOpacity
               style={styles.TouchableOpacity__close}
               onPress={() => {
-                NavigationHelper.navigate('Tab');
+                NavigationHelper.goBack();
               }}
             >
               <Icon name="close" style={styles.Icon__close} />
             </TouchableOpacity>
+
             {/*logo*/}
             <View style={styles.logo}>
               <Image

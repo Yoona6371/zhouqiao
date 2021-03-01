@@ -90,6 +90,7 @@ export default class HomeTabCase extends Component {
             user_id={item.case_author}
             Commodity_type={this.props.route.title}
             image={item.picture}
+            userId={item.case_author_id}
             user_image={item.case_author_avatar}
             style={{ ...padding(25, 0, 25, 0) }}
             caseId={item.case_id}

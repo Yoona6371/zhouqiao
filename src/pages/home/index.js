@@ -92,7 +92,6 @@ class Index extends Component {
         { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
       ],
       slideList: [],
-      enableScrollViewScroll: true,
     };
     this._contentViewScroll = this._contentViewScroll.bind(this);
   }
@@ -176,6 +175,7 @@ class Index extends Component {
                 Commodity_type={this.props.route.title}
                 image={item.picture}
                 user_image={item.case_author_avatar}
+                userId={123}
                 style={{ ...padding(25, 0, 25, 0) }}
               />
             )}
@@ -232,7 +232,6 @@ class Index extends Component {
           style={{
             backgroundColor: '#fff',
           }}
-          scrollEnabled={this.state.enableScrollViewScroll}
           onMomentumScrollEnd={this._contentViewScroll}
         >
           <ImageBackground
@@ -409,7 +408,6 @@ class Index extends Component {
 export default Index;
 class HomeAvatar extends Component {
   render() {
-    console.log(this.props.userId);
     return (
       <View style={{ ...margin(25, 36, 25, 46) }}>
         <Avatar
