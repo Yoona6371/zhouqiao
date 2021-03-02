@@ -1,4 +1,4 @@
-package your.package.wxapi;
+package com.zhaoqiaozhijia_ghj.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;
