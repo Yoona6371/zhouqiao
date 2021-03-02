@@ -117,6 +117,62 @@ const api = {
     url: '/api/client/commodities',
     method: 'get',
   },
+  infoSet: {
+    url: '/api/client/my/baseInfo',
+    method: 'put',
+  },
+  //案例详情
+  CaseDetails: {
+    url: '/api/designCaseExt/client/design_cases',
+    method: 'get',
+  },
+  //收藏案例
+  CollectCase: {
+    url: '/api/designCaseCollect/client/design_cases/collect/add',
+    method: 'post',
+  },
+  DeleteCase: {
+    url: '/api/designCaseCollect/client/design_cases/collect/cancel',
+    method: 'delete',
+  },
+  getSlideShow: {
+    url: '/api/slideShow',
+    method: 'get',
+  },
+  // 获取设计案例
+
+  getDesignExample: {
+    url: '/api/designCase/stylist/other/design_cases',
+    method: 'get',
+  },
+  // 搜索
+  getSearchList: {
+    url: '/api/search',
+    method: 'get',
+  },
+  mobileSet: {
+    url: '/api/user/binding/mobile',
+    method: 'put',
+  },
+  goodsDetail: {
+    url: '/api/commodityExt/client/commodities/detail',
+    method: 'get',
+  },
+  // 获取订单列表
+  getOrderLists: {
+    url: '/api/client/orders',
+    method: 'get'
+  },
+  //排行榜
+  getRankList: {
+    url: '/api/stylist/RankingList',
+    method: 'get'
+  },
+  //订单详情
+  orderDetail: {
+    url: '/api/order',
+    method: 'get'
+  },
 };
 
 export default api;

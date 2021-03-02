@@ -1,38 +1,96 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity } from 'react-native';
 import OrderCard from '../../components/bussiness/OrderCard';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import TopTopNavigator from '../../components/common/TopTabNavigator';
 import TopTitle from '../../components/common/TopTitle';
 class OrderList extends React.Component {
   static navigationOptions = { title: null };
-
+  componentDidMount() {
+    let key = this.props.route.key;
+    Http.getOrderLists({ status: key, page: 1, size: 10 }).then(res => {
+      console.log(res.data.data.dataList, res.data.data.dataList.length, 2222)
+      this.setState({
+        dateList: res.data.data.dataList
+      });
+    })
+  }
   constructor(props) {
     super(props);
   }
   state = {
-    evaluateData: [
-      { type: 1 },
-      { type: 1 },
-      { type: 1 },
-      { type: 1 },
-      { type: 1 },
-    ],
+    dateList: [],
   };
   render() {
-    const { evaluateData } = this.state;
+    const { dateList } = this.state;
+    console.log(dateList, 888)
     return (
       <ScrollView style={{ width: '100%' }}>
         <View style={styles.evaluate_box}>
           <FlatList
-            data={evaluateData}
+            data={dateList}
             renderItem={({ item, index }) => (
-              <OrderCard
-                type={item.type}
-                btnText={item.btnText}
-                topStatus={item.topStatus}
-                style={{ marginTop: pxToDp(20) }}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  NavigationHelper.navigate('OrderDetail', { item: item });
+                }}
+              >
+                {item.status === 0 ?
+                  <OrderCard
+                    onpressRight={() => {
+                      // NavigationHelper.navigate('OrderDetail', { item: item });
+                      NavigationHelper.navigate('CreatOrder', { item: item });
+
+                    }}
+                    onpressLeft={() => {
+                      NavigationHelper.navigate('OrderDetail', { item: item });
+                    }}
+                    number={item.shoppingNumber}
+                    imgUri={item.cover != null ? item.cover : 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1264377723,26636357&fm=26&gp=0.jpg'}
+                    OrderCardNumber={item.orderId}
+                    isUrgent={item.urgent === 1 ? true : false}
+                    type={1}
+                    OrderCardPrince={item.orderPrice}
+                    OrderCardTitle={item.orderName}
+                    style={{ marginTop: pxToDp(20) }}
+                  />
+                  : item.status === 1 ?
+                    <View>
+                      <OrderCard
+                        onpressLeft={() => {
+                          NavigationHelper.navigate('OrderDetail', { item: item });
+                        }}
+                        number={item.shoppingNumber}
+                        isUrgent={item.urgent === 1 ? true : false}
+                        imgUri={item.cover != null ? item.cover : 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1264377723,26636357&fm=26&gp=0.jpg'}
+                        OrderCardNumber={item.orderId}
+                        type={2}
+                        btnText='确认订单'
+                        topStatus='进行中'
+                        OrderCardPrince={item.orderPrice}
+                        OrderCardTitle={item.orderName}
+                        style={{ marginTop: pxToDp(20) }}
+                      />
+                    </View>
+                    :
+                    <OrderCard
+                      onpressLeft={() => {
+                        NavigationHelper.navigate('OrderDetail', { item: item });
+                      }}
+                      number={item.shoppingNumber}
+                      isUrgent={item.urgent === 1 ? true : false}
+                      imgUri={item.cover != null ? item.cover : 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1264377723,26636357&fm=26&gp=0.jpg'}
+                      OrderCardNumber={item.orderId}
+                      type={2}
+                      btnText='立即评价'
+                      topStatus='待评价'
+                      OrderCardPrince={item.orderPrice}
+                      OrderCardTitle={item.orderName}
+                      style={{ marginTop: pxToDp(20) }}
+                    />
+                }
+
+              </TouchableOpacity>
             )}
           />
         </View>
@@ -56,30 +114,20 @@ class Index extends React.Component {
     this.state = {
       pages: [
         {
-          key: '待付款',
+          key: 0,
           title: '待付款',
           component: OrderList,
         },
         {
-          key: '进行中',
+          key: 1,
           title: '进行中',
           component: OrderList,
         },
         {
-          key: '待收货',
-          title: '待收货',
-          component: OrderList,
-        },
-        {
-          key: '已完成',
+          key: 3,
           title: '已完成',
           component: OrderList,
-        },
-        {
-          key: '已取消',
-          title: '已取消',
-          component: OrderList,
-        },
+        }
       ],
     };
   }
@@ -88,7 +136,7 @@ class Index extends React.Component {
     return (
       <TopTopNavigator
         ifScrollEnabled={true}
-        itemWidth={deviceWidthDp / 5}
+        itemWidth={deviceWidthDp / 3}
         type={3}
         routes={pages}
       />

@@ -64,7 +64,9 @@ import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import CodePushPage from '../pages/CodePushPage';
-
+import OrderDetail from '../pages/personal/orderDetail'
+// 生成订单
+import CreatOrder from '../pages/personal/creatOrder'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -102,11 +104,35 @@ class Nav extends React.Component {
           {/*登录*/}
           <Stack.Screen
             name="LoginAndRegister"
-            component={LoginAndRegister}
+            component={Tab}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
+          {/* 订单详情 */}
+          <Stack.Screen
+            name="OrderDetail"
+            component={OrderDetail}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/* 生成订单 */}
+          <Stack.Screen
+            name="CreatOrder"
+            component={CreatOrder}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/* 找回密码 */}
+          {/* <Stack.Screen
+            name="FindPassword"
+            component={FindPassword}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }} */}
+          {/* /> */}
           {/*他人中心*/}
           <Stack.Screen
             name="OthersPersonal"

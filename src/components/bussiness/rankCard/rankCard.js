@@ -19,6 +19,7 @@ export class rankCard extends Component {
     hot: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
     userPhoto: PropTypes.string.isRequired,
+    userId: PropTypes.string.isRequired
   };
   state = {
     follow: false,
@@ -45,6 +46,7 @@ export class rankCard extends Component {
 
   // 取消关注用户
   unfocusUser = async () => {
+
     // const request = this.props.RootStore.globalStore.allData.Http;
     const message = await Http.unfocusUser(
       {},
@@ -88,12 +90,12 @@ export class rankCard extends Component {
         <View style={styles.cardBox}>
           <Text style={styles.Number}>{rankNumber}</Text>
           <Image style={styles.photoStyle} source={{ uri: userPhoto }} />
-          <Text style={styles.name}>{userName}</Text>
+          <Text numberOfLines={1} style={styles.name}>{userName}</Text>
           <Image
             style={styles.rankCardFire}
             source={require('../../../asserts/images/rankCardFire.png')}
           />
-          <Text style={styles.clickGood}>{hot}</Text>
+          <Text numberOfLines={1} style={styles.clickGood}>{hot}</Text>
           <TouchableOpacity style={styles.guanzhuBtn} onPress={() => this.handleClick()}>
             <Text
               style={{
@@ -122,6 +124,7 @@ export class rankCard extends Component {
 
 const styles = StyleSheet.create({
   cardBox: {
+    width: '99%',
     height: pxToDp(136),
     backgroundColor: '#FFF',
     marginTop: pxToDp(17),
@@ -143,6 +146,7 @@ const styles = StyleSheet.create({
     borderRadius: pxToDp(200),
   },
   name: {
+    width: pxToDp(120),
     fontSize: pxToDp(28),
     fontWeight: '700',
     color: '#333333',
@@ -154,18 +158,19 @@ const styles = StyleSheet.create({
     marginLeft: pxToDp(15),
   },
   clickGood: {
+    width: pxToDp(112),
     fontSize: pxToDp(32),
     fontWeight: '700',
     marginLeft: pxToDp(53),
     color: '#FE9E0E',
   },
   guanzhuBtn: {
+    marginLeft: pxToDp(16),
     width: pxToDp(137),
     height: pxToDp(60),
     backgroundColor: '#FE9E0E',
     borderRadius: pxToDp(30),
     justifyContent: 'center',
-    marginLeft: pxToDp(46),
     flexDirection: 'row',
     alignItems: 'center',
   },

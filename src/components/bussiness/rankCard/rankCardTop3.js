@@ -18,7 +18,7 @@ export class rankCardTop3 extends Component {
   state = {
     follow: false,
     follow1: false,
-    follow3:false,
+    follow3: false,
   }
   static propTypes = {
     top3: PropTypes.array.isRequired,
@@ -161,12 +161,12 @@ export class rankCardTop3 extends Component {
               >
                 <Image
                   style={styles.rank2Photo}
-                  source={{ uri: top3[1].runner_up_photo }}
+                  source={{ uri: top3[1].userAvatar }}
                 />
               </ImageBackground>
               <View style={styles.rank2_nameAndZan}>
                 <Text numberOfLines={1} style={styles.rank2Name}>
-                  {top3[1].runner_up_name}
+                  {top3[1].nickName}
                 </Text>
                 <View style={styles.rank2Svg_text_box}>
                   <SvgUri
@@ -175,7 +175,7 @@ export class rankCardTop3 extends Component {
                     height={pxToDp(32)}
                     style={styles.rank2Like}
                   />
-                  <Text style={styles.rank2LikeNumber}>13269</Text>
+                  <Text style={styles.rank2LikeNumber}>{top3[1].hot}</Text>
                 </View>
                 <TouchableOpacity
                   style={styles.guanzhuBtn}
@@ -193,12 +193,12 @@ export class rankCardTop3 extends Component {
               >
                 <Image
                   style={styles.rank1Photo}
-                  source={{ uri: top3[0].champion_photo }}
+                  source={{ uri: top3[0].userAvatar }}
                 />
               </ImageBackground>
               <View style={styles.rank2_nameAndZan}>
                 <Text numberOfLines={1} style={styles.rank2Name}>
-                  {top3[0].champion_name}
+                  {top3[0].nickName}
                 </Text>
                 <View style={styles.rank2Svg_text_box}>
                   <SvgUri
@@ -208,7 +208,7 @@ export class rankCardTop3 extends Component {
                     style={styles.rank2Like}
                   />
                   <Text style={styles.rank2LikeNumber}>
-                    {top3[0].champion_hot}
+                    {top3[0].hot}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -227,12 +227,12 @@ export class rankCardTop3 extends Component {
               >
                 <Image
                   style={styles.rank2Photo}
-                  source={{ uri: top3[2].third_place_photo }}
+                  source={{ uri: top3[2].userAvatar }}
                 />
               </ImageBackground>
               <View style={styles.rank2_nameAndZan}>
                 <Text numberOfLines={1} style={styles.rank2Name}>
-                  {top3[2].third_place_name}
+                  {top3[2].nickName}
                 </Text>
                 <View style={styles.rank2Svg_text_box}>
                   <SvgUri
@@ -242,14 +242,14 @@ export class rankCardTop3 extends Component {
                     style={styles.rank2Like}
                   />
                   <Text style={styles.rank2LikeNumber}>
-                    {top3[2].third_place_hot}
+                    {top3[2].hot}
                   </Text>
                 </View>
                 <TouchableOpacity
                   style={styles.guanzhuBtn}
                   onPress={() => this.handleClick(3)}
                 >
-                   {this.state.follow3 === false ? <Text style={styles.rank2_add}>+ </Text> : null}
+                  {this.state.follow3 === false ? <Text style={styles.rank2_add}>+ </Text> : null}
                   <Text style={styles.rank2_addAttention}>{this.state.follow3 === false ? '关注' : '已关注'}</Text>
                 </TouchableOpacity>
               </View>

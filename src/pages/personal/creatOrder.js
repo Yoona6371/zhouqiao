@@ -64,7 +64,7 @@ export class orderDetail extends Component {
           </View>
           <View>
             <TouchableOpacity style={styles.payBtn}>
-              <Text style={styles.payText}>确认付款</Text>
+              <Text style={styles.payText}>生成订单</Text>
             </TouchableOpacity>
           </View>
         </View>
