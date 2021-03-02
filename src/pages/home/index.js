@@ -409,7 +409,7 @@ class Index extends Component {
 export default Index;
 class HomeAvatar extends Component {
   render() {
-    console.log(this.props.userId);
+    // console.log(this.props.userId);
     return (
       <View style={{ ...margin(25, 36, 25, 46) }}>
         <Avatar

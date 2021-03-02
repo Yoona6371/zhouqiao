@@ -31,26 +31,15 @@ function constructNormalMessage() {
   themsgid += 1;
   message.status = 'send_succeed';
   message.isOutgoing = true;
-  var date = new Date();
-  message.timeString = date.getHours() + ':' + date.getMinutes();
-  var user = {
+  message.timeString = new Date().getFullYear().toString();
+  message.fromUser = {
     userId: '',
-    displayName: 'replace your nickname',
-    avatarPath: 'images',
+    displayName: '',
+    avatarPath: '',
   };
-  if (Platform.OS === 'ios') {
-    user.avatarPath = RNFS.MainBundlePath + '/default_header.png';
-  }
-  message.fromUser = user;
 
   return message;
 }
-
-var imageUrlArray = [
-  //        "https://www.lsc-online.com/wp-content/uploads/2017/05/bigstock-151229657.jpg"
-  //        "https://www.iconspng.com/images/coniglio-rabbit-small/coniglio-rabbit-small.jpg",
-  'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3155998395,3600507640&fm=26&gp=0.jpg',
-];
 
 @inject('RootStore')
 class TestRNIMUI extends Component {
@@ -75,7 +64,7 @@ class TestRNIMUI extends Component {
     this.messageListDidLoadEvent = this.messageListDidLoadEvent.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     /**
      * Android only
      * Must set menu height once, the height should be equals with the soft keyboard height so that the widget won't flash.
@@ -95,46 +84,47 @@ class TestRNIMUI extends Component {
   }
 
   // 获取历史消息
-  getHistoryMessage() {
-    var messages = [];
-    for (let index in imageUrlArray) {
-      var message = constructNormalMessage();
-      (message.fromUser.avatarUrl =
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534926548887&di=f107f4f8bd50fada6c5770ef27535277&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F67%2F23%2F69i58PICP37.jpg'), //1
-        (message.msgType = 'image');
-      message.mediaPath = imageUrlArray[index];
+  async getHistoryMessage() {
+    // console.log(this.props.route.params.fromId);
+    // console.log(this.props.route.params.toId);
+    let res = await Http.messageDetail({
+      formId: this.props.route.params.fromId,
+      megType: 1,
+      page: 1,
+      size: 20,
+      toId: this.props.route.params.toId,
+    });
+    // isArr = Object.prototype.toString.call(data) == '[object Array]';
+    const messagesHistory = res.data.data.records;
+    const messages = [];
+    // console.log(res.data.data.records);
+    // console.log(typeof res.data.data.records);
+    messagesHistory.forEach((v, i) => {
+      const message = constructNormalMessage();
+      if (v.msg_type === 1) {
+        message.msgType = 'text';
+        message.text = v.msg_content;
+      } else if (v.msg_type === 2) {
+        message.msgType = 'image';
+        message.mediaPath = '';
+      }
+      message.timeString = new Date(v.create_time).toLocaleTimeString();
       message.contentSize = { height: 100, width: 200 };
-      message.extras = { extras: 'fdfsf' };
+      // message.extras = { extras: 'fdfsf' };
+      // 修改
+      if (this.props.route.params.fromId === v.from_id) {
+        // 修改
+        message.isOutgoing = true;
+        message.fromUser.avatarPath = this.state.avatar;
+      } else {
+        message.isOutgoing = false;
+        // 修改
+        message.fromUser.avatarPath = v.from_avatar;
+      }
       messages.push(message);
-      // AuroraIController.appendMessages([message])
-      // AuroraIController.scrollToBottom(true)
-    }
+    });
     AuroraIController.appendMessages(messages);
     AuroraIController.scrollToBottom(true);
-
-    // for (var i = 0; i < 10; i++) {
-    //   var message = constructNormalMessage()
-    //   message.msgType = 'custom'
-
-    //   if (Platform.OS === "ios") {
-    //     message.content = `
-    //     <h5>This is a custom message. </h5>
-    //     <img src="file://${RNFS.MainBundlePath}/default_header.png"/>
-    //     `
-    //   } else {
-    //     message.content = '<body bgcolor="#ff3399"><h5>This is a custom message. </h5>\
-    //     <img src="/storage/emulated/0/XhsEmoticonsKeyboard/Emoticons/wxemoticons/icon_040_cover.png"></img></body>'
-    //   }
-
-    //   var eventMessage = constructNormalMessage()
-    //   eventMessage.msgType = "event"
-    //   eventMessage.text = 'fsadfad'
-
-    //   message.contentSize = { 'height': 100, 'width': 200 }
-    //   message.extras = { "extras": "fdfsf" }
-    //   AuroraIController.appendMessages([message, eventMessage])
-    //   AuroraIController.scrollToBottom(true)
-    // }
   }
 
   onInputViewSizeChange = (size) => {
@@ -249,10 +239,21 @@ class TestRNIMUI extends Component {
 
   // 发送文本消息
   onSendText = (text) => {
-    var message = constructNormalMessage();
+    const message = constructNormalMessage();
     message.msgType = 'text';
     message.text = text;
-    AuroraIController.appendMessages([message]);
+    const messages = [];
+    Http.send({
+      contentType: 1,
+      formId: this.props.route.params.fromId,
+      message: text,
+      msgType: 1,
+      toId: this.props.route.params.toId,
+    }).then((res) => {
+      if (res.status === 200) {
+        AuroraIController.appendMessages([message]);
+      }
+    });
   };
 
   onTakePicture = (media) => {
@@ -297,33 +298,54 @@ class TestRNIMUI extends Component {
 
   // 发送图片
   onSendGalleryFiles = (mediaFiles) => {
-    /**
-     * WARN: This callback will return original image,
-     * if insert it directly will high memory usage and blocking UI。
-     * You should crop the picture before insert to messageList。
-     *
-     * WARN: 这里返回的是原图，直接插入大会话列表会很大且耗内存.
-     * 应该做裁剪操作后再插入到 messageListView 中，
-     * 一般的 IM SDK 会提供裁剪操作，或者开发者手动进行裁剪。
-     *
-     * 代码用例不做裁剪操作。
-     */
+    // 由于图片大小需要做裁剪
     Alert.alert('fas', JSON.stringify(mediaFiles));
-    for (let index in mediaFiles) {
+    mediaFiles.forEach((v, i) => {
       var message = constructNormalMessage();
-      if (mediaFiles[index].mediaType == 'image') {
+      if (v.mediaType === 'image') {
         message.msgType = 'image';
+        message.status = 'send_going';
+        message.mediaPath = v.mediaPath;
+        AuroraIController.appendMessages([message]);
+        AuroraIController.scrollToBottom(true);
+        // Http.upimg(
+        //   {
+        //     file: {
+        //       msg_type: 2,
+        //       url: v.mediaPath,
+        //       size: v.size,
+        //       height: v.height,
+        //       width: v.width,
+        //     },
+        //   },
+        //   '',
+        //   true,
+        //   {
+        //     contentType: 2,
+        //     msgType: 1,
+        //     toId: this.props.route.params.toId,
+        //   },
+        // ).then((res) => {
+        //   console.log(res);
+        //   if (res.status === 200) {
+        //     alert('发送成功');
+        AuroraIController.updateMessage({
+          ...message,
+          status: 'send_succeed',
+        });
+        // } else {
+        //   alert('发送失败');
+        // }
+        // });
       } else {
         message.msgType = 'video';
-        message.duration = mediaFiles[index].duration;
+        message.duration = v.duration;
+        message.status = 'send_going';
+        AuroraIController.appendMessages([message]);
+        AuroraIController.scrollToBottom(true);
       }
-
-      message.mediaPath = mediaFiles[index].mediaPath;
-      message.timeString = '8:00';
-      message.status = 'send_going';
-      AuroraIController.appendMessages([message]);
-      AuroraIController.scrollToBottom(true);
-    }
+      // message.timeString = '8:00';
+    });
 
     this.resetMenu();
   };
@@ -395,7 +417,7 @@ class TestRNIMUI extends Component {
         <View style={this.state.navigationBar} ref="NavigatorView">
           <Button
             style={styles.sendCustomBtn}
-            title="Custom Message"
+            title={this.props.route.params.nickName}
             onPress={() => {
               if (Platform.OS === 'ios') {
                 var message = constructNormalMessage();
@@ -410,7 +432,7 @@ class TestRNIMUI extends Component {
                 AuroraIController.appendMessages([message]);
                 AuroraIController.scrollToBottom(true);
               } else {
-                var message = constructNormalMessage();
+                const message = constructNormalMessage();
                 message.msgType = 'custom';
                 message.msgId = '10';
                 message.status = 'send_going';

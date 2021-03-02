@@ -63,7 +63,7 @@ export default class LoginInput extends Component {
   verifyCodeRequest = () => {
     Http.getVerifyCode({ code: 1, mobile: this.state.phoneNumber }).then(
       (res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data.code === 0) {
           Toast.success(res.data.msg, 1000, 'center');
         } else {

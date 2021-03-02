@@ -61,49 +61,33 @@ class Index extends Component {
         //   res.name,
         //   res.size,
         // );
-        // let formData = new FormData();
-        // formData.append('name', res.name);
-        // formData.append('uri', res.uri);
-        // formData.append('type', res.type);
-        // formData.append('size', res.size);
-        // console.log(formData);
-        // axios
-        //   .post(
-        //     'http://www.zhouqiao.art:8080/api/resource/file',
-        //     { file: formData, type: 6 },
-        //     {
-        //       headers: {
-        //         'Content-Type': 'multiple/form-data',
-        //       },
-        //     },
-        //   )
-        //   .then((res) => {
-        //     console.log(res);
-        //   });
-        // console.log(
-        //   11111111111,
-        //   await Http.fileUpdate(
-        //     {
-        //       file: {
-        //         uri: res.uri,
-        //         name: res.name,
-        //         size: res.size,
-        //         type: res.type,
-        //       },
-        //     },
-        //     '',
-        //     true,
-        //     {
-        //       headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //       },
-        //       prarms: {
-        //         type: 6,
-        //       },
-        //     },
-        //   ),
-        // ),
-        console.log('success');
+        let formData = new FormData();
+        formData.append('name', res.name);
+        formData.append('uri', res.uri);
+        formData.append('type', res.type);
+        formData.append('size', res.size);
+        console.log(
+          11111111111,
+          await Http.fileUpdate(
+            {
+              uri: res.uri,
+              name: res.name,
+              size: res.size,
+              type: res.type,
+            },
+            '',
+            true,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+              prarms: {
+                type: 6,
+              },
+            },
+          ),
+        ),
+          console.log('success');
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           console.log('cancleErr', err);

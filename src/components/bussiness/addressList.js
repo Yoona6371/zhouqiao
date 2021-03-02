@@ -20,7 +20,7 @@ export default class AddressList extends Component {
 
   editor = (jumPage) => {
     NavigationHelper.navigate(jumPage);
-    console.log('asd');
+    // console.log('asd');
   };
   render() {
     const {

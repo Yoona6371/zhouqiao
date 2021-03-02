@@ -134,10 +134,6 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'put',
   },
-  getVerifyCode: {
-    url: '/api/sms/verifyCode',
-    method: 'get',
-  },
   //案例详情
   CaseDetails: {
     url: '/api/designCaseExt/client/design_cases',
@@ -152,16 +148,6 @@ const api = {
     url: '/api/designCaseCollect/client/design_cases/collect/cancel',
     method: 'delete',
   },
-  getSlideShow: {
-    url: '/api/slideShow',
-    method: 'get',
-  },
-  // 获取设计案例
-  getDesignExample: {
-    url: '/api/designCase/stylist/other/design_cases',
-    method: 'get',
-  },
-
   mobileSet: {
     url: '/api/user/binding/mobile',
     method: 'put',
@@ -175,6 +161,30 @@ const api = {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
   },
+  // 消息
+  messageList: {
+    url: '/api/message/getList',
+    method: 'get',
+  },
+  messageDetail: {
+    url: '/api/message/getMessageList',
+    method: 'post',
+  },
+  upimg: {
+    url: '/api/message/chat/upimg',
+    method: 'post',
+  },
+  ifRead: {
+    url: '/api/message/readed',
+    method: 'get',
+  },
+  revoke: {
+    url: '/api/message/revoke',
+    method: 'get',
+  },
+  send: {
+    url: '/api/message/send',
+    method: 'post',
   },
 };
 export default api;

@@ -54,7 +54,7 @@ class Index extends Component {
         const res = await DocumentPicker.pick({
           type: [DocumentPicker.types.images],
         });
-        console.log(res);
+        // console.log(res);
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           console.log('cancleErr', err);
@@ -144,7 +144,7 @@ class Index extends Component {
     } else {
       const res = await Http.getMyInfo();
       const userInfo = res.data.data;
-      console.log(res);
+      // console.log(res);
       this.setState({
         userInfo,
       });
@@ -179,7 +179,7 @@ class Index extends Component {
   //申请验证码
   verifyCodeRequest = () => {
     Http.getVerifyCode({ code: 3, mobile: this.state.mobile }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         Toast.success(res.data.msg, 1000, 'center');
       } else {
@@ -235,13 +235,9 @@ class Index extends Component {
       svgRemove,
       router,
     } = this.props;
-    const currentDate =
-      new Date().getFullYear() +
-      '-' +
-      new Date().getMonth() +
-      1 +
-      '-' +
-      new Date().getDate();
+    const currentDate = `${new Date().getFullYear()}-${
+      new Date().getMonth() + 1
+    }-${new Date().getDate()}`;
     return (
       <TouchableOpacity
         style={
