@@ -60,7 +60,7 @@ import Test from '../pages/test';
 //登录
 import LoginAndRegister from '../pages/users/loginAndRegister';
 //找回密码
-import FindPassword from '../pages/users/findPassword'
+import FindPassword from '../pages/users/findPassword';
 // Tab
 import Tab from '../router/tab';
 // 工具
@@ -93,7 +93,7 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="MyAddress"
+          initialRouteName="Tab"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
@@ -104,7 +104,7 @@ class Nav extends React.Component {
           {/*登录*/}
           <Stack.Screen
             name="LoginAndRegister"
-            component={Tab}
+            component={LoginAndRegister}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
@@ -117,7 +117,7 @@ class Nav extends React.Component {
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
-          {/*他人中心*/} 
+          {/*他人中心*/}
           <Stack.Screen
             name="OthersPersonal"
             component={OthersPersonal}
@@ -147,12 +147,12 @@ class Nav extends React.Component {
           <Stack.Screen
             name="ImageShow"
             component={ImageShow}
-            options={{ 
-              ...TransitionPresets.SlideFromRightIOS, 
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
             }}
           />
 
-          {/*设计 
+          {/*设计
           设计师排行榜*/}
 
           {/*消息*/}
