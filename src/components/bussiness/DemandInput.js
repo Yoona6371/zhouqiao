@@ -13,8 +13,10 @@ import Icon from '../common/Icon';
 import Picker from 'react-native-picker';
 import DocumentPicker from 'react-native-document-picker';
 import axios from 'axios';
+import { inject } from 'mobx-react';
 // import RNFS from 'react-native-fs';
 
+@inject('RootStore')
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +31,7 @@ class Index extends Component {
         { key: 0, value: '新手' },
         { key: 1, value: '老手' },
       ],
+      accessory: [],
     };
   }
   // type
@@ -52,7 +55,15 @@ class Index extends Component {
       // Pick a single file
       try {
         const res = await DocumentPicker.pick({
-          type: [DocumentPicker.types.images],
+          type: [
+            DocumentPicker.types.plainText,
+            DocumentPicker.types.pdf,
+            DocumentPicker.types.zip,
+            DocumentPicker.types.doc,
+            DocumentPicker.types.docx,
+            DocumentPicker.types.ppt,
+            DocumentPicker.types.pptx,
+          ],
         });
         // console.log(res);
         // console.log(
@@ -61,33 +72,36 @@ class Index extends Component {
         //   res.name,
         //   res.size,
         // );
+        let type = 0;
+        if (res.type === 'zip') {
+          type = 5;
+        }
+        // res.type === 'docx' ||
+        // res.type === 'doc' ||
+        // res.type === 'plainText' ||
+        // res.type === 'pdf' ||
+        // res.type === 'ppt' ||
+        // res.type === 'pptx'
+        else {
+          type = 6;
+        }
         let formData = new FormData();
         formData.append('file', res);
-        formData.append('type', 0);
-        console.log(
-          await axios.post(
-            'http://www.zhouqiao.art:8080/api/resource/file',
-            formData,
-            {
-              headers: {
-                Authorization:
-                  'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGwiLCJhdWQiOiIxNTIwMzU3NDk3MSIsInJvbGVzIjoiW1wiUk9MRV9DTElFTlRcIl0iLCJpc3MiOiJmZWxvcmQuY24iLCJleHAiOiIyMDIxLTA0LTAxIDAxOjI3OjQwIiwiaWF0IjoiMjAyMS0wMy0wMiAwMToyNzo0MCIsImp0aSI6IjYxMTZjZjNkN2Q0OTRmYTRhM2FhNzA0YWQ5NjVhYTkwIn0.PJZaVIjxMV0WlpQTpHN25NU1y9NCF2zTpikv4G4cE38EWpfSutRJJlMosF1cloou3SGAnbFbGaQzsTYsUarJSjhLgR63eIL7xlZNgNxSoxbjWSCxk1EbF6ld7Bfr4AeGJ5aZk3wQDdMrGaR_1FxiG5uR4ufmupFh0XqxNZE_oew',
-              },
+        formData.append('type', type);
+        let res2 = await axios.post(
+          'http://www.zhouqiao.art:8080/api/resource/file',
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${this.props.RootStore.userStore.allData.accessToken}`,
             },
-          ),
+          },
         );
-        // console.log(
-        //   11111111111,
-        //   await Http.fileUpdate(formData, '', true, {
-        //     headers: {
-        //       'Content-Type': 'multipart/form-data',
-        //     },
-        //     prarms: {
-        //       type: 6,
-        //     },
-        //   }),
-        // ),
-        console.log('success');
+        console.log(res2);
+        if (res2.data.code === 0) {
+          this.state.accessory.push(res.name);
+          this.props.inputUpdate(res2.data.data);
+        }
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           console.log('cancleErr', err);
@@ -154,7 +168,13 @@ class Index extends Component {
 
   render() {
     let { title, tips, type, hint, last } = this.props;
-    let { input, urgent, input_category, input_proficiency } = this.state;
+    let {
+      input,
+      urgent,
+      input_category,
+      input_proficiency,
+      accessory,
+    } = this.state;
     return (
       <View
         style={
@@ -223,17 +243,22 @@ class Index extends Component {
               }
             />
             {type === 2 ? (
-              <View style={styles.demand_file}>
-                <Text style={styles.demand_file_text}>添加附件</Text>
-                <Icon
-                  name="add_file"
-                  width={pxToDp(18)}
-                  height={pxToDp(22)}
-                  style={{
-                    color: '#fe9e0e',
-                    lineHeight: pxToDp(320 / 3),
-                  }}
-                />
+              <View>
+                <View style={styles.demand_file}>
+                  <Text style={styles.demand_file_text}>添加附件</Text>
+                  <Icon
+                    name="add_file"
+                    width={pxToDp(18)}
+                    height={pxToDp(22)}
+                    style={{
+                      color: '#fe9e0e',
+                      lineHeight: pxToDp(320 / 3),
+                    }}
+                  />
+                </View>
+                {accessory.map((v, i) => (
+                  <Text key={i}>{v}</Text>
+                ))}
               </View>
             ) : (
               <Icon
@@ -267,7 +292,7 @@ const styles = StyleSheet.create({
   demand_title__wrap: {
     backgroundColor: 'transparent',
     flexDirection: 'row',
-    height: pxToDp(320 / 3),
+    minHeight: pxToDp(320 / 3),
     marginLeft: pxToDp(30),
   },
   demand_title__wrap_line: {

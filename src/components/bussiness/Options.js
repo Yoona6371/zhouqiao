@@ -190,10 +190,8 @@ class Index extends Component {
 
   mobileSet = () => {
     Http.mobileSet({
-      bindingForm: {
-        mobile: this.state.mobile,
-        verifyCode: this.state.verifyCode,
-      },
+      mobile: this.state.mobile,
+      verifyCode: this.state.verifyCode,
     }).then((res) => {
       if (res.status === 200) {
         Toast.success(res.data.msg, 1000, 'center');

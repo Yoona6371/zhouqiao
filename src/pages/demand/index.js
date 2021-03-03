@@ -32,6 +32,7 @@ class Index extends Component {
               ? props.route.params.expectedPrice.toString()
               : undefined,
           inputUpdate: (data) => {
+            console.log(data);
             this.setState({
               data: {
                 ...this.state.data,
@@ -159,6 +160,14 @@ class Index extends Component {
           type: 2,
           last: true,
           category: 3,
+          inputUpdate: (data) => {
+            this.setState({
+              data: {
+                ...this.state.data,
+                accessory: data,
+              },
+            });
+          },
         },
         // {
         //   title: '图片',
