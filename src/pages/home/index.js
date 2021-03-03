@@ -259,7 +259,7 @@ class Index extends Component {
     let res = await Http.getPaymentDetail({
       body: '舟桥之家',
       outTradeNo: this.state.value,
-      totalFee: 0.1,
+      totalFee: 1,
     });
     console.log(res);
 
@@ -268,8 +268,8 @@ class Index extends Component {
     } else {
       res = res.data.data.data;
       let payload = {
-        partnerId: res.noncestr,
-        nonceStr: res.mchid,
+        partnerId: res.mchid,
+        nonceStr: res.noncestr,
         prepayId: res.prepayid,
         sign: res.sign,
         timeStamp: res.timestamp,
@@ -441,7 +441,7 @@ class Index extends Component {
           >
             <Text style={styles.commodity_header_title}>精彩案例</Text>
           </ImageBackground>
-          <View style={{ height: pxToDp(1800), overflow: 'hidden' }}>
+          <View style={{ height: pxToDp(1750), overflow: 'hidden' }}>
             {this.MyTabs()}
           </View>
           <TouchableOpacity

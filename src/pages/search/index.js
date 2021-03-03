@@ -286,7 +286,7 @@ class index extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <Search
           onEndEditing={() => this.handleSearch()}
           onPress={() => NavigationHelper.goBack()}
