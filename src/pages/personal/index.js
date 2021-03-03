@@ -23,6 +23,7 @@ class Index extends Component {
     super(props);
     this.state = {
       userInfo: {
+        birthday: [],
         clientStatistics: {
           followedNum: 0,
           orderNum: 2,
