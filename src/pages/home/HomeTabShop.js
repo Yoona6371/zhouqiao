@@ -74,6 +74,7 @@ export default class HomeTabShop extends PureComponent {
             user_id={item.commodityAuthor}
             image={item.cover}
             prince={item.price}
+            caseId={item.commodityId}
             style={{ ...padding(25, 25, 0, 0) }}
           />
         )}

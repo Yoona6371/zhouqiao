@@ -44,6 +44,26 @@ class GlobalStore {
   @action setNavigation(navigation) {
     this.allData.navigation = navigation;
   }
+
+  @action setSearch(search) {
+    this.allData.search = search;
+  }
+
+  @action setApiVersion(apiVersion) {
+    this.allData.apiVersion = apiVersion;
+  }
+
+  @action setIsWXAppInstalled(isWXAppInstalled) {
+    this.allData.isWXAppInstalled = isWXAppInstalled;
+  }
+
+  @action setWxAppInstallUrl(wxAppInstallUrl) {
+    this.allData.wxAppInstallUrl = wxAppInstallUrl;
+  }
+
+  @action setIsWXAppSupportApi(isWXAppSupportApi) {
+    this.allData.isWXAppSupportApi = isWXAppSupportApi;
+  }
 }
 
 export default new RootStore();

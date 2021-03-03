@@ -88,7 +88,7 @@ class CommodityList extends PureComponent {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#fff' }}>
         <TopTitle title="设计案例" showBtn={false} />
         {this._render()}
       </View>

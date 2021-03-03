@@ -49,13 +49,56 @@ class Others extends Component {
     userId: PropTypes.string.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      // 更换背景的路由
+      changeBackground: 'ImageShow',
+      nickname: '',
+      avatar:
+        'https://wx2.sinaimg.cn/mw1024/cd966a9aly1gnw4r3wxl0j207i07it8p.jpg',
+      description: '',
+      // 他的关注-> 查看的那个路由
+      seeMyFollows: 'ImageShow',
+      // 他的阅读-> 查看的那个路由
+      seeRecentReadBooks: 'ImageShow',
+      personDetail: [
+        {
+          num: 0,
+          des: '关注数',
+        },
+        {
+          num: 0,
+          des: '粉丝数',
+        },
+        {
+          num: 0,
+          des: '成交订单',
+        },
+        {
+          num: 0,
+          des: '积分',
+        },
+      ],
+      // 他的关注数组（最多8个头像）
+      followsAvatar: [],
+      // ——————————————他的设计案例分页相关开始————————————————
+      // 设计案例
+      dataList: [],
+      refreshState: RefreshState.Idle,
+      totalPage: 0,
+      currentPage: 1,
+      id: 0,
+      // ——————————————他的设计案例分页相关结束————————————————
+    };
+    this._contentViewScroll = this._contentViewScroll.bind(this);
+  }
+
   async componentDidMount() {
     // 获取他人基本信息
     await this.getOthersDetail();
     // 获取他人关注列表
     await this.getOthersFocusList();
-    // 获取关注数，粉丝数，成交订单，积分
-    await this.getFourInfo();
 
     // 分页刚开始刷新
     await this.onHeaderRefresh();
@@ -70,10 +113,29 @@ class Others extends Component {
 
     if (detail.status === 200) {
       const data = detail.data.data;
+      let answer = [
+        {
+          num: data.stylistStatistics.followedNum,
+          des: '关注数',
+        },
+        {
+          num: data.stylistStatistics.fansNum,
+          des: '粉丝数',
+        },
+        {
+          num: data.stylistStatistics.orderFinishedNum,
+          des: '成交订单',
+        },
+        {
+          num: 6592,
+          des: '积分',
+        },
+      ];
       this.setState({
         nickname: data.nickName,
         avatar: data.userAvatar,
         description: data.introduction,
+        personDetail: answer,
       });
     } else {
       Toast.sad('加载失败');
@@ -121,35 +183,6 @@ class Others extends Component {
     } else {
       Toast.sad('加载失败');
     }
-  };
-
-  // 获取关注数，粉丝数，成交订单，积分
-  getFourInfo = async () => {
-    const focus = await Http.myFocusList({ page: 1, size: 1 });
-    const fans = await Http.myFansList({ page: 1, size: 1 });
-    if (!(focus.status === 200 && fans.status === 200)) {
-      Toast.sad('加载失败');
-      return;
-    }
-    const answer = [
-      {
-        num: focus.data.data.totalPage,
-        des: '关注数',
-      },
-      {
-        num: fans.data.data.totalPage,
-        des: '粉丝数',
-      },
-      {
-        num: 6592,
-        des: '成交订单',
-      },
-      {
-        num: 6592,
-        des: '积分',
-      },
-    ];
-    this.setState({ personDetail: answer });
   };
 
   // ——————————————————————————————分页相关开始————————————————————————————
@@ -205,7 +238,7 @@ class Others extends Component {
     const message = await Http.getDesignExample({
       page: currentPage,
       size: 4,
-      userId: '573e31ca621f8eb0dc7e55939c6b4236',
+      userId: this.props.route.params.params.userId,
     });
 
     if (!message || !message.status === 200) {
@@ -249,79 +282,61 @@ class Others extends Component {
   }
 
   // ——————————————————————————————分页相关结束————————————————————————————
-  // 一键关注按钮
-  handleclick = () => {
-    console.log('一键关注');
-  };
 
   // 联系他按钮
   focus = () => {
     console.log('联系他');
   };
 
-  constructor() {
-    super();
-    this.state = {
-      // 更换背景的路由
-      changeBackground: 'ImageShow',
-      nickname: '',
-      avatar:
-        'https://wx2.sinaimg.cn/mw1024/cd966a9aly1gnw4r3wxl0j207i07it8p.jpg',
-      description: '',
-      // 他的关注-> 查看的那个路由
-      seeMyFollows: 'ImageShow',
-      // 他的阅读-> 查看的那个路由
-      seeRecentReadBooks: 'ImageShow',
-      personDetail: [
-        {
-          num: 0,
-          des: '关注数',
-        },
-        {
-          num: 0,
-          des: '粉丝数',
-        },
-        {
-          num: 0,
-          des: '成交订单',
-        },
-        {
-          num: 0,
-          des: '积分',
-        },
-      ],
-      // 他的关注数组（最多8个头像）
-      followsAvatar: [],
-      // ——————————————他的设计案例分页相关开始————————————————
-      // 设计案例
-      dataList: [],
-      refreshState: RefreshState.Idle,
-      totalPage: 0,
-      currentPage: 1,
-      id: 0,
-      // ——————————————他的设计案例分页相关结束————————————————
-    };
+  _renderAvatar() {
+    if (this.state.followsAvatar.length === 0) {
+      return (
+        <Text
+          style={{
+            letterSpacing: pxToDp(5),
+            fontSize: pxToDp(24),
+            lineHeight: pxToDp(43),
+            color: '#888888',
+          }}
+        >
+          暂无关注
+        </Text>
+      );
+    }
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        {this.state.followsAvatar.map((item, index) => {
+          return (
+            <TouchableOpacity
+              key={index}
+              activeOpacity={activeOpacity}
+              onPress={() => NavigationHelper.navigate(item.userId)}
+              style={{ marginRight: pxToDp(23) }}
+            >
+              <Avatar
+                image={{
+                  uri: item.avatar,
+                }}
+                size={75}
+              />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    );
   }
-
   render() {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.others__wrap}>
-          <StatusBar backgroundColor="transparent" translucent={true} />
-          <ImageBackground
-            source={{
-              uri:
-                'http://wx2.sinaimg.cn/mw1024/cd966a9aly1gng53jyox8j20j908vtab.jpg',
-            }}
-            style={styles.others__mySpace}
-          >
+          <View style={styles.others__mySpace}>
             {/* 挤开电量那一栏 */}
-            <View style={{ height: pxToDp(60) }} />
+            <View style={{ height: pxToDp(40) }} />
 
             {/* 更换背景那一栏 */}
             <TouchableOpacity
               style={{
-                height: pxToDp(143),
+                height: pxToDp(103),
                 ...flexRowSpb,
                 ...padding(30, 0, 30, 0),
               }}
@@ -337,33 +352,19 @@ class Others extends Component {
                   color: '#fff',
                 }}
               />
-              <View style={{ ...flexRowSpb }}>
-                <Icon
-                  name={'exit'}
-                  style={{
-                    marginRight: pxToDp(10),
-                    fontSize: pxToDp(20),
-                    color: 'white',
-                  }}
-                />
-                <Text
-                  style={{
-                    letterSpacing: pxToDp(2),
-                    ...fontStyle(30, 143, 143, '700', 'white', 'left'),
-                  }}
-                  onPress={() =>
-                    NavigationHelper.navigate(this.state.changeBackground)
-                  }
-                >
-                  更换背景
-                </Text>
-              </View>
             </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            style={{ backgroundColor: '#fff' }}
+            onMomentumScrollEnd={this._contentViewScroll}
+          >
             {/* 我的空间和头像那部分 */}
             <View
               style={{
                 ...flexRowSpb,
                 ...padding(48, 0, 40, 66),
+                backgroundColor: '#F9B762',
               }}
             >
               <View>
@@ -387,7 +388,7 @@ class Others extends Component {
             <View
               style={{
                 height: pxToDp(130),
-                backgroundColor: 'rgba(255,255,255,0.15)',
+                backgroundColor: 'rgba(249, 183, 98, 0.8)',
                 ...flexRowSpb,
                 ...padding(67, 30, 67, 30),
               }}
@@ -418,8 +419,6 @@ class Others extends Component {
                 );
               })}
             </View>
-          </ImageBackground>
-          <ScrollView style={{ backgroundColor: '#fff' }}>
             {/* —————————————————————————————————————————————————————————————————————————————————— */}
             {/* 个人简介模块 */}
             <View style={styles.others__personMessage}>
@@ -448,7 +447,7 @@ class Others extends Component {
             </View>
             {/* —————————————————————————————————————————————————————————————————————————————————— */}
             {/* 我的关注模块 */}
-            <View style={{ ...margin(25, 0, 25, 0) }}>
+            <View style={{ ...margin(25, 0, 25, 15) }}>
               <View style={{ ...flexRowSpb }}>
                 <Text
                   style={{
@@ -458,54 +457,9 @@ class Others extends Component {
                 >
                   他的关注
                 </Text>
-                <Text
-                  onPress={() =>
-                    NavigationHelper.navigate(this.state.seeMyFollows)
-                  }
-                  style={{
-                    letterSpacing: pxToDp(2),
-                    ...fontStyle(23, 45, 45, '700', '#888888', 'left'),
-                  }}
-                >
-                  查看 &gt;
-                </Text>
               </View>
               {/* 头像展示部分 */}
-              <View style={{ flexDirection: 'row' }}>
-                {this.state.followsAvatar.map((item, index) => {
-                  return (
-                    <TouchableOpacity
-                      key={index}
-                      activeOpacity={activeOpacity}
-                      onPress={() => NavigationHelper.navigate(item.userId)}
-                      style={{ marginRight: pxToDp(23) }}
-                    >
-                      <Avatar
-                        image={{
-                          uri: item.avatar,
-                        }}
-                        size={75}
-                      />
-                    </TouchableOpacity>
-                  );
-                })}
-              </View>
-              <Text
-                onPress={() => this.handleclick()}
-                style={{
-                  width: pxToDp(185),
-                  height: pxToDp(45),
-                  borderColor: '#e5e5e5',
-                  borderWidth: pxToDp(1),
-                  borderRadius: pxToDp(22.5),
-                  lineHeight: pxToDp(45),
-                  fontSize: pxToDp(21),
-                  paddingLeft: pxToDp(29),
-                  ...margin(256, 40, 0, 0),
-                }}
-              >
-                <Text style={{ color: '#fe9e0e' }}>+ </Text>一键关注
-              </Text>
+              {this._renderAvatar()}
             </View>
             {/* —————————————————————————————————————————————————————————————————————————————————— */}
 
@@ -520,30 +474,23 @@ class Others extends Component {
               >
                 他的设计案例
               </Text>
-              <View
-                style={{
-                  ...flexColumnSpb,
-                  flexDirection: 'row',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <RefreshListView
-                  // 如果要测试假数据，可以写data={Data}
-                  data={this.state.dataList}
-                  // data={Data}
-                  numColumns={2}
-                  // contentContainerStyle={{
-                  //   ...flexColumnSpb,
-                  //   backgroundColor: '#fff',
-                  // }}
-                  keyExtractor={(item) => item.id}
-                  renderItem={this._renderItem}
-                  refreshState={this.state.refreshState}
-                  onHeaderRefresh={this.onHeaderRefresh}
-                  onFooterRefresh={this.onFooterRefresh}
-                  footerNoMoreDataText="-我是有底线的-"
-                />
-              </View>
+
+              <RefreshListView
+                // 如果要测试假数据，可以写data={Data}
+                data={this.state.dataList}
+                // data={Data}
+                numColumns={2}
+                // contentContainerStyle={{
+                //   ...flexColumnSpb,
+                //   backgroundColor: '#fff',
+                // }}
+                keyExtractor={(item) => item.id}
+                renderItem={this._renderItem}
+                refreshState={this.state.refreshState}
+                onHeaderRefresh={this.onHeaderRefresh}
+                onFooterRefresh={this.onFooterRefresh}
+                footerNoMoreDataText="-我是有底线的-"
+              />
             </View>
           </ScrollView>
         </View>
@@ -573,6 +520,14 @@ class Others extends Component {
       </View>
     );
   }
+  _contentViewScroll(e: Object) {
+    let offsetY = e.nativeEvent.contentOffset.y; //滑动距离
+    let contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
+    let oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
+    if (offsetY + oriageScrollHeight >= contentSizeHeight - pxToDp(10)) {
+      this.onFooterRefresh();
+    }
+  }
 }
 
 export default Others;
@@ -581,7 +536,7 @@ const styles = StyleSheet.create({
   others__wrap: {
     width: screenWidth,
   },
-  others__mySpace: {},
+  others__mySpace: { zIndex: 10, backgroundColor: '#F9B762' },
   others__personMessage: {
     ...margin(25, 0, 25, 0),
   },

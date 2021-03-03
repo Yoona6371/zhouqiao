@@ -69,12 +69,14 @@ function MyTabBar({ state, descriptors, navigation }) {
           const isFocused = state.index === index;
 
           // 点击事件
-          const onPress = async() => {
+          const onPress = async () => {
             if (
-              RootStore.userStore.allData.accessToken === null &&
+              RootStore.userStore.allData.accessToken === '' &&
               (route.name === '消息' ||
-                route.name === '发布' ||
-                route.name === '我的')
+                route.name === '发布' 
+                // ||
+                // route.name === '我的'
+                )
             ) {
               NavigationHelper.navigate('LoginAndRegister');
               return;
@@ -88,7 +90,6 @@ function MyTabBar({ state, descriptors, navigation }) {
             if (!isFocused && !event.defaultPrevented) {
               navigation.navigate(route.name);
             }
-            
           };
 
           // 长按压

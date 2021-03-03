@@ -68,10 +68,7 @@ class UserXCard extends Component {
   // ——————————————————————————点击关注按钮部分开始————————————————————————————
   // 关注用户
   focusUser = async () => {
-    const message = await Http.focusUser(
-      {},
-      '/a64bbe91e048638e09ef6b7213f02d32/follower',
-    );
+    const message = await Http.focusUser({}, `/${this.props.userId}/follower`);
 
     if (message.status === 200) {
       this.setState({
@@ -90,7 +87,7 @@ class UserXCard extends Component {
     const request = this.props.RootStore.globalStore.allData.Http;
     const message = await request.unfocusUser(
       {},
-      '/a64bbe91e048638e09ef6b7213f02d32/follower',
+      `/${this.props.userId}/follower`,
     );
 
     if (message.status === 200) {
@@ -104,7 +101,7 @@ class UserXCard extends Component {
   };
 
   handleClick() {
-    const token = this.props.RootStore.userStore.allData.token;
+    const token = this.props.RootStore.userStore.allData.accessToken;
     if (!token) {
       Toast.message('您尚未登录');
       return;

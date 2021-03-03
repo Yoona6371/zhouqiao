@@ -38,6 +38,7 @@ class LoginTab extends Component {
     };
   }
   login = () => {
+    Toast.message('登录中...');
     Http.login({
       account: this.state.phoneNumber,
       password: this.state.password,
@@ -161,6 +162,7 @@ class RegisterTab extends Component {
         console.log(res);
         if (res.data.code === 0) {
           Toast.success('注册成功', 1000, 'center');
+          NavigationHelper.replace('LoginAndRegister');
         } else {
           Toast.fail(res.data.msg, 1000, 'center');
         }
@@ -250,12 +252,13 @@ class Index extends Component {
       ],
     };
   }
+
   MyTabs = () => {
     let { pages } = this.state;
     return (
       <Tab.Navigator
         tabBarOptions={{
-          inactiveTintColor: '#FE9E0E',
+          inactiveTintColor: '#e2dddd',
           // inactiveBackgroundColor: '#fffbf6',
           activeTintColor: '#FFFFFF',
           // activeBackgroundColor: '#FE9E0E',
@@ -291,11 +294,12 @@ class Index extends Component {
             <TouchableOpacity
               style={styles.TouchableOpacity__close}
               onPress={() => {
-                NavigationHelper.navigate('Tab');
+                NavigationHelper.goBack();
               }}
             >
               <Icon name="close" style={styles.Icon__close} />
             </TouchableOpacity>
+
             {/*logo*/}
             <View style={styles.logo}>
               <Image

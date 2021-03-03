@@ -67,7 +67,7 @@ const api = {
   //   false,
   // )
   getOthersDetail: {
-    url: '/api/client',
+    url: '/api/stylist',
     method: 'get',
   },
 
@@ -134,10 +134,6 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'put',
   },
-  getVerifyCode: {
-    url: '/api/sms/verifyCode',
-    method: 'get',
-  },
   //案例详情
   CaseDetails: {
     url: '/api/designCaseExt/client/design_cases',
@@ -161,18 +157,21 @@ const api = {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
   },
-
+  // 搜索
+  getSearchList: {
+    url: '/api/search',
+    method: 'get',
+  },
   mobileSet: {
     url: '/api/user/binding/mobile',
     method: 'put',
   },
-  getSlideShow: {
-    url: '/api/slideShow',
+  goodsDetail: {
+    url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
-  // 获取设计案例
-  getDesignExample: {
-    url: '/api/designCase/stylist/other/design_cases',
+  getPaymentDetail: {
+    url: '/api/wxPay/unifiedOrder',
     method: 'get',
   },
   getMyAddress: {
@@ -195,5 +194,35 @@ const api = {
     url: '/api/user/address/{addressId}',
     method: 'delete',
   },
+=======
+  // 生成商品订单
+  generateGoodOrder: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post',
+  },
+  generateDesignOrder: {
+    url: '/api/client/orderDesignCase/',
+    method: 'post',
+  },
+  // 获取订单列表
+  getOrderLists: {
+    url: '/api/client/orders',
+    method: 'get',
+  },
+  //排行榜
+  getRankList: {
+    url: '/api/stylist/RankingList',
+    method: 'get',
+  },
+  //订单详情
+  orderDetail: {
+    url: '/api/order',
+    method: 'get',
+  },
+  // 需求详情
+  demandDetail: {
+    url: '/api/requirement',
+    method: 'get',
+  }
 };
 export default api;
