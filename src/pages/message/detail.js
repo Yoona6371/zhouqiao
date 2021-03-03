@@ -7,6 +7,8 @@ import {
   Dimensions,
   Button,
   Platform,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
 
 // 文件操作库
@@ -14,6 +16,11 @@ var RNFS = require('react-native-fs');
 
 // 引入接口
 import { inject } from 'mobx-react';
+import axios from 'axios';
+import Overlay from '../../components/common/Overlay/Overlay';
+import Toast from '../../components/common/Toast/Toast';
+import { pxToDp } from '../../utils/pxToDp';
+import DocumentPicker from 'react-native-document-picker';
 
 // 聊天UI库
 import IMUI from 'aurora-imui-react-native';
@@ -22,35 +29,21 @@ const MessageListView = IMUI.MessageList;
 const AuroraIController = IMUI.AuroraIMUIController;
 const window = Dimensions.get('window');
 
-let themsgid = 1;
-
 // 创建各种类型消息
 function constructNormalMessage() {
   var message = {};
-  message.msgId = themsgid.toString();
-  themsgid += 1;
+  message.msgId = '';
   message.status = 'send_succeed';
   message.isOutgoing = true;
-  var date = new Date();
-  message.timeString = date.getHours() + ':' + date.getMinutes();
-  var user = {
+  message.timeString = '';
+  message.fromUser = {
     userId: '',
-    displayName: 'replace your nickname',
-    avatarPath: 'images',
+    displayName: '',
+    avatarPath: '',
   };
-  if (Platform.OS === 'ios') {
-    user.avatarPath = RNFS.MainBundlePath + '/default_header.png';
-  }
-  message.fromUser = user;
 
   return message;
 }
-
-var imageUrlArray = [
-  //        "https://www.lsc-online.com/wp-content/uploads/2017/05/bigstock-151229657.jpg"
-  //        "https://www.iconspng.com/images/coniglio-rabbit-small/coniglio-rabbit-small.jpg",
-  'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3155998395,3600507640&fm=26&gp=0.jpg',
-];
 
 @inject('RootStore')
 class TestRNIMUI extends Component {
@@ -68,6 +61,7 @@ class TestRNIMUI extends Component {
       inputViewLayout: { width: window.width, height: initHeight },
       isAllowPullToRefresh: true,
       navigationBar: {},
+      page: 2,
     };
 
     this.updateLayout = this.updateLayout.bind(this);
@@ -75,7 +69,7 @@ class TestRNIMUI extends Component {
     this.messageListDidLoadEvent = this.messageListDidLoadEvent.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     /**
      * Android only
      * Must set menu height once, the height should be equals with the soft keyboard height so that the widget won't flash.
@@ -95,53 +89,65 @@ class TestRNIMUI extends Component {
   }
 
   // 获取历史消息
-  getHistoryMessage() {
-    var messages = [];
-    for (let index in imageUrlArray) {
-      var message = constructNormalMessage();
-      (message.fromUser.avatarUrl =
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534926548887&di=f107f4f8bd50fada6c5770ef27535277&imgtype=0&src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F11%2F67%2F23%2F69i58PICP37.jpg'), //1
-        (message.msgType = 'image');
-      message.mediaPath = imageUrlArray[index];
+  async getHistoryMessage() {
+    AuroraIController.removeAllMessage();
+    // console.log(this.props.route.params.fromId);
+    // console.log(this.props.route.params.toId);
+    let res = await Http.messageDetail({
+      formId: this.props.route.params.fromId,
+      megType: 1,
+      page: 1,
+      size: 20,
+      toId: this.props.route.params.toId,
+    });
+    const messagesHistory = res.data.data.records;
+    const messages = [];
+    let messageIds = '';
+    messagesHistory.forEach((v, i) => {
+      if (i === 0) {
+        messageIds += JSON.stringify(v.massage_id);
+      } else {
+        messageIds = messageIds + ',' + JSON.stringify(v.massage_id);
+      }
+      const message = constructNormalMessage();
+      message.msgId = v.massage_id;
+      if (v.msg_type === 1) {
+        message.msgType = 'text';
+        message.text = v.msg_content;
+      } else if (v.msg_type === 2) {
+        message.msgType = 'image';
+        message.mediaPath = '';
+      }
+      message.timeString = new Date(v.create_time).toLocaleTimeString();
       message.contentSize = { height: 100, width: 200 };
-      message.extras = { extras: 'fdfsf' };
+      // message.extras = { extras: 'fdfsf' };
+      // 修改
+      if (this.props.route.params.fromId === v.from_id) {
+        // 修改
+        message.isOutgoing = true;
+        message.fromUser.avatarPath = this.state.avatar;
+      } else {
+        message.isOutgoing = false;
+        // 修改
+        message.fromUser.avatarPath = v.from_avatar;
+      }
       messages.push(message);
-      // AuroraIController.appendMessages([message])
-      // AuroraIController.scrollToBottom(true)
-    }
+    });
+    // console.log(messageIds);
+    Http.ifRead({
+      messageIds,
+    }).then((res) => {
+      console.log(res);
+    });
     AuroraIController.appendMessages(messages);
     AuroraIController.scrollToBottom(true);
-
-    // for (var i = 0; i < 10; i++) {
-    //   var message = constructNormalMessage()
-    //   message.msgType = 'custom'
-
-    //   if (Platform.OS === "ios") {
-    //     message.content = `
-    //     <h5>This is a custom message. </h5>
-    //     <img src="file://${RNFS.MainBundlePath}/default_header.png"/>
-    //     `
-    //   } else {
-    //     message.content = '<body bgcolor="#ff3399"><h5>This is a custom message. </h5>\
-    //     <img src="/storage/emulated/0/XhsEmoticonsKeyboard/Emoticons/wxemoticons/icon_040_cover.png"></img></body>'
-    //   }
-
-    //   var eventMessage = constructNormalMessage()
-    //   eventMessage.msgType = "event"
-    //   eventMessage.text = 'fsadfad'
-
-    //   message.contentSize = { 'height': 100, 'width': 200 }
-    //   message.extras = { "extras": "fdfsf" }
-    //   AuroraIController.appendMessages([message, eventMessage])
-    //   AuroraIController.scrollToBottom(true)
-    // }
   }
 
   onInputViewSizeChange = (size) => {
     console.log(
       'onInputViewSizeChange height: ' + size.height + ' width: ' + size.width,
     );
-    if (this.state.inputLayoutHeight != size.height) {
+    if (this.state.inputLayoutHeight !== size.height) {
       this.setState({
         inputLayoutHeight: size.height,
         inputViewLayout: { width: window.width, height: size.height },
@@ -205,7 +211,56 @@ class TestRNIMUI extends Component {
   }
 
   onMsgLongClick = (message) => {
-    Alert.alert('message bubble on long press', 'message bubble on long press');
+    // console.log(message);
+    let overlayView = (
+      <Overlay.PopView
+        style={{ alignItems: 'center', justifyContent: 'center' }}
+      >
+        <View
+          style={{
+            backgroundColor: '#fff',
+            minWidth: 260,
+            minHeight: 180,
+            borderRadius: 15,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text>确定撤回此条消息？</Text>
+          <TouchableOpacity
+            onPress={() => {
+              Overlay.hide(key);
+              this.messageRevoke(message);
+            }}
+          >
+            <Text
+              style={{
+                minwidth: pxToDp(120),
+                height: pxToDp(80),
+                backgroundColor: '#888',
+              }}
+            >
+              草率了，坚持撤回!
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </Overlay.PopView>
+    );
+    let key = Overlay.show(overlayView);
+    // Alert.alert('message bubble on long press', 'message bubble on long press');
+  };
+  messageRevoke = (message) => {
+    let msgId = message.msgId;
+    // console.log(message);
+    Http.revoke({ messageId: msgId }).then((res) => {
+      // console.log(res);
+      if (res.data.data === msgId) {
+        Toast.success('撤销成功', 1000, 'center');
+        AuroraIController.removeMessage(msgId);
+      } else {
+        Toast.fail(res.data.data, 1000, 'center');
+      }
+    });
   };
 
   onStatusViewClick = (message) => {
@@ -222,25 +277,36 @@ class TestRNIMUI extends Component {
     AuroraIController.hidenFeatureView(true);
   };
 
-  onPullToRefresh = () => {
-    console.log('on pull to refresh');
-    var messages = [];
-    for (var i = 0; i < 14; i++) {
+  onPullToRefresh = async () => {
+    let messages = [];
+    let res = await Http.messageDetail({
+      formId: this.props.route.params.fromId,
+      megType: 1,
+      page: this.state.page,
+      size: 10,
+      toId: this.props.route.params.toId,
+    });
+    res.data.data.records.forEach((v, i) => {
       var message = constructNormalMessage();
-      // if (index%2 == 0) {
-      message.msgType = 'text';
-      message.text = '' + i;
-      // }
-
-      if (i % 3 == 0) {
-        message.msgType = 'video';
-        message.text = '' + i;
-        message.mediaPath =
-          '/storage/emulated/0/ScreenRecorder/screenrecorder.20180323101705.mp4';
-        message.duration = 12;
+      if (v.msg_type === 1) {
+        message.msgType = 'text';
+        message.text = v.msg_content;
+      } else if (v.msg_type === 2) {
+        message.msgType = 'image';
+        message.mediaPath = '';
+      }
+      message.timeString = new Date(v.create_time).toLocaleTimeString();
+      message.contentSize = { height: 100, width: 200 };
+      // message.extras = { extras: 'fdfsf' };
+      if (this.props.route.params.fromId === v.from_id) {
+        message.isOutgoing = true;
+        message.fromUser.avatarPath = this.state.avatar;
+      } else {
+        message.isOutgoing = false;
+        message.fromUser.avatarPath = v.from_avatar;
       }
       messages.push(message);
-    }
+    });
     AuroraIController.insertMessagesToTop(messages);
     if (Platform.OS === 'android') {
       this.refs.MessageList.refreshComplete();
@@ -249,17 +315,28 @@ class TestRNIMUI extends Component {
 
   // 发送文本消息
   onSendText = (text) => {
-    var message = constructNormalMessage();
+    let message = constructNormalMessage();
     message.msgType = 'text';
     message.text = text;
-    AuroraIController.appendMessages([message]);
+    Http.send({
+      contentType: 1,
+      formId: this.props.route.params.fromId,
+      message: text,
+      msgType: 1,
+      toId: this.props.route.params.toId,
+    }).then((res) => {
+      if (res.status === 200) {
+        AuroraIController.appendMessages([message]);
+      }
+    });
   };
 
   onTakePicture = (media) => {
     console.log('media ' + JSON.stringify(media));
-    var message = constructNormalMessage();
+    let message = constructNormalMessage();
     message.msgType = 'image';
     message.mediaPath = media.mediaPath;
+    this.onSendGalleryFiles([message]);
     AuroraIController.appendMessages([message]);
     this.resetMenu();
     AuroraIController.scrollToBottom(true);
@@ -269,13 +346,40 @@ class TestRNIMUI extends Component {
     console.log('on start record voice');
   };
 
-  onFinishRecordVoice = (mediaPath, duration) => {
-    var message = constructNormalMessage();
+  onFinishRecordVoice = async (mediaPath, duration) => {
+    // console.log(mediaPath);
+    let message = constructNormalMessage();
     message.msgType = 'voice';
     message.mediaPath = mediaPath;
-    message.timeString = 'safsdfa';
+    message.timeString = new Date().toLocaleTimeString();
     message.duration = duration;
+    let formData = new FormData();
+    let path = mediaPath.split('/');
+    let uri = '';
+    for (let i = 0; i < path.length - 1; i++) {
+      uri += '/' + path[i];
+    }
+    formData.append('file', {
+      uri: 'file:' + uri,
+      duration: duration,
+      type: 'voice',
+      name: path[path.length - 1],
+    });
+    formData.append('contentType', 1);
+    formData.append('msgType', 1);
+    formData.append('toId', this.props.route.params.fromId);
+    // console.log(formData);
     AuroraIController.appendMessages([message]);
+    let res = await axios.post(
+      'http://www.zhouqiao.art:8080/api/message/chat/upimg',
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${this.props.RootStore.userStore.allData.accessToken}`,
+          'Content-Type': 'multiple/form-data',
+        },
+      },
+    );
     console.log('on finish record voice');
   };
 
@@ -297,35 +401,60 @@ class TestRNIMUI extends Component {
 
   // 发送图片
   onSendGalleryFiles = (mediaFiles) => {
-    /**
-     * WARN: This callback will return original image,
-     * if insert it directly will high memory usage and blocking UI。
-     * You should crop the picture before insert to messageList。
-     *
-     * WARN: 这里返回的是原图，直接插入大会话列表会很大且耗内存.
-     * 应该做裁剪操作后再插入到 messageListView 中，
-     * 一般的 IM SDK 会提供裁剪操作，或者开发者手动进行裁剪。
-     *
-     * 代码用例不做裁剪操作。
-     */
-    Alert.alert('fas', JSON.stringify(mediaFiles));
-    for (let index in mediaFiles) {
-      var message = constructNormalMessage();
-      if (mediaFiles[index].mediaType == 'image') {
-        message.msgType = 'image';
-      } else {
-        message.msgType = 'video';
-        message.duration = mediaFiles[index].duration;
-      }
-
-      message.mediaPath = mediaFiles[index].mediaPath;
-      message.timeString = '8:00';
-      message.status = 'send_going';
-      AuroraIController.appendMessages([message]);
-      AuroraIController.scrollToBottom(true);
-    }
-
-    this.resetMenu();
+    // 由于图片大小需要做裁剪
+    // console.log(mediaFiles);
+    // Alert.alert('fas', JSON.stringify(mediaFiles));
+    // mediaFiles.forEach((v, i) => {
+    //   let message = constructNormalMessage();
+    //   if (v.mediaType === 'image') {
+    //     message.msgType = 'image';
+    //     message.status = 'send_going';
+    //     message.mediaPath = v.mediaPath;
+    //     AuroraIController.appendMessages([message]);
+    //     AuroraIController.scrollToBottom(true);
+    //     let arr = v.mediaPath.split('/');
+    //     let last = arr[arr.length - 1];
+    //     let file = {
+    //       uri: 'file://' + v.mediaPath,
+    //       type: v.mediaType,
+    //       size: v.size,
+    //       width: v.width,
+    //       height: v.height,
+    //       name: last,
+    //     };
+    //     let formData = new FormData();
+    //     formData.append('file', v);
+    //     formData.append('contentType', 0);
+    //     formData.append('msgType', 0);
+    //     formData.append('toId', 0);
+    //     axios
+    //       .post(
+    //         'http://www.zhouqiao.art:8080/api/message/chat/upimg',
+    //         formData,
+    //         {
+    //           headers: {
+    //             Authorization: `Bearer ${this.props.RootStore.userStore.allData.accessToken}`,
+    //           },
+    //         },
+    //       )
+    //       .then((res) => {
+    //         console.log(1111111111111, res);
+    //       })
+    //       .catch((err) => {
+    //         console.log(22222222222222222, err);
+    //       });
+    //     console.log('11111111111111111');
+    //   } else {
+    //     message.msgType = 'video';
+    //     message.duration = v.duration;
+    //     message.mediaPath = v.mediaPath;
+    //     message.status = 'send_going';
+    //     AuroraIController.appendMessages([message]);
+    //     AuroraIController.scrollToBottom(true);
+    //   }
+    //   // message.timeString = '8:00';
+    // });
+    // this.resetMenu();
   };
 
   onSwitchToMicrophoneMode = () => {
@@ -335,8 +464,45 @@ class TestRNIMUI extends Component {
   onSwitchToEmojiMode = () => {
     AuroraIController.scrollToBottom(true);
   };
-  onSwitchToGalleryMode = () => {
-    AuroraIController.scrollToBottom(true);
+  onSwitchToGalleryMode = async () => {
+    let message = constructNormalMessage();
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images],
+      });
+      let formData = new FormData();
+      formData.append('file', res);
+      formData.append('contentType', 1);
+      formData.append('msgType', 2);
+      formData.append('toId', this.props.route.params.fromId);
+      message.msgType = 'image';
+      message.status = 'send_going';
+      message.mediaPath = res.uri;
+      AuroraIController.appendMessages([message]);
+      AuroraIController.scrollToBottom(true);
+      let res2 = await axios.post(
+        'http://www.zhouqiao.art:8080/api/message/chat/upimg',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${this.props.RootStore.userStore.allData.accessToken}`,
+          },
+        },
+      );
+      // console.log(res2);
+      if (res2.status === 200) {
+        AuroraIController.updateMessage({ ...message, status: 'send_succeed' });
+      }
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('cancleErr', err);
+        // User cancelled the picker, exit any dialogs or menus and move on
+      } else {
+        console.log(err);
+        throw err;
+      }
+    }
+    // AuroraIController.scrollToBottom(true);
   };
 
   onSwitchToCameraMode = () => {
@@ -395,7 +561,7 @@ class TestRNIMUI extends Component {
         <View style={this.state.navigationBar} ref="NavigatorView">
           <Button
             style={styles.sendCustomBtn}
-            title="Custom Message"
+            title={this.props.route.params.nickName}
             onPress={() => {
               if (Platform.OS === 'ios') {
                 var message = constructNormalMessage();
@@ -410,7 +576,7 @@ class TestRNIMUI extends Component {
                 AuroraIController.appendMessages([message]);
                 AuroraIController.scrollToBottom(true);
               } else {
-                var message = constructNormalMessage();
+                let message = constructNormalMessage();
                 message.msgType = 'custom';
                 message.msgId = '10';
                 message.status = 'send_going';
@@ -440,12 +606,13 @@ class TestRNIMUI extends Component {
           ref="MessageList"
           isAllowPullToRefresh={true}
           onAvatarClick={this.onAvatarClick}
-          onMsgClick={this.onMsgClick}
+          // onMsgClick={this.onMsgClick}
           onStatusViewClick={this.onStatusViewClick}
           onTouchMsgList={this.onTouchMsgList}
           onTapMessageCell={this.onTapMessageCell}
           onBeginDragMessageList={this.onBeginDragMessageList}
           onPullToRefresh={this.onPullToRefresh}
+          onMsgLongClick={this.onMsgLongClick}
           avatarSize={{ width: 50, height: 50 }}
           avatarCornerRadius={25}
           messageListBackgroundColor={'#f3f3f3'}

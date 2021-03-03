@@ -16,7 +16,7 @@ import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 
 // 个人中心
-import AccountSecurity from '../pages/personal/setting/account-sec  urity';
+import AccountSecurity from '../pages/personal/setting/account-security';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service/service-list';
 import SettingIndex from '../pages/personal/setting';
