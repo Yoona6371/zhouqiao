@@ -194,7 +194,6 @@ const api = {
     url: '/api/user/address/{addressId}',
     method: 'delete',
   },
-=======
   // 生成商品订单
   generateGoodOrder: {
     url: '/api/stylist/orderCommodity',
