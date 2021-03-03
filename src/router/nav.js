@@ -16,7 +16,7 @@ import DemandDetails from '../pages/demand/demand-details';
 import DemandSet from '../pages/demand';
 
 // 个人中心
-import AccountSecurity from '../pages/personal/setting/account-security';
+import AccountSecurity from '../pages/personal/setting/account-sec  urity';
 import MyFocus from '../pages/personal/myFocus';
 import ServiceList from '../pages/personal/setting/service/service-list';
 import SettingIndex from '../pages/personal/setting';
@@ -27,6 +27,7 @@ import myCollect from '../pages/personal/myCollect';
 import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
+import AddMyAddress from '../pages/personal/setting/addMyAddress';
 import myWallet from '../pages/personal/myWallet';
 // 他人中心
 import OthersPersonal from '../pages/design/others';
@@ -252,6 +253,13 @@ class Nav extends React.Component {
           <Stack.Screen
             name="MyAddress"
             component={MyAddress}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          <Stack.Screen
+            name="AddMyAddress"
+            component={AddMyAddress}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

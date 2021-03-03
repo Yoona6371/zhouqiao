@@ -8,29 +8,23 @@ export default class AddressList extends Component {
     super(props);
   }
   static defaultProps = {
-    detailedAddress: '曹杨九村11栋30号楼210室',
+    address: '曹杨九村11栋30号楼210室',
     name: '卢伟军',
     sex: '女士',
     tel: '18721755801',
-    defaultShow: true,
+    defaultShow: 1,
     jumPage: 'Tabbar',
   };
 
-  delete = () => {};
+  delete = () => {
+    this.props.addressIdGet()
+  };
 
   editor = (jumPage) => {
     NavigationHelper.navigate(jumPage);
-    console.log('asd');
   };
   render() {
-    const {
-      detailedAddress,
-      name,
-      sex,
-      tel,
-      defaultShow,
-      jumPage,
-    } = this.props;
+    const { address, name, sex, tel, defaultShow, jumPage } = this.props;
     return (
       <View style={[styles.adressList_box, this.props.style]}>
         {/*详细地址strat*/}
@@ -42,9 +36,9 @@ export default class AddressList extends Component {
               fontSize: pxToDp(27),
             }}
           >
-            {detailedAddress}
+            {address}
           </Text>
-          {defaultShow ? (
+          {defaultShow ===1  ? (
             <View style={styles.defaultShow_box}>
               <Text style={{ color: '#FFFFFF', fontSize: pxToDp(17) }}>
                 默认
@@ -54,7 +48,6 @@ export default class AddressList extends Component {
             <Text />
           )}
         </View>
-
         {/*详细地址end*/}
         {/*身份信息start*/}
         <View style={styles.address_identity}>

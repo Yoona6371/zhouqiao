@@ -20,6 +20,7 @@ import RootStore from '../../mobx/index';
 import LocalStorageUtils from '../../utils/LocalStorageUtils';
 const Tab = createMaterialTopTabNavigator();
 import axios from 'axios';
+import RNRestart from 'react-native-restart';
 
 @inject('RootStore')
 @observer
@@ -195,7 +196,7 @@ class RegisterTab extends Component {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                NavigationHelper.navigate();
+                RNRestart.Restart();
               }}
             >
               <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
