@@ -15,7 +15,7 @@ import { fontStyle, padding, margin } from '../../utils/StyleUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from '../common/Avatar';
 import Picker from 'react-native-picker';
-import DocumentPicker from 'react-native-document-picker';
+// import DocumentPicker from 'react-native-document-picker';
 import Overlay from '../common/Overlay/Overlay';
 import DatePicker from 'react-native-datepicker';
 import Toast from '../common/Toast/Toast';
@@ -50,19 +50,19 @@ class Index extends Component {
   dataEdit = async () => {
     if (this.props.option === 1) {
       Picker.hide();
-      try {
-        const res = await DocumentPicker.pick({
-          type: [DocumentPicker.types.images],
-        });
-        // console.log(res);
-      } catch (err) {
-        if (DocumentPicker.isCancel(err)) {
-          console.log('cancleErr', err);
-          // User cancelled the picker, exit any dialogs or menus and move on
-        } else {
-          throw err;
-        }
-      }
+      // try {
+      //   const res = await DocumentPicker.pick({
+      //     type: [DocumentPicker.types.images],
+      //   });
+      //   // console.log(res);
+      // } catch (err) {
+      //   if (DocumentPicker.isCancel(err)) {
+      //     console.log('cancleErr', err);
+      //     // User cancelled the picker, exit any dialogs or menus and move on
+      //   } else {
+      //     throw err;
+      //   }
+      // }
     } else if (this.props.option === 2) {
       let overlayView = (
         <Overlay.PullView side="bottom" modal={false}>

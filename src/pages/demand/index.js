@@ -217,7 +217,6 @@ class Index extends Component {
   render() {
     const { list_1, list_2, list_3, textLength } = this.state;
     const opacity_title = this.titleFixed();
-    let list = ['asd', 'asd'];
     return (
       <ScrollView
         stickyHeaderIndices={[0, 1]}

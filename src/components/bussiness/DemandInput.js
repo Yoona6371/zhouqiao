@@ -12,7 +12,7 @@ import { pxToDp, deviceWidthDp } from '../../utils/pxToDp';
 import Icon from '../common/Icon';
 import Picker from 'react-native-picker';
 import DocumentPicker from 'react-native-document-picker';
-// import axios from 'axios';
+import axios from 'axios';
 // import RNFS from 'react-native-fs';
 
 class Index extends Component {
@@ -52,9 +52,9 @@ class Index extends Component {
       // Pick a single file
       try {
         const res = await DocumentPicker.pick({
-          type: [DocumentPicker.types.docx],
+          type: [DocumentPicker.types.images],
         });
-        // console.log(res);
+        console.log(res);
         // console.log(
         //   res.uri,
         //   res.type, // mime type
@@ -62,37 +62,38 @@ class Index extends Component {
         //   res.size,
         // );
         let formData = new FormData();
-        formData.append('name', res.name);
-        formData.append('uri', res.uri);
-        formData.append('type', res.type);
-        formData.append('size', res.size);
+        formData.append('file', res);
+        formData.append('type', 0);
         console.log(
-          11111111111,
-          await Http.fileUpdate(
-            {
-              uri: res.uri,
-              name: res.name,
-              size: res.size,
-              type: res.type,
-            },
-            '',
-            true,
+          await axios.post(
+            'http://www.zhouqiao.art:8080/api/resource/file',
+            formData,
             {
               headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-              prarms: {
-                type: 6,
+                Authorization:
+                  'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbGwiLCJhdWQiOiIxNTIwMzU3NDk3MSIsInJvbGVzIjoiW1wiUk9MRV9DTElFTlRcIl0iLCJpc3MiOiJmZWxvcmQuY24iLCJleHAiOiIyMDIxLTA0LTAxIDAxOjI3OjQwIiwiaWF0IjoiMjAyMS0wMy0wMiAwMToyNzo0MCIsImp0aSI6IjYxMTZjZjNkN2Q0OTRmYTRhM2FhNzA0YWQ5NjVhYTkwIn0.PJZaVIjxMV0WlpQTpHN25NU1y9NCF2zTpikv4G4cE38EWpfSutRJJlMosF1cloou3SGAnbFbGaQzsTYsUarJSjhLgR63eIL7xlZNgNxSoxbjWSCxk1EbF6ld7Bfr4AeGJ5aZk3wQDdMrGaR_1FxiG5uR4ufmupFh0XqxNZE_oew',
               },
             },
           ),
-        ),
-          console.log('success');
+        );
+        // console.log(
+        //   11111111111,
+        //   await Http.fileUpdate(formData, '', true, {
+        //     headers: {
+        //       'Content-Type': 'multipart/form-data',
+        //     },
+        //     prarms: {
+        //       type: 6,
+        //     },
+        //   }),
+        // ),
+        console.log('success');
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           console.log('cancleErr', err);
           // User cancelled the picker, exit any dialogs or menus and move on
         } else {
+          console.log(err);
           throw err;
         }
       }
