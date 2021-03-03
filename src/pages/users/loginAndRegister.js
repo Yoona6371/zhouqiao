@@ -20,6 +20,7 @@ import RootStore from '../../mobx/index';
 import LocalStorageUtils from '../../utils/LocalStorageUtils';
 const Tab = createMaterialTopTabNavigator();
 import axios from 'axios';
+import RNRestart from 'react-native-restart';
 
 @inject('RootStore')
 @observer
@@ -99,9 +100,7 @@ class LoginTab extends Component {
                 NavigationHelper.navigate('FindPassword');
               }}
             >
-              <Text
-                style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              >
+              <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
                 忘记密码？
               </Text>
             </TouchableOpacity>
@@ -195,7 +194,7 @@ class RegisterTab extends Component {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                NavigationHelper.navigate();
+                RNRestart.Restart();
               }}
             >
               <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
