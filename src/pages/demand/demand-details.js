@@ -15,6 +15,7 @@ import { Image } from 'react-native-svg';
 import TopTitle from '../../components/common/TopTitle';
 import Toast from '../../components/common/Toast/Toast';
 
+
 // requirementId: 38719e6d4abb8464665e7908ba213b00
 class DemandDetails extends Component {
   constructor(props) {

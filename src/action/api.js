@@ -202,6 +202,6 @@ const api = {
   demandDetail: {
     url: '/api/requirement',
     method: 'get',
-  }
+  },
 };
 export default api;
