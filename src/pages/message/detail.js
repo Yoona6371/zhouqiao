@@ -61,6 +61,7 @@ class TestRNIMUI extends Component {
       inputViewLayout: { width: window.width, height: initHeight },
       isAllowPullToRefresh: true,
       navigationBar: {},
+      page: 2,
     };
 
     this.updateLayout = this.updateLayout.bind(this);
@@ -89,6 +90,7 @@ class TestRNIMUI extends Component {
 
   // 获取历史消息
   async getHistoryMessage() {
+    AuroraIController.removeAllMessage();
     // console.log(this.props.route.params.fromId);
     // console.log(this.props.route.params.toId);
     let res = await Http.messageDetail({
@@ -275,25 +277,36 @@ class TestRNIMUI extends Component {
     AuroraIController.hidenFeatureView(true);
   };
 
-  onPullToRefresh = () => {
-    console.log('on pull to refresh');
+  onPullToRefresh = async () => {
     let messages = [];
-    for (var i = 0; i < 14; i++) {
+    let res = await Http.messageDetail({
+      formId: this.props.route.params.fromId,
+      megType: 1,
+      page: this.state.page,
+      size: 10,
+      toId: this.props.route.params.toId,
+    });
+    res.data.data.records.forEach((v, i) => {
       var message = constructNormalMessage();
-      // if (index%2 == 0) {
-      message.msgType = 'text';
-      message.text = '' + i;
-      // }
-
-      if (i % 3 === 0) {
-        message.msgType = 'video';
-        message.text = '' + i;
-        message.mediaPath =
-          '/storage/emulated/0/ScreenRecorder/screenrecorder.20180323101705.mp4';
-        message.duration = 12;
+      if (v.msg_type === 1) {
+        message.msgType = 'text';
+        message.text = v.msg_content;
+      } else if (v.msg_type === 2) {
+        message.msgType = 'image';
+        message.mediaPath = '';
+      }
+      message.timeString = new Date(v.create_time).toLocaleTimeString();
+      message.contentSize = { height: 100, width: 200 };
+      // message.extras = { extras: 'fdfsf' };
+      if (this.props.route.params.fromId === v.from_id) {
+        message.isOutgoing = true;
+        message.fromUser.avatarPath = this.state.avatar;
+      } else {
+        message.isOutgoing = false;
+        message.fromUser.avatarPath = v.from_avatar;
       }
       messages.push(message);
-    }
+    });
     AuroraIController.insertMessagesToTop(messages);
     if (Platform.OS === 'android') {
       this.refs.MessageList.refreshComplete();

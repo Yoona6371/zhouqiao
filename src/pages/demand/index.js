@@ -196,7 +196,6 @@ class Index extends Component {
 
   demandSet = () => {
     if (this.props.route.params !== undefined) {
-      console.log('修改');
       Http.demandUpdate(
         this.state.data,
         '/' + this.props.route.params.requirementId,
@@ -209,6 +208,7 @@ class Index extends Component {
       Http.demandSet(this.state.data).then((res) => {
         if (res.status === 200) {
           NavigationHelper.navigate('DemandDetails');
+          console.log(res);
         }
       });
     }
