@@ -54,7 +54,7 @@ class Index extends Component {
         const res = await DocumentPicker.pick({
           type: [DocumentPicker.types.images],
         });
-        console.log(res);
+        // console.log(res);
         // console.log(
         //   res.uri,
         //   res.type, // mime type

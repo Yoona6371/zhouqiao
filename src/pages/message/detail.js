@@ -133,7 +133,7 @@ class TestRNIMUI extends Component {
       }
       messages.push(message);
     });
-    console.log(messageIds);
+    // console.log(messageIds);
     Http.ifRead({
       messageIds,
     }).then((res) => {
@@ -211,7 +211,7 @@ class TestRNIMUI extends Component {
   }
 
   onMsgLongClick = (message) => {
-    console.log(message);
+    // console.log(message);
     let overlayView = (
       <Overlay.PopView
         style={{ alignItems: 'center', justifyContent: 'center' }}
@@ -251,9 +251,9 @@ class TestRNIMUI extends Component {
   };
   messageRevoke = (message) => {
     let msgId = message.msgId;
-    console.log(message);
+    // console.log(message);
     Http.revoke({ messageId: msgId }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.data.data === msgId) {
         Toast.success('撤销成功', 1000, 'center');
         AuroraIController.removeMessage(msgId);
@@ -347,7 +347,7 @@ class TestRNIMUI extends Component {
   };
 
   onFinishRecordVoice = async (mediaPath, duration) => {
-    console.log(mediaPath);
+    // console.log(mediaPath);
     let message = constructNormalMessage();
     message.msgType = 'voice';
     message.mediaPath = mediaPath;
@@ -368,7 +368,7 @@ class TestRNIMUI extends Component {
     formData.append('contentType', 1);
     formData.append('msgType', 1);
     formData.append('toId', this.props.route.params.fromId);
-    console.log(formData);
+    // console.log(formData);
     AuroraIController.appendMessages([message]);
     let res = await axios.post(
       'http://www.zhouqiao.art:8080/api/message/chat/upimg',
@@ -380,7 +380,6 @@ class TestRNIMUI extends Component {
         },
       },
     );
-    console.log(111111111111111111, res);
     console.log('on finish record voice');
   };
 
@@ -403,7 +402,7 @@ class TestRNIMUI extends Component {
   // 发送图片
   onSendGalleryFiles = (mediaFiles) => {
     // 由于图片大小需要做裁剪
-    console.log(mediaFiles);
+    // console.log(mediaFiles);
     // Alert.alert('fas', JSON.stringify(mediaFiles));
     // mediaFiles.forEach((v, i) => {
     //   let message = constructNormalMessage();
@@ -490,7 +489,7 @@ class TestRNIMUI extends Component {
           },
         },
       );
-      console.log(res2);
+      // console.log(res2);
       if (res2.status === 200) {
         AuroraIController.updateMessage({ ...message, status: 'send_succeed' });
       }

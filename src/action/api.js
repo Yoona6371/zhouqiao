@@ -195,6 +195,26 @@ const api = {
     url: '/api/wxPay/unifiedOrder',
     method: 'get',
   },
+  getMyAddress: {
+    url: '/api/user/addresses',
+    method: 'get',
+  },
+  addMyaddress: {
+    url: '/api/user/address',
+    method: 'post',
+  },
+  changeAddress: {
+    url: '/api/user/address/{addressId}',
+    method: 'put',
+  },
+  addressDetails: {
+    url: '/api/user/address/{addressId}',
+    method: 'get',
+  },
+  deleteAddress: {
+    url: '/api/user/address/{addressId}',
+    method: 'delete',
+  },
   // 生成商品订单
   generateGoodOrder: {
     url: '/api/stylist/orderCommodity',
