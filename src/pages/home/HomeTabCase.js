@@ -10,7 +10,14 @@ export default class HomeTabCase extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataList: [],
+      dataList: [
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+      ],
       refreshState: RefreshState.Idle,
       totalPage: 0,
       currentPage: 1,
@@ -31,6 +38,8 @@ export default class HomeTabCase extends Component {
       refreshState:
         dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
+    // console.log(dataList);
+
   };
 
   onFooterRefresh = async () => {
@@ -68,6 +77,7 @@ export default class HomeTabCase extends Component {
 
   render() {
     const { dataList } = this.state;
+
     return (
       <RefreshListView
         data={dataList}
@@ -80,8 +90,10 @@ export default class HomeTabCase extends Component {
             user_id={item.case_author}
             Commodity_type={this.props.route.title}
             image={item.picture}
+            userId={item.case_author_id}
             user_image={item.case_author_avatar}
             style={{ ...padding(25, 0, 25, 0) }}
+            caseId={item.case_id}
           />
         )}
         refreshState={this.state.refreshState}

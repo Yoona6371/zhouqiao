@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import Shimmer from 'react-native-shimmer';
 
 import Banner from '../../components/bussiness/banner';
 import SearchInput from '../../components/bussiness/searchInput';
@@ -29,14 +30,68 @@ import {
   margin,
   padding,
 } from '../../utils/StyleUtils';
+import CommodityCard from '../../components/bussiness/CommodityCard';
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pages: [],
-      hotData: [],
-      headerPhoto: [],
+      hotData: [
+        {
+          case_id: 0,
+          cover: '',
+          case_name: '',
+          purchase_num: 0,
+        },
+        {
+          case_id: 1,
+          cover: '',
+          case_name: '',
+          purchase_num: 0,
+        },
+      ],
+      headerPhoto: [
+        {
+          name: '',
+          image: {
+            uri: '',
+          },
+        },
+        {
+          name: '',
+          image: {
+            uri: '',
+          },
+        },
+        {
+          name: '',
+          image: {
+            uri: '',
+          },
+        },
+        {
+          name: '',
+          image: {
+            uri: '',
+          },
+        },
+        {
+          name: '',
+          image: {
+            uri: '',
+          },
+        },
+      ],
+      dataList: [
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+      ],
+      slideList: [],
     };
     this._contentViewScroll = this._contentViewScroll.bind(this);
   }
@@ -47,6 +102,7 @@ class Index extends Component {
       page: 1,
       size: 12,
     });
+    // console.log(hotDesignCaseList);
     let rankingListRes = await Http.rankingList({
       page: 1,
       size: 8,
@@ -58,6 +114,7 @@ class Index extends Component {
         image: {
           uri: item.userAvatar,
         },
+        userId: item.userId,
       });
     });
     //获取案例类别
@@ -70,16 +127,61 @@ class Index extends Component {
         component: HomeTabCase,
       });
     });
+
+    // console.log(rankingListRes);
+
+    let slideRes = await Http.getSlideShow({
+      type: 0,
+    });
+    let slideList = [];
+    slideRes.data.data.forEach((item) => {
+      slideList.push({
+        title: 'White Pocket Sunset',
+        subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
+        illustration: item.cover,
+      });
+    });
+
     this.setState({
       hotData: hotDesignCaseList.data.data.records,
       pages: arrCaseType,
       headerPhoto: rankingList,
+      slideList,
     });
   }
   MyTabs = () => {
     let { pages } = this.state;
     if (pages.length === 0) {
-      return;
+      return (
+        <View>
+          <Shimmer style={{ marginTop: pxToDp(30) }}>
+            <View
+              style={{
+                height: pxToDp(45),
+                width: deviceWidthDp,
+                backgroundColor: '#eae8e8',
+              }}
+            />
+          </Shimmer>
+          <FlatList
+            data={this.state.dataList}
+            numColumns={2}
+            contentContainerStyle={{ backgroundColor: '#fff' }}
+            keyExtractor={this.keyExtractor}
+            renderItem={({ item, index }) => (
+              <CommodityCard
+                Title={item.case_name}
+                user_id={item.case_author}
+                Commodity_type={this.props.route.title}
+                image={item.picture}
+                user_image={item.case_author_avatar}
+                userId={123}
+                style={{ ...padding(25, 0, 25, 0) }}
+              />
+            )}
+          />
+        </View>
+      );
     } else {
       return (
         <TopTabNavigator
@@ -104,12 +206,13 @@ class Index extends Component {
     let offsetY = e.nativeEvent.contentOffset.y; //滑动距离
     let contentSizeHeight = e.nativeEvent.contentSize.height; //scrollView contentSize高度
     let oriageScrollHeight = e.nativeEvent.layoutMeasurement.height; //scrollView高度
-    if (offsetY + oriageScrollHeight >= contentSizeHeight) {
+    if (offsetY + oriageScrollHeight >= contentSizeHeight - pxToDp(10)) {
       this.child.onFooterRefresh();
     }
   }
 
   render() {
+    let list = ['asd', 'asd'];
     return (
       <View style={{ flex: 1 }}>
         <ImageBackground
@@ -129,14 +232,25 @@ class Index extends Component {
           style={{
             backgroundColor: '#fff',
           }}
-          scrollEnabled={this.state.enableScrollViewScroll}
           onMomentumScrollEnd={this._contentViewScroll}
         >
           <ImageBackground
             source={require('../../asserts/images/home_header_bg.png')}
             style={styles.home_header2}
           >
-            <Banner />
+            {this.state.slideList.length === 0 ? (
+              <Shimmer style={{ marginTop: pxToDp(10) }}>
+                <View
+                  style={{
+                    height: pxToDp(346),
+                    width: pxToDp(230),
+                    backgroundColor: '#eae8e8',
+                  }}
+                />
+              </Shimmer>
+            ) : (
+              <Banner slideList={this.state.slideList} />
+            )}
           </ImageBackground>
           {/*最新通知*/}
           <View style={styles.home_information}>
@@ -268,7 +382,11 @@ class Index extends Component {
               horizontal={true}
               data={this.state.headerPhoto}
               renderItem={({ item }) => (
-                <HomeAvatar name={item.name} image={item.image} />
+                <HomeAvatar
+                  name={item.name}
+                  image={item.image}
+                  userId={item.userId}
+                />
               )}
             />
             {/*热门列表结束*/}
@@ -292,7 +410,12 @@ class HomeAvatar extends Component {
   render() {
     return (
       <View style={{ ...margin(25, 36, 25, 46) }}>
-        <Avatar size={130} image={this.props.image} isVip={true} />
+        <Avatar
+          userId={this.props.userId}
+          size={130}
+          image={this.props.image}
+          isVip={true}
+        />
         <Text
           style={{
             marginTop: pxToDp(15),
@@ -313,7 +436,8 @@ const styles = StyleSheet.create({
   },
   home_header2: {
     width: deviceWidthDp,
-    height: pxToDp(362),
+    height: pxToDp(342),
+    overflow: 'hidden',
   },
   header_container: {
     ...flexRowSpb,
@@ -324,7 +448,7 @@ const styles = StyleSheet.create({
     height: pxToDp(74),
   },
   home_information: {
-    ...padding(0, 35, 0, 35),
+    ...padding(0, 15, 0, 35),
     ...margin(30, 0, 30, 0),
     ...flexRowSpb,
     borderBottomWidth: 1,

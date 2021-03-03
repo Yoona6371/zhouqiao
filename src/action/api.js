@@ -1,23 +1,36 @@
 // 封装接口
 const api = {
-  categoryCase: {
-    url: '/api/designCase/stylist/design_cases/category',
-    method: 'get',
-  },
   login: {
     url: '/api/auth/password',
+    method: 'post',
+  },
+  getVerifyCode: {
+    url: '/api/sms/verifyCode',
+    method: 'get',
+  },
+  register: {
+    utl: '/api/user/register',
     method: 'post',
   },
   getMyInfo: {
     url: '/api/client/my/baseInfo',
     method: 'get',
   },
-  caseType: {
-    url: '/designCase/designCaseCategory/client/design_cases/category/list',
-    method: 'get',
-  },
+
   rankingList: {
     url: '/api/stylist/RankingList',
+    method: 'get',
+  },
+  test: {
+    url: '/api/client/baseInfo',
+    method: 'get',
+  },
+  categoryCase: {
+    url: '/api/designCase/stylist/design_cases/category',
+    method: 'get',
+  },
+  caseType: {
+    url: '/designCase/designCaseCategory/client/design_cases/category/list',
     method: 'get',
   },
   demandSet: {
@@ -26,7 +39,7 @@ const api = {
   },
   demandUpdate: {
     url: '/api/client/my/requirement',
-    method: 'post',
+    method: 'put',
   },
   demandDelete: {
     url: '/api/client/my/requirement',
@@ -54,7 +67,7 @@ const api = {
   //   false,
   // )
   getOthersDetail: {
-    url: '/api/client',
+    url: '/api/stylist',
     method: 'get',
   },
 
@@ -140,7 +153,11 @@ const api = {
     method: 'get',
   },
   // 获取设计案例
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
   getDesignExample: {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
@@ -158,6 +175,7 @@ const api = {
     url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
+<<<<<<< HEAD
   // 获取订单列表
   getOrderLists: {
     url: '/api/client/orders',
@@ -173,6 +191,7 @@ const api = {
     url: '/api/order',
     method: 'get'
   },
+=======
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
 };
-
 export default api;

@@ -11,6 +11,7 @@ import { pxToDp } from '../../utils/pxToDp';
 import PropTypes from 'prop-types';
 import { activeOpacity } from '../../constants/config';
 import Avatar from '../common/Avatar';
+import Shimmer from 'react-native-shimmer';
 class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
@@ -31,7 +32,10 @@ class CommodityCard extends React.PureComponent {
     this.state = {};
   }
   Press = () => {
-    NavigationHelper.navigate('CommodityDetail');
+    NavigationHelper.navigate('CommodityDetail', {
+      caseId: this.props.caseId,
+      type: this.props.type,
+    });
   };
   render() {
     const {
@@ -63,17 +67,40 @@ class CommodityCard extends React.PureComponent {
           {this.props.type === 3 ? (
             <View style={styles.CommodityCard__typeThreeContainer}>
               <View style={styles.CommodityCard__shoppingImageBox}>
-                <Image
-                  source={{
-                    uri: image,
-                  }}
-                  style={styles.CommodityCard__shoppingImage}
-                />
+                {image === '' ? (
+                  <Shimmer>
+                    <ImageBackground
+                      source={{
+                        uri: image,
+                      }}
+                      style={styles.CommodityCard__shoppingImage}
+                    />
+                  </Shimmer>
+                ) : (
+                  <ImageBackground
+                    source={{
+                      uri: image,
+                    }}
+                    style={styles.CommodityCard__shoppingImage}
+                  />
+                )}
               </View>
               <View style={styles.CommodityCard__typeThreeShoppingTitleBox}>
-                <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
-                  {Title}
-                </Text>
+                {Title === '' ? (
+                  <Shimmer style={{ marginTop: pxToDp(10) }}>
+                    <View
+                      style={{
+                        height: pxToDp(25),
+                        width: pxToDp(230),
+                        backgroundColor: '#eae8e8',
+                      }}
+                    />
+                  </Shimmer>
+                ) : (
+                  <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
+                    {Title}
+                  </Text>
+                )}
               </View>
               <View style={{ marginTop: pxToDp(24) }}>
                 <Text
@@ -91,29 +118,66 @@ class CommodityCard extends React.PureComponent {
             <View style={styles.CommodityCard__typeOneCaseBox}>
               {/*案例图片开始*/}
               <View>
-                <ImageBackground
-                  source={{
-                    uri: image,
-                  }}
-                  style={{ width: pxToDp(325), height: pxToDp(325) }}
-                >
-                  <View style={styles.CommodityCard__typeOneTypeBox}>
-                    <Text style={styles.CommodityCard__typeOneTpyeText}>
-                      {this.props.Commodity_type}
-                    </Text>
-                  </View>
-                </ImageBackground>
+                {image === '' ? (
+                  <Shimmer>
+                    <ImageBackground
+                      source={{
+                        uri: image,
+                      }}
+                      style={{
+                        width: pxToDp(325),
+                        height: pxToDp(325),
+                        backgroundColor: '#eae8e8',
+                      }}
+                    >
+                      <View style={styles.CommodityCard__typeOneTypeBox}>
+                        <Text style={styles.CommodityCard__typeOneTpyeText}>
+                          {this.props.Commodity_type}
+                        </Text>
+                      </View>
+                    </ImageBackground>
+                  </Shimmer>
+                ) : (
+                  <ImageBackground
+                    source={{
+                      uri: image,
+                    }}
+                    style={{
+                      width: pxToDp(325),
+                      height: pxToDp(325),
+                      backgroundColor: '#eae8e8',
+                    }}
+                  >
+                    <View style={styles.CommodityCard__typeOneTypeBox}>
+                      <Text style={styles.CommodityCard__typeOneTpyeText}>
+                        {this.props.Commodity_type}
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                )}
               </View>
               {/*案例图片结束*/}
               {/*案例描述开始*/}
               <View>
                 <View style={styles.CommodityCard__typeOneTitleBox}>
-                  <Text
-                    styel={styles.CommodityCard__typeOneTitle}
-                    numberOfLines={2}
-                  >
-                    {this.props.Title}
-                  </Text>
+                  {Title === '' ? (
+                    <Shimmer style={{ marginTop: pxToDp(10) }}>
+                      <View
+                        style={{
+                          height: pxToDp(25),
+                          width: pxToDp(230),
+                          backgroundColor: '#eae8e8',
+                        }}
+                      />
+                    </Shimmer>
+                  ) : (
+                    <Text
+                      styel={styles.CommodityCard__typeOneTitle}
+                      numberOfLines={2}
+                    >
+                      {this.props.Title}
+                    </Text>
+                  )}
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {/*用户头像开始*/}
@@ -172,7 +236,11 @@ const styles = StyleSheet.create({
     elevation: 10,
     overflow: 'hidden',
   },
-  CommodityCard__shoppingImage: { width: pxToDp(330), height: pxToDp(300) },
+  CommodityCard__shoppingImage: {
+    width: pxToDp(330),
+    height: pxToDp(300),
+    backgroundColor: '#eae8e8',
+  },
   CommodityCard__typeThreeShoppingTitleBox: {
     width: pxToDp(306),
     marginTop: pxToDp(25),
@@ -216,7 +284,6 @@ const styles = StyleSheet.create({
     marginTop: pxToDp(24),
     marginLeft: pxToDp(9),
     borderRadius: pxToDp(25),
-    backgroundColor: '#FE9E0E',
     justifyContent: 'center',
     overflow: 'hidden',
     alignItems: 'center',

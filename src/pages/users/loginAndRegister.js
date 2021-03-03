@@ -18,8 +18,8 @@ import { inject, observer } from 'mobx-react';
 import Toast from '../../components/common/Toast/Toast';
 import RootStore from '../../mobx/index';
 import LocalStorageUtils from '../../utils/LocalStorageUtils';
-import navigationHelper from '../../utils/navigationHelper';
 const Tab = createMaterialTopTabNavigator();
+import axios from 'axios';
 
 @inject('RootStore')
 @observer
@@ -36,12 +36,12 @@ class LoginTab extends Component {
       img: '',
     };
   }
-  forgetPassword = () => {};
   login = () => {
     Http.login({
       account: this.state.phoneNumber,
       password: this.state.password,
     }).then((res) => {
+      console.log(res);
       if (res.data.code === 0) {
         Toast.success(res.data.msg, 1000, 'center');
         NavigationHelper.goBack();
@@ -94,12 +94,17 @@ class LoginTab extends Component {
           />
           {/*forgetPassword start*/}
           <View style={{ marginTop: pxToDp(45) }}>
-            <Text
-              style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              onPress={this.forgetPassword}
+            <TouchableOpacity
+              onPress={() => {
+                NavigationHelper.navigate('FindPassword');
+              }}
             >
-              忘记密码？
-            </Text>
+              <Text
+                style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
+              >
+                忘记密码？
+              </Text>
+            </TouchableOpacity>
           </View>
           {/*forgetPassword end*/}
           {/*button start*/}
@@ -133,23 +138,70 @@ class LoginTab extends Component {
   }
 }
 class RegisterTab extends Component {
+  constructor() {
+    super();
+    this.state = {
+      phoneNumber: '',
+      password: '',
+      verifyCode: '',
+    };
+  }
+
+  register = () => {
+    axios
+      .post(
+        'http://www.zhouqiao.art:8080/api/user/register',
+        {
+          mobile: this.state.phoneNumber,
+          password: this.state.password,
+          verifyCode: this.state.verifyCode,
+        },
+        { params: { role: '2' } },
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.code === 0) {
+          Toast.success('注册成功', 1000, 'center');
+        } else {
+          Toast.fail(res.data.msg, 1000, 'center');
+        }
+      });
+  };
+
   render() {
     return (
-      <View style={{ alignItems: 'center', backgroundColor: '#FFFFFF' }}>
+      <View
+        style={{ flex: 1, alignItems: 'center', backgroundColor: '#FFFFFF' }}
+      >
         {/*注册 start*/}
         <View style={{ marginTop: pxToDp(90) }}>
-          <LoginInput type={2} />
+          <LoginInput
+            type={2}
+            verifyType={1}
+            phoneNumberGet={(value) => {
+              this.setState({ phoneNumber: value });
+            }}
+            passwordGet={(value) => {
+              this.setState({ password: value });
+            }}
+            verifyCodeGet={(value) => {
+              this.setState({ verifyCode: value });
+            }}
+          />
           {/*forgetPassword start*/}
-          <View style={{ marginTop: pxToDp(45), flexDirection: 'row' }}>
+          <View style={{ marginTop: pxToDp(25), flexDirection: 'row' }}>
             <Text style={{ color: '#999999', fontSize: pxToDp(24) }}>
               已有帐号？
             </Text>
-            <Text
-              style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              onPress={() => this.props.navigation.navigate('LoginTab')}
+            <TouchableOpacity
+              onPress={() => {
+                NavigationHelper.navigate();
+              }}
             >
-              立即登录
-            </Text>
+              <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
+                立即登录
+              </Text>
+            </TouchableOpacity>
           </View>
           {/*forgetPassword end*/}
           {/*button start*/}
@@ -162,6 +214,7 @@ class RegisterTab extends Component {
                 backgroundColor: '#FD840B',
                 justifyContent: 'center',
               }}
+              onPress={this.register}
             >
               <Text
                 style={{
@@ -170,7 +223,7 @@ class RegisterTab extends Component {
                   color: '#FFFFFF',
                 }}
               >
-                登录
+                注册
               </Text>
             </TouchableOpacity>
           </View>
@@ -198,6 +251,7 @@ class Index extends Component {
       ],
     };
   }
+
   MyTabs = () => {
     let { pages } = this.state;
     return (
@@ -218,12 +272,11 @@ class Index extends Component {
         }}
       >
         {pages.map((v, i) => (
-          <Tab.Screen name={v.name} component={v.component} key={i} />
+          <Tab.Screen name={v.name} component={v.component} />
         ))}
       </Tab.Navigator>
     );
   };
-  forgetPassword = () => {};
   render() {
     const { pages } = this.state;
     return (
@@ -240,11 +293,12 @@ class Index extends Component {
             <TouchableOpacity
               style={styles.TouchableOpacity__close}
               onPress={() => {
-                NavigationHelper.navigate('Tab');
+                NavigationHelper.goBack();
               }}
             >
               <Icon name="close" style={styles.Icon__close} />
             </TouchableOpacity>
+
             {/*logo*/}
             <View style={styles.logo}>
               <Image
