@@ -258,7 +258,7 @@ class Index extends Component {
     console.log(this.state.value);
     let res = await Http.getPaymentDetail({
       body: '舟桥之家',
-      outTradeNo: this.state.value,
+      outTradeNo: '4564125648',
       totalFee: 1,
     });
     console.log(res);
@@ -286,24 +286,24 @@ class Index extends Component {
     //   scene: 0,
     // });
   }
-
-  onChangeText(text) {
-    this.setState({ value: text });
-  }
+  //
+  // onChangeText(text) {
+  //   this.setState({ value: text });
+  // }
   render() {
     let list = ['asd', 'asd'];
     return (
       <View style={{ flex: 1 }}>
-        <TextInput
-          style={{
-            height: 40,
-            borderColor: 'gray',
-            borderWidth: 1,
-            marginTop: 30,
-          }}
-          onChangeText={(text) => this.onChangeText(text)}
-          value={this.state.value}
-        />
+        {/*<TextInput*/}
+        {/*  style={{*/}
+        {/*    height: 40,*/}
+        {/*    borderColor: 'gray',*/}
+        {/*    borderWidth: 1,*/}
+        {/*    marginTop: 30,*/}
+        {/*  }}*/}
+        {/*  onChangeText={(text) => this.onChangeText(text)}*/}
+        {/*  value={this.state.value}*/}
+        {/*/>*/}
         <ImageBackground
           source={require('../../asserts/images/home_header_bg.png')}
           style={styles.home_header1}

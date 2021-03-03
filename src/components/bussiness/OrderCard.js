@@ -42,8 +42,8 @@ class OrderCard extends React.Component {
     OrderCardTitle:
       '这是我的买卖，快快花十个亿买走吧快快花十个亿买走吧快快花十个亿买走吧快快花十个亿买走吧快快花十个亿买走吧',
     OrderCardPrince: 6666,
-    btnText: '立即评价',
-    topStatus: '待评价',
+    // btnText: '222',
+    // topStatus: 'asd',
     shoppingNumber: 1,
   };
   render() {
@@ -53,11 +53,14 @@ class OrderCard extends React.Component {
       OrderCardNumber,
       OrderCardTitle,
       OrderCardPrince,
-      OrderCardType,
+      // OrderCardType,
       // OrderCardImage,
       btnText,
       topStatus,
       shoppingNumber,
+      imgUri,
+      onpressRight,
+      onpressLeft
     } = this.props;
     return (
       <View style={{ ...styles.OrderCard_box, ...this.props.style }}>
@@ -89,21 +92,21 @@ class OrderCard extends React.Component {
             }}
           >
             <ImageBackground
-              source={require('../../asserts/images/shopping_Image.png')}
+              source={{ uri: imgUri }}
               style={styles.Order_imgBox}
             >
-              <View style={styles.Order_typeBox}>
+              {/* <View style={styles.Order_typeBox}>
                 <Text style={styles.Order_typeText}>{OrderCardType}</Text>
-              </View>
+              </View> */}
               {isUrgent === true ? (
                 <View style={styles.Urgent_box}>
                   <Text style={styles.Urgent_text}>加急</Text>
                 </View>
               ) : (
-                <View>
-                  <Text />
-                </View>
-              )}
+                  <View>
+                    <Text />
+                  </View>
+                )}
             </ImageBackground>
           </View>
           {/*订单图片部分结束*/}
@@ -150,20 +153,24 @@ class OrderCard extends React.Component {
                 </Text>
               </View>
             ) : (
-              <View />
-            )}
+                <View />
+              )}
 
             {/*取消订单按钮开始*/}
             {type === 1 ? (
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={onpressRight}
+              >
                 <View style={styles.cancellation_box}>
                   <Text style={styles.cancellation_text}>取消订单</Text>
                 </View>
               </TouchableOpacity>
             ) : (
-              <View />
-            )}
-            <TouchableOpacity>
+                <View />
+              )}
+            <TouchableOpacity
+              onPress={onpressLeft}
+            >
               <View
                 style={{
                   ...styles.payment_box,

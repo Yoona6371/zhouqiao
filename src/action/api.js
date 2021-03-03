@@ -183,5 +183,20 @@ const api = {
     url: '/api/client/orderDesignCase/',
     method: 'post',
   },
+  // 获取订单列表
+  getOrderLists: {
+    url: '/api/client/orders',
+    method: 'get',
+  },
+  //排行榜
+  getRankList: {
+    url: '/api/stylist/RankingList',
+    method: 'get',
+  },
+  //订单详情
+  orderDetail: {
+    url: '/api/order',
+    method: 'get',
+  },
 };
 export default api;
