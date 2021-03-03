@@ -148,6 +148,10 @@ const api = {
     url: '/api/designCaseCollect/client/design_cases/collect/cancel',
     method: 'delete',
   },
+  mobileSet: {
+    url: '/api/user/binding/mobile',
+    method: 'put',
+  },
   getSlideShow: {
     url: '/api/slideShow',
     method: 'get',
@@ -157,14 +161,31 @@ const api = {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
   },
+  // 消息
+  messageDetail: {
+    url: '/api/message/getMessageList',
+    method: 'post',
+  },
+  upimg: {
+    url: '/api/message/chat/upimg',
+    method: 'post',
+  },
+  ifRead: {
+    url: '/api/message/readed',
+    method: 'get',
+  },
+  revoke: {
+    url: '/api/message/revoke',
+    method: 'get',
+  },
+  send: {
+    url: '/api/message/send',
+    method: 'post',
+  },
   // 搜索
   getSearchList: {
     url: '/api/search',
     method: 'get',
-  },
-  mobileSet: {
-    url: '/api/user/binding/mobile',
-    method: 'put',
   },
   goodsDetail: {
     url: '/api/commodityExt/client/commodities/detail',
@@ -222,6 +243,6 @@ const api = {
   demandDetail: {
     url: '/api/requirement',
     method: 'get',
-  }
+  },
 };
 export default api;

@@ -17,7 +17,7 @@ export default class AddressList extends Component {
   };
 
   delete = () => {
-    this.props.addressIdGet()
+    this.props.addressIdGet();
   };
 
   editor = (jumPage) => {
@@ -38,7 +38,7 @@ export default class AddressList extends Component {
           >
             {address}
           </Text>
-          {defaultShow ===1  ? (
+          {defaultShow === 1 ? (
             <View style={styles.defaultShow_box}>
               <Text style={{ color: '#FFFFFF', fontSize: pxToDp(17) }}>
                 默认
