@@ -23,10 +23,11 @@ import {
   padding,
 } from '../../utils/StyleUtils';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
-
+import Toast from '../../components/common/Toast/Toast';
 import { activeOpacity } from '../../constants/config';
-import { log } from 'react-native-reanimated';
-
+import { inject } from 'mobx-react';
+import Shimmer from 'react-native-shimmer';
+@inject('RootStore')
 class CommodityDetail extends Component {
   constructor(props) {
     super(props);
@@ -51,50 +52,102 @@ class CommodityDetail extends Component {
     console.log(this.state.caseId);
     let newCaseId = this.props.route.params.caseId;
     await this.setState({ caseId: newCaseId });
-    console.log('我的案例id', this.state.caseId);
-    //获取案例详情
-    let res = await Http.CaseDetails({
-      designCaseId: this.state.caseId.toString(),
-    });
-    let detailsData = res.data.data;
-    console.log('案例详情数据', detailsData);
-    // console.log('案例详情数据', detailsData.list);
-    await this.setState({
-      detailsData: detailsData,
-      detailsDataList: detailsData.list,
-      isCollect: detailsData.collected,
-    });
-    //改装轮播图数据
-    let pictureList = [];
-    this.state.detailsDataList.forEach((item) => {
-      pictureList.push({
-        title: item.designCaseId,
-        subtitle: item.designCaseId,
-        illustration: item.picturePath,
-      });
-    });
-    this.setState({ pictureList: pictureList });
-    // console.log('图片list',pictureList);
+    await this.getRes();
   };
+
+  getRes = async () => {
+    if (this.props.route.params.type == 3) {
+      console.log(this.props.route.params.caseId);
+      let res = await Http.goodsDetail({
+        commodityId: this.props.route.params.caseId,
+      });
+      let detailsData = res.data.data;
+      await this.setState({
+        detailsData: detailsData,
+        detailsDataList: detailsData.list,
+      });
+      //改装轮播图数据
+      let pictureList = [];
+      this.state.detailsDataList.forEach((item) => {
+        pictureList.push({
+          title: item.designCaseId,
+          subtitle: item.designCaseId,
+          illustration: item.picturePath,
+        });
+      });
+      this.setState({ pictureList: pictureList });
+    } else {
+      let res = await Http.CaseDetails({
+        designCaseId: this.props.route.params.caseId,
+      });
+      let detailsData = res.data.data;
+      await this.setState({
+        detailsData: detailsData,
+        detailsDataList: detailsData.list,
+        isCollect: detailsData.collected,
+      });
+      //改装轮播图数据
+      let pictureList = [];
+      this.state.detailsDataList.forEach((item) => {
+        pictureList.push({
+          title: 'White Pocket Sunset',
+          subtitle: 'Lorem ipsum dolor sit amet et nuncat ',
+          illustration: item.picturePath,
+        });
+      });
+      this.setState({ pictureList: pictureList });
+      // console.log('图片list',pictureList);
+    }
+  };
+
   //点击收藏 取消收藏
   CollectOnclick = async () => {
+    const token = this.props.RootStore.userStore.allData.accessToken;
+    if (!token) {
+      Toast.message('您尚未登录');
+      return;
+    }
     let { caseId } = this.state;
     if (!this.state.isCollect) {
       let i = await Http.CollectCase({}, '', false, {
         params: { designCaseId: caseId },
       });
       this.setState({ isCollect: !this.state.isCollect });
+      Toast.message('收藏成功');
     } else {
       let j = await Http.DeleteCase({ designCaseId: caseId });
       this.setState({ isCollect: !this.state.isCollect });
+      Toast.message('取消收藏');
     }
   };
+
+  handleOrder = async () => {
+    let res;
+    if (this.props.route.params.type == 3) {
+      res = await Http.generateGoodOrder({
+        commodityId: this.props.route.params.caseId,
+        number: 1,
+      });
+    } else {
+      res = await Http.generateDesignOrder({}, this.props.route.params.caseId);
+    }
+    if (res.data.code === 0) {
+      Toast.message('生成订单成功');
+      NavigationHelper.navigate('OrderLists');
+    } else {
+      Toast.message(res.data.msg);
+    }
+  };
+
   render() {
     const { detailsData, isCollect, detailsDataList } = this.state;
     console.log('render里的list', detailsData.list);
     return (
       <View style={{ flex: 1 }}>
-        <TopTitle title={'案例详情'} showBtn={false} />
+        <TopTitle
+          title={this.props.route.params.type == 3 ? '商品介绍' : '案例介绍'}
+          showBtn={false}
+        />
         <ScrollView
           style={{
             backgroundColor: '#fff',
@@ -104,40 +157,26 @@ class CommodityDetail extends Component {
         >
           <View style={styles.banner_wrap}>
             {this.state.renderPlaceholderOnly ? null : (
-              <Banner
-                type={2}
-                list={this.state.pictureList}
-                listLength={this.state.pictureList.length}
-              />
+              <Banner type={2} slideList={this.state.pictureList} />
             )}
-            <LinearGradient
-              colors={['rgba(255, 255, 255, 0.3)', 'rgba(34,34,34,1)']}
-              style={styles.banner_footer}
-            >
-              <Text style={styles.banner_footer_text}>123</Text>
-            </LinearGradient>
-            <TouchableOpacity style={styles.icon_box}>
-              <Icon
-                name={'collect'}
-                style={{
-                  fontSize: pxToDp(36),
-                  paddingBottom: pxToDp(4),
-                  color: '#fff',
-                }}
+          </View>
+
+          {this.props.route.params.type == 3 ? null : (
+            <View style={styles.design_box}>
+              <Text style={styles.design_box_title}>设计师介绍</Text>
+              <UserXCard
+                image={{ uri: detailsData.caseAuthorAvatar }}
+                name={detailsData.caseAuthor}
+                text={detailsData.collectNum}
+                userId={detailsData.caseAuthorId}
               />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.design_box}>
-            <Text style={styles.design_box_title}>设计师介绍</Text>
-            <UserXCard
-              image={{ uri: detailsData.caseAuthorAvatar }}
-              name={detailsData.caseAuthor}
-              text={detailsData.collectNum}
-            />
-          </View>
+            </View>
+          )}
           <View style={styles.case_wrap}>
             <View style={styles.case_header}>
-              <Text style={styles.case_header_title}>案例介绍</Text>
+              <Text style={styles.case_header_title}>
+                {this.props.route.params.type == 3 ? '商品介绍' : '案例介绍'}
+              </Text>
               <View style={styles.case_header_title_right}>
                 <Text
                   style={{
@@ -165,6 +204,7 @@ class CommodityDetail extends Component {
             {detailsDataList.map((item) => {
               return (
                 <Image
+                  key={item.picturePath}
                   style={{ width: pxToDp(690), height: pxToDp(1000) }}
                   source={{
                     uri: item.picturePath,
@@ -175,24 +215,26 @@ class CommodityDetail extends Component {
           </View>
         </ScrollView>
         <View style={styles.commodity_footer}>
-          <TouchableOpacity
-            activeOpacity={activeOpacity}
-            style={styles.commodity_footer_but}
-            onPress={() => {
-              this.CollectOnclick();
-            }}
-          >
-            <Icon
-              name={'collect'}
-              style={{
-                fontSize: pxToDp(25),
-                color: isCollect ? '#fe9e0eFF' : '#A1A3A5',
-              }}
-            />
-            <Text style={{ ...styles.but_text, marginTop: pxToDp(15) }}>
-              收藏
-            </Text>
-          </TouchableOpacity>
+          {this.props.route.params.type == 3 ? (
+            <View style={styles.commodity_footer_but} />
+          ) : (
+            <TouchableOpacity
+              activeOpacity={activeOpacity}
+              style={styles.commodity_footer_but}
+              onPress={this.CollectOnclick}
+            >
+              <Icon
+                name={'collect'}
+                style={{
+                  fontSize: pxToDp(25),
+                  color: isCollect ? '#fe9e0eFF' : '#A1A3A5',
+                }}
+              />
+              <Text style={{ ...styles.but_text, marginTop: pxToDp(15) }}>
+                收藏
+              </Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
             activeOpacity={activeOpacity}
             style={styles.commodity_footer_but2}
@@ -208,6 +250,7 @@ class CommodityDetail extends Component {
           <TouchableOpacity
             activeOpacity={activeOpacity}
             style={styles.commodity_footer_but3}
+            onPress={this.handleOrder}
           >
             <View style={{ ...flexRowCenter }}>
               <Text style={{ ...styles.but_text, color: '#fff' }}>价格：</Text>
@@ -233,12 +276,12 @@ const styles = StyleSheet.create({
     width: pxToDp(690),
     overflow: 'hidden',
     position: 'relative',
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderRadius: 8,
     alignSelf: 'center',
-    backgroundColor: '#999',
+    backgroundColor: '#eae8e8',
   },
   banner_footer: {
+    zIndex: 10,
     width: pxToDp(690),
     height: pxToDp(72),
     position: 'absolute',

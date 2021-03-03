@@ -59,12 +59,16 @@ import MessageDetail from '../pages/message/detail';
 import Test from '../pages/test';
 //登录
 import LoginAndRegister from '../pages/users/loginAndRegister';
+//找回密码
+import FindPassword from '../pages/users/findPassword';
 // Tab
 import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import CodePushPage from '../pages/CodePushPage';
-
+import OrderDetail from '../pages/personal/orderDetail';
+// 生成订单
+import CreatOrder from '../pages/personal/creatOrder';
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -92,7 +96,7 @@ class Nav extends React.Component {
       >
         <Stack.Navigator
           initialRouteName="Tab"
-          headerMode={'none'} 
+          headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
             NavigationHelper.navigation = navigation.navigation;
@@ -103,6 +107,32 @@ class Nav extends React.Component {
           <Stack.Screen
             name="LoginAndRegister"
             component={LoginAndRegister}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/* 订单详情 */}
+          <Stack.Screen
+            name="OrderDetail"
+            component={OrderDetail}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/* 生成订单 */}
+          <Stack.Screen
+            name="CreatOrder"
+            component={CreatOrder}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/* 找回密码 */}
+          {/* <Stack.Screen
+          {/* 找回密码 */}
+          <Stack.Screen
+            name="FindPassword"
+            component={FindPassword}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

@@ -67,7 +67,7 @@ const api = {
   //   false,
   // )
   getOthersDetail: {
-    url: '/api/client',
+    url: '/api/stylist',
     method: 'get',
   },
 
@@ -162,10 +162,6 @@ const api = {
     method: 'get',
   },
   // 消息
-  messageList: {
-    url: '/api/message/getList',
-    method: 'get',
-  },
   messageDetail: {
     url: '/api/message/getMessageList',
     method: 'post',
@@ -185,6 +181,48 @@ const api = {
   send: {
     url: '/api/message/send',
     method: 'post',
+  },
+  // 搜索
+  getSearchList: {
+    url: '/api/search',
+    method: 'get',
+  },
+  goodsDetail: {
+    url: '/api/commodityExt/client/commodities/detail',
+    method: 'get',
+  },
+  getPaymentDetail: {
+    url: '/api/wxPay/unifiedOrder',
+    method: 'get',
+  },
+  // 生成商品订单
+  generateGoodOrder: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post',
+  },
+  generateDesignOrder: {
+    url: '/api/client/orderDesignCase/',
+    method: 'post',
+  },
+  // 获取订单列表
+  getOrderLists: {
+    url: '/api/client/orders',
+    method: 'get',
+  },
+  //排行榜
+  getRankList: {
+    url: '/api/stylist/RankingList',
+    method: 'get',
+  },
+  //订单详情
+  orderDetail: {
+    url: '/api/order',
+    method: 'get',
+  },
+  // 需求详情
+  demandDetail: {
+    url: '/api/requirement',
+    method: 'get',
   },
 };
 export default api;
