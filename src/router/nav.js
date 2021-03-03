@@ -66,7 +66,9 @@ import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import CodePushPage from '../pages/CodePushPage';
-
+import OrderDetail from '../pages/personal/orderDetail'
+// 生成订单
+import CreatOrder from '../pages/personal/creatOrder'
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -104,20 +106,51 @@ class Nav extends React.Component {
           {/*登录*/}
           <Stack.Screen
             name="LoginAndRegister"
+<<<<<<< HEAD
+            component={Tab}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          {/* 订单详情 */}
+          <Stack.Screen
+            name="OrderDetail"
+            component={OrderDetail}
+=======
             component={LoginAndRegister }
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+<<<<<<< HEAD
+          {/* 生成订单 */}
+          <Stack.Screen
+            name="CreatOrder"
+            component={CreatOrder}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
           {/* 找回密码 */}
+          {/* <Stack.Screen
+=======
+          {/* 找回密码 */}
           <Stack.Screen
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
             name="FindPassword"
             component={FindPassword}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
+<<<<<<< HEAD
+            }} */}
+          {/* /> */}
+          {/*他人中心*/}
+=======
             }}
           />
           {/*他人中心*/} 
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
           <Stack.Screen
             name="OthersPersonal"
             component={OthersPersonal}

@@ -153,7 +153,11 @@ const api = {
     method: 'get',
   },
   // 获取设计案例
+<<<<<<< HEAD
+
+=======
   
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
   getDesignExample: {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
@@ -171,5 +175,23 @@ const api = {
     url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
+<<<<<<< HEAD
+  // 获取订单列表
+  getOrderLists: {
+    url: '/api/client/orders',
+    method: 'get'
+  },
+  //排行榜
+  getRankList: {
+    url: '/api/stylist/RankingList',
+    method: 'get'
+  },
+  //订单详情
+  orderDetail: {
+    url: '/api/order',
+    method: 'get'
+  },
+=======
+>>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
 };
 export default api;
