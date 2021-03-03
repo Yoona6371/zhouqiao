@@ -41,6 +41,7 @@ import {
   handleShareToSession,
 } from '../../utils/wxHandle';
 import Toast from '../../components/common/Toast/Toast';
+import LocalStorageUtils from '../../utils/LocalStorageUtils';
 
 @inject('RootStore')
 @observer
@@ -190,6 +191,13 @@ class Index extends Component {
     this.props.RootStore.globalStore.setIsWXAppInstalled(
       this.state.isWXAppInstalled,
     );
+
+    // 如果有token就拿token
+    const token = await LocalStorageUtils.get('accessToken');
+    console.log(token, 'token');
+    if (token !== null || '' || undefined) {
+      this.props.RootStore.userStore.setToken(token);
+    }
   }
 
   MyTabs = () => {

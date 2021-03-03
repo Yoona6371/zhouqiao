@@ -6678,6 +6678,11 @@ react-native-reanimated@^1.13.2:
   dependencies:
     fbjs "^1.0.0"
 
+react-native-restart@^0.0.22:
+  version "0.0.22"
+  resolved "https://registry.npm.taobao.org/react-native-restart/download/react-native-restart-0.0.22.tgz#81fcb7f31e35951d85410c68b9556acf3ab88705"
+  integrity sha1-gfy38x41lR2FQQxouVVqzzq4hwU=
+
 react-native-safe-area-context@^3.1.9:
   version "3.1.9"
   resolved "https://registry.npm.taobao.org/react-native-safe-area-context/download/react-native-safe-area-context-3.1.9.tgz"
@@ -6701,6 +6706,11 @@ react-native-shimmer@^0.6.0:
   integrity sha1-lSnEyFZlgnxYLrt0ooWmekUPXys=
   dependencies:
     prop-types "^15.6.0"
+
+react-native-simple-radio-button@^2.7.4:
+  version "2.7.4"
+  resolved "https://registry.npm.taobao.org/react-native-simple-radio-button/download/react-native-simple-radio-button-2.7.4.tgz#86e2dbe8af9e6bf60eee088f60466f7a975e7758"
+  integrity sha1-huLb6K+ea/YO7giPYEZvepded1g=
 
 react-native-smart-refresh@^1.1.5:
   version "1.1.5"

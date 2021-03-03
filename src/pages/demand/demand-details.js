@@ -32,9 +32,9 @@ class DemandDetails extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // 获取需求详情
-    this.requireDetail();
+    await this.requireDetail();
   }
   /**
    * {
@@ -113,7 +113,7 @@ class DemandDetails extends Component {
       category,
       content,
     } = this.state;
-    
+
     return (
       <View style={{ flex: 1 }}>
         <TopTitle title={'需求详情'} showBtn={false} />

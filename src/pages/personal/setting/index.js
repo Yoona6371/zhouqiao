@@ -61,7 +61,7 @@ class Index extends Component {
           title: '退出登录',
           text_more: '',
           svg: security,
-          router: '',
+          router: 'LoginAndRegister',
         },
       ],
       info: {},
