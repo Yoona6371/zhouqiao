@@ -198,5 +198,10 @@ const api = {
     url: '/api/order',
     method: 'get',
   },
+  // 需求详情
+  demandDetail: {
+    url: '/api/requirement',
+    method: 'get',
+  }
 };
 export default api;
