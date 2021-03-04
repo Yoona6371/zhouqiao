@@ -22,7 +22,7 @@ class DemandDetails extends Component {
     super(props);
     this.state = {
       top: true,
-      status: 0,
+      urgent: 0,
       requirementTitle: ' ',
       publisherNick: ' ',
       expectedPrice: 0,
@@ -94,7 +94,7 @@ class DemandDetails extends Component {
     const data = detail.data.data;
     this.setState({
       top: false,
-      status: data.status,
+      urgent: data.urgent,
       requirementTitle: data.requirementTitle,
       publisherNick: data.publisherNick,
       expectedPrice: data.expectedPrice,
@@ -108,7 +108,7 @@ class DemandDetails extends Component {
   render() {
     const {
       top,
-      status,
+      urgent,
       requirementTitle,
       publisherNick,
       expectedPrice,
@@ -131,14 +131,12 @@ class DemandDetails extends Component {
             />
           </Shimmer>
         ) : (
-          <View />
-        )}
-
+        <View>
         <TopTitle title={'需求详情'} showBtn={false} />
         <ScrollView style={{ backgroundColor: '#fff', paddingTop: pxToDp(20) }}>
           {/*demand卡片开始*/}
           <DemandCard
-            type={status}
+            type={urgent}
             project_contacts={publisherNick}
             project_budget={expectedPrice}
             project_escrow={expectedPrice}
@@ -257,6 +255,8 @@ class DemandDetails extends Component {
 
           {/*底部按钮结束*/}
         </ScrollView>
+        </View>
+        )}
       </View>
     );
   }
