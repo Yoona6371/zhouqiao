@@ -12,7 +12,8 @@ import { inject, observer } from 'mobx-react';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon/index';
 import DemandList from '../../components/bussiness/DemandList';
-
+import { DeviceEventEmitter } from 'react-native';
+import RNRestart from 'react-native-restart';
 @inject('RootStore')
 @observer
 /**
@@ -41,13 +42,23 @@ class Index extends Component {
     // await this.getMyInfo();
     // 我的关注列表
     // await this.getMyFocusList();
-    let res = await Http.myRequirements({ page: 1, size: 2 });
-
+    //执行获取需求列表
+    await this.getRequirement();
     await this.getMyInfo();
     // 我的发布拿两个数据
-    this.setState({ myRequirements: res.data.data.dataList });
+    //路由监听
+    this.subscription = DeviceEventEmitter.addListener('EventType', () => {
+      // RNRestart.Restart();
+      // console.log('惺惺惜惺惺');
+      this.getRequirement();
+    });
   }
-
+  //获取需求列表
+  getRequirement = async () => {
+    let res = await Http.myRequirements({ page: 1, size: 2 });
+    this.setState({ myRequirements: res.data.data.dataList });
+    // this.subscription.remove();
+  };
   // ——————————————————————————昵称、关注数渲染开始——————————————————————
   // 获取我的基本信息
   // getMyInfo = async () => {
@@ -120,6 +131,7 @@ class Index extends Component {
   render() {
     const { clientStatistics, nickName, userAvatar } = this.state.userInfo;
     const { myRequirements } = this.state;
+    // console.log('在个人中心里的需求列表', myRequirements);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
@@ -473,6 +485,7 @@ class Index extends Component {
                 requirementTitle={v.requirementTitle}
                 requirementContentHtml={v.requirementContentHtml}
                 requirementContent={v.requirementContent}
+                getRequirmentFun={this.getRequirement()}
               />
             ))}
           </ScrollView>

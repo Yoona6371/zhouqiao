@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { DeviceEventEmitter } from 'react-native';
 import {
   View,
   Text,
@@ -32,7 +33,6 @@ class Index extends Component {
               ? props.route.params.expectedPrice.toString()
               : undefined,
           inputUpdate: (data) => {
-            console.log(data);
             this.setState({
               data: {
                 ...this.state.data,
@@ -160,14 +160,6 @@ class Index extends Component {
           type: 2,
           last: true,
           category: 3,
-          inputUpdate: (data) => {
-            this.setState({
-              data: {
-                ...this.state.data,
-                accessory: data,
-              },
-            });
-          },
         },
         // {
         //   title: '图片',
@@ -193,6 +185,7 @@ class Index extends Component {
       },
     };
   }
+  componentDidMount(): void {}
 
   titleFixed = () => {
     const { scrollY } = this.state;
@@ -205,6 +198,7 @@ class Index extends Component {
 
   demandSet = () => {
     if (this.props.route.params !== undefined) {
+      console.log('修改');
       Http.demandUpdate(
         this.state.data,
         '/' + this.props.route.params.requirementId,
@@ -217,7 +211,7 @@ class Index extends Component {
       Http.demandSet(this.state.data).then((res) => {
         if (res.status === 200) {
           NavigationHelper.navigate('DemandDetails');
-          console.log(res);
+          DeviceEventEmitter.emit('EventType');
         }
       });
     }
@@ -226,6 +220,7 @@ class Index extends Component {
   render() {
     const { list_1, list_2, list_3, textLength } = this.state;
     const opacity_title = this.titleFixed();
+    let list = ['asd', 'asd'];
     return (
       <ScrollView
         stickyHeaderIndices={[0, 1]}
