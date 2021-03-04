@@ -43,7 +43,8 @@ class LoginTab extends Component {
       account: this.state.phoneNumber,
       password: this.state.password,
     }).then((res) => {
-      console.log(res);
+      console.log(1111)
+      console.log(res.data);
       if (res.data.code === 0) {
         Toast.success(res.data.msg, 1000, 'center');
         NavigationHelper.goBack();

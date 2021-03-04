@@ -16,34 +16,35 @@ export class orderDetail extends Component {
     const { address1, num } = this.state;
     let address = address1.address;
     let id = this.props.route.params.caseId;
+    console.log('idhhhhhhtype', this.props.route.params.caseId, this.props.route.params.caseType);
     if (this.props.route.params.caseType === 2) {
-      // console.log('idhhhhhhtype', this.props.route.params.caseId, this.props.route.params.caseType);
-      let orderDesignCaseForm1 = {
+      let orderDesignCaseForm = {
         address: address,
-        commodityId: id,
+        designCaseId: `${id}`,
         contact: address1.name,
         gender: address1.sex,
-        mobile: address1.tel
+        mobile: address1.tel,
+        number: 1
       }
-      console.log('form1', orderDesignCaseForm1)
-      Http.orderDesignCase({
-        orderDesignCaseForm: orderDesignCaseForm1
-      }, '/' + id).then(res => {
+      console.log('orderDesignCaseForm', orderDesignCaseForm)
+      Http.orderDesignCase(
+        orderDesignCaseForm
+      ).then(res => {
         console.log(res)
       })
     } else if (this.props.route.params.caseType === 4) {
-      let orderCommodityForm1 = {
+      let orderCommodityForm = {
         address: address,
-        commodityId: id,
+        commodityId: `${id}`,
         number: num,
         contact: address1.name,
         gender: address1.sex,
         mobile: address1.tel
       }
-      console.log('orderCommodityFormwww', orderCommodityForm1)
-      Http.orderCommodity({
-        orderCommodityForm: orderCommodityForm1
-      }).then(res => {
+      console.log('orderCommodityFormwww', orderCommodityForm)
+      Http.orderCommodity(
+        orderCommodityForm
+      ).then(res => {
         console.log(res.data, 999)
       })
     }
@@ -59,6 +60,7 @@ export class orderDetail extends Component {
   add = () => {
     const { num } = this.state
     let a = num + 1
+    // console.log(a)
     this.setState({ num: a });
   }
   returnData = (address) => {

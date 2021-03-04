@@ -8,7 +8,8 @@ import LocalStorageUtils from '../utils/LocalStorageUtils';
 // server 循环遍历输出不同的请求方法
 const instance = axios.create({
   //基础路径
-  baseURL: 'http://www.zhouqiao.art:8080',
+  // baseURL: 'http://www.zhouqiao.art:8080',
+  baseURL: 'http://mevwgb.natappfree.cc',
   // 请求限时
   timeout: 10000,
 });

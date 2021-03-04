@@ -198,26 +198,26 @@ class CommodityCard extends React.PureComponent {
                       // styel={{ width: pxToDp(50), height: pxToDp(50) }}
                       />
                     </View>
-                  ) : (
-                    <View style={styles.CommodityCard__typeTwoBtnBox}>
-                      <TouchableOpacity
-                        onPress={() => {
-                          this.CollectBtn();
-                        }}
-                      >
-                        <Text style={styles.CommodityCard__typeTwoBtnText}>
-                          取消收藏
+                    {/*用户头像结束*/}
+                    {this.props.type === 1 ? (
+                      <View style={styles.CommodityCard__typeOneUserIdBox}>
+                        <Text style={styles.CommodityCard__typeOneUserId}>
+                          {this.props.user_id}
                         </Text>
-                      </TouchableOpacity>
-                    </View>
+                      </View>
                     ) : (
                         <View style={styles.CommodityCard__typeTwoBtnBox}>
-                      <TouchableOpacity>
-                        <Text style={styles.CommodityCard__typeTwoBtnText}>
-                          取消收藏
+                          <TouchableOpacity
+                            onPress={() => {
+                              this.CollectBtn();
+                            }}
+                          >
+                            <Text style={styles.CommodityCard__typeTwoBtnText}>
+                              取消收藏
                         </Text>
-                      </TouchableOpacity>
-                    </View>
+                          </TouchableOpacity>
+                        </View>
+                      )}
                   </View>
                 </View>
               </View>
