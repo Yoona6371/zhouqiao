@@ -348,8 +348,8 @@ class Index extends Component {
                 />
               </Shimmer>
             ) : (
-              <Banner slideList={this.state.slideList} />
-            )}
+                <Banner slideList={this.state.slideList} />
+              )}
           </ImageBackground>
           {/*最新通知*/}
           <View style={styles.home_information}>
@@ -439,7 +439,7 @@ class Index extends Component {
               horizontal={true}
               data={this.state.hotData}
               renderItem={({ item }) => (
-                <HotCard key={item.case_id} item={item} />
+                <HotCard caseType={2} key={item.case_id} item={item} />
               )}
             />
             {/*热门列表结束*/}

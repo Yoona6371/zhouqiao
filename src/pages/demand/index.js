@@ -184,6 +184,7 @@ class Index extends Component {
           this.props.route.params !== undefined
             ? this.props.route.params.requirementContent
             : undefined,
+        proficiency: 0,
       },
     };
   }
@@ -216,8 +217,9 @@ class Index extends Component {
         });
       } else {
         Http.demandSet(this.state.data).then((res) => {
-          if (res.status === 200) {
-            NavigationHelper.navigate('DemandDetails');
+          if (res.data.code === 0) {
+            Toast.success('发布成功');
+            NavigationHelper.navigate('myDemand');
             DeviceEventEmitter.emit('EventType');
           }
         });
@@ -235,7 +237,6 @@ class Index extends Component {
     }
   };
   Toast_text = (data, text) => {
-    console.log(data);
     if (data === undefined) {
       Toast.fail(`${text}不能为空`);
     } else {
