@@ -228,6 +228,15 @@ class CommodityDetail extends Component {
           <TouchableOpacity
             activeOpacity={activeOpacity}
             style={styles.commodity_footer_but3}
+            onPress={() => {
+              NavigationHelper.navigate(
+                'CreatOrder',
+                {
+                  caseId: this.props.route.params.caseId,
+                  caseType: this.props.route.params.type
+                }
+              )
+            }}
           >
             <View style={{ ...flexRowCenter }}>
               <Text style={{ ...styles.but_text, color: '#fff' }}>价格：</Text>
@@ -235,22 +244,9 @@ class CommodityDetail extends Component {
                 ￥{detailsData.price}
               </Text>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                NavigationHelper.navigate(
-                  'CreatOrder',
-                  {
-                    caseId: this.props.route.params.caseId,
-                    caseType: this.props.route.params.type
-                  }
-                )
-              }}
-            >
-              <Text style={{ ...styles.but2_text, marginTop: pxToDp(12) }}>
-                立即购买
+            <Text style={{ ...styles.but2_text, marginTop: pxToDp(12) }}>
+              立即购买
             </Text>
-            </TouchableOpacity>
-
           </TouchableOpacity>
         </View>
       </View>

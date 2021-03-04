@@ -18,18 +18,27 @@ export class orderDetail extends Component {
     let id = this.props.route.params.caseId;
     if (this.props.route.params.caseType === 2) {
       // console.log('idhhhhhhtype', this.props.route.params.caseId, this.props.route.params.caseType);
-      console.log(address, id, 'llalalala')
-      Http.orderDesignCase({
+      let orderDesignCaseForm1 = {
         address: address,
+        commodityId: id,
+        contact: address1.name,
+        gender: address1.sex,
+        mobile: address1.tel
+      }
+      console.log('form1', orderDesignCaseForm1)
+      Http.orderDesignCase({
+        orderDesignCaseForm: orderDesignCaseForm1
       }, '/' + id).then(res => {
         console.log(res, 111)
       })
     } else if (this.props.route.params.caseType === 4) {
-
       let orderCommodityForm1 = {
         address: address,
         commodityId: id,
-        number: num
+        number: num,
+        contact: address1.name,
+        gender: address1.sex,
+        mobile: address1.tel
       }
       console.log('orderCommodityFormwww', orderCommodityForm1)
       Http.orderCommodity({

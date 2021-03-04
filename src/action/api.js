@@ -148,6 +148,10 @@ const api = {
     url: '/api/designCaseCollect/client/design_cases/collect/cancel',
     method: 'delete',
   },
+  mobileSet: {
+    url: '/api/user/binding/mobile',
+    method: 'put',
+  },
   getSlideShow: {
     url: '/api/slideShow',
     method: 'get',
@@ -157,33 +161,96 @@ const api = {
     url: '/api/designCase/stylist/other/design_cases',
     method: 'get',
   },
+  // 消息
+  messageDetail: {
+    url: '/api/message/getMessageList',
+    method: 'post',
+  },
+  upimg: {
+    url: '/api/message/chat/upimg',
+    method: 'post',
+  },
+  ifRead: {
+    url: '/api/message/readed',
+    method: 'get',
+  },
+  revoke: {
+    url: '/api/message/revoke',
+    method: 'get',
+  },
+  send: {
+    url: '/api/message/send',
+    method: 'post',
+  },
   // 搜索
   getSearchList: {
     url: '/api/search',
     method: 'get',
   },
-  mobileSet: {
-    url: '/api/user/binding/mobile',
-    method: 'put',
-  },
   goodsDetail: {
     url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
+  getPaymentDetail: {
+    url: '/api/wxPay/unifiedOrder',
+    method: 'get',
+  },
+  getMyAddress: {
+    url: '/api/user/addresses',
+    method: 'get',
+  },
+  addMyaddress: {
+    url: '/api/user/address',
+    method: 'post',
+  },
+  changeAddress: {
+    url: '/api/user/address/',
+    method: 'put',
+  },
+  addressDetails: {
+    url: '/api/user/address/',
+    method: 'get',
+  },
+  deleteAddress: {
+    url: '/api/user/address/',
+    method: 'delete',
+  },
+  // 生成商品订单
+  generateGoodOrder: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post',
+  },
+  generateDesignOrder: {
+    url: '/api/client/orderDesignCase/',
+    method: 'post',
+  },
   // 获取订单列表
   getOrderLists: {
     url: '/api/client/orders',
-    method: 'get'
+    method: 'get',
   },
   //排行榜
   getRankList: {
     url: '/api/stylist/RankingList',
-    method: 'get'
+    method: 'get',
   },
   //订单详情
   orderDetail: {
     url: '/api/order',
-    method: 'get'
+    method: 'get',
   },
+  // 需求详情
+  demandDetail: {
+    url: '/api/requirement',
+    method: 'get',
+  },
+  orderCommodity: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post'
+  },
+  orderDesignCase: {
+    url: '/api/client/orderDesignCase',
+    method: 'post'
+  }
 };
 export default api;
