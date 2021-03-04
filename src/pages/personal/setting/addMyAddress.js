@@ -15,9 +15,8 @@ import RadioForm, {
   RadioButtonInput,
   RadioButtonLabel,
 } from 'react-native-simple-radio-button';
-import { NavigationHelpersContext } from '@react-navigation/native';
 import Toast from '../../../components/common/Toast/Toast';
-import {DeviceEventEmitter} from 'react-native'
+import { DeviceEventEmitter } from 'react-native';
 
 class Index extends Component {
   constructor(props) {
@@ -53,12 +52,11 @@ class Index extends Component {
       if (res.data.code === 0) {
         // Toast.success(res.data.msg, 10, 'center');
         NavigationHelper.goBack();
-        DeviceEventEmitter.emit("EventType");
+        DeviceEventEmitter.emit('EventType');
       } else {
         Toast.fail(res.data.data.errMsg, 1000, 'center');
       }
     });
-
   };
   render() {
     return (

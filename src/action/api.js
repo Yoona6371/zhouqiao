@@ -248,5 +248,9 @@ const api = {
     url: '/api/requirement',
     method: 'get',
   },
+  MyCollectList: {
+    url: '/api/designCaseCollect/client/design_cases/collect/mylist',
+    method: 'get',
+  },
 };
 export default api;
