@@ -162,14 +162,6 @@ class Index extends Component {
           type: 2,
           last: true,
           category: 3,
-          inputUpdate: (data) => {
-            this.setState({
-              data: {
-                ...this.state.data,
-                accessory: data,
-              },
-            });
-          },
         },
         // {
         //   title: '图片',
@@ -226,6 +218,7 @@ class Index extends Component {
         Http.demandSet(this.state.data).then((res) => {
           if (res.status === 200) {
             NavigationHelper.navigate('DemandDetails');
+            DeviceEventEmitter.emit('EventType');
           }
         });
       }
@@ -253,6 +246,7 @@ class Index extends Component {
   render() {
     const { list_1, list_2, list_3, textLength } = this.state;
     const opacity_title = this.titleFixed();
+    let list = ['asd', 'asd'];
     return (
       <ScrollView
         stickyHeaderIndices={[0, 1]}
