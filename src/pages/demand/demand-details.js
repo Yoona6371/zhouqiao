@@ -9,26 +9,27 @@ import {
 import DemandCard from '../../components/bussiness/demandCard';
 import Icon from '../../components/common/Icon';
 import { flexRowCenter, fontStyle } from '../../utils/StyleUtils';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LabelCard from '../../components/bussiness/labelCard';
 import { Image } from 'react-native-svg';
 import TopTitle from '../../components/common/TopTitle';
 import Toast from '../../components/common/Toast/Toast';
+import Shimmer from 'react-native-shimmer';
 
 // requirementId: 38719e6d4abb8464665e7908ba213b00
 class DemandDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: 1,
-      requirementTitle: '页面前端开发',
-      publisherNick: 'DAOKO',
-      expectedPrice: 6000,
-      requirementAbstract: '做二轮，三轮电动自行车，电动摩托车行业',
-      createTime: ['2021', '01', '22'],
-      category: 'PS',
-      content:
-        '开发具有较高的通用性。无论是前端渲染的单页面应用,还是后端模板渲染的多页面应用，组件化开发的概念都能适用。组件化开发具有较高的通用性。无论是前端渲染的单页面应用还是后端模板渲染的多页面应用，组件化开发的概念都能适用组件化开发具有较高的通用性。无论是前端渲染的单页面应用，还是后端模板渲染的多页面应用，组件化开发。',
+      top: true,
+      status: 0,
+      requirementTitle: ' ',
+      publisherNick: ' ',
+      expectedPrice: 0,
+      requirementAbstract: ' ',
+      createTime: [' ', ' ', ' '],
+      category: ' ',
+      content: ' ',
     };
   }
 
@@ -81,7 +82,7 @@ class DemandDetails extends Component {
   requireDetail = async () => {
     const detail = await Http.demandDetail(
       {},
-      `/${this.props.requirementId}`,
+      `/${this.props.route.params.requirementId}`,
     );
 
     console.log(detail);
@@ -92,6 +93,7 @@ class DemandDetails extends Component {
 
     const data = detail.data.data;
     this.setState({
+      top: false,
       status: data.status,
       requirementTitle: data.requirementTitle,
       publisherNick: data.publisherNick,
@@ -105,6 +107,7 @@ class DemandDetails extends Component {
 
   render() {
     const {
+      top,
       status,
       requirementTitle,
       publisherNick,
@@ -114,9 +117,23 @@ class DemandDetails extends Component {
       category,
       content,
     } = this.state;
-    
+
     return (
       <View style={{ flex: 1 }}>
+        {top ? (
+          <Shimmer style={{ marginTop: pxToDp(30) }}>
+            <View
+              style={{
+                height: pxToDp(45),
+                width: deviceWidthDp,
+                backgroundColor: '#eae8e8',
+              }}
+            />
+          </Shimmer>
+        ) : (
+          <View />
+        )}
+
         <TopTitle title={'需求详情'} showBtn={false} />
         <ScrollView style={{ backgroundColor: '#fff', paddingTop: pxToDp(20) }}>
           {/*demand卡片开始*/}
