@@ -20,6 +20,7 @@ import RootStore from '../../mobx/index';
 import LocalStorageUtils from '../../utils/LocalStorageUtils';
 const Tab = createMaterialTopTabNavigator();
 import axios from 'axios';
+import RNRestart from 'react-native-restart';
 
 @inject('RootStore')
 @observer
@@ -37,6 +38,7 @@ class LoginTab extends Component {
     };
   }
   login = () => {
+    Toast.message('登录中...');
     Http.login({
       account: this.state.phoneNumber,
       password: this.state.password,
@@ -99,9 +101,7 @@ class LoginTab extends Component {
                 NavigationHelper.navigate('FindPassword');
               }}
             >
-              <Text
-                style={{ color: '#16b0ff', fontSize: pxToDp(24) }}
-              >
+              <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
                 忘记密码？
               </Text>
             </TouchableOpacity>
@@ -162,6 +162,7 @@ class RegisterTab extends Component {
         console.log(res);
         if (res.data.code === 0) {
           Toast.success('注册成功', 1000, 'center');
+          NavigationHelper.replace('LoginAndRegister');
         } else {
           Toast.fail(res.data.msg, 1000, 'center');
         }
@@ -195,7 +196,7 @@ class RegisterTab extends Component {
             </Text>
             <TouchableOpacity
               onPress={() => {
-                NavigationHelper.navigate();
+                RNRestart.Restart();
               }}
             >
               <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
@@ -257,7 +258,7 @@ class Index extends Component {
     return (
       <Tab.Navigator
         tabBarOptions={{
-          inactiveTintColor: '#FE9E0E',
+          inactiveTintColor: '#e2dddd',
           // inactiveBackgroundColor: '#fffbf6',
           activeTintColor: '#FFFFFF',
           // activeBackgroundColor: '#FE9E0E',
@@ -277,6 +278,7 @@ class Index extends Component {
       </Tab.Navigator>
     );
   };
+
   render() {
     const { pages } = this.state;
     return (

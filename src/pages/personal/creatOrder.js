@@ -29,7 +29,7 @@ export class orderDetail extends Component {
       Http.orderDesignCase({
         orderDesignCaseForm: orderDesignCaseForm1
       }, '/' + id).then(res => {
-        console.log(res, 111)
+        console.log(res)
       })
     } else if (this.props.route.params.caseType === 4) {
       let orderCommodityForm1 = {

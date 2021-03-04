@@ -19,6 +19,8 @@ import DocumentPicker from 'react-native-document-picker';
 import Overlay from '../common/Overlay/Overlay';
 import DatePicker from 'react-native-datepicker';
 import Toast from '../common/Toast/Toast';
+import axios from 'axios';
+import LocalStorageUtils from '../../utils/LocalStorageUtils';
 
 class Index extends Component {
   constructor(props) {
@@ -54,7 +56,20 @@ class Index extends Component {
         const res = await DocumentPicker.pick({
           type: [DocumentPicker.types.images],
         });
-        console.log(res);
+        let formData = new FormData();
+        formData.append('file', res);
+        formData.append('type', 0);
+        axios
+          .post('http://www.zhouqiao.art:8080/api/resource/file', formData, {
+            headers: {
+              Authorization: `Bearer ${this.props.RootStore.userStore.allData.accessToken}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.code === 0) {
+              Toast.success('上传成功');
+            }
+          });
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
           console.log('cancleErr', err);
@@ -141,10 +156,13 @@ class Index extends Component {
         </Overlay.PullView>
       );
       Overlay.show(overlayView);
+    } else if (this.props.option === 0) {
+      await LocalStorageUtils.clear();
+      NavigationHelper.resetTo('LoginAndRegister');
     } else {
       const res = await Http.getMyInfo();
       const userInfo = res.data.data;
-      console.log(res);
+      // console.log(res);
       this.setState({
         userInfo,
       });
@@ -179,7 +197,7 @@ class Index extends Component {
   //申请验证码
   verifyCodeRequest = () => {
     Http.getVerifyCode({ code: 3, mobile: this.state.mobile }).then((res) => {
-      console.log(res);
+      // console.log(res);
       if (res.status === 200) {
         Toast.success(res.data.msg, 1000, 'center');
       } else {
@@ -190,10 +208,8 @@ class Index extends Component {
 
   mobileSet = () => {
     Http.mobileSet({
-      bindingForm: {
-        mobile: this.state.mobile,
-        verifyCode: this.state.verifyCode,
-      },
+      mobile: this.state.mobile,
+      verifyCode: this.state.verifyCode,
     }).then((res) => {
       if (res.status === 200) {
         Toast.success(res.data.msg, 1000, 'center');
@@ -235,13 +251,9 @@ class Index extends Component {
       svgRemove,
       router,
     } = this.props;
-    const currentDate =
-      new Date().getFullYear() +
-      '-' +
-      new Date().getMonth() +
-      1 +
-      '-' +
-      new Date().getDate();
+    const currentDate = `${new Date().getFullYear()}-${
+      new Date().getMonth() + 1
+    }-${new Date().getDate()}`;
     return (
       <TouchableOpacity
         style={

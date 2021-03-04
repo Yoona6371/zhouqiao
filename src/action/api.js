@@ -9,8 +9,12 @@ const api = {
     method: 'get',
   },
   register: {
-    utl: '/api/user/register',
+    url: '/api/user/register',
     method: 'post',
+  },
+  findPassword:{
+    url:'/api/my/password',
+    method:'put',
   },
   getMyInfo: {
     url: '/api/client/my/baseInfo',
@@ -162,6 +166,10 @@ const api = {
     method: 'get',
   },
   // 消息
+  messageList: {
+    url: '/api/message/getList',
+    method: 'get',
+  },
   messageDetail: {
     url: '/api/message/getMessageList',
     method: 'post',
@@ -251,6 +259,10 @@ const api = {
   orderDesignCase: {
     url: '/api/client/orderDesignCase',
     method: 'post'
-  }
+  },
+  MyCollectList: {
+    url: '/api/designCaseCollect/client/design_cases/collect/mylist',
+    method: 'get',
+  },
 };
 export default api;

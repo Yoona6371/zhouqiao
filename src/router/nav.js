@@ -27,6 +27,8 @@ import myCollect from '../pages/personal/myCollect';
 import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
+import AddMyAddress from '../pages/personal/setting/addMyAddress';
+import EditMyAddress from '../pages/personal/setting/editMyAddress';
 import myWallet from '../pages/personal/myWallet';
 // 他人中心
 import OthersPersonal from '../pages/design/others';
@@ -60,15 +62,15 @@ import Test from '../pages/test';
 //登录
 import LoginAndRegister from '../pages/users/loginAndRegister';
 //找回密码
-import FindPassword from '../pages/users/findPassword'
+import FindPassword from '../pages/users/findPassword';
 // Tab
 import Tab from '../router/tab';
 // 工具
 import LocalStorageUtils from '../utils/LocalStorageUtils';
 import CodePushPage from '../pages/CodePushPage';
-import OrderDetail from '../pages/personal/orderDetail'
+import OrderDetail from '../pages/personal/orderDetail';
 // 生成订单
-import CreatOrder from '../pages/personal/creatOrder'
+import CreatOrder from '../pages/personal/creatOrder';
 const Stack = createStackNavigator();
 
 class Nav extends React.Component {
@@ -106,7 +108,7 @@ class Nav extends React.Component {
           {/*登录*/}
           <Stack.Screen
             name="LoginAndRegister"
-            component={Tab}
+            component={LoginAndRegister}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
@@ -129,12 +131,14 @@ class Nav extends React.Component {
           />
           {/* 找回密码 */}
           {/* <Stack.Screen
+          {/* 找回密码 */}
+          <Stack.Screen
             name="FindPassword"
             component={FindPassword}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
-            }} */}
-          {/* /> */}
+            }}
+          />
           {/*他人中心*/}
           <Stack.Screen
             name="OthersPersonal"
@@ -165,12 +169,12 @@ class Nav extends React.Component {
           <Stack.Screen
             name="ImageShow"
             component={ImageShow}
-            options={{ 
-              ...TransitionPresets.SlideFromRightIOS, 
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
             }}
           />
 
-          {/*设计 
+          {/*设计
           设计师排行榜*/}
 
           {/*消息*/}
@@ -250,6 +254,20 @@ class Nav extends React.Component {
           <Stack.Screen
             name="MyAddress"
             component={MyAddress}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          <Stack.Screen
+            name="AddMyAddress"
+            component={AddMyAddress}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />
+          <Stack.Screen
+            name="EditMyAddress"
+            component={EditMyAddress}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}

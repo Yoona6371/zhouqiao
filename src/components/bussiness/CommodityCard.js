@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { activeOpacity } from '../../constants/config';
 import Avatar from '../common/Avatar';
 import Shimmer from 'react-native-shimmer';
+import Toast from '../common/Toast/Toast';
 class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
@@ -36,6 +37,13 @@ class CommodityCard extends React.PureComponent {
       caseId: this.props.caseId,
       type: this.props.caseType,
     });
+  };
+  //取消收藏
+  CollectBtn = async () => {
+    let i = await Http.DeleteCase({ designCaseId: this.props.caseId });
+    console.log('取消收藏的结果', i);
+    Toast.message('取消成功');
+
   };
   render() {
     const {
@@ -190,22 +198,26 @@ class CommodityCard extends React.PureComponent {
                       // styel={{ width: pxToDp(50), height: pxToDp(50) }}
                       />
                     </View>
-                    {/*用户头像结束*/}
-                    {this.props.type === 1 ? (
-                      <View style={styles.CommodityCard__typeOneUserIdBox}>
-                        <Text style={styles.CommodityCard__typeOneUserId}>
-                          {this.props.user_id}
+                  ) : (
+                    <View style={styles.CommodityCard__typeTwoBtnBox}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.CollectBtn();
+                        }}
+                      >
+                        <Text style={styles.CommodityCard__typeTwoBtnText}>
+                          取消收藏
                         </Text>
-                      </View>
+                      </TouchableOpacity>
+                    </View>
                     ) : (
                         <View style={styles.CommodityCard__typeTwoBtnBox}>
-                          <TouchableOpacity>
-                            <Text style={styles.CommodityCard__typeTwoBtnText}>
-                              取消收藏
+                      <TouchableOpacity>
+                        <Text style={styles.CommodityCard__typeTwoBtnText}>
+                          取消收藏
                         </Text>
-                          </TouchableOpacity>
-                        </View>
-                      )}
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
               </View>

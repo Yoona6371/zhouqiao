@@ -62,6 +62,7 @@ class Index extends Component {
           text_more: '',
           svg: security,
           router: '',
+          option: 0,
         },
       ],
       info: {},
@@ -94,6 +95,7 @@ class Index extends Component {
               text_more={v.text_more}
               router={v.router}
               svg={v.svg}
+              option={v.option}
             />
           ))}
         </View>

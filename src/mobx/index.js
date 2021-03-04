@@ -31,6 +31,11 @@ class UserStore {
     this.allData = data;
     await LocalStorageUtils.deleteItem('userInfo');
   }
+
+  // 设置token
+  @action setToken(token) {
+    this.allData.accessToken = token;
+  }
 }
 
 class GlobalStore {
@@ -47,6 +52,22 @@ class GlobalStore {
 
   @action setSearch(search) {
     this.allData.search = search;
+  }
+
+  @action setApiVersion(apiVersion) {
+    this.allData.apiVersion = apiVersion;
+  }
+
+  @action setIsWXAppInstalled(isWXAppInstalled) {
+    this.allData.isWXAppInstalled = isWXAppInstalled;
+  }
+
+  @action setWxAppInstallUrl(wxAppInstallUrl) {
+    this.allData.wxAppInstallUrl = wxAppInstallUrl;
+  }
+
+  @action setIsWXAppSupportApi(isWXAppSupportApi) {
+    this.allData.isWXAppSupportApi = isWXAppSupportApi;
   }
 }
 

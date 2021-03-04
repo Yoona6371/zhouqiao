@@ -8,8 +8,12 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  Platform,
+  TextInput,
 } from 'react-native';
 import Shimmer from 'react-native-shimmer';
+import * as WeChat from 'react-native-wechat-lib';
+import { inject, observer } from 'mobx-react';
 
 import Banner from '../../components/bussiness/banner';
 import SearchInput from '../../components/bussiness/searchInput';
@@ -31,11 +35,21 @@ import {
   padding,
 } from '../../utils/StyleUtils';
 import CommodityCard from '../../components/bussiness/CommodityCard';
+import {
+  handleOpenApp,
+  handlePayment,
+  handleShareToSession,
+} from '../../utils/wxHandle';
+import Toast from '../../components/common/Toast/Toast';
+import LocalStorageUtils from '../../utils/LocalStorageUtils';
 
+@inject('RootStore')
+@observer
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      value: '',
       pages: [],
       hotData: [
         {
@@ -92,8 +106,20 @@ class Index extends Component {
         { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
       ],
       slideList: [],
+      apiVersion: null,
+      isWXAppInstalled: false,
+      wxAppInstallUrl: null,
+      isWXAppSupportApi: false,
+      payload: {
+        partnerId: '1606239230',
+        nonceStr: 'a9ef3c0a0bf34cc49f2fb3a44c236d89',
+        prepayId: 'wx01000556641895951023fa0442bde40000',
+        sign: '1910F5FCCA93317E81693F0E1EC11BE6',
+        timeStamp: '1614528360',
+      },
     };
     this._contentViewScroll = this._contentViewScroll.bind(this);
+    this.Payment = this.Payment.bind(this);
   }
 
   async componentDidMount() {
@@ -147,8 +173,34 @@ class Index extends Component {
       pages: arrCaseType,
       headerPhoto: rankingList,
       slideList,
+      apiVersion: await WeChat.getApiVersion(),
+      wxAppInstallUrl:
+        Platform.OS === 'ios' ? await WeChat.getWXAppInstallUrl() : null,
+      isWXAppSupportApi: await WeChat.isWXAppSupportApi(),
+      isWXAppInstalled: await WeChat.isWXAppInstalled(),
     });
+
+    // 设置全局微信
+    this.props.RootStore.globalStore.setApiVersion(this.state.apiVersion);
+    this.props.RootStore.globalStore.setWxAppInstallUrl(
+      this.state.wxAppInstallUrl,
+    );
+    this.props.RootStore.globalStore.setIsWXAppSupportApi(
+      this.state.isWXAppSupportApi,
+    );
+    this.props.RootStore.globalStore.setIsWXAppInstalled(
+      this.state.isWXAppInstalled,
+    );
+
+    // 如果有token就拿token
+    const token = await LocalStorageUtils.get('accessToken');
+    console.log(token, 'token');
+    if (token !== null || '' || undefined) {
+      console.log(token);
+      this.props.RootStore.userStore.setToken(token.value);
+    }
   }
+
   MyTabs = () => {
     let { pages } = this.state;
     if (pages.length === 0) {
@@ -211,10 +263,57 @@ class Index extends Component {
     }
   }
 
+  async Payment() {
+    console.log(this.state.value);
+    let res = await Http.getPaymentDetail({
+      body: '舟桥之家',
+      outTradeNo: '456asdsad4aa125648',
+      totalFee: 1,
+    });
+    console.log(res);
+
+    if (res.data.code !== 0) {
+      Toast.sad(res.data.msg);
+    } else {
+      res = res.data.data.data;
+      let payload = {
+        partnerId: res.partnerid,
+        nonceStr: res.noncestr,
+        prepayId: res.prepayid,
+        sign: res.sign,
+        timeStamp: res.timestamp,
+        pg: res.package,
+      };
+      this.setState({ payload });
+      await handlePayment(
+        this.props.RootStore.globalStore.allData.isWXAppInstalled,
+        payload,
+      );
+    }
+    // await WeChat.shareImage({
+    //   imageUrl:
+    //     'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10112%2F152%2Fw1080h672%2F20181224%2Fd0f1-hqqzpkv0678153.jpg&refer=http%3A%2F%2Fn.sinaimg.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1617205659&t=c9598c57cc22765b9057b329a045ead8',
+    //   scene: 0,
+    // });
+  }
+  //
+  // onChangeText(text) {
+  //   this.setState({ value: text });
+  // }
   render() {
     let list = ['asd', 'asd'];
     return (
       <View style={{ flex: 1 }}>
+        {/*<TextInput*/}
+        {/*  style={{*/}
+        {/*    height: 40,*/}
+        {/*    borderColor: 'gray',*/}
+        {/*    borderWidth: 1,*/}
+        {/*    marginTop: 30,*/}
+        {/*  }}*/}
+        {/*  onChangeText={(text) => this.onChangeText(text)}*/}
+        {/*  value={this.state.value}*/}
+        {/*/>*/}
         <ImageBackground
           source={require('../../asserts/images/home_header_bg.png')}
           style={styles.home_header1}
@@ -256,7 +355,8 @@ class Index extends Component {
           <View style={styles.home_information}>
             <View style={{ ...flexRowSpb, justifyContent: 'flex-start' }}>
               <TouchableOpacity
-                onPress={() => NavigationHelper.navigate('消息')}
+                // onPress={() => NavigationHelper.navigate('消息')}
+                onPress={() => this.Payment()}
                 style={styles.information_text1_container}
               >
                 <Icon
@@ -351,7 +451,7 @@ class Index extends Component {
           >
             <Text style={styles.commodity_header_title}>精彩案例</Text>
           </ImageBackground>
-          <View style={{ height: pxToDp(1800), overflow: 'hidden' }}>
+          <View style={{ height: pxToDp(1750), overflow: 'hidden' }}>
             {this.MyTabs()}
           </View>
           <TouchableOpacity

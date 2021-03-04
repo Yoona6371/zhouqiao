@@ -43,10 +43,10 @@ class Index extends Component {
     });
     console.log(addressList);
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
-      RNRestart.Restart();
+      this.componentDidMount();
     });
   }
-
+  
   render() {
     const { list } = this.state;
     return (

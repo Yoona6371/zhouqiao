@@ -45,7 +45,7 @@ class Test extends Component {
         },
         {
           title: '生日',
-          text_more: props.route.params.birthday.join('-'),
+          text_more: props.route.params.birthday || '',
           type: 1,
           option: 5,
           isDate: true,

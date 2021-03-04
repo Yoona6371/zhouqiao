@@ -85,7 +85,7 @@ export class index extends Component {
         style={{
           backgroundColor: bgColor,
           alignItems: 'center',
-          zIndex: 10,
+          zIndex: 100,
         }}
       >
         <View

@@ -47,9 +47,9 @@ class CommodityDetail extends Component {
       this.setState({ renderPlaceholderOnly: false });
     });
     //绑定案例id
-    console.log('这里试试', this.props.route.params);
-    console.log('ID和type', this.props.route.params.caseId, this.props.route.params.type);
-    console.log(this.state.caseId);
+    // console.log('这里试试', this.props.route.params);
+    // console.log('ID和type', this.props.route.params.caseId, this.props.route.params.type);
+    // console.log(this.state.caseId);
     let newCaseId = this.props.route.params.caseId;
     await this.setState({ caseId: newCaseId });
     await this.getRes();
@@ -108,16 +108,38 @@ class CommodityDetail extends Component {
       return;
     }
     let { caseId } = this.state;
+    console.log('详情页的案例id', caseId);
     if (!this.state.isCollect) {
       let i = await Http.CollectCase({}, '', false, {
         params: { designCaseId: caseId },
       });
       this.setState({ isCollect: !this.state.isCollect });
+      Toast.message('收藏成功');
     } else {
       let j = await Http.DeleteCase({ designCaseId: caseId });
       this.setState({ isCollect: !this.state.isCollect });
+      Toast.message('取消收藏');
     }
   };
+
+  handleOrder = async () => {
+    let res;
+    if (this.props.route.params.type == 3) {
+      res = await Http.generateGoodOrder({
+        commodityId: this.props.route.params.caseId,
+        number: 1,
+      });
+    } else {
+      res = await Http.generateDesignOrder({}, this.props.route.params.caseId);
+    }
+    if (res.data.code === 0) {
+      Toast.message('生成订单成功');
+      NavigationHelper.navigate('OrderLists');
+    } else {
+      Toast.message(res.data.msg);
+    }
+  };
+
   render() {
     const { detailsData, isCollect, detailsDataList } = this.state;
     // console.log('render里的list', detailsData.list);
@@ -148,6 +170,7 @@ class CommodityDetail extends Component {
                 name={detailsData.caseAuthor}
                 text={detailsData.collectNum}
                 userId={detailsData.caseAuthorId}
+                focus={detailsData.followed}
               />
             </View>
           )}
@@ -183,6 +206,7 @@ class CommodityDetail extends Component {
             {detailsDataList.map((item) => {
               return (
                 <Image
+                  key={item.picturePath}
                   style={{ width: pxToDp(690), height: pxToDp(1000) }}
                   source={{
                     uri: item.picturePath,

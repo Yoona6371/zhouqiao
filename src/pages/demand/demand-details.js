@@ -9,34 +9,141 @@ import {
 import DemandCard from '../../components/bussiness/demandCard';
 import Icon from '../../components/common/Icon';
 import { flexRowCenter, fontStyle } from '../../utils/StyleUtils';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LabelCard from '../../components/bussiness/labelCard';
 import { Image } from 'react-native-svg';
 import TopTitle from '../../components/common/TopTitle';
+import Toast from '../../components/common/Toast/Toast';
+import Shimmer from 'react-native-shimmer';
+
+// requirementId: 38719e6d4abb8464665e7908ba213b00
 class DemandDetails extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      top: true,
+      status: 0,
+      requirementTitle: ' ',
+      publisherNick: ' ',
+      expectedPrice: 0,
+      requirementAbstract: ' ',
+      createTime: [' ', ' ', ' '],
+      category: ' ',
+      content: ' ',
+    };
   }
 
-  componentDidMount() {
-    console.log(this.props.route.params.requirementId);
+  async componentDidMount() {
+    // 获取需求详情
+    await this.requireDetail();
   }
+  /**
+   * {
+  "code": 0,
+  "msg": "操作成功",
+  "data": {
+    "requirementId": "38719e6d4abb8464665e7908ba213b00",
+    "publisherId": "cfc241796dc3f8d4a86150a1131789d3",
+    "publisherNick": "DAOKO",
+    "categoryId": 1,
+    "category": "ps",
+    "requirementTitle": "页面前端开发",
+    "requirementAbstract": "济南紫金玫瑰股份有限公司需要电商运营,网站前端开发",
+    "communityNumber": 4,
+    "communityNumberCurrent": 0,
+    "status": 1,
+    "createTime": [
+      2021,
+      2,
+      20,
+      10,
+      24,
+      26
+    ],
+    "updateTime": [
+      2021,
+      3,
+      3,
+      14,
+      33,
+      55
+    ],
+    "urgent": 1,
+    "proficiency": 1,
+    "expectedPrice": 5000,
+    "expectedTime": 14,
+    "accessory": "https://zhouqiao.oss-cn-beijing.aliyuncs.com/requirement/docs/fb30d9e7-f739-4a5f-95ad-e136e1850716.docx",
+    "designerId": null,
+    "content": "济南紫金玫瑰股份有限公司需要电商运营,网站前端开发",
+    "contentHtml": "济南紫金玫瑰股份有限公司需要电商运营,网站前端开发"
+  }
+}
+   */
+  requireDetail = async () => {
+    const detail = await Http.demandDetail(
+      {},
+      `/${this.props.route.params.requirementId}`,
+    );
+
+    console.log(detail);
+    if (!(detail.status === 200)) {
+      Toast.sad('加载失败');
+      return;
+    }
+
+    const data = detail.data.data;
+    this.setState({
+      top: false,
+      status: data.status,
+      requirementTitle: data.requirementTitle,
+      publisherNick: data.publisherNick,
+      expectedPrice: data.expectedPrice,
+      requirementAbstract: data.requirementAbstract,
+      createTime: data.createTime,
+      category: data.category,
+      content: data.content,
+    });
+  };
 
   render() {
+    const {
+      top,
+      status,
+      requirementTitle,
+      publisherNick,
+      expectedPrice,
+      requirementAbstract,
+      createTime,
+      category,
+      content,
+    } = this.state;
+
     return (
       <View style={{ flex: 1 }}>
+        {top ? (
+          <Shimmer style={{ marginTop: pxToDp(30) }}>
+            <View
+              style={{
+                height: pxToDp(45),
+                width: deviceWidthDp,
+                backgroundColor: '#eae8e8',
+              }}
+            />
+          </Shimmer>
+        ) : (
+          <View />
+        )}
+
         <TopTitle title={'需求详情'} showBtn={false} />
         <ScrollView style={{ backgroundColor: '#fff', paddingTop: pxToDp(20) }}>
           {/*demand卡片开始*/}
           <DemandCard
-            type={1}
-            project_contacts={'冯泽明'}
-            project_budget={666}
-            project_escrow={555}
-            project_describe={
-              '拼页面，拼页面，我就是要拼页面，我就是要拼页面，我就是要拼页面，我就是要拼页面我就是要拼页面'
-            }
-            project_Title={'冯泽明的需求详情'}
+            type={status}
+            project_contacts={publisherNick}
+            project_budget={expectedPrice}
+            project_escrow={0}
+            project_describe={requirementAbstract}
+            project_Title={requirementTitle}
           />
           {/*demand卡片结束*/}
           {/*中间的盒子开始*/}
@@ -55,11 +162,13 @@ class DemandDetails extends Component {
                   <Text style={styles.demandBox_titleTxt}>需求详情</Text>
                 </View>
                 <View>
-                  <Text style={styles.demandBox_dataText}>2021-01-22发布</Text>
+                  <Text style={styles.demandBox_dataText}>
+                    {createTime[0]}-{createTime[1]}-{createTime[2]}发布
+                  </Text>
                 </View>
               </View>
               <View style={{ marginTop: pxToDp(29) }}>
-                <LabelCard typeText={'叫爸爸'} />
+                <LabelCard typeText={category} />
               </View>
             </View>
             {/*盒子左边部分结束*/}
@@ -102,11 +211,7 @@ class DemandDetails extends Component {
                   lineHeight: pxToDp(40),
                 }}
               >
-                {'      '}开发具有较高的通用性。无论是前端渲染的单页面应用
-                ,还是后端模板渲染的多页面应用，组件化开发的概念都
-                能适用。组件化开发具有较高的通用性。无论是前端渲染的单页面应用还是后端
-                模板渲染的多页面应用，组件化开发的概念都能适用组件化开发
-                具有较高的通用性。无论是前端渲染的单页面应用，还是后端模板渲染的多页面应用，组件化开发。
+                {content}
               </Text>
             </View>
           </View>
