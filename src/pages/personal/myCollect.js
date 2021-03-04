@@ -68,8 +68,8 @@ class CollectList extends Component {
     console.log('收藏的案例', res);
     const newList = res.data.data.list;
     this.setState({
-      totalPage: res.data.data.total,
-      currentPage: res.data.data.current,
+      totalPage: res.data.data.totalCount,
+      currentPage: res.data.data.currentPage,
     });
     return isReload ? newList : [...this.state.dataList, ...newList];
   }

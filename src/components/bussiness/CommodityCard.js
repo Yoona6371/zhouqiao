@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { activeOpacity } from '../../constants/config';
 import Avatar from '../common/Avatar';
 import Shimmer from 'react-native-shimmer';
+import Toast from '../common/Toast/Toast';
 class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
@@ -36,6 +37,13 @@ class CommodityCard extends React.PureComponent {
       caseId: this.props.caseId,
       type: this.props.type,
     });
+  };
+  //取消收藏
+  CollectBtn = async () => {
+    let i = await Http.DeleteCase({ designCaseId: this.props.caseId });
+    console.log('取消收藏的结果', i);
+    Toast.message('取消成功');
+
   };
   render() {
     const {
@@ -199,7 +207,11 @@ class CommodityCard extends React.PureComponent {
                     </View>
                   ) : (
                     <View style={styles.CommodityCard__typeTwoBtnBox}>
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.CollectBtn();
+                        }}
+                      >
                         <Text style={styles.CommodityCard__typeTwoBtnText}>
                           取消收藏
                         </Text>
