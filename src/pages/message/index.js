@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import { fontStyle, margin, padding } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
@@ -15,18 +15,23 @@ class Index extends Component {
       list: [],
       userId: '',
       avatar: '',
+      count: 0,
     };
   }
 
   async componentDidMount() {
     let res = await Http.messageList({ page: 1, size: 8 });
+    let count = 0;
+    res.data.data.dataList.forEach((v) => {
+      count += v.count;
+    });
     let res2 = await Http.getMyInfo();
     this.setState({
       list: res.data.data.dataList,
       userId: res2.data.data.userId,
       avatar: res2.data.data.avatar,
+      count: count,
     });
-    console.log(res.data.data);
   }
 
   timeFormmat(data) {
@@ -44,7 +49,7 @@ class Index extends Component {
   }
 
   render() {
-    const { list } = this.state;
+    const { list, count } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.message_title}>
@@ -53,90 +58,51 @@ class Index extends Component {
           <View style={styles.message_assist} />
           {/* 未读提示 */}
           <Text style={[styles.message_tips, styles.message_tips_position]}>
-            18
+            {count}
           </Text>
         </View>
         <View style={styles.message_list_wrap}>
-          <TouchableOpacity
-            style={styles.message_list}
-            onPress={() => NavigationHelper.navigate('MessageNotice')}
-          >
-            <View style={{ alignSelf: 'center' }}>
-              <Avatar
-                image={{
-                  uri:
-                    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202101%2F15%2F20210115170419_ed8cd.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614850704&t=612446e233692bedd314d255c7faeff3',
-                }}
-                size={90}
-              />
-            </View>
-            <View>
-              <Text style={{ ...fontStyle(30, 64, 64, 'bold', '#333') }}>
-                通知
-              </Text>
-              <Text style={{ ...fontStyle(24, 64, 64, '500', '#999') }}>
-                尊敬的用户，您收到一条新的消息
-              </Text>
-            </View>
-            <View>
-              <Text
-                style={{
-                  ...fontStyle(24, 64, 64, '500', '#999', 'right'),
-                }}
-              >
-                一小时前
-              </Text>
-              <Text
-                style={{
-                  ...styles.message_tips,
-                  marginTop: pxToDp(16),
-                  marginLeft: pxToDp(92),
-                }}
-              >
-                18
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.message_list}
-            onPress={() => NavigationHelper.navigate('MessageDetail')}
-          >
-            <View style={{ alignSelf: 'center' }}>
-              <Avatar
-                image={{
-                  uri:
-                    'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202101%2F15%2F20210115170419_ed8cd.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614850704&t=612446e233692bedd314d255c7faeff3',
-                }}
-                size={90}
-              />
-            </View>
-            <View>
-              <Text style={{ ...fontStyle(30, 64, 64, 'bold', '#333') }}>
-                通知
-              </Text>
-              <Text style={{ ...fontStyle(24, 64, 64, '500', '#999') }}>
-                尊敬的用户，您收到一条新的消息
-              </Text>
-            </View>
-            <View>
-              <Text
-                style={{
-                  ...fontStyle(24, 64, 64, '500', '#999', 'right'),
-                }}
-              >
-                一小时前
-              </Text>
-              <Text
-                style={{
-                  ...styles.message_tips,
-                  marginTop: pxToDp(16),
-                  marginLeft: pxToDp(92),
-                }}
-              >
-                18
-              </Text>
-            </View>
-          </TouchableOpacity>
+          {/* 系统通知 */}
+          {/*  <TouchableOpacity*/}
+          {/*    style={styles.message_list}*/}
+          {/*    onPress={() => NavigationHelper.navigate('MessageNotice')}*/}
+          {/*  >*/}
+          {/*    <View style={{ alignSelf: 'center' }}>*/}
+          {/*      <Avatar*/}
+          {/*        image={{*/}
+          {/*          uri:*/}
+          {/*            'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202101%2F15%2F20210115170419_ed8cd.thumb.1000_0.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614850704&t=612446e233692bedd314d255c7faeff3',*/}
+          {/*        }}*/}
+          {/*        size={90}*/}
+          {/*      />*/}
+          {/*    </View>*/}
+          {/*    <View>*/}
+          {/*      <Text style={{ ...fontStyle(30, 64, 64, 'bold', '#333') }}>*/}
+          {/*        通知*/}
+          {/*      </Text>*/}
+          {/*      <Text style={{ ...fontStyle(24, 64, 64, '500', '#999') }}>*/}
+          {/*        尊敬的用户，您收到一条新的消息*/}
+          {/*      </Text>*/}
+          {/*    </View>*/}
+          {/*    <View>*/}
+          {/*      <Text*/}
+          {/*        style={{*/}
+          {/*          ...fontStyle(24, 64, 64, '500', '#999', 'right'),*/}
+          {/*        }}*/}
+          {/*      >*/}
+          {/*        一小时前*/}
+          {/*      </Text>*/}
+          {/*      <Text*/}
+          {/*        style={{*/}
+          {/*          ...styles.message_tips,*/}
+          {/*          marginTop: pxToDp(16),*/}
+          {/*          marginLeft: pxToDp(92),*/}
+          {/*        }}*/}
+          {/*      >*/}
+          {/*        18*/}
+          {/*      </Text>*/}
+          {/*    </View>*/}
+          {/*  </TouchableOpacity>*/}
           {list.map((v, i) => (
             <TouchableOpacity
               key={i}
@@ -151,11 +117,11 @@ class Index extends Component {
               }
             >
               <View style={{ alignSelf: 'center' }}>
-                <Avatar
-                  image={{
+                <Image
+                  source={{
                     uri: v.from_avatar,
                   }}
-                  size={90}
+                  style={{ height: pxToDp(90), width: pxToDp(90) }}
                 />
               </View>
               <View>
@@ -174,15 +140,17 @@ class Index extends Component {
                 >
                   {this.timeFormmat(v.lasttime)}
                 </Text>
-                <Text
-                  style={{
-                    ...styles.message_tips,
-                    marginTop: pxToDp(16),
-                    marginLeft: pxToDp(92),
-                  }}
-                >
-                  {v.count}
-                </Text>
+                {v.count === 0 ? null : (
+                  <Text
+                    style={{
+                      ...styles.message_tips,
+                      marginTop: pxToDp(16),
+                      marginLeft: pxToDp(92),
+                    }}
+                  >
+                    {v.count}
+                  </Text>
+                )}
               </View>
             </TouchableOpacity>
           ))}
