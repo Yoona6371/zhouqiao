@@ -162,6 +162,10 @@ const api = {
     method: 'get',
   },
   // 消息
+  messageList: {
+    url: '/api/message/getList',
+    method: 'get',
+  },
   messageDetail: {
     url: '/api/message/getMessageList',
     method: 'post',
