@@ -21,7 +21,6 @@ class DemandDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      top: true,
       status: 0,
       requirementTitle: ' ',
       publisherNick: ' ',
@@ -93,7 +92,6 @@ class DemandDetails extends Component {
 
     const data = detail.data.data;
     this.setState({
-      top: false,
       status: data.status,
       requirementTitle: data.requirementTitle,
       publisherNick: data.publisherNick,
@@ -107,7 +105,6 @@ class DemandDetails extends Component {
 
   render() {
     const {
-      top,
       status,
       requirementTitle,
       publisherNick,
@@ -120,20 +117,6 @@ class DemandDetails extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        {top ? (
-          <Shimmer style={{ marginTop: pxToDp(30) }}>
-            <View
-              style={{
-                height: pxToDp(45),
-                width: deviceWidthDp,
-                backgroundColor: '#eae8e8',
-              }}
-            />
-          </Shimmer>
-        ) : (
-          <View />
-        )}
-
         <TopTitle title={'需求详情'} showBtn={false} />
         <ScrollView style={{ backgroundColor: '#fff', paddingTop: pxToDp(20) }}>
           {/*demand卡片开始*/}
@@ -238,22 +221,22 @@ class DemandDetails extends Component {
           </View>
           {/*底部图片结束*/}
           {/*底部按钮开始*/}
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: pxToDp(166),
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => NavigationHelper.replace('myDemand')}
-            >
-              <View style={styles.bottom_btn}>
-                <Text style={{ color: '#FFFFFF' }}>确定</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          {/*<View*/}
+          {/*  style={{*/}
+          {/*    width: '100%',*/}
+          {/*    justifyContent: 'center',*/}
+          {/*    alignItems: 'center',*/}
+          {/*    marginBottom: pxToDp(166),*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <TouchableOpacity*/}
+          {/*    onPress={() => NavigationHelper.replace('myDemand')}*/}
+          {/*  >*/}
+          {/*    <View style={styles.bottom_btn}>*/}
+          {/*      <Text style={{ color: '#FFFFFF' }}>确定</Text>*/}
+          {/*    </View>*/}
+          {/*  </TouchableOpacity>*/}
+          {/*</View>*/}
 
           {/*底部按钮结束*/}
         </ScrollView>
