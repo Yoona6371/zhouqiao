@@ -39,7 +39,8 @@ class OrderList extends React.Component {
                   <OrderCard
                     onpressRight={() => {
                       // NavigationHelper.navigate('OrderDetail', { item: item });
-                      NavigationHelper.navigate('CreatOrder', { item: item });
+                      // NavigationHelper.navigate('CreatOrder', { item: item });
+                      alert("删除订单")
 
                     }}
                     onpressLeft={() => {

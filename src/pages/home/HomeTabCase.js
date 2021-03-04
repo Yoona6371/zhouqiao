@@ -86,6 +86,7 @@ export default class HomeTabCase extends Component {
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard
+            caseType={2}
             Title={item.case_name}
             user_id={item.case_author}
             Commodity_type={this.props.route.title}

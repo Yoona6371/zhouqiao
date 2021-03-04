@@ -47,8 +47,8 @@ class CommodityDetail extends Component {
       this.setState({ renderPlaceholderOnly: false });
     });
     //绑定案例id
-    console.log('这里试试', this.props);
-    console.log('ggg', this.props.route.params.caseId);
+    console.log('这里试试', this.props.route.params);
+    console.log('ID和type', this.props.route.params.caseId, this.props.route.params.type);
     console.log(this.state.caseId);
     let newCaseId = this.props.route.params.caseId;
     await this.setState({ caseId: newCaseId });
@@ -120,7 +120,7 @@ class CommodityDetail extends Component {
   };
   render() {
     const { detailsData, isCollect, detailsDataList } = this.state;
-    console.log('render里的list', detailsData.list);
+    // console.log('render里的list', detailsData.list);
     return (
       <View style={{ flex: 1 }}>
         <TopTitle
@@ -196,23 +196,23 @@ class CommodityDetail extends Component {
           {this.props.route.params.type == 3 ? (
             <View style={styles.commodity_footer_but} />
           ) : (
-            <TouchableOpacity
-              activeOpacity={activeOpacity}
-              style={styles.commodity_footer_but}
-              onPress={this.CollectOnclick}
-            >
-              <Icon
-                name={'collect'}
-                style={{
-                  fontSize: pxToDp(25),
-                  color: isCollect ? '#fe9e0eFF' : '#A1A3A5',
-                }}
-              />
-              <Text style={{ ...styles.but_text, marginTop: pxToDp(15) }}>
-                收藏
+              <TouchableOpacity
+                activeOpacity={activeOpacity}
+                style={styles.commodity_footer_but}
+                onPress={this.CollectOnclick}
+              >
+                <Icon
+                  name={'collect'}
+                  style={{
+                    fontSize: pxToDp(25),
+                    color: isCollect ? '#fe9e0eFF' : '#A1A3A5',
+                  }}
+                />
+                <Text style={{ ...styles.but_text, marginTop: pxToDp(15) }}>
+                  收藏
               </Text>
-            </TouchableOpacity>
-          )}
+              </TouchableOpacity>
+            )}
           <TouchableOpacity
             activeOpacity={activeOpacity}
             style={styles.commodity_footer_but2}
@@ -235,9 +235,22 @@ class CommodityDetail extends Component {
                 ￥{detailsData.price}
               </Text>
             </View>
-            <Text style={{ ...styles.but2_text, marginTop: pxToDp(12) }}>
-              立即购买
+            <TouchableOpacity
+              onPress={() => {
+                NavigationHelper.navigate(
+                  'CreatOrder',
+                  {
+                    caseId: this.props.route.params.caseId,
+                    caseType: this.props.route.params.type
+                  }
+                )
+              }}
+            >
+              <Text style={{ ...styles.but2_text, marginTop: pxToDp(12) }}>
+                立即购买
             </Text>
+            </TouchableOpacity>
+
           </TouchableOpacity>
         </View>
       </View>

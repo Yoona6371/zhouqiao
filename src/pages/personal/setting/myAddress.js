@@ -16,58 +16,10 @@ class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: [
-        {
-          user: {
-            detailedAddress: '曹杨九村11栋30号楼210室',
-            name: '卢伟军',
-            sex: '女士',
-            tel: '18721755801',
-          },
-          defaultShow: true,
-          jumPage: 'Tabber',
-        },
-        {
-          user: {
-            detailedAddress: '曹杨九村11栋30号楼210室',
-            name: '卢伟军',
-            sex: '女士',
-            tel: '18721755801',
-          },
-          defaultShow: false,
-          jumPage: 'Tabber',
-        },
-        {
-          user: {
-            detailedAddress: '曹杨九村11栋30号楼210室',
-            name: '卢伟军',
-            sex: '女士',
-            tel: '18721755801',
-          },
-          defaultShow: false,
-          jumPage: 'Tabber',
-        },
-        {
-          user: {
-            detailedAddress: '曹杨九村11栋30号楼210室',
-            name: '卢伟军',
-            sex: '女士',
-            tel: '18721755801',
-          },
-          defaultShow: false,
-          jumPage: 'Tabber',
-        },
-        {
-          user: {
-            detailedAddress: '曹杨九村11栋30号楼210室',
-            name: '卢伟军',
-            sex: '女士',
-            tel: '18721755801',
-          },
-          defaultShow: false,
-          jumPage: 'Tabber',
-        },
-      ],
+      selectAddress: [],
+      list: [],
+
+      
     };
   }
   render() {
@@ -77,13 +29,28 @@ class Index extends Component {
         <TopTitle title="地址管理" showBtn={false} />
         <ScrollView style={styles.address__wrap}>
           {list.map((v, i) => (
-            <AddressList
-              style={{ marginBottom: pxToDp(20) }}
-              key={i}
-              user={v.user}
-              defaultShow={v.defaultShow}
-              jumPage={v.jumPage}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                this.setState({ selectAddress: v });
+                console.log(this.props.route.params.ifBack)
+                if (this.props.route.params.ifBack === true) {
+                  this.props.route.params.returnData(v)
+                  NavigationHelper.goBack({ id: '4564564' })
+                }
+              }}
+            >
+              <AddressList
+                style={{ marginBottom: pxToDp(20) }}
+                key={i}
+                name={v.name}
+                sex={v.sex}
+                tel={v.tel}
+                address={v.address}
+                defaultShow={v.defaultShow}
+                jumPage={v.jumPage}
+              />
+            </TouchableOpacity>
+
           ))}
           {/*button start*/}
           <View
@@ -124,7 +91,7 @@ class Index extends Component {
           </View>
           {/*button  end*/}
         </ScrollView>
-      </View>
+      </View >
     );
   }
 }

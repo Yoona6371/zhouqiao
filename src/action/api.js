@@ -175,7 +175,43 @@ const api = {
     url: '/api/commodityExt/client/commodities/detail',
     method: 'get',
   },
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+  getPaymentDetail: {
+    url: '/api/wxPay/unifiedOrder',
+    method: 'get',
+  },
+  getMyAddress: {
+    url: '/api/user/addresses',
+    method: 'get',
+  },
+  addMyaddress: {
+    url: '/api/user/address',
+    method: 'post',
+  },
+  changeAddress: {
+    url: '/api/user/address/{addressId}',
+    method: 'put',
+  },
+  addressDetails: {
+    url: '/api/user/address/{addressId}',
+    method: 'get',
+  },
+  deleteAddress: {
+    url: '/api/user/address/{addressId}',
+    method: 'delete',
+  },
+  // 生成商品订单
+  generateGoodOrder: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post',
+  },
+  // generateDesignOrder: {
+  //   url: '/api/client/orderDesignCase/',
+  //   method: 'post',
+  // },
+>>>>>>> Stashed changes
   // 获取订单列表
   getOrderLists: {
     url: '/api/client/orders',
@@ -191,7 +227,26 @@ const api = {
     url: '/api/order',
     method: 'get'
   },
+<<<<<<< Updated upstream
 =======
 >>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
+=======
+  // 需求详情
+  demandDetail: {
+    url: '/api/requirement',
+    method: 'get',
+  },
+  // 设计案例订单生成
+  orderDesignCase: {
+    url: ' /api/client/orderDesignCase',
+    method: 'post'
+  },
+
+  // 商品订单生成/api/stylist/orderCommodity
+  orderCommodity: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post'
+  }
+>>>>>>> Stashed changes
 };
 export default api;

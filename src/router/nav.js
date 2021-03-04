@@ -106,7 +106,6 @@ class Nav extends React.Component {
           {/*登录*/}
           <Stack.Screen
             name="LoginAndRegister"
-<<<<<<< HEAD
             component={Tab}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
@@ -116,14 +115,10 @@ class Nav extends React.Component {
           <Stack.Screen
             name="OrderDetail"
             component={OrderDetail}
-=======
-            component={LoginAndRegister }
->>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
           />
-<<<<<<< HEAD
           {/* 生成订单 */}
           <Stack.Screen
             name="CreatOrder"
@@ -134,23 +129,13 @@ class Nav extends React.Component {
           />
           {/* 找回密码 */}
           {/* <Stack.Screen
-=======
-          {/* 找回密码 */}
-          <Stack.Screen
->>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
             name="FindPassword"
             component={FindPassword}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
-<<<<<<< HEAD
             }} */}
           {/* /> */}
           {/*他人中心*/}
-=======
-            }}
-          />
-          {/*他人中心*/} 
->>>>>>> 9346031bff7c5e2e3ec1944cb35ff888bcdafaa7
           <Stack.Screen
             name="OthersPersonal"
             component={OthersPersonal}
