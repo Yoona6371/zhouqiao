@@ -20,6 +20,7 @@ import Overlay from '../common/Overlay/Overlay';
 import DatePicker from 'react-native-datepicker';
 import Toast from '../common/Toast/Toast';
 import axios from 'axios';
+import LocalStorageUtils from '../../utils/LocalStorageUtils';
 
 class Index extends Component {
   constructor(props) {
@@ -156,6 +157,7 @@ class Index extends Component {
       );
       Overlay.show(overlayView);
     } else if (this.props.option === 0) {
+      await LocalStorageUtils.clear();
       NavigationHelper.resetTo('LoginAndRegister');
     } else {
       const res = await Http.getMyInfo();
