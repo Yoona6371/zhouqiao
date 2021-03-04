@@ -5,294 +5,81 @@ import { ScrollView } from 'react-native-gesture-handler';
 import TopTabNavigator from '../../components/common/TopTabNavigator';
 import { pxToDp } from '../../utils/pxToDp';
 import CommodityCard from '../../components/bussiness/CommodityCard';
-class Drawing extends Component {
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              paddingBottom: pxToDp(40),
-              paddingTop: pxToDp(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
+import RefreshListView, {
+  RefreshState,
+} from '../../components/common/RefreshListView';
+import { flexColumnSpb, padding } from '../../utils/StyleUtils';
+
+class CollectList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataList: [
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+        { case_name: '', picture: '', user_id: '', case_author_avatar: '' },
+      ],
+      refreshState: RefreshState.Idle,
+      totalPage: 0,
+      currentPage: 1,
+    };
   }
-}
-class PS_AI extends Component {
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              paddingBottom: pxToDp(40),
-              paddingTop: pxToDp(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
+
+  async componentDidMount() {
+    await this.onHeaderRefresh();
   }
-}
-class cartoon extends Component {
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              paddingBottom: pxToDp(40),
-              paddingTop: pxToDp(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-}
-class plane extends Component {
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              paddingBottom: pxToDp(40),
-              paddingTop: pxToDp(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-}
-class CAD extends Component {
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              paddingBottom: pxToDp(40),
-              paddingTop: pxToDp(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-}
-class UI extends Component {
-  render() {
-    return (
-      <View>
-        <ScrollView>
-          <View
-            style={{
-              paddingBottom: pxToDp(40),
-              paddingTop: pxToDp(10),
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              justifyContent: 'space-evenly',
-            }}
-          >
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-            <CommodityCard
-              Commodity_type="PS/AI"
-              type={2}
-              Title="朗艺装饰企业网站建设 定制开发制作网页"
-            />
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
-}
-export class detail extends Component {
-  state = {
-    pages: [
-      {
-        key: '手绘',
-        title: '手绘',
-        component: Drawing,
-      },
-      {
-        key: 'PS/AI',
-        title: 'PS/AI',
-        component: PS_AI,
-      },
-      {
-        key: '漫画/插画',
-        title: '漫画/插画',
-        component: cartoon,
-      },
-      {
-        key: '平面',
-        title: '平面',
-        component: plane,
-      },
-      {
-        key: 'CAD',
-        title: 'CAD',
-        component: CAD,
-      },
-      {
-        key: 'UI',
-        title: 'UI',
-        component: UI,
-      },
-    ],
+
+  onHeaderRefresh = async () => {
+    this.setState({ refreshState: RefreshState.HeaderRefreshing });
+
+    let dataList = await this.getList(true);
+
+    this.setState({
+      dataList: dataList,
+      refreshState:
+        dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
+    });
+    // console.log(dataList);
   };
-  MyTabs = () => {
-    const widthPhone = Dimensions.get('window').width;
-    let { pages } = this.state;
-    return (
-      <TopTabNavigator
-        ifScrollEnabled={true}
-        type={1}
-        itemWidth={widthPhone / 3.5}
-        routes={pages}
-      />
-    );
+
+  onFooterRefresh = async () => {
+    this.setState({ refreshState: RefreshState.FooterRefreshing });
+    const { totalPage, currentPage } = this.state;
+
+    let dataList = await this.getList(false, currentPage + 1);
+    this.setState({
+      dataList: dataList,
+      refreshState:
+        dataList.length === totalPage
+          ? RefreshState.NoMoreData
+          : RefreshState.Idle,
+    });
   };
+
+  // 获取测试数据
+  async getList(isReload: boolean, currentPage = 1): Array<Object> {
+    let res = await Http.MyCollectList({
+      page: currentPage,
+      size: 3,
+    });
+    console.log('收藏的案例', res);
+    const newList = res.data.data.list;
+    this.setState({
+      totalPage: res.data.data.totalCount,
+      currentPage: res.data.data.currentPage,
+    });
+    return isReload ? newList : [...this.state.dataList, ...newList];
+  }
+
+  keyExtractor = (item: any, index: number) => {
+    return index.toString();
+  };
+
   render() {
+    const { dataList } = this.state;
     const width = Dimensions.get('window').width;
     return (
       <View
@@ -301,19 +88,39 @@ export class detail extends Component {
         }}
       >
         <TopTitle title="我的收藏" showBtn={false} />
-        <View style={{ flex: 1 }}>{this.MyTabs()}</View>
+
+        <View style={{ flex: 1 }}>
+          <RefreshListView
+            data={dataList}
+            numColumns={2}
+            contentContainerStyle={{ backgroundColor: '#fff' }}
+            keyExtractor={this.keyExtractor}
+            renderItem={({ item, index }) => (
+              <CommodityCard
+                Title={item.case_name}
+                user_id={item.case_author}
+                Commodity_type={item.category}
+                image={item.cover}
+                userId={item.case_author_id}
+                user_image={item.case_author_avatar}
+                style={{ ...padding(25, 0, 25, 0) }}
+                caseId={item.case_id}
+                type={2}
+              />
+            )}
+            refreshState={this.state.refreshState}
+            onHeaderRefresh={this.onHeaderRefresh}
+            onFooterRefresh={this.onFooterRefresh}
+            // 可选
+            footerRefreshingText="玩命加载中 >.<"
+            footerFailureText="我擦嘞，居然失败了 =.=!"
+            footerNoMoreDataText="-我是有底线的-"
+            footerEmptyDataText="-好像什么东西都没有-"
+          />
+        </View>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  containerBox: {
-    paddingBottom: pxToDp(40),
-    paddingTop: pxToDp(10),
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-  },
-});
-export default detail;
+export default CollectList;

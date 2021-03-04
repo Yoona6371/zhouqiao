@@ -24,6 +24,7 @@ import DocumentPicker from 'react-native-document-picker';
 
 // 聊天UI库
 import IMUI from 'aurora-imui-react-native';
+import { margin, padding, fontStyle } from '../../utils/StyleUtils';
 const InputView = IMUI.ChatInput;
 const MessageListView = IMUI.MessageList;
 const AuroraIController = IMUI.AuroraIMUIController;
@@ -559,47 +560,57 @@ class TestRNIMUI extends Component {
     return (
       <View style={styles.container}>
         <View style={this.state.navigationBar} ref="NavigatorView">
-          <Button
-            style={styles.sendCustomBtn}
-            title={this.props.route.params.nickName}
-            onPress={() => {
-              if (Platform.OS === 'ios') {
-                var message = constructNormalMessage();
-                message.msgType = 'custom';
-                message.content = `
-                <h5>This is a custom message. </h5>
-                <img src="file://${RNFS.MainBundlePath}/default_header.png"/>
-                `;
-                console.log(message.content);
-                message.contentSize = { height: 100, width: 200 };
-                message.extras = { extras: 'fdfsf' };
-                AuroraIController.appendMessages([message]);
-                AuroraIController.scrollToBottom(true);
-              } else {
-                let message = constructNormalMessage();
-                message.msgType = 'custom';
-                message.msgId = '10';
-                message.status = 'send_going';
-                message.isOutgoing = true;
-                message.content = `
-                <body bgcolor="#ff3399">
-                  <h5>This is a custom message. </h5>
-                  <img src="/storage/emulated/0/XhsEmoticonsKeyboard/Emoticons/wxemoticons/icon_040_cover.png"></img>
-                </body>`;
-                message.contentSize = { height: 100, width: 200 };
-                message.extras = { extras: 'fdfsf' };
-                var user = {
-                  userId: '1',
-                  displayName: '',
-                  avatarPath: '',
-                };
-                user.displayName = '0001';
-                user.avatarPath = 'ironman';
-                message.fromUser = user;
-                AuroraIController.appendMessages([message]);
-              }
+          <Text
+            style={{
+              ...padding(20, 50, 20, 50),
+              ...fontStyle(34, 136, 36, '500', '#000'),
+              backgroundColor: '#F5FCFF',
+              zIndex: 1,
             }}
-          />
+          >
+            {this.props.route.params.nickName}
+          </Text>
+          {/*<Button*/}
+          {/*  style={styles.sendCustomBtn}*/}
+          {/*  title={this.props.route.params.nickName}*/}
+          {/*  onPress={() => {*/}
+          {/*    if (Platform.OS === 'ios') {*/}
+          {/*      var message = constructNormalMessage();*/}
+          {/*      message.msgType = 'custom';*/}
+          {/*      message.content = `*/}
+          {/*      <h5>This is a custom message. </h5>*/}
+          {/*      <img src="file://${RNFS.MainBundlePath}/default_header.png"/>*/}
+          {/*      `;*/}
+          {/*      console.log(message.content);*/}
+          {/*      message.contentSize = { height: 100, width: 200 };*/}
+          {/*      message.extras = { extras: 'fdfsf' };*/}
+          {/*      AuroraIController.appendMessages([message]);*/}
+          {/*      AuroraIController.scrollToBottom(true);*/}
+          {/*    } else {*/}
+          {/*      let message = constructNormalMessage();*/}
+          {/*      message.msgType = 'custom';*/}
+          {/*      message.msgId = '10';*/}
+          {/*      message.status = 'send_going';*/}
+          {/*      message.isOutgoing = true;*/}
+          {/*      message.content = `*/}
+          {/*      <body bgcolor="#ff3399">*/}
+          {/*        <h5>This is a custom message. </h5>*/}
+          {/*        <img src="/storage/emulated/0/XhsEmoticonsKeyboard/Emoticons/wxemoticons/icon_040_cover.png"></img>*/}
+          {/*      </body>`;*/}
+          {/*      message.contentSize = { height: 100, width: 200 };*/}
+          {/*      message.extras = { extras: 'fdfsf' };*/}
+          {/*      var user = {*/}
+          {/*        userId: '1',*/}
+          {/*        displayName: '',*/}
+          {/*        avatarPath: '',*/}
+          {/*      };*/}
+          {/*      user.displayName = '0001';*/}
+          {/*      user.avatarPath = 'ironman';*/}
+          {/*      message.fromUser = user;*/}
+          {/*      AuroraIController.appendMessages([message]);*/}
+          {/*    }*/}
+          {/*  }}*/}
+          {/*/>*/}
         </View>
         <MessageListView
           style={this.state.messageListLayout}
@@ -647,7 +658,7 @@ class TestRNIMUI extends Component {
           onSizeChange={this.onInputViewSizeChange}
           closeCamera={this.onCloseCamera}
           switchCameraMode={this.switchCameraMode}
-          showSelectAlbumBtn={true}
+          showSelectAlbumBtn={false}
           showRecordVideoBtn={false}
           onClickSelectAlbum={this.onClickSelectAlbum}
           inputPadding={{ left: 30, top: 10, right: 10, bottom: 10 }}
@@ -672,6 +683,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingTop: pxToDp(50),
   },
   inputView: {
     backgroundColor: 'green',
@@ -680,7 +692,7 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     marginTop: 10,
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#3e83d7',
     borderRadius: 8,
     backgroundColor: '#3e83d7',

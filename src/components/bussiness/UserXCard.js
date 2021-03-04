@@ -47,22 +47,30 @@ class UserXCard extends Component {
     text: 121312312312,
     name: '夏允',
     type: 2,
-    focus: false,
+    // focus: false,
   };
 
   constructor(props) {
     super(props);
     let temp = Math.floor(Math.random() * 7);
     this.state = {
-      follow: false,
       bgColor: COLORARRAY[temp],
     };
   }
 
   componentDidMount() {
-    if (this.props.RootStore.userStore.allData.token && this.props.focus) {
-      this.focusUser();
-    }
+    // if (this.props.RootStore.userStore.allData.token && this.props.focus) {
+    //   this.focusUser();
+    // }
+  }
+  //接收新的参数
+  async componentWillReceiveProps(
+    nextProps: Readonly<P>,
+    nextContext: any,
+  ): void {
+    console.log('生命周期里的', this.props);
+    await this.setState({ follow: this.props.focus });
+    console.log('希望这里的state改变了', this.state.follow);
   }
 
   // ——————————————————————————点击关注按钮部分开始————————————————————————————
@@ -74,7 +82,8 @@ class UserXCard extends Component {
       this.setState({
         follow: true,
       });
-      if (!this.props.focus) {
+      if (!this.state.follow) {
+        console.log('关注成功的结果', message);
         Toast.smile('关注成功');
       }
     } else {
@@ -84,17 +93,18 @@ class UserXCard extends Component {
 
   // 取消关注用户
   unfocusUser = async () => {
-    const request = this.props.RootStore.globalStore.allData.Http;
-    const message = await request.unfocusUser(
+    const message = await Http.unfocusUser(
       {},
       `/${this.props.userId}/follower`,
     );
-
+    console.log('取消关注返回结果', message);
     if (message.status === 200) {
       this.setState({
         follow: false,
       });
-      Toast.smile('取消成功');
+      if (!this.state.follow) {
+        Toast.smile('取消成功');
+      }
     } else {
       Toast.sad('取消失败');
     }
@@ -142,7 +152,16 @@ class UserXCard extends Component {
     return this.props.type === 1 ? ['#fff', '#fff'] : ['#333', '#666'];
   }
   render() {
-    const { image, isVip, text, name, type, avatarText, userId } = this.props;
+    const {
+      image,
+      isVip,
+      text,
+      name,
+      type,
+      avatarText,
+      userId,
+      focus,
+    } = this.props;
     const { follow } = this.state;
     return (
       <View
