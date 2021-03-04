@@ -43,7 +43,7 @@ export class DemandList extends Component {
   // 右上角类型切换
   // type=1是实训  type=2是公益  type=3是普通
   get typeStyle() {
-    if (this.props.type === 1) {
+    if (this.props.type === 0) {
       return {
         width: pxToDp(140),
         height: pxToDp(52),
@@ -56,20 +56,7 @@ export class DemandList extends Component {
         right: pxToDp(0),
         top: pxToDp(0),
       };
-    } else if (this.props.type === 2) {
-      return {
-        width: pxToDp(140),
-        height: pxToDp(52),
-        backgroundColor: '#19D691',
-        borderTopLeftRadius: pxToDp(0),
-        borderTopRightRadius: pxToDp(10),
-        borderBottomLeftRadius: pxToDp(26),
-        borderBottomRightRadius: pxToDp(0),
-        position: 'absolute',
-        right: pxToDp(0),
-        top: pxToDp(0),
-      };
-    } else if (this.props.type === 3) {
+    } else if (this.props.type === 1) {
       return {
         width: pxToDp(140),
         height: pxToDp(52),
@@ -85,7 +72,7 @@ export class DemandList extends Component {
     }
   }
   get left_gang() {
-    if (this.props.type === 1) {
+    if (this.props.type === 0) {
       return {
         width: pxToDp(6),
         height: pxToDp(24),
@@ -93,15 +80,7 @@ export class DemandList extends Component {
         borderRadius: pxToDp(3),
         ...margin(13, 33, 0, 0),
       };
-    } else if (this.props.type === 2) {
-      return {
-        width: pxToDp(6),
-        height: pxToDp(24),
-        backgroundColor: '#F72758',
-        borderRadius: pxToDp(3),
-        ...margin(13, 33, 0, 0),
-      };
-    } else if (this.props.type === 3) {
+    } else if (this.props.type === 1) {
       return {
         width: pxToDp(6),
         height: pxToDp(24),
@@ -138,7 +117,7 @@ export class DemandList extends Component {
   };
 
   render() {
-    const { type, text, date } = this.props;
+    const { type, text, date, requirementTitle } = this.props;
     const { typeText } = this.state;
     return (
       <TouchableOpacity
@@ -161,11 +140,9 @@ export class DemandList extends Component {
               left: pxToDp(11),
             }}
             source={
-              type === 1 ? (
+              type === 0 ? (
                 require('../../asserts/images/shixun.png')
-              ) : type === 2 ? (
-                require('../../asserts/images/gongyi.png')
-              ) : type === 3 ? (
+              ) : type === 1 ? (
                 require('../../asserts/images/putong.png')
               ) : (
                 <></>
@@ -175,12 +152,10 @@ export class DemandList extends Component {
           {/* 背景图片 */}
           {/* 2.0右上角的标签开始 */}
           <View style={{ ...this.typeStyle }}>
-            {type === 1 ? (
-              <Text style={styles.labelText}>实训</Text>
-            ) : type === 2 ? (
-              <Text style={styles.labelText}>公益</Text>
-            ) : type === 3 ? (
+            {type === 0 ? (
               <Text style={styles.labelText}>普通</Text>
+            ) : type === 1 ? (
+              <Text style={styles.labelText}>加急</Text>
             ) : (
               <></>
             )}
@@ -189,12 +164,10 @@ export class DemandList extends Component {
           {/* 3.0左上角标题开始 */}
           <View style={styles.leftBox}>
             <View style={{ ...this.left_gang }} />
-            {type === 1 ? (
-              <Text style={styles.left_title}>实训活动设计</Text>
-            ) : type === 2 ? (
-              <Text style={styles.left_title}>公益活动设计</Text>
-            ) : type === 3 ? (
-              <Text style={styles.left_title}>普通活动设计</Text>
+            {type === 0 ? (
+              <Text style={styles.left_title}>{requirementTitle}</Text>
+            ) : type === 1 ? (
+              <Text style={styles.left_title}>{requirementTitle}</Text>
             ) : (
               <></>
             )}
@@ -204,11 +177,9 @@ export class DemandList extends Component {
           <View>
             <SvgUri
               svgXmlData={
-                type === 1 ? (
+                type === 0 ? (
                   quotationMarks
-                ) : type === 2 ? (
-                  quotationMarks2
-                ) : type === 3 ? (
+                ) : type === 1 ? (
                   quotationMarks3
                 ) : (
                   <></>
@@ -223,11 +194,9 @@ export class DemandList extends Component {
             </Text>
             <SvgUri
               svgXmlData={
-                type === 1 ? (
+                type === 0 ? (
                   under_quotationMarks
-                ) : type === 2 ? (
-                  under_quotationMarks2
-                ) : type === 3 ? (
+                ) : type === 1 ? (
                   under_quotationMarks3
                 ) : (
                   <></>
