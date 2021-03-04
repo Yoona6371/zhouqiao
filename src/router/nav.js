@@ -28,6 +28,7 @@ import history from '../pages/personal/history';
 import Feedback from '../pages/personal/setting/feedback';
 import MyAddress from '../pages/personal/setting/myAddress';
 import AddMyAddress from '../pages/personal/setting/addMyAddress';
+import EditMyAddress from '../pages/personal/setting/editMyAddress';
 import myWallet from '../pages/personal/myWallet';
 // 他人中心
 import OthersPersonal from '../pages/design/others';
@@ -260,6 +261,13 @@ class Nav extends React.Component {
           <Stack.Screen
             name="AddMyAddress"
             component={AddMyAddress}
+            options={{
+              ...TransitionPresets.SlideFromRightIOS,
+            }}
+          />  
+          <Stack.Screen
+            name="EditMyAddress"
+            component={EditMyAddress}
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
