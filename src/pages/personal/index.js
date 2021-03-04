@@ -41,9 +41,8 @@ class Index extends Component {
     // await this.getMyInfo();
     // 我的关注列表
     // await this.getMyFocusList();
-    let res = await Http.myRequirements({ page: 1, size: 2 });
-
     await this.getMyInfo();
+    let res = await Http.myRequirements({ page: 1, size: 2 });
     // 我的发布拿两个数据
     this.setState({ myRequirements: res.data.data.dataList });
   }

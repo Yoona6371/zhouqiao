@@ -15,10 +15,11 @@ import { fontStyle, padding, margin } from '../../utils/StyleUtils';
 import LinearGradient from 'react-native-linear-gradient';
 import Avatar from '../common/Avatar';
 import Picker from 'react-native-picker';
-// import DocumentPicker from 'react-native-document-picker';
+import DocumentPicker from 'react-native-document-picker';
 import Overlay from '../common/Overlay/Overlay';
 import DatePicker from 'react-native-datepicker';
 import Toast from '../common/Toast/Toast';
+import axios from 'axios';
 
 class Index extends Component {
   constructor(props) {
@@ -50,19 +51,32 @@ class Index extends Component {
   dataEdit = async () => {
     if (this.props.option === 1) {
       Picker.hide();
-      // try {
-      //   const res = await DocumentPicker.pick({
-      //     type: [DocumentPicker.types.images],
-      //   });
-      //   // console.log(res);
-      // } catch (err) {
-      //   if (DocumentPicker.isCancel(err)) {
-      //     console.log('cancleErr', err);
-      //     // User cancelled the picker, exit any dialogs or menus and move on
-      //   } else {
-      //     throw err;
-      //   }
-      // }
+      try {
+        const res = await DocumentPicker.pick({
+          type: [DocumentPicker.types.images],
+        });
+        let formData = new FormData();
+        formData.append('file', res);
+        formData.append('type', 0);
+        axios
+          .post('http://www.zhouqiao.art:8080/api/resource/file', formData, {
+            headers: {
+              Authorization: `Bearer ${this.props.RootStore.userStore.allData.accessToken}`,
+            },
+          })
+          .then((res) => {
+            if (res.data.code === 0) {
+              Toast.success('上传成功');
+            }
+          });
+      } catch (err) {
+        if (DocumentPicker.isCancel(err)) {
+          console.log('cancleErr', err);
+          // User cancelled the picker, exit any dialogs or menus and move on
+        } else {
+          throw err;
+        }
+      }
     } else if (this.props.option === 2) {
       let overlayView = (
         <Overlay.PullView side="bottom" modal={false}>
@@ -141,6 +155,8 @@ class Index extends Component {
         </Overlay.PullView>
       );
       Overlay.show(overlayView);
+    } else if (this.props.option === 0) {
+      NavigationHelper.resetTo('LoginAndRegister');
     } else {
       const res = await Http.getMyInfo();
       const userInfo = res.data.data;
