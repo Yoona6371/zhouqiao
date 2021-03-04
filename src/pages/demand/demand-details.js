@@ -33,9 +33,9 @@ class DemandDetails extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // 获取需求详情
-    this.requireDetail();
+    await this.requireDetail();
   }
   /**
    * {
@@ -141,7 +141,7 @@ class DemandDetails extends Component {
             type={status}
             project_contacts={publisherNick}
             project_budget={expectedPrice}
-            project_escrow={expectedPrice}
+            project_escrow={0}
             project_describe={requirementAbstract}
             project_Title={requirementTitle}
           />
