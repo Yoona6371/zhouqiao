@@ -45,10 +45,8 @@ class Index extends Component {
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
       this.componentDidMount();
     });
-
-    //删除地址
-    // Http.deleteAddress({addressId:'0d2758540c00ca55283fcd2c828c4e43'}).then((res) =>{console.log(res)})
   }
+  
   render() {
     const { list } = this.state;
     return (
@@ -65,6 +63,7 @@ class Index extends Component {
               address={v.address}
               defaultShow={v.defaultShow}
               jumPage={v.jumPage}
+              addressId ={v.addressId}
             />
           ))}
           {/*button start*/}
