@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon';
+import RNRestart from 'react-native-restart';
+import Toast from '../common/Toast/Toast';
 
 export default class AddressList extends Component {
   constructor(props) {
@@ -13,18 +15,27 @@ export default class AddressList extends Component {
     sex: '女士',
     tel: '18721755801',
     defaultShow: 1,
-    jumPage: 'Tabbar',
   };
 
   delete = () => {
-    this.props.addressIdGet()
+    console.log(this.props.addressId);
+    Http.deleteAddress({}, this.props.addressId)
+    .then((res) => {
+      console.log(res);
+      if (res.data.code === 0) {
+        RNRestart.Restart();
+      } else {
+        Toast.fail(res.data.msg, 1000, 'center');
+      }
+    });
   };
 
-  editor = (jumPage) => {
-    NavigationHelper.navigate(jumPage);
+  //编辑页面跳转
+  editor = () => {
+    NavigationHelper.navigate('EditMyAddress', this.props.addressId);
   };
   render() {
-    const { address, name, sex, tel, defaultShow, jumPage } = this.props;
+    const { address, name, sex, tel, defaultShow} = this.props;
     return (
       <View style={[styles.adressList_box, this.props.style]}>
         {/*详细地址strat*/}
@@ -38,7 +49,7 @@ export default class AddressList extends Component {
           >
             {address}
           </Text>
-          {defaultShow ===1  ? (
+          {defaultShow === 1 ? (
             <View style={styles.defaultShow_box}>
               <Text style={{ color: '#FFFFFF', fontSize: pxToDp(17) }}>
                 默认
