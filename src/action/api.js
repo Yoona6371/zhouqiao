@@ -252,6 +252,14 @@ const api = {
     url: '/api/requirement',
     method: 'get',
   },
+  orderCommodity: {
+    url: '/api/stylist/orderCommodity',
+    method: 'post'
+  },
+  orderDesignCase: {
+    url: '/api/client/orderDesignCase',
+    method: 'post'
+  },
   MyCollectList: {
     url: '/api/designCaseCollect/client/design_cases/collect/mylist',
     method: 'get',
