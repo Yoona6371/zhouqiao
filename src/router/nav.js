@@ -97,13 +97,13 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="Tab"
+          initialRouteName="LoginAndRegister"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
             NavigationHelper.navigation = navigation.navigation;
           }}
-        >
+        > 
           {/*用户*/}
           {/*登录*/}
           <Stack.Screen
