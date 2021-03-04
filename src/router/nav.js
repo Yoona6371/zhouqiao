@@ -264,7 +264,7 @@ class Nav extends React.Component {
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
-          />  
+          />
           <Stack.Screen
             name="EditMyAddress"
             component={EditMyAddress}

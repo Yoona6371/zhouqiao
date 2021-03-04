@@ -468,8 +468,8 @@ class Index extends Component {
             {myRequirements.map((v, i) => (
               <DemandList
                 key={i}
-                type={1}
-                text={v.requirementAbstract}
+                type={v.urgent}
+                text={v.requirementTitle}
                 date={v.createTime}
                 requirementId={v.requirementId}
                 expectedPrice={v.expectedPrice}
