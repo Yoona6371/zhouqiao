@@ -39,7 +39,6 @@ export default class HomeTabCase extends Component {
         dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
     // console.log(dataList);
-
   };
 
   onFooterRefresh = async () => {
@@ -86,6 +85,7 @@ export default class HomeTabCase extends Component {
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard
+            caseType={2}
             Title={item.case_name}
             user_id={item.case_author}
             Commodity_type={this.props.route.title}

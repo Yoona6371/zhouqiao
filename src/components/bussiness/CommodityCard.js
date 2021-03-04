@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import { activeOpacity } from '../../constants/config';
 import Avatar from '../common/Avatar';
 import Shimmer from 'react-native-shimmer';
+import Toast from '../common/Toast/Toast';
 class CommodityCard extends React.PureComponent {
   static propTypes = {
     type: PropTypes.number,
@@ -34,8 +35,15 @@ class CommodityCard extends React.PureComponent {
   Press = () => {
     NavigationHelper.navigate('CommodityDetail', {
       caseId: this.props.caseId,
-      type: this.props.type,
+      type: this.props.caseType,
     });
+  };
+  //取消收藏
+  CollectBtn = async () => {
+    let i = await Http.DeleteCase({ designCaseId: this.props.caseId });
+    console.log('取消收藏的结果', i);
+    Toast.message('取消成功');
+
   };
   render() {
     const {
@@ -77,13 +85,13 @@ class CommodityCard extends React.PureComponent {
                     />
                   </Shimmer>
                 ) : (
-                  <ImageBackground
-                    source={{
-                      uri: image,
-                    }}
-                    style={styles.CommodityCard__shoppingImage}
-                  />
-                )}
+                    <ImageBackground
+                      source={{
+                        uri: image,
+                      }}
+                      style={styles.CommodityCard__shoppingImage}
+                    />
+                  )}
               </View>
               <View style={styles.CommodityCard__typeThreeShoppingTitleBox}>
                 {Title === '' ? (
@@ -97,10 +105,10 @@ class CommodityCard extends React.PureComponent {
                     />
                   </Shimmer>
                 ) : (
-                  <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
-                    {Title}
-                  </Text>
-                )}
+                    <Text style={styles.CommodityCard__typeOThreeShoppingTitle}>
+                      {Title}
+                    </Text>
+                  )}
               </View>
               <View style={{ marginTop: pxToDp(24) }}>
                 <Text
@@ -115,101 +123,105 @@ class CommodityCard extends React.PureComponent {
               </View>
             </View>
           ) : (
-            <View style={styles.CommodityCard__typeOneCaseBox}>
-              {/*案例图片开始*/}
-              <View>
-                {image === '' ? (
-                  <Shimmer>
-                    <ImageBackground
-                      source={{
-                        uri: image,
-                      }}
-                      style={{
-                        width: pxToDp(325),
-                        height: pxToDp(325),
-                        backgroundColor: '#eae8e8',
-                      }}
-                    >
-                      <View style={styles.CommodityCard__typeOneTypeBox}>
-                        <Text style={styles.CommodityCard__typeOneTpyeText}>
-                          {this.props.Commodity_type}
-                        </Text>
-                      </View>
-                    </ImageBackground>
-                  </Shimmer>
-                ) : (
-                  <ImageBackground
-                    source={{
-                      uri: image,
-                    }}
-                    style={{
-                      width: pxToDp(325),
-                      height: pxToDp(325),
-                      backgroundColor: '#eae8e8',
-                    }}
-                  >
-                    <View style={styles.CommodityCard__typeOneTypeBox}>
-                      <Text style={styles.CommodityCard__typeOneTpyeText}>
-                        {this.props.Commodity_type}
-                      </Text>
-                    </View>
-                  </ImageBackground>
-                )}
-              </View>
-              {/*案例图片结束*/}
-              {/*案例描述开始*/}
-              <View>
-                <View style={styles.CommodityCard__typeOneTitleBox}>
-                  {Title === '' ? (
-                    <Shimmer style={{ marginTop: pxToDp(10) }}>
-                      <View
+              <View style={styles.CommodityCard__typeOneCaseBox}>
+                {/*案例图片开始*/}
+                <View>
+                  {image === '' ? (
+                    <Shimmer>
+                      <ImageBackground
+                        source={{
+                          uri: image,
+                        }}
                         style={{
-                          height: pxToDp(25),
-                          width: pxToDp(230),
+                          width: pxToDp(325),
+                          height: pxToDp(325),
                           backgroundColor: '#eae8e8',
                         }}
-                      />
+                      >
+                        <View style={styles.CommodityCard__typeOneTypeBox}>
+                          <Text style={styles.CommodityCard__typeOneTpyeText}>
+                            {this.props.Commodity_type}
+                          </Text>
+                        </View>
+                      </ImageBackground>
                     </Shimmer>
                   ) : (
-                    <Text
-                      styel={styles.CommodityCard__typeOneTitle}
-                      numberOfLines={2}
-                    >
-                      {this.props.Title}
-                    </Text>
-                  )}
+                      <ImageBackground
+                        source={{
+                          uri: image,
+                        }}
+                        style={{
+                          width: pxToDp(325),
+                          height: pxToDp(325),
+                          backgroundColor: '#eae8e8',
+                        }}
+                      >
+                        <View style={styles.CommodityCard__typeOneTypeBox}>
+                          <Text style={styles.CommodityCard__typeOneTpyeText}>
+                            {this.props.Commodity_type}
+                          </Text>
+                        </View>
+                      </ImageBackground>
+                    )}
                 </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  {/*用户头像开始*/}
-                  <View style={styles.CommodityCard__typeOneUserImage}>
-                    <Avatar
-                      image={{ uri: user_image }}
-                      size={50}
-                      userId={this.props.userId}
+                {/*案例图片结束*/}
+                {/*案例描述开始*/}
+                <View>
+                  <View style={styles.CommodityCard__typeOneTitleBox}>
+                    {Title === '' ? (
+                      <Shimmer style={{ marginTop: pxToDp(10) }}>
+                        <View
+                          style={{
+                            height: pxToDp(25),
+                            width: pxToDp(230),
+                            backgroundColor: '#eae8e8',
+                          }}
+                        />
+                      </Shimmer>
+                    ) : (
+                        <Text
+                          styel={styles.CommodityCard__typeOneTitle}
+                          numberOfLines={2}
+                        >
+                          {this.props.Title}
+                        </Text>
+                      )}
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {/*用户头像开始*/}
+                    <View style={styles.CommodityCard__typeOneUserImage}>
+                      <Avatar
+                        image={{ uri: user_image }}
+                        size={50}
+                        userId={this.props.userId}
                       // source={require('../../asserts/images/CommodityCard_userImage.png')}
                       // styel={{ width: pxToDp(50), height: pxToDp(50) }}
-                    />
-                  </View>
-                  {/*用户头像结束*/}
-                  {this.props.type === 1 ? (
-                    <View style={styles.CommodityCard__typeOneUserIdBox}>
-                      <Text style={styles.CommodityCard__typeOneUserId}>
-                        {this.props.user_id}
-                      </Text>
+                      />
                     </View>
                   ) : (
                     <View style={styles.CommodityCard__typeTwoBtnBox}>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.CollectBtn();
+                        }}
+                      >
+                        <Text style={styles.CommodityCard__typeTwoBtnText}>
+                          取消收藏
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                    ) : (
+                        <View style={styles.CommodityCard__typeTwoBtnBox}>
                       <TouchableOpacity>
                         <Text style={styles.CommodityCard__typeTwoBtnText}>
                           取消收藏
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  )}
+                  </View>
                 </View>
               </View>
-            </View>
-          )}
+            )}
         </View>
       </TouchableOpacity>
     );

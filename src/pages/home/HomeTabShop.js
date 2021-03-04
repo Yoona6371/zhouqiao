@@ -69,6 +69,7 @@ export default class HomeTabShop extends PureComponent {
         keyExtractor={this.keyExtractor}
         renderItem={({ item, index }) => (
           <CommodityCard
+            caseType={4}
             type={3}
             Title={item.commodityName}
             user_id={item.commodityAuthor}

@@ -278,6 +278,7 @@ class Index extends Component {
       </Tab.Navigator>
     );
   };
+
   render() {
     const { pages } = this.state;
     return (

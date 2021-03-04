@@ -53,6 +53,7 @@ class page extends Component {
   // 获取测试数据
   async getList(isReload: boolean, currentPage = 1): Array<Object> {
     let key = this.props.route.key;
+    console.log('key是什么', key);
     if (this.props.route.key === '0') {
       key = null;
     }
@@ -61,7 +62,7 @@ class page extends Component {
       page: currentPage,
       size: 8,
     });
-    console.log(res);
+    console.log('我的需求列表请求的值', res);
     const newList = res.data.data.dataList;
     this.setState({
       totalPage: res.data.data.totalPage,
@@ -82,8 +83,8 @@ class page extends Component {
           keyExtractor={this.keyExtractor}
           renderItem={({ item, index }) => (
             <DemandList
-              type={1}
-              text={item.requirementAbstract}
+              type={item.urgent}
+              text={item.requirementTitle}
               date={item.createTime}
               key={index}
               requirementId={item.requirementId}

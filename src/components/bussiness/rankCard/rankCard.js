@@ -16,7 +16,7 @@ export class rankCard extends Component {
   static propTypes = {
     rankNumber: PropTypes.string.isRequired,
     userName: PropTypes.string.isRequired,
-    hot: PropTypes.string.isRequired,
+    hot: PropTypes.number.isRequired,
     onPress: PropTypes.func.isRequired,
     userPhoto: PropTypes.string.isRequired,
     userId: PropTypes.string.isRequired

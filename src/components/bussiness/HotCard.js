@@ -73,6 +73,7 @@ class HotCard extends Component {
   handleClick() {
     NavigationHelper.navigate('CommodityDetail', {
       caseId: this.props.item.case_id,
+      type: this.props.caseType,
     });
   }
 }

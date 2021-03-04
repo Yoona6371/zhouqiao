@@ -7,18 +7,46 @@ import TopTitle from '../../components/common/TopTitle'
 import { pxToDp } from '../../utils/pxToDp'
 export class orderDetail extends Component {
   componentDidMount() {
-    // let item = this.props.route.params.item;
-    // let id = item.orderId;
-    // console.log(id, 'id')
-    // Http.orderDetail({
-    //   type: item.type
-    // }, '/' + id).then(res => {
-    //   console.log(res.data.data, 3333)
-    //   this.setState({ buyerMsg: res.data.data });
-    // })
   }
   state = {
-    num: 1
+    num: 1,
+    address1: []
+  }
+  postOrder = () => {
+    const { address1, num } = this.state;
+    let address = address1.address;
+    let id = this.props.route.params.caseId;
+    if (this.props.route.params.caseType === 2) {
+      // console.log('idhhhhhhtype', this.props.route.params.caseId, this.props.route.params.caseType);
+      let orderDesignCaseForm1 = {
+        address: address,
+        commodityId: id,
+        contact: address1.name,
+        gender: address1.sex,
+        mobile: address1.tel
+      }
+      console.log('form1', orderDesignCaseForm1)
+      Http.orderDesignCase({
+        orderDesignCaseForm: orderDesignCaseForm1
+      }, '/' + id).then(res => {
+        console.log(res)
+      })
+    } else if (this.props.route.params.caseType === 4) {
+      let orderCommodityForm1 = {
+        address: address,
+        commodityId: id,
+        number: num,
+        contact: address1.name,
+        gender: address1.sex,
+        mobile: address1.tel
+      }
+      console.log('orderCommodityFormwww', orderCommodityForm1)
+      Http.orderCommodity({
+        orderCommodityForm: orderCommodityForm1
+      }).then(res => {
+        console.log(res.data, 999)
+      })
+    }
   }
   down = () => {
     const { num } = this.state
@@ -33,8 +61,11 @@ export class orderDetail extends Component {
     let a = num + 1
     this.setState({ num: a });
   }
+  returnData = (address) => {
+    this.setState({ address1: address });
+  }
   render() {
-    const { num } = this.state
+    const { num, address1 } = this.state
     // let { buyerMsg } = this.state;
     // let item = this.props.route.params.item;
     return (
@@ -42,33 +73,49 @@ export class orderDetail extends Component {
         <TopTitle title="生成订单" showBtn={false} />
         <View style={{ alignItems: 'center' }}>
           <View style={styles.addressBox}>
-            <AddressList></AddressList>
+            <TouchableOpacity onPress={() => {
+              NavigationHelper.navigate('MyAddress', {
+                ifBack: true,
+                returnData: this.returnData.bind(this)
+              })
+            }}>
+              {address1 === [] ?
+                <AddressList></AddressList>
+                :
+                <AddressList address={address1.address} name={address1.name} sex={address1.sex} tel={address1.tel}></AddressList>
+              }
+            </TouchableOpacity>
           </View>
-          <View style={styles.numBox}>
-            <View style={{ flexDirection: 'row' }}>
-              <TouchableOpacity
-                onPress={this.down}
-                style={styles.numDown}>
-                <Text style={{ lineHeight: pxToDp(50) }}>-</Text>
-              </TouchableOpacity>
-              <TextInput keyboardType='numeric' style={styles.numInput}>
-                {this.state.num}
-              </TextInput>
-              <TouchableOpacity
-                onPress={this.add}
-                style={styles.numAdd}>
-                <Text style={{ lineHeight: pxToDp(50) }}>+</Text>
-              </TouchableOpacity>
+          {this.props.route.params.caseType === 2 ? <View></View> :
+            <View style={styles.numBox}>
+              <View style={{ flexDirection: 'row' }}>
+                <TouchableOpacity
+                  onPress={this.down}
+                  style={styles.numDown}>
+                  <Text style={{ lineHeight: pxToDp(50) }}>-</Text>
+                </TouchableOpacity>
+                <TextInput keyboardType='numeric' style={styles.numInput}>
+                  {this.state.num}
+                </TextInput>
+                <TouchableOpacity
+                  onPress={this.add}
+                  style={styles.numAdd}>
+                  <Text style={{ lineHeight: pxToDp(50) }}>+</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.payNum}>购买数量</Text>
             </View>
-            <Text style={styles.payNum}>购买数量</Text>
-          </View>
+          }
+
           <View>
-            <TouchableOpacity style={styles.payBtn}>
+            <TouchableOpacity style={styles.payBtn}
+              onPress={this.postOrder}
+            >
               <Text style={styles.payText}>生成订单</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </View >
     )
   }
 }

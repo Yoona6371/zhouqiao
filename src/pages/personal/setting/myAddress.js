@@ -43,7 +43,7 @@ class Index extends Component {
     });
     console.log(addressList);
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
-      RNRestart.Restart();
+      this.componentDidMount();
     });
   }
   
@@ -54,17 +54,31 @@ class Index extends Component {
         <TopTitle title="地址管理" showBtn={false} />
         <ScrollView style={styles.address__wrap}>
           {list.map((v, i) => (
-            <AddressList
-              style={{ marginBottom: pxToDp(20) }}
-              key={i}
-              name={v.name}
-              sex={v.sex}
-              tel={v.tel}
-              address={v.address}
-              defaultShow={v.defaultShow}
-              jumPage={v.jumPage}
-              addressId ={v.addressId}
-            />
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({ selectAddress: v });
+                  console.log(this.props.route.params.ifBack)
+                  if (this.props.route.params.ifBack === true) {
+                    this.props.route.params.returnData(v)
+                    NavigationHelper.goBack({ id: '4564564' })
+                  }
+                }}
+              >
+                <AddressList
+                  style={{ marginBottom: pxToDp(20) }}
+                  key={i}
+                  name={v.name}
+                  sex={v.sex}
+                  tel={v.tel}
+                  address={v.address}
+                  defaultShow={v.defaultShow}
+                  jumPage={v.jumPage}
+                  addressId={v.addressId}
+                />
+              </TouchableOpacity>
+            </View>
+
           ))}
           {/*button start*/}
           <View

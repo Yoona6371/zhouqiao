@@ -31,6 +31,11 @@ class UserStore {
     this.allData = data;
     await LocalStorageUtils.deleteItem('userInfo');
   }
+
+  // 设置token
+  @action setToken(token) {
+    this.allData.accessToken = token;
+  }
 }
 
 class GlobalStore {

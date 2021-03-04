@@ -9,32 +9,32 @@ import {
 import DemandCard from '../../components/bussiness/demandCard';
 import Icon from '../../components/common/Icon';
 import { flexRowCenter, fontStyle } from '../../utils/StyleUtils';
-import { pxToDp } from '../../utils/pxToDp';
+import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LabelCard from '../../components/bussiness/labelCard';
 import { Image } from 'react-native-svg';
 import TopTitle from '../../components/common/TopTitle';
 import Toast from '../../components/common/Toast/Toast';
+import Shimmer from 'react-native-shimmer';
 
 // requirementId: 38719e6d4abb8464665e7908ba213b00
 class DemandDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: 1,
-      requirementTitle: '页面前端开发',
-      publisherNick: 'DAOKO',
-      expectedPrice: 6000,
-      requirementAbstract: '做二轮，三轮电动自行车，电动摩托车行业',
-      createTime: ['2021', '01', '22'],
-      category: 'PS',
-      content:
-        '开发具有较高的通用性。无论是前端渲染的单页面应用,还是后端模板渲染的多页面应用，组件化开发的概念都能适用。组件化开发具有较高的通用性。无论是前端渲染的单页面应用还是后端模板渲染的多页面应用，组件化开发的概念都能适用组件化开发具有较高的通用性。无论是前端渲染的单页面应用，还是后端模板渲染的多页面应用，组件化开发。',
+      status: 0,
+      requirementTitle: ' ',
+      publisherNick: ' ',
+      expectedPrice: 0,
+      requirementAbstract: ' ',
+      createTime: [' ', ' ', ' '],
+      category: ' ',
+      content: ' ',
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // 获取需求详情
-    this.requireDetail();
+    await this.requireDetail();
   }
   /**
    * {
@@ -79,11 +79,12 @@ class DemandDetails extends Component {
 }
    */
   requireDetail = async () => {
-    const detail = await Http.getOthersDetail(
+    const detail = await Http.demandDetail(
       {},
       `/${this.props.route.params.requirementId}`,
     );
 
+    console.log(detail);
     if (!(detail.status === 200)) {
       Toast.sad('加载失败');
       return;
@@ -113,7 +114,7 @@ class DemandDetails extends Component {
       category,
       content,
     } = this.state;
-    
+
     return (
       <View style={{ flex: 1 }}>
         <TopTitle title={'需求详情'} showBtn={false} />
@@ -123,7 +124,7 @@ class DemandDetails extends Component {
             type={status}
             project_contacts={publisherNick}
             project_budget={expectedPrice}
-            project_escrow={expectedPrice}
+            project_escrow={0}
             project_describe={requirementAbstract}
             project_Title={requirementTitle}
           />
@@ -150,7 +151,7 @@ class DemandDetails extends Component {
                 </View>
               </View>
               <View style={{ marginTop: pxToDp(29) }}>
-                <LabelCard typeText={'叫爸爸'} />
+                <LabelCard typeText={category} />
               </View>
             </View>
             {/*盒子左边部分结束*/}
@@ -220,22 +221,22 @@ class DemandDetails extends Component {
           </View>
           {/*底部图片结束*/}
           {/*底部按钮开始*/}
-          <View
-            style={{
-              width: '100%',
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: pxToDp(166),
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => NavigationHelper.replace('myDemand')}
-            >
-              <View style={styles.bottom_btn}>
-                <Text style={{ color: '#FFFFFF' }}>确定</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+          {/*<View*/}
+          {/*  style={{*/}
+          {/*    width: '100%',*/}
+          {/*    justifyContent: 'center',*/}
+          {/*    alignItems: 'center',*/}
+          {/*    marginBottom: pxToDp(166),*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <TouchableOpacity*/}
+          {/*    onPress={() => NavigationHelper.replace('myDemand')}*/}
+          {/*  >*/}
+          {/*    <View style={styles.bottom_btn}>*/}
+          {/*      <Text style={{ color: '#FFFFFF' }}>确定</Text>*/}
+          {/*    </View>*/}
+          {/*  </TouchableOpacity>*/}
+          {/*</View>*/}
 
           {/*底部按钮结束*/}
         </ScrollView>

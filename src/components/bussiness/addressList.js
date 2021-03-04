@@ -17,10 +17,9 @@ export default class AddressList extends Component {
     defaultShow: 1,
   };
 
-  delete = () =>{
+  delete = () => { 
     console.log(this.props.addressId);
-    Http.deleteAddress({}, this.props.addressId)
-    .then((res) => {
+    Http.deleteAddress({}, this.props.addressId).then((res) => {
       console.log(res);
       if (res.data.code === 0) {
         RNRestart.Restart();
@@ -36,7 +35,7 @@ export default class AddressList extends Component {
     NavigationHelper.navigate('EditMyAddress', this.props.addressId);
   };
   render() {
-    const { address, name, sex, tel, defaultShow} = this.props;
+    const { address, name, sex, tel, defaultShow } = this.props;
     return (
       <View style={[styles.adressList_box, this.props.style]}>
         {/*详细地址strat*/}

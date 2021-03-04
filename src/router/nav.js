@@ -97,13 +97,13 @@ class Nav extends React.Component {
         }}
       >
         <Stack.Navigator
-          initialRouteName="LoginAndRegister"
+          initialRouteName="Tab"
           headerMode={'none'}
           mode={'card'}
           screenOptions={(navigation) => {
             NavigationHelper.navigation = navigation.navigation;
           }}
-        > 
+        >
           {/*用户*/}
           {/*登录*/}
           <Stack.Screen
@@ -264,7 +264,7 @@ class Nav extends React.Component {
             options={{
               ...TransitionPresets.SlideFromRightIOS,
             }}
-          />  
+          />
           <Stack.Screen
             name="EditMyAddress"
             component={EditMyAddress}
