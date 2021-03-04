@@ -219,9 +219,7 @@ class Index extends Component {
         Http.demandSet(this.state.data).then((res) => {
           if (res.data.code === 0) {
             Toast.success('发布成功');
-            NavigationHelper.navigate('DemandDetails', {
-              requirementId: res.data.data.requirementId,
-            });
+            NavigationHelper.navigate('myDemand');
             DeviceEventEmitter.emit('EventType');
           }
         });
