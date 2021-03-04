@@ -196,7 +196,8 @@ class Index extends Component {
     const token = await LocalStorageUtils.get('accessToken');
     console.log(token, 'token');
     if (token !== null || '' || undefined) {
-      this.props.RootStore.userStore.setToken(token);
+      console.log(token);
+      this.props.RootStore.userStore.setToken(token.value);
     }
   }
 
@@ -266,7 +267,7 @@ class Index extends Component {
     console.log(this.state.value);
     let res = await Http.getPaymentDetail({
       body: '舟桥之家',
-      outTradeNo: '4564125648',
+      outTradeNo: '456asdsad4aa125648',
       totalFee: 1,
     });
     console.log(res);
@@ -276,11 +277,12 @@ class Index extends Component {
     } else {
       res = res.data.data.data;
       let payload = {
-        partnerId: res.mchid,
+        partnerId: res.partnerid,
         nonceStr: res.noncestr,
         prepayId: res.prepayid,
         sign: res.sign,
         timeStamp: res.timestamp,
+        pg: res.package,
       };
       this.setState({ payload });
       await handlePayment(
