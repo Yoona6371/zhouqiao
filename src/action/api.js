@@ -9,8 +9,12 @@ const api = {
     method: 'get',
   },
   register: {
-    utl: '/api/user/register',
+    url: '/api/user/register',
     method: 'post',
+  },
+  findPassword:{
+    url:'/api/my/password',
+    method:'put',
   },
   getMyInfo: {
     url: '/api/client/my/baseInfo',
