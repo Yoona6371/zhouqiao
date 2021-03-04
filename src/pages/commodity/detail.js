@@ -47,9 +47,8 @@ class CommodityDetail extends Component {
       this.setState({ renderPlaceholderOnly: false });
     });
     //绑定案例id
-    console.log('这里试试', this.props);
-    console.log('ggg', this.props.route.params.caseId);
-    console.log(this.state.caseId);
+    // console.log('这里试试', this.props);
+    // console.log(this.state.caseId);
     let newCaseId = this.props.route.params.caseId;
     await this.setState({ caseId: newCaseId });
     await this.getRes();
@@ -108,6 +107,7 @@ class CommodityDetail extends Component {
       return;
     }
     let { caseId } = this.state;
+    console.log('详情页的案例id', caseId);
     if (!this.state.isCollect) {
       let i = await Http.CollectCase({}, '', false, {
         params: { designCaseId: caseId },
@@ -141,7 +141,7 @@ class CommodityDetail extends Component {
 
   render() {
     const { detailsData, isCollect, detailsDataList } = this.state;
-    console.log('render里的list', detailsData.list);
+    console.log('详情页的数据', detailsData);
     return (
       <View style={{ flex: 1 }}>
         <TopTitle
@@ -169,6 +169,7 @@ class CommodityDetail extends Component {
                 name={detailsData.caseAuthor}
                 text={detailsData.collectNum}
                 userId={detailsData.caseAuthorId}
+                focus={detailsData.followed}
               />
             </View>
           )}
