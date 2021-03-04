@@ -79,11 +79,12 @@ class DemandDetails extends Component {
 }
    */
   requireDetail = async () => {
-    const detail = await Http.getOthersDetail(
+    const detail = await Http.demandDetail(
       {},
-      `/${this.props.route.params.requirementId}`,
+      `/${this.props.requirementId}`,
     );
 
+    console.log(detail);
     if (!(detail.status === 200)) {
       Toast.sad('加载失败');
       return;
@@ -150,7 +151,7 @@ class DemandDetails extends Component {
                 </View>
               </View>
               <View style={{ marginTop: pxToDp(29) }}>
-                <LabelCard typeText={'叫爸爸'} />
+                <LabelCard typeText={category} />
               </View>
             </View>
             {/*盒子左边部分结束*/}
