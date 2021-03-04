@@ -4,13 +4,47 @@ import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import { fontStyle, margin, padding } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import Avatar from '../../components/common/Avatar';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { parse } from 'react-native-svg';
+// import { createFlowAnnotation } from 'mobx/dist/types/flowannotation';
 
 class Index extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      list: [],
+      userId: '',
+      avatar: '',
+    };
+  }
+
+  async componentDidMount() {
+    let res = await Http.messageList({ page: 1, size: 8 });
+    let res2 = await Http.getMyInfo();
+    this.setState({
+      list: res.data.data.dataList,
+      userId: res2.data.data.userId,
+      avatar: res2.data.data.avatar,
+    });
+    console.log(res.data.data);
+  }
+
+  timeFormmat(data) {
+    let hour = this.timeJudge(parseInt((data / 1000 / 60 / 60) % 24));
+    let minute = this.timeJudge(parseInt((data / 1000 / 60) % 60));
+    let second = this.timeJudge(parseInt((data / 1000) % 60));
+    return hour + ':' + minute + ':' + second;
+  }
+  timeJudge(data) {
+    if (data > 9) {
+      return data;
+    } else {
+      return '0' + data;
+    }
   }
 
   render() {
+    const { list } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.message_title}>
@@ -103,6 +137,55 @@ class Index extends Component {
               </Text>
             </View>
           </TouchableOpacity>
+          {list.map((v, i) => (
+            <TouchableOpacity
+              key={i}
+              style={styles.message_list}
+              onPress={() =>
+                NavigationHelper.navigate('MessageDetail', {
+                  fromId: v.from_id,
+                  toId: this.state.userId,
+                  avatar: this.state.avatar,
+                  nickName: v.from_name,
+                })
+              }
+            >
+              <View style={{ alignSelf: 'center' }}>
+                <Avatar
+                  image={{
+                    uri: v.from_avatar,
+                  }}
+                  size={90}
+                />
+              </View>
+              <View>
+                <Text style={{ ...fontStyle(30, 64, 64, 'bold', '#333') }}>
+                  {v.from_name}
+                </Text>
+                <Text style={{ ...fontStyle(24, 64, 64, '500', '#999') }}>
+                  尊敬的用户，您收到一条新的消息
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    ...fontStyle(24, 64, 64, '500', '#999', 'right'),
+                  }}
+                >
+                  {this.timeFormmat(v.lasttime)}
+                </Text>
+                <Text
+                  style={{
+                    ...styles.message_tips,
+                    marginTop: pxToDp(16),
+                    marginLeft: pxToDp(92),
+                  }}
+                >
+                  {v.count}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
     );

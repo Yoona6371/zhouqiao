@@ -17,7 +17,7 @@ export default class AddressList extends Component {
     defaultShow: 1,
   };
 
-  delete = () => {
+  delete = () =>
     console.log(this.props.addressId);
     Http.deleteAddress({}, this.props.addressId)
     .then((res) => {
@@ -28,6 +28,7 @@ export default class AddressList extends Component {
         Toast.fail(res.data.msg, 1000, 'center');
       }
     });
+    this.props.addressIdGet();
   };
 
   //编辑页面跳转
