@@ -183,18 +183,17 @@ const api = {
     method: 'post',
   },
   changeAddress: {
-    url: '/api/user/address/{addressId}',
+    url: '/api/user/address/',
     method: 'put',
   },
   addressDetails: {
-    url: '/api/user/address/{addressId}',
+    url: '/api/user/address/',
     method: 'get',
   },
   deleteAddress: {
-    url: '/api/user/address/{addressId}',
+    url: '/api/user/address/',
     method: 'delete',
   },
-=======
   // 生成商品订单
   generateGoodOrder: {
     url: '/api/stylist/orderCommodity',
