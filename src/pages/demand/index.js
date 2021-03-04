@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { DeviceEventEmitter } from 'react-native';
 import {
   View,
   Text,
@@ -9,6 +8,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Animated,
+  DeviceEventEmitter,
 } from 'react-native';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,6 +16,7 @@ import { fontStyle, margin } from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
+import Toast from '../../components/common/Toast/Toast';
 
 class Index extends Component {
   constructor(props) {
@@ -26,13 +27,14 @@ class Index extends Component {
       list_1: [
         {
           title: '预算金额',
-          tips: '请输入预算金额(元)',
+          tips: '预算金额(元)，默认屏蔽单位',
           type: 0,
           input:
             this.props.route.params !== undefined
               ? props.route.params.expectedPrice.toString()
               : undefined,
           inputUpdate: (data) => {
+            // console.log(data);
             this.setState({
               data: {
                 ...this.state.data,
@@ -43,7 +45,7 @@ class Index extends Component {
         },
         {
           title: '项目周期',
-          tips: '请输入项目周期(天)',
+          tips: '项目周期(天)，默认屏蔽单位',
           type: 0,
           input:
             this.props.route.params !== undefined
@@ -181,11 +183,10 @@ class Index extends Component {
         requirementContent:
           this.props.route.params !== undefined
             ? this.props.route.params.requirementContent
-            : '',
+            : undefined,
       },
     };
   }
-  componentDidMount(): void {}
 
   titleFixed = () => {
     const { scrollY } = this.state;
@@ -197,23 +198,48 @@ class Index extends Component {
   };
 
   demandSet = () => {
-    if (this.props.route.params !== undefined) {
-      console.log('修改');
-      Http.demandUpdate(
-        this.state.data,
-        '/' + this.props.route.params.requirementId,
-      ).then((res) => {
-        if (res.status === 200) {
-          NavigationHelper.goBack();
-        }
-      });
+    if (
+      this.Toast_number(this.state.data.expectedPrice, '预算金额') &&
+      this.Toast_number(this.state.data.expectedTime, '项目周期') &&
+      this.Toast_number(this.state.data.categoryId, '需求类别') &&
+      this.Toast_text(this.state.data.requirementTitle, '订单名称') &&
+      this.Toast_text(this.state.data.requirementContent, '详细信息')
+    ) {
+      if (this.props.route.params !== undefined) {
+        Http.demandUpdate(
+          this.state.data,
+          '/' + this.props.route.params.requirementId,
+        ).then((res) => {
+          if (res.status === 200) {
+            NavigationHelper.goBack();
+          }
+        });
+      } else {
+        Http.demandSet(this.state.data).then((res) => {
+          if (res.status === 200) {
+            NavigationHelper.navigate('DemandDetails');
+            DeviceEventEmitter.emit('EventType');
+          }
+        });
+      }
+    }
+  };
+
+  Toast_number = (data, text) => {
+    if (data === undefined) {
+      Toast.fail(`${text}不能为空`);
+    } else if (data <= 0) {
+      Toast.fail('请输入有效数据');
     } else {
-      Http.demandSet(this.state.data).then((res) => {
-        if (res.status === 200) {
-          NavigationHelper.navigate('DemandDetails');
-          DeviceEventEmitter.emit('EventType');
-        }
-      });
+      return true;
+    }
+  };
+  Toast_text = (data, text) => {
+    console.log(data);
+    if (data === undefined) {
+      Toast.fail(`${text}不能为空`);
+    } else {
+      return true;
     }
   };
 

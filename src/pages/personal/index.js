@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   ScrollView,
-  FlatList,
   TouchableOpacity,
 } from 'react-native';
 import { inject, observer } from 'mobx-react';
@@ -13,7 +12,6 @@ import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon/index';
 import DemandList from '../../components/bussiness/DemandList';
 import { DeviceEventEmitter } from 'react-native';
-import RNRestart from 'react-native-restart';
 @inject('RootStore')
 @observer
 /**
@@ -42,14 +40,12 @@ class Index extends Component {
     // await this.getMyInfo();
     // 我的关注列表
     // await this.getMyFocusList();
+    await this.getMyInfo();
     //执行获取需求列表
     await this.getRequirement();
-    await this.getMyInfo();
-    // 我的发布拿两个数据
     //路由监听
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
       // RNRestart.Restart();
-      // console.log('惺惺惜惺惺');
       this.getRequirement();
     });
   }

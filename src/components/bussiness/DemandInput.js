@@ -97,7 +97,7 @@ class Index extends Component {
             },
           },
         );
-        console.log(res2);
+        // console.log(res2);
         if (res2.data.code === 0) {
           this.state.accessory.push(res.name);
           this.props.inputUpdate(res2.data.data);
