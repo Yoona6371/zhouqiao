@@ -81,7 +81,7 @@ class DemandDetails extends Component {
   requireDetail = async () => {
     const detail = await Http.demandDetail(
       {},
-      `/${this.props.requirementId}`,
+      `/${this.props.route.params.requirementId}`,
     );
 
     console.log(detail);
@@ -124,7 +124,7 @@ class DemandDetails extends Component {
             type={status}
             project_contacts={publisherNick}
             project_budget={expectedPrice}
-            project_escrow={expectedPrice}
+            project_escrow={0}
             project_describe={requirementAbstract}
             project_Title={requirementTitle}
           />
