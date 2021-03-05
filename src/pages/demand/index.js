@@ -220,7 +220,7 @@ class Index extends Component {
           if (res.data.code === 0) {
             Toast.success('发布成功');
             NavigationHelper.navigate('myDemand');
-            DeviceEventEmitter.emit('EventType');
+            DeviceEventEmitter.emit('showDemandList');
           }
         });
       }
