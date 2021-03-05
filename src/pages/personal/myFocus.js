@@ -21,13 +21,16 @@ import {
 } from '../../utils/StyleUtils';
 
 class MyFocus extends Component {
-  state = {
-    dataList: [],
-    refreshState: RefreshState.Idle,
-    totalPage: 0,
-    currentPage: 1,
-    id: 0,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataList: [],
+      refreshState: RefreshState.Idle,
+      totalPage: 0,
+      currentPage: 1,
+      id: 0,
+    };
+  }
 
   async componentDidMount() {
     await this.onHeaderRefresh();
@@ -77,34 +80,12 @@ class MyFocus extends Component {
     }
 
     const newList = message.data.data.dataList;
-    let ans = [];
-    for (let i = 0; i < newList.length; i++) {
-      ans.push({
-        id: this.state.id + 1,
-        // uri: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic3.zhimg.com%2F50%2Fv2-befba403346b040bf6122d1f5475b73b_hd.gif&refer=http%3A%2F%2Fpic3.zhimg.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1613785977&t=ed55d7d8daae65a8574f34292f4cedc9',
-        uri: newList[i].avatar,
-        name: newList[i].userNick,
-      });
-      this.setState({ id: this.state.id + 1 });
-    }
-
+    console.log(message);
     this.setState({
-      totalPage: message.data.data.totalPage,
-      currentPage: currentPage,
+      totalPage: message.data.data.totalRecords,
+      currentPage: message.data.data.currentPage,
     });
-    return isReload ? ans : [...this.state.dataList, ...ans];
-  }
-
-  _renderItem(item) {
-    return (
-      <UserXCard
-        type={1}
-        image={item.item}
-        focus={true}
-        name={item.item.name}
-        userId={item.item.userId}
-      />
-    );
+    return isReload ? newList : [...this.state.dataList, ...newList];
   }
 
   render() {
@@ -114,19 +95,28 @@ class MyFocus extends Component {
         <RefreshListView
           // 如果要测试假数据，可以写data={Data}
           data={this.state.dataList}
-          // data={Data}
           numColumns={2}
-          // contentContainerStyle={{
-          //   ...flexColumnSpb,
-          //   backgroundColor: '#fff',
-          // }}
           //item是从数据库中获取到的每个数据
-          keyExtractor={(item) => item.id}
-          renderItem={this._renderItem}
+          keyExtractor={(item) => item.userId}
+          renderItem={(item) => {
+            return (
+              <UserXCard
+                type={1}
+                image={{ uri: item.item.avatar }}
+                focus={true}
+                name={item.item.userNick}
+                userId={item.item.userId}
+              />
+            );
+          }}
           refreshState={this.state.refreshState}
           onHeaderRefresh={this.onHeaderRefresh}
           onFooterRefresh={this.onFooterRefresh}
+          // 可选
+          footerRefreshingText="玩命加载中 >.<"
+          footerFailureText="我擦嘞，居然失败了 =.=!"
           footerNoMoreDataText="-我是有底线的-"
+          footerEmptyDataText="-好像什么东西都没有-"
         />
       </View>
     );
@@ -137,7 +127,7 @@ export default MyFocus;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingBottom: pxToDp(30),
+    flex: 1,
     backgroundColor: bgColor,
   },
 });
