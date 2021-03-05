@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { pxToDp } from '../../utils/pxToDp';
@@ -44,11 +45,14 @@ class Index extends Component {
     //执行获取需求列表
     await this.getRequirement();
     //路由监听
-    this.subscription = DeviceEventEmitter.addListener('EventType', () => {
-      // RNRestart.Restart();
+    this.subscription = DeviceEventEmitter.addListener('showDemandList', () => {
       this.getRequirement();
     });
   }
+  // componentWillUnmount(): void {
+  //   this.subscription.remove();
+  // }
+
   //获取需求列表
   getRequirement = async () => {
     let res = await Http.myRequirements({ page: 1, size: 2 });
@@ -127,7 +131,7 @@ class Index extends Component {
   render() {
     const { clientStatistics, nickName, userAvatar } = this.state.userInfo;
     const { myRequirements } = this.state;
-    // console.log('在个人中心里的需求列表', myRequirements);
+    console.log('在个人中心里的需求列表', myRequirements);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
@@ -465,25 +469,28 @@ class Index extends Component {
         <View>
           {/* <ScrollView> */}
           <ScrollView style={{ paddingBottom: pxToDp(0) }}>
-            {myRequirements.map((v, i) => (
-              <DemandList
-                key={i}
-                type={v.urgent}
-                text={v.requirementTitle}
-                date={v.createTime}
-                requirementId={v.requirementId}
-                expectedPrice={v.expectedPrice}
-                expectedTime={v.expectedTime}
-                urgent={v.urgent}
-                communityNumber={v.communityNumber}
-                proficiency={v.proficiency}
-                categoryId={v.categoryId}
-                requirementTitle={v.requirementTitle}
-                requirementContentHtml={v.requirementContentHtml}
-                requirementContent={v.requirementContent}
-                getRequirmentFun={this.getRequirement()}
-              />
-            ))}
+            <FlatList
+              data={myRequirements}
+              renderItem={({ item, i }) => (
+                <DemandList
+                  key={i}
+                  type={item.urgent}
+                  text={item.requirementTitle}
+                  date={item.createTime}
+                  requirementId={item.requirementId}
+                  expectedPrice={item.expectedPrice}
+                  expectedTime={item.expectedTime}
+                  urgent={item.urgent}
+                  communityNumber={item.communityNumber}
+                  proficiency={item.proficiency}
+                  categoryId={item.categoryId}
+                  requirementTitle={item.requirementTitle}
+                  requirementContentHtml={item.requirementContentHtml}
+                  requirementContent={item.requirementContent}
+                  getRequirmentFun={this.getRequirement}
+                />
+              )}
+            />
           </ScrollView>
           {/* </ScrollView> */}
         </View>

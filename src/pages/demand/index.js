@@ -222,6 +222,8 @@ class Index extends Component {
             NavigationHelper.goBack();
             Toast.success('发布成功');
             // this.setState({ data: {} });
+            NavigationHelper.navigate('myDemand');
+            DeviceEventEmitter.emit('showDemandList');
           }
         });
       } else {
