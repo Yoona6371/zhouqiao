@@ -12,7 +12,6 @@ import Icon from '../../../components/common/Icon';
 import TopTitle, { index } from '../../../components/common/TopTitle';
 import { padding } from '../../../utils/StyleUtils';
 import { DeviceEventEmitter } from 'react-native';
-import RNRestart from 'react-native-restart';
 
 class Index extends Component {
   constructor(props) {
@@ -22,6 +21,7 @@ class Index extends Component {
     };
   }
   async componentDidMount() {
+    await this.getAddressList();
     //获取地址
     let addressRes = await Http.getMyAddress();
     console.log(addressRes.data.data);
@@ -45,10 +45,6 @@ class Index extends Component {
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
       this.componentDidMount();
     });
-  }
-  componentWillUnmount() {
-    // 移除监听
-    this.subscription.remove();
   }
 
   render() {
@@ -77,8 +73,8 @@ class Index extends Component {
                   tel={v.tel}
                   address={v.address}
                   defaultShow={v.defaultShow}
-                  jumPage={v.jumPage}
                   addressId={v.addressId}
+                  addressIdGet={this.getAddressList}
                 />
               </TouchableOpacity>
             </View>
