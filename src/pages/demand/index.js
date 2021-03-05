@@ -17,6 +17,7 @@ import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
 import Toast from '../../components/common/Toast/Toast';
+import RNstart from 'react-native-restart';
 
 class Index extends Component {
   constructor(props) {
@@ -176,8 +177,7 @@ class Index extends Component {
       color: '#fff',
 
       // 提交数据
-      // 赋默认值
-      data: {
+      defaultData: {
         urgent: 0,
         communityNumber: 2,
         requirementContent:
@@ -186,6 +186,8 @@ class Index extends Component {
             : undefined,
         proficiency: 0,
       },
+      data: {},
+      submitting: false,
     };
   }
 
@@ -199,6 +201,10 @@ class Index extends Component {
   };
 
   demandSet = () => {
+    if (this.state.submitting) {
+      Toast.message('发布中，请勿重复点击');
+      return;
+    }
     if (
       this.Toast_number(this.state.data.expectedPrice, '预算金额') &&
       this.Toast_number(this.state.data.expectedTime, '项目周期') &&
@@ -207,24 +213,36 @@ class Index extends Component {
       this.Toast_text(this.state.data.requirementContent, '详细信息')
     ) {
       if (this.props.route.params !== undefined) {
+        this.setState({ submitting: true });
         Http.demandUpdate(
-          this.state.data,
+          { ...this.state.defaultData, ...this.state.data },
           '/' + this.props.route.params.requirementId,
         ).then((res) => {
           if (res.status === 200) {
             NavigationHelper.goBack();
+            Toast.success('发布成功');
+            // this.setState({ data: {} });
           }
         });
       } else {
-        Http.demandSet(this.state.data).then((res) => {
-          if (res.data.code === 0) {
-            Toast.success('发布成功');
-            NavigationHelper.navigate('myDemand');
-            DeviceEventEmitter.emit('EventType');
-          }
-        });
+        this.setState({ submitting: true });
+        Http.demandSet({ ...this.state.defaultData, ...this.state.data }).then(
+          (res) => {
+            if (res.data.code === 0) {
+              Toast.success('发布成功');
+              NavigationHelper.navigate('myDemand');
+              DeviceEventEmitter.emit('EventType');
+              // this.setState({ data: {} });
+              // this.$Child.dataClean();
+              // RNstart.Restart();
+            } else {
+              Toast.fail('发布失败，请检查网络');
+            }
+          },
+        );
       }
     }
+    this.setState({ submitting: false });
   };
 
   Toast_number = (data, text) => {
@@ -309,6 +327,9 @@ class Index extends Component {
               last={v.last}
               inputUpdate={v.inputUpdate}
               input={v.input}
+              onRef={(ref) => {
+                this.$Child = ref;
+              }}
             />
           ))}
         </View>
@@ -324,6 +345,9 @@ class Index extends Component {
               category={v.category}
               input={v.input}
               option={v.option}
+              onRef={(ref) => {
+                this.$Child = ref;
+              }}
             />
           ))}
         </View>
@@ -339,6 +363,9 @@ class Index extends Component {
               last={v.last}
               inputUpdate={v.inputUpdate}
               category={v.category}
+              onRef={(ref) => {
+                this.$Child = ref;
+              }}
             />
           ))}
           {/*<View style={styles.picture}>*/}
