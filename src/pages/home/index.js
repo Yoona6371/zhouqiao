@@ -348,15 +348,15 @@ class Index extends Component {
                 />
               </Shimmer>
             ) : (
-                <Banner slideList={this.state.slideList} />
-              )}
+              <Banner slideList={this.state.slideList} />
+            )}
           </ImageBackground>
           {/*最新通知*/}
           <View style={styles.home_information}>
             <View style={{ ...flexRowSpb, justifyContent: 'flex-start' }}>
               <TouchableOpacity
-                // onPress={() => NavigationHelper.navigate('消息')}
-                onPress={() => this.Payment()}
+                onPress={() => NavigationHelper.navigate('消息')}
+                // onPress={() => this.Payment()}
                 style={styles.information_text1_container}
               >
                 <Icon
@@ -380,7 +380,7 @@ class Index extends Component {
                 </Text>
               </TouchableOpacity>
               <Text style={styles.information_text2}>
-                舟桥之家APP即将上线啦！
+                舟桥之家APP即将上线啦3-5！
               </Text>
             </View>
             <Text style={styles.information_date}>8-11</Text>

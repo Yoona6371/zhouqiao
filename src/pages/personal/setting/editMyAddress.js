@@ -19,8 +19,7 @@ import Toast from '../../../components/common/Toast/Toast';
 import RNRestart from 'react-native-restart';
 import axios from 'axios';
 import { inject } from 'mobx-react';
-import {DeviceEventEmitter} from 'react-native'
-
+import { DeviceEventEmitter } from 'react-native';
 
 @inject('RootStore')
 class Index extends Component {
@@ -90,7 +89,7 @@ class Index extends Component {
         if (res.data.code === 0) {
           Toast.success(res.data.msg, 1000, 'center');
           NavigationHelper.goBack();
-        DeviceEventEmitter.emit("EventType");
+          DeviceEventEmitter.emit('EventType');
         } else {
           Toast.fail(res.data.msg, 1000, 'center');
         }
@@ -126,7 +125,7 @@ class Index extends Component {
             <Text style={styles.input__text}>身份</Text>
             <RadioForm
               radio_props={this.state.sex_props}
-              initial={sex === '先生'? 1 : 0}
+              initial={sex === '先生' ? 1 : 0}
               // value={this.state.sexValue}
               onPress={(value) => {
                 this.setState({ sexValue: value });
