@@ -155,12 +155,12 @@ class Index extends Component {
     });
   };
 
-  // dataClean = () => {
-  //   console.log('方法调用成功');
-  //   this.setState({
-  //     input: 'asdasdasd',
-  //   });
-  // };
+  dataClean = async () => {
+    console.log('方法调用成功');
+    await this.setState({
+      input: 'asdasdasd',
+    });
+  };
 
   async componentDidMount() {
     this.props.onRef(this);

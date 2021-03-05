@@ -17,7 +17,7 @@ import Icon from '../../components/common/Icon';
 import DemandInput from '../../components/bussiness/DemandInput';
 import { TextInput } from 'react-native-gesture-handler';
 import Toast from '../../components/common/Toast/Toast';
-import RNstart from 'react-native-restart';
+import RNStart from 'react-native-restart';
 
 class Index extends Component {
   constructor(props) {
@@ -234,7 +234,6 @@ class Index extends Component {
               DeviceEventEmitter.emit('EventType');
               // this.setState({ data: {} });
               // this.$Child.dataClean();
-              // RNstart.Restart();
             } else {
               Toast.fail('发布失败，请检查网络');
             }
@@ -242,7 +241,9 @@ class Index extends Component {
         );
       }
     }
-    this.setState({ submitting: false });
+    setTimeout(() => {
+      this.setState({ submitting: false });
+    }, 2000);
   };
 
   Toast_number = (data, text) => {
@@ -265,7 +266,6 @@ class Index extends Component {
   render() {
     const { list_1, list_2, list_3, textLength } = this.state;
     const opacity_title = this.titleFixed();
-    let list = ['asd', 'asd'];
     return (
       <ScrollView
         stickyHeaderIndices={[0, 1]}
