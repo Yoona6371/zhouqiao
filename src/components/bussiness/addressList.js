@@ -17,7 +17,7 @@ export default class AddressList extends Component {
     defaultShow: 1,
   };
 
-  delete = () => {
+  delete = () => { 
     console.log(this.props.addressId);
     Http.deleteAddress({}, this.props.addressId).then((res) => {
       console.log(res);
