@@ -46,7 +46,11 @@ class Index extends Component {
       this.componentDidMount();
     });
   }
-  
+  componentWillUnmount() {
+    // 移除监听
+    this.subscription.remove();
+  }
+
   render() {
     const { list } = this.state;
     return (
@@ -58,10 +62,10 @@ class Index extends Component {
               <TouchableOpacity
                 onPress={() => {
                   this.setState({ selectAddress: v });
-                  console.log(this.props.route.params.ifBack)
+                  console.log(this.props.route.params.ifBack);
                   if (this.props.route.params.ifBack === true) {
-                    this.props.route.params.returnData(v)
-                    NavigationHelper.goBack({ id: '4564564' })
+                    this.props.route.params.returnData(v);
+                    NavigationHelper.goBack({ id: '4564564' });
                   }
                 }}
               >
@@ -78,7 +82,6 @@ class Index extends Component {
                 />
               </TouchableOpacity>
             </View>
-
           ))}
           {/*button start*/}
           <View

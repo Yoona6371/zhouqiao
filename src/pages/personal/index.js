@@ -6,12 +6,16 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon/index';
 import DemandList from '../../components/bussiness/DemandList';
 import { DeviceEventEmitter } from 'react-native';
+import CommodityCard from '../../components/bussiness/CommodityCard';
+import { padding } from '../../utils/StyleUtils';
+import RefreshListView from '../../components/common/RefreshListView';
 @inject('RootStore')
 @observer
 /**
@@ -31,7 +35,21 @@ class Index extends Component {
           orderAfterSaleNum: 0,
         },
       },
-      myRequirements: [],
+      myRequirements: [
+        // {
+        //   urgent: 0,
+        //   createTime: '',
+        //   requirementId: '',
+        //   expectedPrice: '',
+        //   expectedTime: '',
+        //   communityNumber: '',
+        //   proficiency: '',
+        //   categoryId: '',
+        //   requirementTitle: '',
+        //   requirementContentHtml: '',
+        //   requirementContent: '',
+        // },
+      ],
     };
   }
 
@@ -49,6 +67,12 @@ class Index extends Component {
       this.getRequirement();
     });
   }
+
+  componentWillUnmount() {
+    // 移除监听
+    this.subscription.remove();
+  }
+
   //获取需求列表
   getRequirement = async () => {
     let res = await Http.myRequirements({ page: 1, size: 2 });
@@ -463,7 +487,6 @@ class Index extends Component {
           <Text style={styles.myOutPut_text}>我的发布</Text>
         </View>
         <View>
-          {/* <ScrollView> */}
           <ScrollView style={{ paddingBottom: pxToDp(0) }}>
             {myRequirements.map((v, i) => (
               <DemandList
@@ -481,7 +504,7 @@ class Index extends Component {
                 requirementTitle={v.requirementTitle}
                 requirementContentHtml={v.requirementContentHtml}
                 requirementContent={v.requirementContent}
-                getRequirmentFun={this.getRequirement()}
+                getRequirmentFun={this.getRequirement}
               />
             ))}
           </ScrollView>
