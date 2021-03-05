@@ -42,40 +42,34 @@ export class index extends Component {
   // 下拉刷新函数
   async onRefresh() {
     this.setState({ isRefreshing: true });
-    await this.getRankData(this.state.currentPage + 1);
-    this.setState({
-      rankListOutOfThree: this.state.dataList.slice(
-        3 + this.state.currentPage * 5,
-        4 + (this.state.currentPage + 1) * 5,
-      ),
-      currentPage: this.state.currentPage + 1,
-      isRefreshing: false,
+    await this.onHeaderRefresh();
+    this.setState({ isRefreshing: false });
+  }
+
+  getTestList(isReload: boolean, currentPage = 1): Array<Object> {
+    Http.getRankList({
+      page: currentPage,
+      size: 5,
+    }).then((res) => {
+      const ans = res.data.data.dataList;
+      if (currentPage === 1) {
+        this.setState({ top33: ans.slice(0, 3) });
+      }
+      this.setState({
+        currentPage: currentPage,
+        totalPage: res.data.data.totalRecords,
+      });
+      return isReload ? ans : [...this.state.dataList, ...ans];
     });
   }
 
-  getRankData = (page = 1) => {
-    Http.getRankList({
-      page: page,
-      size: 5,
-    }).then((res) => {
-      console.log(res.data.data);
-      const dataList = [...this.state.dataList, ...res.data.data.dataList];
-      if (page === 1) {
-        this.setState({ top33: dataList.slice(0, 3) });
-      }
-      this.setState({
-        dataList: dataList,
-        currentPage: res.data.data.currentPage,
-        totalPage: res.data.data.totalRecords,
-        rankListOutOfThree: dataList.slice(3),
-      });
-    });
-  };
-
   onHeaderRefresh = async () => {
     this.setState({ refreshState: RefreshState.HeaderRefreshing });
-    await this.getRankData();
+    let dataList = await this.getTestList(true);
+
     this.setState({
+      dataList: dataList,
+      rankListOutOfThree: dataList.slice(3),
       refreshState:
         this.state.dataList.length < 1
           ? RefreshState.EmptyData
@@ -85,8 +79,11 @@ export class index extends Component {
 
   onFooterRefresh = async () => {
     this.setState({ refreshState: RefreshState.FooterRefreshing });
-    await this.getRankData(this.state.currentPage + 1);
+    let dataList = await this.getTestList(false, this.state.currentPage + 1);
+
     this.setState({
+      dataList: dataList,
+      rankListOutOfThree: dataList.slice(3),
       refreshState:
         this.state.currentPage === this.state.totalPage
           ? RefreshState.NoMoreData
