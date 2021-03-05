@@ -13,9 +13,6 @@ import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon/index';
 import DemandList from '../../components/bussiness/DemandList';
 import { DeviceEventEmitter } from 'react-native';
-import CommodityCard from '../../components/bussiness/CommodityCard';
-import { padding } from '../../utils/StyleUtils';
-import RefreshListView from '../../components/common/RefreshListView';
 @inject('RootStore')
 @observer
 /**
@@ -35,21 +32,7 @@ class Index extends Component {
           orderAfterSaleNum: 0,
         },
       },
-      myRequirements: [
-        // {
-        //   urgent: 0,
-        //   createTime: '',
-        //   requirementId: '',
-        //   expectedPrice: '',
-        //   expectedTime: '',
-        //   communityNumber: '',
-        //   proficiency: '',
-        //   categoryId: '',
-        //   requirementTitle: '',
-        //   requirementContentHtml: '',
-        //   requirementContent: '',
-        // },
-      ],
+      myRequirements: [],
     };
   }
 
@@ -62,14 +45,12 @@ class Index extends Component {
     //执行获取需求列表
     await this.getRequirement();
     //路由监听
-    this.subscription = DeviceEventEmitter.addListener('EventType', () => {
-      // RNRestart.Restart();
+    this.subscription = DeviceEventEmitter.addListener('showDemandList', () => {
       this.getRequirement();
     });
   }
 
-  componentWillUnmount() {
-    // 移除监听
+  componentWillUnmount(): void {
     this.subscription.remove();
   }
 
@@ -151,7 +132,7 @@ class Index extends Component {
   render() {
     const { clientStatistics, nickName, userAvatar } = this.state.userInfo;
     const { myRequirements } = this.state;
-    // console.log('在个人中心里的需求列表', myRequirements);
+    console.log('在个人中心里的需求列表', myRequirements);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.head_bg}>
@@ -487,26 +468,30 @@ class Index extends Component {
           <Text style={styles.myOutPut_text}>我的发布</Text>
         </View>
         <View>
+          {/* <ScrollView> */}
           <ScrollView style={{ paddingBottom: pxToDp(0) }}>
-            {myRequirements.map((v, i) => (
-              <DemandList
-                key={i}
-                type={v.urgent}
-                text={v.requirementTitle}
-                date={v.createTime}
-                requirementId={v.requirementId}
-                expectedPrice={v.expectedPrice}
-                expectedTime={v.expectedTime}
-                urgent={v.urgent}
-                communityNumber={v.communityNumber}
-                proficiency={v.proficiency}
-                categoryId={v.categoryId}
-                requirementTitle={v.requirementTitle}
-                requirementContentHtml={v.requirementContentHtml}
-                requirementContent={v.requirementContent}
-                getRequirmentFun={this.getRequirement}
-              />
-            ))}
+            <FlatList
+              data={myRequirements}
+              renderItem={({ item, i }) => (
+                <DemandList
+                  key={i}
+                  type={item.urgent}
+                  text={item.requirementTitle}
+                  date={item.createTime}
+                  requirementId={item.requirementId}
+                  expectedPrice={item.expectedPrice}
+                  expectedTime={item.expectedTime}
+                  urgent={item.urgent}
+                  communityNumber={item.communityNumber}
+                  proficiency={item.proficiency}
+                  categoryId={item.categoryId}
+                  requirementTitle={item.requirementTitle}
+                  requirementContentHtml={item.requirementContentHtml}
+                  requirementContent={item.requirementContent}
+                  getRequirmentFun={this.getRequirement}
+                />
+              )}
+            />
           </ScrollView>
           {/* </ScrollView> */}
         </View>

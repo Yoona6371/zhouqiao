@@ -155,7 +155,15 @@ class Index extends Component {
     });
   };
 
+  dataClean = async () => {
+    console.log('方法调用成功');
+    await this.setState({
+      input: 'asdasdasd',
+    });
+  };
+
   async componentDidMount() {
+    this.props.onRef(this);
     let res = await Http.requirementCategories();
     await res.data.data.map((v, i) => {
       this.state.list_category.push(v.category);
