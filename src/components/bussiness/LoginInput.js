@@ -37,6 +37,7 @@ export default class LoginInput extends Component {
       phoneNumberErrShow: false,
       passwordErrShow: false,
       verifyCodeErrShow: false,
+      btnText:'获取验证码',
     };
   }
 
@@ -61,6 +62,21 @@ export default class LoginInput extends Component {
   };
 
   //申请验证码
+
+  //倒计时
+  countDown =()=>{
+    let seconds =60;
+    //重新获取60s
+    this.setState({btnText:`重新获取(${seconds})`});
+    let timeId = setInterval(() =>{
+      seconds--;
+      this.setState({btnText:`重新获取(${seconds})`});
+      if(seconds === 0){
+        clearInterval(timeId);
+        this.setState({btnText:"重新获取"});
+      }
+    },1000);
+  }
   //传入验证码接口类型
   verifyCodeRequest = (verifyType) => {
     Http.getVerifyCode({
@@ -70,6 +86,7 @@ export default class LoginInput extends Component {
       console.log(res);
       if (res.data.code === 0) {
         Toast.success(res.data.msg, 1000, 'center');
+        this.countDown();
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }
@@ -88,6 +105,7 @@ export default class LoginInput extends Component {
       phoneNumberErrShow,
       passwordErrShow,
       verifyCodeErrShow,
+      btnText
     } = this.state;
     const { type, verifyType } = this.props;
 
@@ -208,7 +226,7 @@ export default class LoginInput extends Component {
                       justifyContent: 'center',
                     }}
                   >
-                    获取验证码
+                    {btnText}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -305,7 +323,7 @@ export default class LoginInput extends Component {
                         alignSelf: 'center',
                       }}
                     >
-                      获取验证码
+                      {btnText}
                     </Text>
                   </TouchableOpacity>
                 </View>
