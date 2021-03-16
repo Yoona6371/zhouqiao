@@ -14,6 +14,7 @@ import Picker from 'react-native-picker';
 import DocumentPicker from 'react-native-document-picker';
 import axios from 'axios';
 import { inject } from 'mobx-react';
+import Toast from '../common/Toast/Toast';
 // import RNFS from 'react-native-fs';
 
 @inject('RootStore')
@@ -31,7 +32,7 @@ class Index extends Component {
         { key: 0, value: '新手' },
         { key: 1, value: '老手' },
       ],
-      accessory: [],
+      accessory: '',
     };
   }
   // type
@@ -65,6 +66,7 @@ class Index extends Component {
             DocumentPicker.types.pptx,
           ],
         });
+        Toast.info('附件上传中', 2000, 'center');
         // console.log(res);
         // console.log(
         //   res.uri,
@@ -99,8 +101,11 @@ class Index extends Component {
         );
         // console.log(res2);
         if (res2.data.code === 0) {
-          this.state.accessory.push(res.name);
+          Toast.success('附件上传成功', 2000, 'center');
+          this.setState({ accessory: res.name });
           this.props.inputUpdate(res2.data.data);
+        } else {
+          Toast.fail(res.data.msg, 2000, 'center');
         }
       } catch (err) {
         if (DocumentPicker.isCancel(err)) {
@@ -160,6 +165,11 @@ class Index extends Component {
     await this.setState({
       input: 'asdasdasd',
     });
+  };
+
+  fileDelete = () => {
+    this.setState({ accessory: '' });
+    this.props.inputUpdate('');
   };
 
   async componentDidMount() {
@@ -228,30 +238,31 @@ class Index extends Component {
             </TouchableOpacity>
           </View>
         ) : type === 1 || type === 2 ? (
-          <TouchableOpacity
-            style={styles.demand_category}
-            onPress={this.setCategory}
-          >
-            <TextInput
-              disabled={true}
-              placeholder={tips}
-              editable={false}
-              value={
-                this.props.category === 1 ? input_proficiency : input_category
-              }
-              style={
-                type === 1
-                  ? {
-                      width:
-                        deviceWidthDp -
-                        pxToDp(232) -
-                        styles.demand_category.marginRight,
-                    }
-                  : { width: deviceWidthDp - pxToDp(186 + 182 + 60) }
-              }
-            />
-            {type === 2 ? (
-              <View>
+          <View style={{ overflow: 'hidden' }}>
+            <TouchableOpacity
+              disabled={this.state.accessory !== ''}
+              style={styles.demand_category}
+              onPress={this.setCategory}
+            >
+              <TextInput
+                disabled={true}
+                placeholder={tips}
+                editable={false}
+                value={
+                  this.props.category === 1 ? input_proficiency : input_category
+                }
+                style={
+                  type === 1
+                    ? {
+                        width:
+                          deviceWidthDp -
+                          pxToDp(232) -
+                          styles.demand_category.marginRight,
+                      }
+                    : { width: deviceWidthDp - pxToDp(186 + 182 + 60) }
+                }
+              />
+              {type === 2 ? (
                 <View style={styles.demand_file}>
                   <Text style={styles.demand_file_text}>添加附件</Text>
                   <Icon
@@ -264,24 +275,39 @@ class Index extends Component {
                     }}
                   />
                 </View>
-                {accessory.map((v, i) => (
-                  <Text key={i}>{v}</Text>
-                ))}
-              </View>
-            ) : (
-              <Icon
-                name="drop_down"
-                width={pxToDp(16)}
-                height={pxToDp(9)}
+              ) : (
+                // {accessory.map((v, i) => (
+                //   <Text key={i}>{v}</Text>
+                // ))}
+                <Icon
+                  name="drop_down"
+                  width={pxToDp(16)}
+                  height={pxToDp(9)}
+                  style={{
+                    color: '#b2b2b2',
+                    lineHeight: pxToDp(320 / 3),
+                  }}
+                />
+              )}
+            </TouchableOpacity>
+            {type === 2 && this.state.accessory !== '' ? (
+              <View
                 style={{
-                  color: '#b2b2b2',
-                  lineHeight: pxToDp(320 / 3),
+                  flexDirection: 'row',
+                  alignSelf: 'flex-end',
+                  marginRight: pxToDp(66),
                 }}
-              />
-            )}
-          </TouchableOpacity>
-        ) : (
+              >
+                <Text>{this.state.accessory}</Text>
+                <TouchableOpacity onPress={this.fileDelete}>
+                  <Icon name="delete" style={{ marginLeft: pxToDp(20) }} />
+                </TouchableOpacity>
+              </View>
+            ) : null}
+          </View>
+        ) : type === 5 ? null : (
           <TextInput
+            style={{ flex: 1 }}
             placeholder={tips}
             value={input}
             keyboardType={type === 0 ? 'number-pad' : 'default'}

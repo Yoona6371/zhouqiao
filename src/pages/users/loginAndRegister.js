@@ -21,6 +21,7 @@ import LocalStorageUtils from '../../utils/LocalStorageUtils';
 const Tab = createMaterialTopTabNavigator();
 import axios from 'axios';
 import RNRestart from 'react-native-restart';
+import io from 'socket.io-client';
 
 @inject('RootStore')
 @observer
@@ -37,6 +38,7 @@ class LoginTab extends Component {
       img: '',
     };
   }
+
   login = () => {
     Toast.message('登录中...');
     Http.login({
@@ -57,6 +59,15 @@ class LoginTab extends Component {
         RootStore.userStore.allData.userId = this.state.userId;
         RootStore.userStore.allData.refreshToken = this.state.refreshToken;
         RootStore.userStore.allData.password = this.state.password;
+        RootStore.globalStore.allData.Socket = io(
+          'http://www.zhouqiao.art:9092',
+          {
+            query: `userid=${this.state.userId}`,
+            reconnect: false,
+            'reconnection delay': 20000,
+            transports: ['websocket'], // you need to explicitly tell it to use websockets
+          },
+        ).connect();
 
         //获取个人信息
         Http.getMyInfo().then((answer) => {

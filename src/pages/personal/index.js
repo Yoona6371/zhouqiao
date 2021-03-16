@@ -120,7 +120,7 @@ class Index extends Component {
     // 	"userId": "cfc241796dc3f8d4a86150a1131789d3"
     // },
     const userInfo = res.data.data;
-    console.log(res);
+    // console.log(res);
     this.setState({
       userInfo,
     });
