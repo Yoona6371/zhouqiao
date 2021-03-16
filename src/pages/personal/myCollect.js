@@ -89,35 +89,33 @@ class CollectList extends Component {
       >
         <TopTitle title="我的收藏" showBtn={false} />
 
-        <View style={{ flex: 1 }}>
-          <RefreshListView
-            data={dataList}
-            numColumns={2}
-            contentContainerStyle={{ backgroundColor: '#fff' }}
-            keyExtractor={this.keyExtractor}
-            renderItem={({ item, index }) => (
-              <CommodityCard
-                Title={item.case_name}
-                user_id={item.case_author}
-                Commodity_type={item.category}
-                image={item.cover}
-                userId={item.case_author_id}
-                user_image={item.case_author_avatar}
-                style={{ ...padding(25, 0, 25, 0) }}
-                caseId={item.case_id}
-                type={2}
-              />
-            )}
-            refreshState={this.state.refreshState}
-            onHeaderRefresh={this.onHeaderRefresh}
-            onFooterRefresh={this.onFooterRefresh}
-            // 可选
-            footerRefreshingText="玩命加载中 >.<"
-            footerFailureText="我擦嘞，居然失败了 =.=!"
-            footerNoMoreDataText="-我是有底线的-"
-            footerEmptyDataText="-好像什么东西都没有-"
-          />
-        </View>
+        <RefreshListView
+          data={dataList}
+          numColumns={2}
+          contentContainerStyle={{ backgroundColor: '#fff' }}
+          keyExtractor={this.keyExtractor}
+          renderItem={({ item, index }) => (
+            <CommodityCard
+              Title={item.case_name}
+              user_id={item.case_author}
+              Commodity_type={item.category}
+              image={item.cover}
+              userId={item.case_author_id}
+              user_image={item.case_author_avatar}
+              style={{ ...padding(25, 0, 25, 0) }}
+              caseId={item.case_id}
+              type={2}
+            />
+          )}
+          refreshState={this.state.refreshState}
+          onHeaderRefresh={this.onHeaderRefresh}
+          onFooterRefresh={this.onFooterRefresh}
+          // 可选
+          footerRefreshingText="玩命加载中 >.<"
+          footerFailureText="我擦嘞，居然失败了 =.=!"
+          footerNoMoreDataText="-我是有底线的-"
+          footerEmptyDataText="-好像什么东西都没有-"
+        />
       </View>
     );
   }

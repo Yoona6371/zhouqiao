@@ -18,16 +18,15 @@ export default class AddressList extends Component {
   };
 
   delete = () => {
-    console.log(this.props.addressId);
+    console.log('hh');
     Http.deleteAddress({}, this.props.addressId).then((res) => {
       console.log(res);
       if (res.data.code === 0) {
-        RNRestart.Restart();
+        this.props.addressIdGet();
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }
     });
-    this.props.addressIdGet();
   };
 
   //编辑页面跳转

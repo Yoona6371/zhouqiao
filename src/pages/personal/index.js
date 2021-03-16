@@ -49,9 +49,10 @@ class Index extends Component {
       this.getRequirement();
     });
   }
-  // componentWillUnmount(): void {
-  //   this.subscription.remove();
-  // }
+
+  componentWillUnmount(): void {
+    this.subscription.remove();
+  }
 
   //获取需求列表
   getRequirement = async () => {

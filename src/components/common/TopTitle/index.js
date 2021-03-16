@@ -113,7 +113,7 @@ export class index extends Component {
             style={{
               marginTop: pxToDp(89),
               // backgroundColor: 'yellow',
-              width: pxToDp(200),
+              width: pxToDp(230),
               justifyContent: 'center',
               alignItems: 'center',
             }}

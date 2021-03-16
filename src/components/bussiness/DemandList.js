@@ -110,6 +110,7 @@ export class DemandList extends Component {
     Http.demandDelete({}, '/' + this.props.requirementId).then((res) => {
       if (res.status === 200) {
         Toast.success(res.data.msg, 1000, 'center');
+        this.props.getRequirmentFun();
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }
