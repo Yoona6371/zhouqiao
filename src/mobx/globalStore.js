@@ -6,6 +6,7 @@ const globalStore = {
   isWXAppInstalled: false,
   wxAppInstallUrl: null,
   isWXAppSupportApi: false,
+  Socket: {},
 };
 
 export default globalStore;

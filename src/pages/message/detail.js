@@ -64,7 +64,6 @@ class TestRNIMUI extends Component {
       navigationBar: {},
       page: 2,
     };
-
     this.updateLayout = this.updateLayout.bind(this);
     this.onMsgClick = this.onMsgClick.bind(this);
     this.messageListDidLoadEvent = this.messageListDidLoadEvent.bind(this);
@@ -80,6 +79,16 @@ class TestRNIMUI extends Component {
       this.refs.ChatInput.setMenuContainerHeight(316);
     }
     this.resetMenu();
+    this.props.RootStore.globalStore.allData.Socket.on(
+      'messageptop',
+      (data) => {
+        this.onReceiveText(
+          JSON.parse(data).msgContent,
+          JSON.parse(data).contentType,
+        );
+        // console.log(JSON.parse(data));
+      },
+    );
     AuroraIController.addMessageListDidLoadListener(
       this.messageListDidLoadEvent,
     );
@@ -91,55 +100,58 @@ class TestRNIMUI extends Component {
 
   // 获取历史消息
   async getHistoryMessage() {
+    // console.log(111111111111111, this.props.RootStore.userStore);
     AuroraIController.removeAllMessage();
-    // console.log(this.props.route.params.fromId);
-    // console.log(this.props.route.params.toId);
     let res = await Http.messageDetail({
       formId: this.props.route.params.fromId,
       megType: 1,
       page: 1,
       size: 20,
-      toId: this.props.route.params.toId,
+      // toId: this.props.route.params.toId,
     });
+    // console.log(res.data.data.records);
     const messagesHistory = res.data.data.records;
     const messages = [];
     let messageIds = '';
     messagesHistory.forEach((v, i) => {
-      if (i === 0) {
-        messageIds += JSON.stringify(v.massage_id);
-      } else {
-        messageIds = messageIds + ',' + JSON.stringify(v.massage_id);
+      if (v.status === 0) {
+        if (messageIds === '') {
+          messageIds += JSON.stringify(v.massage_id);
+        } else {
+          messageIds = messageIds + ',' + JSON.stringify(v.massage_id);
+        }
       }
       const message = constructNormalMessage();
       message.msgId = v.massage_id;
-      if (v.msg_type === 1) {
+      if (v.content_type === 0) {
         message.msgType = 'text';
         message.text = v.msg_content;
-      } else if (v.msg_type === 2) {
+      } else if (v.content_type === 1) {
         message.msgType = 'image';
-        message.mediaPath = '';
+        message.mediaPath = v.msg_content;
       }
       message.timeString = new Date(v.create_time).toLocaleTimeString();
       message.contentSize = { height: 100, width: 200 };
-      // message.extras = { extras: 'fdfsf' };
       // 修改
-      if (this.props.route.params.fromId === v.from_id) {
+      if (this.props.route.params.fromId !== v.from_id) {
         // 修改
         message.isOutgoing = true;
-        message.fromUser.avatarPath = this.state.avatar;
+        message.fromUser.avatarPath = this.props.route.params.avatar_self;
       } else {
         message.isOutgoing = false;
         // 修改
-        message.fromUser.avatarPath = v.from_avatar;
+        message.fromUser.avatarPath = this.props.route.params.avatar_opposite;
       }
       messages.push(message);
     });
-    // console.log(messageIds);
-    Http.ifRead({
-      messageIds,
-    }).then((res) => {
-      console.log(res);
-    });
+    if (messageIds !== '') {
+      Http.ifRead({
+        messageIds,
+      }).then((res) => {
+        console.log(res);
+      });
+    }
+
     AuroraIController.appendMessages(messages);
     AuroraIController.scrollToBottom(true);
   }
@@ -220,25 +232,39 @@ class TestRNIMUI extends Component {
         <View
           style={{
             backgroundColor: '#fff',
-            minWidth: 260,
-            minHeight: 180,
+            minWidth: 180,
+            minHeight: 100,
             borderRadius: 15,
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <Text>确定撤回此条消息？</Text>
+          <Text
+            style={{
+              ...fontStyle(32, 60, 60, 'bold', '#333', 'center'),
+              paddingBottom: pxToDp(20),
+            }}
+          >
+            确定撤回此条消息？
+          </Text>
           <TouchableOpacity
             onPress={() => {
               Overlay.hide(key);
               this.messageRevoke(message);
             }}
+            style={{
+              flex: 0.4,
+              ...fontStyle(24, 40, 40, '500', '#FFF', 'center'),
+            }}
           >
             <Text
               style={{
-                minwidth: pxToDp(120),
+                width: pxToDp(320),
                 height: pxToDp(80),
-                backgroundColor: '#888',
+                backgroundColor: '#ffb340',
+                borderRadius: pxToDp(20),
+                lineHeight: pxToDp(80),
+                textAlign: 'center',
               }}
             >
               草率了，坚持撤回!
@@ -285,16 +311,18 @@ class TestRNIMUI extends Component {
       megType: 1,
       page: this.state.page,
       size: 10,
-      toId: this.props.route.params.toId,
+      // toId: this.props.route.params.toId,
     });
+    // console.log(res.data.data.records);
+    this.setState({ page: this.state.page + 1 });
     res.data.data.records.forEach((v, i) => {
       var message = constructNormalMessage();
-      if (v.msg_type === 1) {
+      if (v.content_type === 0) {
         message.msgType = 'text';
         message.text = v.msg_content;
-      } else if (v.msg_type === 2) {
+      } else if (v.content_type === 1) {
         message.msgType = 'image';
-        message.mediaPath = '';
+        message.mediaPath = v.msg_content;
       }
       message.timeString = new Date(v.create_time).toLocaleTimeString();
       message.contentSize = { height: 100, width: 200 };
@@ -320,16 +348,31 @@ class TestRNIMUI extends Component {
     message.msgType = 'text';
     message.text = text;
     Http.send({
-      contentType: 1,
-      formId: this.props.route.params.fromId,
+      contentType: 0,
+      formId: this.props.route.params.toId,
       message: text,
       msgType: 1,
-      toId: this.props.route.params.toId,
+      toId: this.props.route.params.fromId,
     }).then((res) => {
-      if (res.status === 200) {
+      console.log(123123, res);
+      if (res.data.code === 0) {
         AuroraIController.appendMessages([message]);
+      } else {
+        Toast.fail(res.data.msg);
       }
     });
+  };
+  // 接收消息
+  onReceiveText = (text, type) => {
+    let message = constructNormalMessage();
+    if (type === 0) {
+      message.msgType = 'text';
+      message.text = text;
+    } else if (type === 1) {
+      message.msgType = 'image';
+      message.mediaPath = text;
+    }
+    AuroraIController.appendMessages([message]);
   };
 
   onTakePicture = (media) => {
@@ -490,9 +533,10 @@ class TestRNIMUI extends Component {
           },
         },
       );
-      // console.log(res2);
-      if (res2.status === 200) {
+      if (res2.data.code === 0) {
         AuroraIController.updateMessage({ ...message, status: 'send_succeed' });
+      } else {
+        Toast.fail(res.data.msg);
       }
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -570,47 +614,6 @@ class TestRNIMUI extends Component {
           >
             {this.props.route.params.nickName}
           </Text>
-          {/*<Button*/}
-          {/*  style={styles.sendCustomBtn}*/}
-          {/*  title={this.props.route.params.nickName}*/}
-          {/*  onPress={() => {*/}
-          {/*    if (Platform.OS === 'ios') {*/}
-          {/*      var message = constructNormalMessage();*/}
-          {/*      message.msgType = 'custom';*/}
-          {/*      message.content = `*/}
-          {/*      <h5>This is a custom message. </h5>*/}
-          {/*      <img src="file://${RNFS.MainBundlePath}/default_header.png"/>*/}
-          {/*      `;*/}
-          {/*      console.log(message.content);*/}
-          {/*      message.contentSize = { height: 100, width: 200 };*/}
-          {/*      message.extras = { extras: 'fdfsf' };*/}
-          {/*      AuroraIController.appendMessages([message]);*/}
-          {/*      AuroraIController.scrollToBottom(true);*/}
-          {/*    } else {*/}
-          {/*      let message = constructNormalMessage();*/}
-          {/*      message.msgType = 'custom';*/}
-          {/*      message.msgId = '10';*/}
-          {/*      message.status = 'send_going';*/}
-          {/*      message.isOutgoing = true;*/}
-          {/*      message.content = `*/}
-          {/*      <body bgcolor="#ff3399">*/}
-          {/*        <h5>This is a custom message. </h5>*/}
-          {/*        <img src="/storage/emulated/0/XhsEmoticonsKeyboard/Emoticons/wxemoticons/icon_040_cover.png"></img>*/}
-          {/*      </body>`;*/}
-          {/*      message.contentSize = { height: 100, width: 200 };*/}
-          {/*      message.extras = { extras: 'fdfsf' };*/}
-          {/*      var user = {*/}
-          {/*        userId: '1',*/}
-          {/*        displayName: '',*/}
-          {/*        avatarPath: '',*/}
-          {/*      };*/}
-          {/*      user.displayName = '0001';*/}
-          {/*      user.avatarPath = 'ironman';*/}
-          {/*      message.fromUser = user;*/}
-          {/*      AuroraIController.appendMessages([message]);*/}
-          {/*    }*/}
-          {/*  }}*/}
-          {/*/>*/}
         </View>
         <MessageListView
           style={this.state.messageListLayout}

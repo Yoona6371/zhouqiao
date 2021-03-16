@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
 import Icon from '../common/Icon';
@@ -21,7 +22,10 @@ import DatePicker from 'react-native-datepicker';
 import Toast from '../common/Toast/Toast';
 import axios from 'axios';
 import LocalStorageUtils from '../../utils/LocalStorageUtils';
+import { inject, observer } from 'mobx-react';
 
+@inject('RootStore')
+@observer
 class Index extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +38,8 @@ class Index extends Component {
       mobile: '',
       verifyCode: '',
       userInfo: {},
+      weChat: '',
+      qq: '',
     };
   }
   static propTypes = {
@@ -67,7 +73,10 @@ class Index extends Component {
           })
           .then((res) => {
             if (res.data.code === 0) {
-              Toast.success('上传成功');
+              this.props.RootStore.userStore.allData.img = res.data.data;
+              this.setState({ userAvatar: res.data.data });
+              this.infoSet();
+              // Toast.success('上传成功');
             }
           });
       } catch (err) {
@@ -80,7 +89,12 @@ class Index extends Component {
       }
     } else if (this.props.option === 2) {
       let overlayView = (
-        <Overlay.PullView side="bottom" modal={false}>
+        <Overlay.PopView
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
           <View style={styles.textSet__wrap}>
             <View style={{ flexDirection: 'row', marginTop: pxToDp(20) }}>
               <Text style={styles.textSet_text}>
@@ -92,21 +106,25 @@ class Index extends Component {
               </Text>
               <TextInput
                 placeholder="请输入"
-                onChangeText={(e) => {
-                  this.props.nick
-                    ? this.setState({ nickName: e })
-                    : this.setState({ introduction: e });
+                onChangeText={(data) => {
+                  this.props.detail === 0
+                    ? this.setState({ nickName: data })
+                    : this.setState({ introduction: data });
                 }}
                 style={styles.textSet_input}
               />
             </View>
-            <TouchableOpacity onPress={this.infoSet}>
+            <TouchableOpacity
+              onPress={() => {
+                this.infoSet(key);
+              }}
+            >
               <Text style={styles.textSet_button}>确定修改</Text>
             </TouchableOpacity>
           </View>
-        </Overlay.PullView>
+        </Overlay.PopView>
       );
-      Overlay.show(overlayView);
+      const key = Overlay.show(overlayView);
     } else if (this.props.option === 3) {
       Picker.init({
         pickerData: ['男', '女'],
@@ -118,9 +136,7 @@ class Index extends Component {
         pickerToolBarBg: [255, 255, 255, 1],
         pickerBg: [255, 255, 255, 1],
         onPickerConfirm: (data) => {
-          data === '男'
-            ? this.setState({ gender: 0 })
-            : this.setState({ gender: 1 });
+          this.setState({ gender: data[0] });
           this.infoSet();
         },
       });
@@ -138,7 +154,7 @@ class Index extends Component {
               我当前绑定的手机号码：
             </Text>
             <Text style={{ ...fontStyle(46, 48, 48, '500', '#888', 'center') }}>
-              {this.props.info.mobile}
+              {this.props.text_more}
             </Text>
             <TextInput
               placeholder={'请输入手机号码'}
@@ -151,18 +167,29 @@ class Index extends Component {
                 this.setState({ verifyCode: e });
               }}
             />
-            <Text onPress={this.mobileSet}>确认修改</Text>
+            <Text
+              onPress={() => {
+                this.mobileSet(key);
+              }}
+            >
+              确认修改
+            </Text>
           </View>
         </Overlay.PullView>
       );
-      Overlay.show(overlayView);
+      const key = Overlay.show(overlayView);
     } else if (this.props.option === 0) {
       await LocalStorageUtils.clear();
-      NavigationHelper.resetTo('LoginAndRegister');
+      this.props.RootStore.userStore.allData.accessToken = '';
+      this.props.RootStore.userStore.allData.userId = '';
+      this.props.RootStore.userStore.allData.refreshToken = '';
+      this.props.RootStore.userStore.allData.password = '';
+      NavigationHelper.resetTo('Tab');
+      this.props.RootStore.globalStore.allData.Socket.emit('disconnect');
+      Toast.success('退出登录成功');
     } else {
       const res = await Http.getMyInfo();
       const userInfo = res.data.data;
-      // console.log(res);
       this.setState({
         userInfo,
       });
@@ -177,29 +204,31 @@ class Index extends Component {
     }
   };
 
-  infoSet = () => {
+  infoSet = (key) => {
     let data = {
       birthday: this.state.birthday,
       introduction: this.state.introduction,
-      gender: this.state.gender,
+      gender: this.state.gender === '男' ? 0 : 1,
       nickName: this.state.nickName,
       userAvatar: this.state.userAvatar,
     };
     Http.infoSet(data).then((res) => {
-      if (res.status === 200) {
-        Toast.success(res.data.msg, 1000, 'center');
+      if (res.data.code === 0) {
+        Overlay.hide(key);
+        Toast.success('修改成功', 2000, 'center');
       } else {
-        Toast.fail(res.data.msg, 1000, 'center');
+        Toast.fail(res.data.msg, 2000, 'center');
       }
     });
   };
 
   //申请验证码
-  verifyCodeRequest = () => {
+  verifyCodeRequest = (key) => {
     Http.getVerifyCode({ code: 3, mobile: this.state.mobile }).then((res) => {
       // console.log(res);
       if (res.status === 200) {
         Toast.success(res.data.msg, 1000, 'center');
+        Overlay.hide(key);
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }
@@ -221,16 +250,16 @@ class Index extends Component {
 
   componentDidMount() {
     Http.getMyInfo().then((res) => {
-      if (res.status === 200) {
-        this.setState({
-          birthday: res.data.data.birthday,
-          gender: res.data.data.gender,
-          introduction: res.data.data.introduction,
-          nickName: res.data.data.nickName,
-          userAvatar: res.data.data.userAvatar,
-          mobile: res.data.data.mobile,
-        });
-      }
+      this.setState({
+        userAvatar: res.data.data.userAvatar,
+        nickName: res.data.data.nickName,
+        gender: res.data.data.gender === 1 ? '女' : '男',
+        introduction: res.data.data.introduction,
+        birthday: res.data.data.birthday,
+        mobile: res.data.data.mobile,
+        weChat: res.data.data.weChat,
+        qq: res.data.data.qq,
+      });
     });
   }
 
@@ -389,7 +418,16 @@ class Index extends Component {
                   marginRight: pxToDp(30),
                 }}
               >
-                <Avatar image={{ uri: image }} size={120} />
+                {/*<Avatar image={{ uri: image }} size={120} />*/}
+                <Image
+                  source={{ uri: this.state.userAvatar }}
+                  style={{
+                    width: pxToDp(120),
+                    height: pxToDp(120),
+                    borderRadius: pxToDp(60),
+                    backgroundColor: '#eee',
+                  }}
+                />
               </View>
             )}
             <Icon

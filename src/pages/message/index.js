@@ -1,52 +1,112 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  DeviceEventEmitter,
+} from 'react-native';
 import { deviceWidthDp, pxToDp } from '../../utils/pxToDp';
-import { fontStyle, margin, padding } from '../../utils/StyleUtils';
+import {
+  flexColumnSpb,
+  fontStyle,
+  margin,
+  padding,
+} from '../../utils/StyleUtils';
 import Icon from '../../components/common/Icon';
 import Avatar from '../../components/common/Avatar';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { parse } from 'react-native-svg';
+import RefreshListView, {
+  RefreshState,
+} from '../../components/common/RefreshListView';
+import DemandList from '../../components/bussiness/DemandList';
 // import { createFlowAnnotation } from 'mobx/dist/types/flowannotation';
+import ListCard from '../../components/bussiness/message/ListCard';
+import { inject } from 'mobx-react';
 
+@inject('RootStore')
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       list: [],
-      userId: '',
-      avatar: '',
+      userId: this.props.RootStore.userStore.allData.userId,
+      avatar: this.props.RootStore.userStore.allData.img,
       count: 0,
+      refreshState: RefreshState.Idle,
+      totalPage: 1,
+      currentPage: 1,
     };
   }
 
   async componentDidMount() {
-    let res = await Http.messageList({ page: 1, size: 8 });
+    await this.onHeaderRefresh();
+  }
+
+  onHeaderRefresh = async () => {
+    this.setState({ refreshState: RefreshState.HeaderRefreshing });
+
+    let list = await this.getList(true);
+
+    this.setState({
+      list: list,
+      refreshState:
+        list.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
+    });
+  };
+
+  onFooterRefresh = async () => {
+    if (this.state.list.length > 20) {
+      this.setState({ refreshState: RefreshState.FooterRefreshing });
+      const { totalPage, currentPage } = this.state;
+
+      let list = await this.getList(false, currentPage + 1);
+      this.setState({
+        list: list,
+        refreshState:
+          list.length === totalPage
+            ? RefreshState.NoMoreData
+            : RefreshState.Idle,
+      });
+    }
+  };
+
+  // 获取测试数据
+  async getList(isReload: boolean, currentPage = 1): Array<Object> {
+    let key = this.props.route.key;
+    if (this.props.route.key === '0') {
+      key = null;
+    }
+    let res = await Http.messageList({ page: 1, size: 20 });
     let count = 0;
     res.data.data.dataList.forEach((v) => {
       count += v.count;
     });
-    let res2 = await Http.getMyInfo();
+    this.setState({ count: count });
+
+    const newList = res.data.data.dataList;
     this.setState({
-      list: res.data.data.dataList,
-      userId: res2.data.data.userId,
-      avatar: res2.data.data.avatar,
-      count: count,
+      totalPage: 1,
+      currentPage: res.data.data.currentPage,
     });
+    return isReload ? newList : [...this.state.list, ...newList];
   }
 
-  timeFormmat(data) {
-    let hour = this.timeJudge(parseInt((data / 1000 / 60 / 60) % 24));
-    let minute = this.timeJudge(parseInt((data / 1000 / 60) % 60));
-    let second = this.timeJudge(parseInt((data / 1000) % 60));
-    return hour + ':' + minute + ':' + second;
-  }
-  timeJudge(data) {
-    if (data > 9) {
-      return data;
-    } else {
-      return '0' + data;
-    }
-  }
+  // timeFormmat(data) {
+  //   let hour = this.timeJudge(parseInt((data / 1000 / 60 / 60) % 24));
+  //   let minute = this.timeJudge(parseInt((data / 1000 / 60) % 60));
+  //   let second = this.timeJudge(parseInt((data / 1000) % 60));
+  //   return hour + ':' + minute + ':' + second;
+  // }
+  // timeJudge(data) {
+  //   if (data > 9) {
+  //     return data;
+  //   } else {
+  //     return '0' + data;
+  //   }
+  // }
 
   render() {
     const { list, count } = this.state;
@@ -103,57 +163,21 @@ class Index extends Component {
           {/*      </Text>*/}
           {/*    </View>*/}
           {/*  </TouchableOpacity>*/}
-          {list.map((v, i) => (
-            <TouchableOpacity
-              key={i}
-              style={styles.message_list}
-              onPress={() =>
-                NavigationHelper.navigate('MessageDetail', {
-                  fromId: v.from_id,
-                  toId: this.state.userId,
-                  avatar: this.state.avatar,
-                  nickName: v.from_name,
-                })
-              }
-            >
-              <View style={{ alignSelf: 'center' }}>
-                <Image
-                  source={{
-                    uri: v.from_avatar,
-                  }}
-                  style={{ height: pxToDp(90), width: pxToDp(90) }}
-                />
-              </View>
-              <View>
-                <Text style={{ ...fontStyle(30, 64, 64, 'bold', '#333') }}>
-                  {v.from_name}
-                </Text>
-                <Text style={{ ...fontStyle(24, 64, 64, '500', '#999') }}>
-                  尊敬的用户，您收到一条新的消息
-                </Text>
-              </View>
-              <View>
-                <Text
-                  style={{
-                    ...fontStyle(24, 64, 64, '500', '#999', 'right'),
-                  }}
-                >
-                  {this.timeFormmat(v.lasttime)}
-                </Text>
-                {v.count === 0 ? null : (
-                  <Text
-                    style={{
-                      ...styles.message_tips,
-                      marginTop: pxToDp(16),
-                      marginLeft: pxToDp(92),
-                    }}
-                  >
-                    {v.count}
-                  </Text>
-                )}
-              </View>
-            </TouchableOpacity>
-          ))}
+          <RefreshListView
+            data={list}
+            numColumns={1}
+            contentContainerStyle={{ ...flexColumnSpb }}
+            keyExtractor={this.keyExtractor}
+            renderItem={(item, index) => <ListCard card={item} key={index} />}
+            refreshState={this.state.refreshState}
+            onHeaderRefresh={this.onHeaderRefresh}
+            onFooterRefresh={this.onFooterRefresh}
+            // 可选
+            footerRefreshingText="玩命加载中 >.<"
+            footerFailureText="我擦嘞，居然失败了 =.=!"
+            footerNoMoreDataText="-我是有底线的-"
+            footerEmptyDataText="-好像什么东西都没有-"
+          />
         </View>
       </View>
     );
@@ -200,6 +224,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     ...padding(30, 0, 30, 0),
     paddingBottom: pxToDp(44),
+    flex: 1,
   },
   message_list: {
     marginTop: pxToDp(20),

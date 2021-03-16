@@ -11,7 +11,9 @@ import Option from '../../../components/bussiness/Options';
 import { margin } from '../../../utils/StyleUtils';
 import { pxToDp } from '../../../utils/pxToDp';
 import TopTitle from '../../../components/common/TopTitle';
+import { inject } from 'mobx-react';
 
+@inject('RootStore')
 class Test extends Component {
   constructor(props) {
     super(props);
@@ -19,20 +21,21 @@ class Test extends Component {
       list: [
         {
           title: '头像',
-          image: props.route.params.userAvatar,
+          image: props.RootStore.userStore.allData.img,
           type: 3,
           option: 1,
         },
         {
           title: '昵称',
-          text_more: props.route.params.nickName,
+          text_more: props.RootStore.userStore.allData.nickName,
           type: 1,
           option: 2,
           detail: 0,
         },
         {
           title: '性别',
-          text_more: props.route.params.gender === 1 ? '女' : '男',
+          text_more:
+            props.RootStore.userStore.allData.gender === 1 ? '女' : '男',
           type: 1,
           option: 3,
         },
@@ -79,17 +82,22 @@ class Test extends Component {
 
   componentDidMount() {
     Http.getMyInfo().then((res) => {
-      if (res.status === 200) {
-        this.setState({
-          info: {
-            birthday: res.data.data.birthday,
-            gender: res.data.data.gender,
-            introduction: res.data.data.introduction,
-            nickName: res.data.data.nickName,
-            userAvatar: res.data.data.userAvatar,
-            mobile: res.data.data.mobile,
-          },
-        });
+      let list = this.state.list;
+      if (res.data.code === 0) {
+        list[0].image = res.data.data.userAvatar;
+        list[1].text_more = res.data.data.nickName;
+        list[2].text_more = res.data.data.gender === 1 ? '女' : '男';
+        list[3].text_more = res.data.data.introduction;
+        list[4].text_more = res.data.data.birthday;
+        list[5].text_more =
+          res.data.data.mobile === undefined ? '未绑定' : res.data.data.mobile;
+        list[6].text_more =
+          res.data.data.weChat === undefined ? '未绑定' : '已绑定';
+        list[6].text_more_status = res.data.data.weChat !== undefined;
+        list[7].text_more =
+          res.data.data.qq === undefined ? '未绑定' : '已绑定';
+        list[7].text_more_status = res.data.data.qq !== undefined;
+        this.setState({ list: list });
       }
     });
   }
@@ -116,7 +124,6 @@ class Test extends Component {
                 svgRemove={true}
                 image={v.image}
                 option={v.option}
-                info={this.state.info}
                 detail={v.detail}
                 isDate={v.isDate}
               />

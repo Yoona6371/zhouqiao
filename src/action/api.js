@@ -12,9 +12,9 @@ const api = {
     url: '/api/user/register',
     method: 'post',
   },
-  findPassword:{
-    url:'/api/my/password',
-    method:'put',
+  findPassword: {
+    url: '/api/my/password',
+    method: 'put',
   },
   getMyInfo: {
     url: '/api/client/my/baseInfo',
@@ -138,6 +138,10 @@ const api = {
     url: '/api/client/my/baseInfo',
     method: 'put',
   },
+  nickSet: {
+    url: '/api/user/my/nick',
+    method: 'put',
+  },
   //案例详情
   CaseDetails: {
     url: '/api/designCaseExt/client/design_cases',
@@ -254,11 +258,11 @@ const api = {
   },
   orderCommodity: {
     url: '/api/stylist/orderCommodity',
-    method: 'post'
+    method: 'post',
   },
   orderDesignCase: {
     url: '/api/client/orderDesignCase',
-    method: 'post'
+    method: 'post',
   },
   MyCollectList: {
     url: '/api/designCaseCollect/client/design_cases/collect/mylist',

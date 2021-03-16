@@ -163,6 +163,9 @@ class Index extends Component {
           type: 2,
           last: true,
           category: 3,
+          inputUpdate: (data) => {
+            this.setState({ data: { ...this.state.data, accessory: data } });
+          },
         },
         // {
         //   title: '图片',
