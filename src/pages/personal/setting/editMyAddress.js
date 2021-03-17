@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
+  Switch,
 } from 'react-native';
 import { pxToDp } from '../../../utils/pxToDp';
 import TopTitle, { index } from '../../../components/common/TopTitle';
@@ -27,18 +28,9 @@ class Index extends Component {
     super(props);
     this.state = {
       name: '',
-      isDefault: 0,
-      sexValue: 0,
+      isDefault: false,
       phoneNumber: '',
       address: '',
-      sex_props: [
-        { label: '先生', value: 0 },
-        { label: '女士', value: 1 },
-      ],
-      default_props: [
-        { label: '是', value: 0 },
-        { label: '否', value: 1 },
-      ],
     };
   }
 
@@ -48,16 +40,12 @@ class Index extends Component {
       if (res.data.code === 0) {
         this.setState({ name: res.data.data.contact });
         this.setState({ address: res.data.data.address });
-        // this.setState({ sexValue: res.data.data.gender });
         this.setState({ isDefault: res.data.data.isDefault });
         this.setState({ phoneNumber: res.data.data.mobile });
-
-        let sex = res.data.data.gender;
-        if (sex === '先生') {
-          this.setState({ sexValue: 0 });
-        }
-        if (sex === '女士') {
-          this.setState({ sexValue: 1 });
+        if (res.data.data.isDefault === 1) {
+          this.setState({ isDefault: true });
+        } else {
+          this.setState({ isDefault: false });
         }
         console.log(this.state);
       }
@@ -67,15 +55,20 @@ class Index extends Component {
   //保存地址
   saveAddress = () => {
     //接口函数
-    console.log(this.state);
+    // console.log(this.state);
+    let a = 0;
+    if (this.state.isDefault === 1) {
+      a = 0;
+    } else {
+      a = 1;
+    }
     axios
       .put(
         `http://www.zhouqiao.art:8080/api/user/address/${this.props.route.params}`,
         {
           address: this.state.address,
           contact: this.state.name,
-          gender: this.state.sexValue,
-          isDefault: this.state.isDefault,
+          isDefault: a,
           mobile: this.state.phoneNumber,
         },
         {
@@ -96,7 +89,7 @@ class Index extends Component {
       });
   };
   render() {
-    const sex = this.state.sexValue;
+    const isDefault = this.state.isDefault;
     return (
       <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
         {/* 标题开始 */}
@@ -119,26 +112,6 @@ class Index extends Component {
               }}
             />
           </View>
-          {/* name 结束 */}
-          {/* 性别开始 */}
-          <View style={styles.input__box}>
-            <Text style={styles.input__text}>身份</Text>
-            <RadioForm
-              radio_props={this.state.sex_props}
-              initial={sex === '先生' ? 1 : 0}
-              // value={this.state.sexValue}
-              onPress={(value) => {
-                this.setState({ sexValue: value });
-              }}
-              // vdefaultValue={this.state.sexValue}
-              buttonColor={'#ff9900'}
-              labelStyle={{ fontSize: pxToDp(30), marginRight: pxToDp(20) }}
-              buttonSize={pxToDp(20)}
-              formHorizontal={true}
-              style={{ marginTop: pxToDp(10) }}
-            />
-          </View>
-          {/* 性别结束 */}
           {/* 手机号码开始 */}
           <View style={styles.input__box}>
             <Text style={styles.input__text}>手机号码</Text>
@@ -181,17 +154,13 @@ class Index extends Component {
           {/* 是否设为默认地址  开始*/}
           <View style={styles.input__box}>
             <Text style={styles.input__text}>默认地址</Text>
-            <RadioForm
-              radio_props={this.state.default_props}
-              initial={this.state.isDefault}
-              onPress={(value) => {
-                this.setState({ isDefault: value });
+            <Switch
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={isDefault ? '#f5dd4b' : '#f4f3f4'}
+              onValueChange={(res) => {
+                this.setState({ isDefault: res });
               }}
-              buttonColor={'#ff9900'}
-              labelStyle={{ fontSize: pxToDp(30), marginRight: pxToDp(50) }}
-              buttonSize={pxToDp(20)}
-              formHorizontal={true}
-              style={{ marginTop: pxToDp(10) }}
+              value={isDefault}
             />
           </View>
           {/* 是否设为默认地址  结束*/}

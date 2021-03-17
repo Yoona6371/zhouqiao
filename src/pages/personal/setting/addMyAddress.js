@@ -5,16 +5,12 @@ import {
   TouchableOpacity,
   TextInput,
   Text,
+  Switch,
 } from 'react-native';
 import { pxToDp } from '../../../utils/pxToDp';
 import TopTitle, { index } from '../../../components/common/TopTitle';
 import Textarea from 'react-native-textarea';
 import { padding } from '../../../utils/StyleUtils';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
 import Toast from '../../../components/common/Toast/Toast';
 import { DeviceEventEmitter } from 'react-native';
 
@@ -23,29 +19,26 @@ class Index extends Component {
     super(props);
     this.state = {
       name: '',
-      isDefault: 0,
-      sexValue: 0,
+      isDefault: false,
       phoneNumber: '',
       address: '',
-      sex_props: [
-        { label: '先生', value: 1 },
-        { label: '女士', value: 0 },
-      ],
-      default_props: [
-        { label: '是', value: 1 },
-        { label: '否', value: 0 },
-      ],
     };
   }
 
   //保存地址
   saveAddress = () => {
+    //转化地址默认布尔值为数字
+    let a = 0;
+    if (this.state.isDefault === 1) {
+      a = 0;
+    } else {
+      a = 1;
+    }
     //接口函数
     Http.addMyaddress({
       address: this.state.address,
       contact: this.state.name,
-      gender: this.state.sexValue,
-      isDefault: this.state.isDefault,
+      isDefault: a,
       mobile: this.state.phoneNumber,
     }).then((res) => {
       console.log(res);
@@ -59,6 +52,7 @@ class Index extends Component {
     });
   };
   render() {
+    const isDefault = this.state.isDefault;
     return (
       <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
         {/* 标题开始 */}
@@ -81,23 +75,6 @@ class Index extends Component {
             />
           </View>
           {/* name 结束 */}
-          {/* 性别开始 */}
-          <View style={styles.input__box}>
-            <Text style={styles.input__text}>身份</Text>
-            <RadioForm
-              radio_props={this.state.sex_props}
-              initial={100}
-              onPress={(value) => {
-                this.setState({ sexValue: value });
-              }}
-              buttonColor={'#ff9900'}
-              labelStyle={{ fontSize: pxToDp(30), marginRight: pxToDp(20) }}
-              buttonSize={pxToDp(20)}
-              formHorizontal={true}
-              style={{ marginTop: pxToDp(10) }}
-            />
-          </View>
-          {/* 性别结束 */}
           {/* 手机号码开始 */}
           <View style={styles.input__box}>
             <Text style={styles.input__text}>手机号码</Text>
@@ -139,17 +116,13 @@ class Index extends Component {
           {/* 是否设为默认地址  开始*/}
           <View style={styles.input__box}>
             <Text style={styles.input__text}>默认地址</Text>
-            <RadioForm
-              radio_props={this.state.default_props}
-              initial={100}
-              onPress={(value) => {
-                this.setState({ isDefault: value });
+            <Switch
+              trackColor={{ false: '#767577', true: '#81b0ff' }}
+              thumbColor={isDefault ? '#f5dd4b' : '#f4f3f4'}
+              onValueChange={(res) => {
+                this.setState({ isDefault: res });
               }}
-              buttonColor={'#ff9900'}
-              labelStyle={{ fontSize: pxToDp(30), marginRight: pxToDp(50) }}
-              buttonSize={pxToDp(20)}
-              formHorizontal={true}
-              style={{ marginTop: pxToDp(10) }}
+              value={isDefault}
             />
           </View>
           {/* 是否设为默认地址  结束*/}
