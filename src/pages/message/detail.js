@@ -79,16 +79,22 @@ class TestRNIMUI extends Component {
       this.refs.ChatInput.setMenuContainerHeight(316);
     }
     this.resetMenu();
-    this.props.RootStore.globalStore.allData.Socket.on(
-      'messageptop',
-      (data) => {
-        this.onReceiveText(
-          JSON.parse(data).msgContent,
-          JSON.parse(data).contentType,
-        );
-        // console.log(JSON.parse(data));
-      },
-    );
+    if (
+      this.props.RootStore.globalStore.allData.Socket._callbacks
+        .$messageptop === undefined
+    ) {
+      console.log('添加监听');
+      this.props.RootStore.globalStore.allData.Socket.on(
+        'messageptop',
+        (data) => {
+          this.onReceiveText(
+            JSON.parse(data).msgContent,
+            JSON.parse(data).contentType,
+            JSON.parse(data).fromAvatar,
+          );
+        },
+      );
+    }
     AuroraIController.addMessageListDidLoadListener(
       this.messageListDidLoadEvent,
     );
@@ -173,6 +179,15 @@ class TestRNIMUI extends Component {
     AuroraIController.removeMessageListDidLoadListener(
       this.messageListDidLoadEvent,
     );
+    console.log('进入willunmount');
+    // this.props.RootStore.globalStore.allData.Socket.close(
+    //   'messageptop',
+    //   (data) => {
+    //     console.log('进入取消监听');
+    //     console.log(data);
+    //   },
+    // );
+    console.log('取消监听结束');
   }
 
   resetMenu() {
@@ -363,7 +378,7 @@ class TestRNIMUI extends Component {
     });
   };
   // 接收消息
-  onReceiveText = (text, type) => {
+  onReceiveText = (text, type, avatar) => {
     let message = constructNormalMessage();
     if (type === 0) {
       message.msgType = 'text';
@@ -372,6 +387,8 @@ class TestRNIMUI extends Component {
       message.msgType = 'image';
       message.mediaPath = text;
     }
+    message.fromUser.avatarPath = avatar;
+    message.isOutgoing = false;
     AuroraIController.appendMessages([message]);
   };
 
