@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon';
-import RNRestart from 'react-native-restart';
 import Toast from '../common/Toast/Toast';
 
 export default class AddressList extends Component {

@@ -11,13 +11,7 @@ import { pxToDp } from '../../../utils/pxToDp';
 import TopTitle, { index } from '../../../components/common/TopTitle';
 import Textarea from 'react-native-textarea';
 import { padding } from '../../../utils/StyleUtils';
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button';
 import Toast from '../../../components/common/Toast/Toast';
-import RNRestart from 'react-native-restart';
 import axios from 'axios';
 import { inject } from 'mobx-react';
 import { DeviceEventEmitter } from 'react-native';
@@ -121,6 +115,7 @@ class Index extends Component {
               value={this.state.phoneNumber}
               maxLength={11}
               style={{ fontSize: pxToDp(30) }}
+              keyboardType="numeric"
               onChangeText={(value) => {
                 this.setState({ phoneNumber: value });
               }}

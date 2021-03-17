@@ -12,7 +12,6 @@ import Icon from '../../../components/common/Icon';
 import TopTitle, { index } from '../../../components/common/TopTitle';
 import { padding } from '../../../utils/StyleUtils';
 import { DeviceEventEmitter } from 'react-native';
-import RNRestart from 'react-native-restart';
 
 class Index extends Component {
   constructor(props) {

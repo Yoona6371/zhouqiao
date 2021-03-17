@@ -37,7 +37,7 @@ export default class LoginInput extends Component {
       phoneNumberErrShow: false,
       passwordErrShow: false,
       verifyCodeErrShow: false,
-      btnText:'获取验证码',
+      btnText: '获取验证码',
     };
   }
 
@@ -64,19 +64,19 @@ export default class LoginInput extends Component {
   //申请验证码
 
   //倒计时
-  countDown =()=>{
-    let seconds =60;
+  countDown = () => {
+    let seconds = 60;
     //重新获取60s
-    this.setState({btnText:`重新获取(${seconds})`});
-    let timeId = setInterval(() =>{
+    this.setState({ btnText: `重新获取(${seconds})` });
+    let timeId = setInterval(() => {
       seconds--;
-      this.setState({btnText:`重新获取(${seconds})`});
-      if(seconds === 0){
+      this.setState({ btnText: `重新获取(${seconds})` });
+      if (seconds === 0) {
         clearInterval(timeId);
-        this.setState({btnText:"重新获取"});
+        this.setState({ btnText: '重新获取' });
       }
-    },1000);
-  }
+    }, 1000);
+  };
   //传入验证码接口类型
   verifyCodeRequest = (verifyType) => {
     Http.getVerifyCode({
@@ -92,7 +92,6 @@ export default class LoginInput extends Component {
       }
     });
   };
-  verifyCodeSubmitEditing = () => {};
   verifyCodeChangeText = (verifyCode) => {
     this.setState({ verifyCode });
     this.props.verifyCodeGet(verifyCode);
@@ -105,7 +104,7 @@ export default class LoginInput extends Component {
       phoneNumberErrShow,
       passwordErrShow,
       verifyCodeErrShow,
-      btnText
+      btnText,
     } = this.state;
     const { type, verifyType } = this.props;
 
@@ -113,7 +112,7 @@ export default class LoginInput extends Component {
       <View>
         {type === 1 ? (
           <View>
-            <View>
+            <View style={{ height: pxToDp(108) }}>
               <View style={styles.input_box}>
                 <TextInput
                   placeholder="输入手机号码"
@@ -141,7 +140,7 @@ export default class LoginInput extends Component {
               )}
             </View>
             <View>
-              <View style={[styles.input_box, { marginTop: pxToDp(50) }]}>
+              <View style={[styles.input_box, { marginTop: pxToDp(30) }]}>
                 <TextInput
                   placeholder="输入密码"
                   style={{ fontSize: pxToDp(24) }}
@@ -170,7 +169,7 @@ export default class LoginInput extends Component {
           </View>
         ) : type === 2 ? (
           <View>
-            <View>
+            <View style={{ height: pxToDp(108) }}>
               <View style={styles.input_box}>
                 <TextInput
                   placeholder="请输入手机号码"
@@ -197,49 +196,53 @@ export default class LoginInput extends Component {
                 <View />
               )}
             </View>
-            <View
-              style={[styles.input__box__type2__fix, { marginTop: pxToDp(30) }]}
-            >
-              <TextInput
-                placeholder="请输入验证码"
-                style={{ fontSize: pxToDp(24) }}
-                placeholderTextColor="#918D87"
-                onSubmitEditing={this.verifyCodeSubmitEditing}
-                onChangeText={this.verifyCodeChangeText}
-                onFocus={() => {
-                  this.setState({ verifyCodeErrShow: false });
-                }}
-                onBlur={() => {
-                  this.setState({ verifyCodeErrShow: true });
-                }}
-              />
-              <View style={styles.touchableOpacity__type3}>
-                <TouchableOpacity
-                  style={{ justifyContent: 'center' }}
-                  onPress={() => this.verifyCodeRequest(verifyType)}
-                >
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: pxToDp(21),
-                      alignSelf: 'center',
-                      justifyContent: 'center',
-                    }}
+            <View style={{ height: pxToDp(108) }}>
+              <View
+                style={[
+                  styles.input__box__type2__fix,
+                  { marginTop: pxToDp(10) },
+                ]}
+              >
+                <TextInput
+                  placeholder="请输入验证码"
+                  style={{ fontSize: pxToDp(24) }}
+                  placeholderTextColor="#918D87"
+                  onChangeText={this.verifyCodeChangeText}
+                  onFocus={() => {
+                    this.setState({ verifyCodeErrShow: false });
+                  }}
+                  onBlur={() => {
+                    this.setState({ verifyCodeErrShow: true });
+                  }}
+                />
+                <View style={styles.touchableOpacity__type3}>
+                  <TouchableOpacity
+                    style={{ justifyContent: 'center' }}
+                    onPress={() => this.verifyCodeRequest(verifyType)}
                   >
-                    {btnText}
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: pxToDp(21),
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {btnText}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
+              {verifyCodeErrShow ? (
+                <Text style={styles.errorText}>
+                  {utils.checkVerification(verifyCode)}
+                </Text>
+              ) : (
+                <View />
+              )}
             </View>
-            {verifyCodeErrShow ? (
-              <Text style={styles.errorText}>
-                {utils.checkVerification(verifyCode)}
-              </Text>
-            ) : (
-              <View />
-            )}
-            <View>
-              <View style={[styles.input_box, { marginTop: pxToDp(30) }]}>
+            <View style={{ height: pxToDp(108) }}>
+              <View style={[styles.input_box, { marginTop: pxToDp(20) }]}>
                 <TextInput
                   placeholder="请输入密码"
                   style={{ fontSize: pxToDp(24) }}
@@ -268,47 +271,48 @@ export default class LoginInput extends Component {
           </View>
         ) : (
           <View>
-            <View>
-              <View style={styles.input__box__type3}>
-                <Icon name="phone" style={styles.icon__type3} />
-                <TextInput
-                  placeholder="请输入手机号码"
-                  placeholderTextColor="#918D87"
-                  maxLength={11}
-                  onSubmitEditing={this.phoneNumberSubmitEditing}
-                  onChangeText={this.phoneNumberChangeText}
-                  keyboardType="phone-pad"
-                  style={{ fontSize: pxToDp(24) }}
-                  onFocus={() => {
-                    this.setState({ phoneNumberErrShow: false });
-                  }}
-                  onBlur={() => {
-                    this.setState({ phoneNumberErrShow: true });
-                  }}
-                />
+            <View style={{ height: pxToDp(115) }}>
+              <View>
+                <View style={styles.input__box__type3}>
+                  <Icon name="phone" style={styles.icon__type3} />
+                  <TextInput
+                    placeholder="请输入手机号码"
+                    placeholderTextColor="#918D87"
+                    maxLength={11}
+                    onSubmitEditing={this.phoneNumberSubmitEditing}
+                    onChangeText={this.phoneNumberChangeText}
+                    keyboardType="phone-pad"
+                    style={{ fontSize: pxToDp(24) }}
+                    onFocus={() => {
+                      this.setState({ phoneNumberErrShow: false });
+                    }}
+                    onBlur={() => {
+                      this.setState({ phoneNumberErrShow: true });
+                    }}
+                  />
+                </View>
               </View>
+              {phoneNumberErrShow ? (
+                <Text style={styles.errorText}>
+                  {utils.checkPhone(phoneNumber)}
+                </Text>
+              ) : (
+                <View />
+              )}
             </View>
-            {phoneNumberErrShow ? (
-              <Text style={styles.errorText}>
-                {utils.checkPhone(phoneNumber)}
-              </Text>
-            ) : (
-              <View />
-            )}
-            <View>
+            <View style={{ height: pxToDp(115) }}>
               <View style={styles.input__box__type3}>
                 <Icon name="verification" style={styles.icon__type3} />
                 <TextInput
                   placeholder="请输入验证码"
                   style={{ fontSize: pxToDp(24) }}
                   placeholderTextColor="#918D87"
-                  onSubmitEditing={this.verifyCodeSubmitEditing}
                   onChangeText={this.verifyCodeChangeText}
                   onFocus={() => {
-                    this.setState({ passwordErrShow: false });
+                    this.setState({ verifyCodeErrShow: false });
                   }}
                   onBlur={() => {
-                    this.setState({ passwordErrShow: true });
+                    this.setState({ verifyCodeErrShow: true });
                   }}
                 />
                 <View style={styles.touchableOpacity__type3}>
@@ -336,7 +340,7 @@ export default class LoginInput extends Component {
                 <View />
               )}
             </View>
-            <View>
+            <View style={{ height: pxToDp(115) }}>
               <View style={styles.input__box__type3}>
                 <Icon name="lock" style={styles.icon__type3} />
                 <TextInput

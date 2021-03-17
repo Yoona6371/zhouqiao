@@ -82,6 +82,7 @@ class Index extends Component {
               placeholder="手机号"
               placeholderTextColor="#999999"
               maxLength={11}
+              keyboardType="numeric"
               style={{ fontSize: pxToDp(30) }}
               onChangeText={(value) => {
                 this.setState({ phoneNumber: value });
