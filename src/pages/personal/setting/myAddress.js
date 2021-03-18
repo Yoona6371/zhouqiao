@@ -20,8 +20,9 @@ class Index extends Component {
       list: [],
     };
   }
-  async componentDidMount() {
-    await this.getAddressList();
+
+  //获取地址列表
+  addressRequire = async () => {
     //获取地址
     let addressRes = await Http.getMyAddress();
     console.log(addressRes.data.data);
@@ -42,8 +43,13 @@ class Index extends Component {
       list: addressList,
     });
     console.log(addressList);
+  };
+  componentDidMount() {
+    this.addressRequire();
+    //路由监听事件
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
-      this.componentDidMount();
+      //重新获取地址列表
+      this.addressRequire();
     });
   }
 
@@ -74,7 +80,7 @@ class Index extends Component {
                   address={v.address}
                   defaultShow={v.defaultShow}
                   addressId={v.addressId}
-                  addressIdGet={this.getAddressList}
+                  addressRefresh={this.addressRequire()}
                 />
               </TouchableOpacity>
             </View>

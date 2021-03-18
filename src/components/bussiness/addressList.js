@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { pxToDp } from '../../utils/pxToDp';
 import Icon from '../../components/common/Icon';
-import RNRestart from 'react-native-restart';
 import Toast from '../common/Toast/Toast';
 
 export default class AddressList extends Component {
@@ -12,17 +11,17 @@ export default class AddressList extends Component {
   static defaultProps = {
     address: '曹杨九村11栋30号楼210室',
     name: '卢伟军',
-    sex: '女士',
     tel: '18721755801',
     defaultShow: 1,
   };
-
   delete = () => {
-    console.log('hh');
+    console.log(this.props.addressId);
     Http.deleteAddress({}, this.props.addressId).then((res) => {
       console.log(res);
       if (res.data.code === 0) {
-        this.props.addressIdGet();
+        Toast.success(res.data.msg, 10, 'center');
+        //刷新地址列表
+        this.props.addressRefresh();
       } else {
         Toast.fail(res.data.msg, 1000, 'center');
       }
@@ -34,7 +33,7 @@ export default class AddressList extends Component {
     NavigationHelper.navigate('EditMyAddress', this.props.addressId);
   };
   render() {
-    const { address, name, sex, tel, defaultShow } = this.props;
+    const { address, name, tel, defaultShow } = this.props;
     return (
       <View style={[styles.adressList_box, this.props.style]}>
         {/*详细地址strat*/}
@@ -62,7 +61,6 @@ export default class AddressList extends Component {
         {/*身份信息start*/}
         <View style={styles.address_identity}>
           <Text style={styles.address_identity_text}>{name}</Text>
-          <Text style={styles.address_identity_text}>{sex}</Text>
           <Text style={styles.address_identity_text}>{tel}</Text>
         </View>
         {/*身份信息end*/}
