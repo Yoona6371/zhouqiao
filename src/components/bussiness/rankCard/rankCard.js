@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { pxToDp } from '../../../utils/pxToDp';
 import Toast from '../../common/Toast/Toast';
 import { inject } from 'mobx-react';
+import Shimmer from 'react-native-shimmer';
 @inject('RootStore')
 export class rankCard extends Component {
   static propTypes = {
@@ -19,7 +20,7 @@ export class rankCard extends Component {
     hot: PropTypes.number.isRequired,
     onPress: PropTypes.func.isRequired,
     userPhoto: PropTypes.string.isRequired,
-    userId: PropTypes.string.isRequired
+    userId: PropTypes.string.isRequired,
   };
   state = {
     follow: false,
@@ -78,25 +79,62 @@ export class rankCard extends Component {
       this.unfocusUser();
     }
   }
+
+  clickDesign = (num) => {
+    NavigationHelper.navigate('OthersPersonal', {
+      params: {
+        userId: this.props.userId,
+      },
+    });
+  };
+
   // ——————————————————————————点击关注按钮部分结束————————————————————————————
   render() {
-    const { rankNumber, userPhoto, userName, hot, onPress } = this.props;
+    const { rankNumber, userPhoto, userName, hot} = this.props;
     return (
       <View
         style={{
           alignItems: 'center',
         }}
       >
-        <View style={styles.cardBox}>
-          <Text style={styles.Number}>{rankNumber}</Text>
-          <Image style={styles.photoStyle} source={{ uri: userPhoto }} />
-          <Text numberOfLines={1} style={styles.name}>{userName}</Text>
-          <Image
-            style={styles.rankCardFire}
-            source={require('../../../asserts/images/rankCardFire.png')}
-          />
-          <Text numberOfLines={1} style={styles.clickGood}>{hot}</Text>
-          <TouchableOpacity style={styles.guanzhuBtn} onPress={() => this.handleClick()}>
+        <TouchableOpacity 
+          onPress = {() => this.clickDesign()}
+          activeOpacity={0.7}
+          style={styles.cardBox}
+        >
+          { rankNumber === '' ? 
+          (<Shimmer>
+            <View
+              style={{height: pxToDp(40), width: pxToDp(35), backgroundColor: '#eae8e8',}}
+            />
+          </Shimmer>)
+          : (<Text style={styles.Number}>{rankNumber}</Text>)}
+          
+          { userPhoto === '' ?
+          (<Shimmer style={styles.photoStyle}>
+            <View
+              style={{backgroundColor: '#eae8e8', ...styles.photoStyle}}
+            />
+          </Shimmer>) : 
+          (<Image style={styles.photoStyle} source={{ uri: userPhoto }} />)}
+          
+          { userName === '' && hot === ''?
+          (<Shimmer style={{ width: pxToDp(323), marginLeft: pxToDp(26), height: pxToDp(40), backgroundColor: '#eae8e8'}} />)
+          :(
+          <View style = {{flexDirection: 'row'}}>
+            <Text numberOfLines={1} style={styles.name}>{userName}</Text>
+            <Image
+              style={styles.rankCardFire}
+              source={require('../../../asserts/images/rankCardFire.png')}
+            />
+            <Text numberOfLines={1} style={styles.clickGood}>{hot}</Text>
+          </View>
+          )}
+
+          { userName === '' ?
+          (<Shimmer style={{ marginLeft: pxToDp(16), width: pxToDp(137), height: pxToDp(60), backgroundColor: '#eae8e8'}} />) :
+
+          (<TouchableOpacity style={styles.guanzhuBtn} onPress={() => this.handleClick()}>
             <Text
               style={{
                 color: '#FFF',
@@ -115,9 +153,9 @@ export class rankCard extends Component {
             >
               {this.state.follow === false ? '关注' : '已关注'}
             </Text>
+          </TouchableOpacity>)}
           </TouchableOpacity>
         </View>
-      </View>
     );
   }
 }

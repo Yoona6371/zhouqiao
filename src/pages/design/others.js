@@ -106,24 +106,25 @@ class Others extends Component {
 
   // 获取他人基本信息
   getOthersDetail = async () => {
+    console.log('函数执行开始');
     const detail = await Http.getOthersDetail(
       {},
       `/${this.props.route.params.params.userId}/baseInfo`,
     );
-
+    console.log(123123,detail)
     if (detail.status === 200) {
       const data = detail.data.data;
       let answer = [
         {
-          num: data.stylistStatistics.followedNum,
+          num: data.stylistStatistics===undefined?data.stylistStatistics.followedNum:0,
           des: '关注数',
         },
         {
-          num: data.stylistStatistics.fansNum,
+          num:  data.stylistStatistics===undefined?data.stylistStatistics.fansNum:0,
           des: '粉丝数',
         },
         {
-          num: data.stylistStatistics.orderFinishedNum,
+          num: data.stylistStatistics===undefined? data.stylistStatistics.orderFinishedNum:0,
           des: '成交订单',
         },
         {
@@ -161,11 +162,12 @@ class Others extends Component {
   //   }
   // }
   getOthersFocusList = async () => {
+    console.log(123123123,this.props.route.params.params.userId)
     const detail = await Http.getOthersFocusList(
       { page: 1, size: 8 },
       `/${this.props.route.params.params.userId}/follower`,
     );
-
+      console.log(12312312,detail);
     if (detail.status === 200) {
       const data = detail.data.data;
       let focus = [];
@@ -176,7 +178,6 @@ class Others extends Component {
           avatar: data.dataList[i].avatar,
         });
       }
-
       this.setState({
         followsAvatar: focus,
       });
@@ -325,7 +326,9 @@ class Others extends Component {
       </View>
     );
   }
+  
   render() {
+    console.log(1111111,this.state.followsAvatar);
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.others__wrap}>

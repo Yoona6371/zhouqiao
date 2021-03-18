@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, SafeAreaView } from 'react-native';
 import TopTitle from '../../components/common/TopTitle';
 import RankCardTop3 from '../../components/bussiness/rankCard/rankCardTop3';
 import RankCard from '../../components/bussiness/rankCard/rankCard';
 import { pxToDp } from '../../utils/pxToDp';
 import { flexColumnSpb, padding } from '../../utils/StyleUtils';
+import PropTypes from 'prop-types';
 
 import RefreshListView, {
   RefreshState,
 } from '../../components/common/RefreshListView';
+
+// import RefreshListView, { RefreshState } from 'react-native-refresh-list-view';
+import Shimmer from 'react-native-shimmer';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 export class index extends Component {
   state = {
     dataList: [], // 数据
@@ -33,61 +39,98 @@ export class index extends Component {
         hot: '',
       },
     ],
+    NineShimmer: [1, 2, 3, 4, 5, 6],
   };
-  getRankData = (page = 1) => {
-    Http.getRankList({
-      page: page,
-      size: 5,
-    }).then((res) => {
-      console.log(res.data.data);
-      let dataList = res.data.data.dataList;
-      this.setState({
-        dataList: dataList,
-        top33: dataList.slice(0, 3),
-        currentPage: res.data.data.currentPage,
-        totalPage: res.data.data.totalRecords,
-        rankListOutOfThree: dataList.filter((item, index) => {
-          return index !== 0 && index !== 1 && index !== 2;
-        }),
-      });
-    });
-  };
-  componentDidMount() {
-    this.getRankData();
+
+  async componentDidMount() {
+    await this.onHeaderRefresh();
   }
+
+  async getTestList(isReload: boolean, currentPage = 1): Array<Object> {
+    const message = await Http.getRankList({
+      page: currentPage,
+      size: 10,
+    });
+
+    const ans = message.data.data.dataList;
+    console.log(ans); 
+    if (currentPage === 1) {
+      this.setState({ top33: ans.slice(0, 3) });
+    }
+    this.setState({
+      currentPage: currentPage,
+      totalPage: message.data.data.totalRecords / 10,
+    });
+    return isReload ? ans : [...this.state.dataList, ...ans];
+  }
+
   onHeaderRefresh = async () => {
     this.setState({ refreshState: RefreshState.HeaderRefreshing });
-    console.log(1111);
-    await this.getRankData();
+    let dataList = await this.getTestList(true);
     this.setState({
+      dataList: dataList,
+      rankListOutOfThree: dataList.slice(3),
       refreshState:
-        this.state.dataList.length < 1
-          ? RefreshState.EmptyData
-          : RefreshState.Idle,
+        dataList.length < 1 ? RefreshState.EmptyData : RefreshState.Idle,
     });
   };
 
   onFooterRefresh = async () => {
-    console.log(1332);
     this.setState({ refreshState: RefreshState.FooterRefreshing });
-    const { totalPage, currentPage } = this.state;
+    let dataList = await this.getTestList(false, this.state.currentPage + 1);
+    console.log(this.state.currentPage);
+    console.log(this.state.totalPage);
+    this.setState({
+      dataList: dataList,
+      rankListOutOfThree: dataList.slice(3),
+      refreshState:
+        this.state.currentPage === this.state.totalPage
+          ? RefreshState.NoMoreData
+          : RefreshState.Idle,
+    });
   };
+
+  onPressChampion = () => {
+    NavigationHelper.navigate('OthersPersonal', {
+      params: {
+        userId: this.state.top33[0].userId,
+      },
+    });
+  };
+
+  onPressRunner_up = () => {
+    NavigationHelper.navigate('OthersPersonal', {
+      params: {
+        userId: this.state.top33[1].userId,
+      },
+    });
+  };
+
+  onPressThird_place = () => {
+    NavigationHelper.navigate('OthersPersonal', {
+      params: {
+        userId: this.state.top33[2].userId,
+      },
+    });
+  };
+
   render() {
-    const { top3, rankListOutOfThree, top33 } = this.state;
+    const { rankListOutOfThree, top33, NineShimmer } = this.state;
     return (
       <View>
         <View style={{ position: 'absolute', top: 0, zIndex: 999 }}>
           <TopTitle title="设计师榜" showBtn={false} color="#FFF" bgColor="" />
         </View>
         <RankCardTop3
-          onPressChampion={() => alert(1111)}
-          onPressRunner_up={() => alert(222)}
-          onPressThird_place={() => alert(333)}
+          onPressChampion={this.onPressChampion}
+          onPressRunner_up={this.onPressRunner_up}
+          onPressThird_place={this.onPressThird_place}
           top3={top33}
+          onPress={()=>{}}
         >
           {' '}
         </RankCardTop3>
-        <ScrollView>
+        <SafeAreaView style={{ height: pxToDp(879) }}>
           <RefreshListView
             data={rankListOutOfThree}
             numColumns={1}
@@ -95,12 +138,12 @@ export class index extends Component {
             keyExtractor={this.keyExtractor}
             renderItem={({ item, index }) => (
               <RankCard
+                key={index}
                 userId={item.userId}
-                rankNumber={index + 4 < 10 ? '0' + (index + 4) : index + 4}
-                userPhoto={item.userAvatar}
-                userName={item.nickName}
+                rankNumber={index + 4 < 10 ? '0' + (index + 4) : index + 4 + ''}
+                userPhoto={item.avatar}
+                userName={item.userNick}
                 hot={item.hot}
-                onPress={() => alert('哎，关注我')}
               />
             )}
             refreshState={this.state.refreshState}
@@ -112,7 +155,7 @@ export class index extends Component {
             footerNoMoreDataText="-我是有底线的-"
             footerEmptyDataText="-好像什么东西都没有-"
           />
-        </ScrollView>
+        </SafeAreaView>
       </View>
     );
   }

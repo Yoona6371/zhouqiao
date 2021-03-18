@@ -13,6 +13,8 @@ import SvgUri from 'react-native-svg-uri';
 import { like } from '../../../constants/svg';
 import Toast from '../../common/Toast/Toast';
 import { inject } from 'mobx-react';
+import Shimmer from 'react-native-shimmer';
+
 @inject('RootStore')
 export class rankCardTop3 extends Component {
   state = {
@@ -154,21 +156,31 @@ export class rankCardTop3 extends Component {
           source={require('../../../asserts/images/rankCardBg.png')}
         >
           <View style={styles.threeRankBorder}>
+            <TouchableOpacity
+              activeOpacity={0.7}  
+              onPress = {() => onPressRunner_up()}
+            >
             <View style={styles.runner_up}>
-              <ImageBackground
+              { top3[1].hot === '' ? (<Shimmer style={{ width: pxToDp(100), height: pxToDp(100), marginTop: pxToDp(20), marginLeft: pxToDp(60), backgroundColor: '#eae8e8'}} />)
+              : (<ImageBackground
                 style={styles.rank2Bg}
                 source={require('../../../asserts/images/rank2.png')}
               >
                 <Image
                   style={styles.rank2Photo}
-                  source={{ uri: top3[1].userAvatar }}
+                  source={{ uri: top3[1].avatar }}
                 />
-              </ImageBackground>
+              </ImageBackground>)}
+
               <View style={styles.rank2_nameAndZan}>
-                <Text numberOfLines={1} style={styles.rank2Name}>
-                  {top3[1].nickName}
-                </Text>
-                <View style={styles.rank2Svg_text_box}>
+                {top3[1].hot == '' ? 
+                (<Shimmer style={{ width: pxToDp(150), height: pxToDp(41), marginTop: pxToDp(16), backgroundColor: '#eae8e8'}} />)
+                :(<Text numberOfLines={1} style={styles.rank2Name}>
+                  {top3[1].userNick}
+                </Text>)}
+                
+                {top3[1].hot === '' ? (<Shimmer style={{ width: pxToDp(100), height: pxToDp(37), marginTop: pxToDp(10), backgroundColor: '#eae8e8'}} />)
+                : (<View style={styles.rank2Svg_text_box}>
                   <SvgUri
                     svgXmlData={like}
                     width={pxToDp(30)}
@@ -176,31 +188,43 @@ export class rankCardTop3 extends Component {
                     style={styles.rank2Like}
                   />
                   <Text style={styles.rank2LikeNumber}>{top3[1].hot}</Text>
-                </View>
-                <TouchableOpacity
+                </View>)}
+
+                {top3[1].hot === '' ? (<Shimmer style={{ width: pxToDp(110), height: pxToDp(34), marginTop: pxToDp(10), backgroundColor: '#eae8e8'}} />)
+                : (<TouchableOpacity
                   style={styles.guanzhuBtn}
                   onPress={() => this.handleClick(2)}
                 >
                   {this.state.follow === false ? <Text style={styles.rank2_add}>+ </Text> : null}
                   <Text style={styles.rank2_addAttention}>{this.state.follow === false ? '关注' : '已关注'}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
               </View>
             </View>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress = {() => onPressChampion()}
+            >
             <View style={styles.champion}>
-              <ImageBackground
+              { top3[1].hot === '' ? (<Shimmer style={{ width: pxToDp(100), height: pxToDp(100), marginTop: pxToDp(20), marginLeft: pxToDp(80), backgroundColor: '#eae8e8'}} />)
+              :(<ImageBackground
                 style={styles.rank1Bg}
                 source={require('../../../asserts/images/rank1.png')}
               >
                 <Image
                   style={styles.rank1Photo}
-                  source={{ uri: top3[0].userAvatar }}
+                  source={{ uri: top3[0].avatar }}
                 />
-              </ImageBackground>
-              <View style={styles.rank2_nameAndZan}>
-                <Text numberOfLines={1} style={styles.rank2Name}>
-                  {top3[0].nickName}
-                </Text>
-                <View style={styles.rank2Svg_text_box}>
+              </ImageBackground>)}
+            
+            <View style={styles.rank2_nameAndZan}>
+                { top3[0].hot === '' ? (<Shimmer style={{ width: pxToDp(150), height: pxToDp(41), marginTop: pxToDp(16), backgroundColor: '#eae8e8'}} />)
+                : (<Text numberOfLines={1} style={styles.rank2Name}>
+                  {top3[0].userNick}
+                </Text>) }
+                { top3[0].hot === '' ? (<Shimmer style={{ width: pxToDp(100), height: pxToDp(37), marginTop: pxToDp(10), backgroundColor: '#eae8e8'}} />)
+                : (<View style={styles.rank2Svg_text_box}>
                   <SvgUri
                     svgXmlData={like}
                     width={pxToDp(30)}
@@ -210,31 +234,42 @@ export class rankCardTop3 extends Component {
                   <Text style={styles.rank2LikeNumber}>
                     {top3[0].hot}
                   </Text>
-                </View>
-                <TouchableOpacity
+                </View>)}
+                { top3[0].hot === '' ? (<Shimmer style={{ width: pxToDp(110), height: pxToDp(34), marginTop: pxToDp(10), backgroundColor: '#eae8e8'}} />)
+                : (<TouchableOpacity
                   style={styles.guanzhuBtn1}
                   onPress={() => this.handleClick(1)}
                 >
                   {this.state.follow1 === false ? <Text style={styles.rank2_add}>+ </Text> : null}
                   <Text style={styles.rank2_addAttention}>{this.state.follow1 === false ? '关注' : '已关注'}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
               </View>
             </View>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress = {() => onPressThird_place()}
+            >
             <View style={styles.third_place}>
-              <ImageBackground
+              { top3[0].hot === '' ? (<Shimmer style={{ width: pxToDp(100), height: pxToDp(100), marginTop: pxToDp(20), marginLeft: pxToDp(60), backgroundColor: '#eae8e8'}} />)
+              : (<ImageBackground
                 style={styles.rank2Bg}
                 source={require('../../../asserts/images/rank3.png')}
               >
                 <Image
                   style={styles.rank2Photo}
-                  source={{ uri: top3[2].userAvatar }}
+                  source={{ uri: top3[2].avatar }}
                 />
-              </ImageBackground>
+              </ImageBackground>)}
+
               <View style={styles.rank2_nameAndZan}>
-                <Text numberOfLines={1} style={styles.rank2Name}>
-                  {top3[2].nickName}
-                </Text>
-                <View style={styles.rank2Svg_text_box}>
+                {top3[2].hot === '' ? (<Shimmer style={{ width: pxToDp(150), height: pxToDp(41), marginTop: pxToDp(16), backgroundColor: '#eae8e8'}} />)
+                : (<Text numberOfLines={1} style={styles.rank2Name}>
+                  {top3[2].userNick}
+                </Text>)}
+                {top3[2].hot === '' ? (<Shimmer style={{ width: pxToDp(100), height: pxToDp(37), marginTop: pxToDp(10), backgroundColor: '#eae8e8'}} />)
+                : (<View style={styles.rank2Svg_text_box}>
                   <SvgUri
                     svgXmlData={like}
                     width={pxToDp(30)}
@@ -244,16 +279,19 @@ export class rankCardTop3 extends Component {
                   <Text style={styles.rank2LikeNumber}>
                     {top3[2].hot}
                   </Text>
-                </View>
-                <TouchableOpacity
+                </View>)}
+                  
+                {top3[2].hot === '' ? (<Shimmer style={{ width: pxToDp(110), height: pxToDp(34), marginTop: pxToDp(10), backgroundColor: '#eae8e8'}} />)
+                : (<TouchableOpacity
                   style={styles.guanzhuBtn}
                   onPress={() => this.handleClick(3)}
                 >
                   {this.state.follow3 === false ? <Text style={styles.rank2_add}>+ </Text> : null}
                   <Text style={styles.rank2_addAttention}>{this.state.follow3 === false ? '关注' : '已关注'}</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>)}
               </View>
             </View>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
