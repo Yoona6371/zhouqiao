@@ -26,7 +26,7 @@ class Index extends Component {
     //获取地址
     let addressRes = await Http.getMyAddress();
     console.log(addressRes.data.data);
-    //地址信息列表
+    // // 地址信息列表
     let addressList = [];
     addressRes.data.data.forEach((item) => {
       addressList.push({
@@ -42,11 +42,13 @@ class Index extends Component {
     this.setState({
       list: addressList,
     });
-    console.log(addressList);
+    console.log('我在获取数据');
   };
+
   componentDidMount() {
+    console.log('我在请求');
     this.addressRequire();
-    //路由监听事件
+    // 路由监听事件
     this.subscription = DeviceEventEmitter.addListener('EventType', () => {
       //重新获取地址列表
       this.addressRequire();
@@ -80,7 +82,7 @@ class Index extends Component {
                   address={v.address}
                   defaultShow={v.defaultShow}
                   addressId={v.addressId}
-                  addressRefresh={this.addressRequire()}
+                  addressRefresh={() => this.addressRequire()}
                 />
               </TouchableOpacity>
             </View>
