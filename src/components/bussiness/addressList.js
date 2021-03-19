@@ -84,7 +84,7 @@ export default class AddressList extends Component {
           {/*编辑结束*/}
           {/*删除开始*/}
           <TouchableOpacity
-            onPress={this.delete}
+            onPress={()=>this.delete}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: pxToDp(25),
-    width: '60%',
+    width: '55%',
     justifyContent: 'space-between',
     marginTop: pxToDp(20),
   },

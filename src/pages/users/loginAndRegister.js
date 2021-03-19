@@ -200,22 +200,9 @@ class RegisterTab extends Component {
               this.setState({ verifyCode: value });
             }}
           />
-          {/*forgetPassword start*/}
-          <View style={{ marginTop: pxToDp(25), flexDirection: 'row' }}>
-            <Text style={{ color: '#999999', fontSize: pxToDp(24) }}>
-              已有帐号？
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                RNRestart.Restart();
-              }}
-            >
-              <Text style={{ color: '#16b0ff', fontSize: pxToDp(24) }}>
-                立即登录
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {/*forgetPassword end*/}
+          {/*/!*forgetPassword start*!/*/}
+          <View style={{ marginTop: pxToDp(45), flexDirection: 'row' }} />
+          {/*/!*forgetPassword end*!/*/}
           {/*button start*/}
           <View style={{ marginTop: pxToDp(45), marginBottom: pxToDp(72) }}>
             <TouchableOpacity
@@ -226,7 +213,7 @@ class RegisterTab extends Component {
                 backgroundColor: '#FD840B',
                 justifyContent: 'center',
               }}
-              onPress={this.register}
+              onPress={() => this.register}
             >
               <Text
                 style={{
@@ -270,9 +257,7 @@ class Index extends Component {
       <Tab.Navigator
         tabBarOptions={{
           inactiveTintColor: '#e2dddd',
-          // inactiveBackgroundColor: '#fffbf6',
           activeTintColor: '#FFFFFF',
-          // activeBackgroundColor: '#FE9E0E',
           pressColor: '#FE9E0E',
           indicatorStyle: {
             height: 0,
