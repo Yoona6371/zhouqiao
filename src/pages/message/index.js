@@ -58,7 +58,7 @@ class Index extends Component {
   };
 
   onFooterRefresh = async () => {
-    if (this.state.list.length > 20) {
+    if (this.state.list.length >= 20) {
       this.setState({ refreshState: RefreshState.FooterRefreshing });
       const { totalPage, currentPage } = this.state;
 
@@ -166,9 +166,21 @@ class Index extends Component {
           <RefreshListView
             data={list}
             numColumns={1}
+            // extraData={this.state}
             contentContainerStyle={{ ...flexColumnSpb }}
             keyExtractor={this.keyExtractor}
-            renderItem={(item, index) => <ListCard card={item} key={index} />}
+            renderItem={(item, index) => (
+              <ListCard
+                card={item}
+                key={index}
+                countUpdate={() => {
+                  this.setState({ count:this.state.count+1 });
+                }}
+                messageClear={(count) => {
+                  this.setState({count:this.state.count-count})
+                }}
+              />
+            )}
             refreshState={this.state.refreshState}
             onHeaderRefresh={this.onHeaderRefresh}
             onFooterRefresh={this.onFooterRefresh}

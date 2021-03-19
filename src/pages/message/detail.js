@@ -9,6 +9,7 @@ import {
   Platform,
   Text,
   TouchableOpacity,
+  DeviceEventEmitter,
 } from 'react-native';
 
 // 文件操作库
@@ -79,19 +80,41 @@ class TestRNIMUI extends Component {
       this.refs.ChatInput.setMenuContainerHeight(316);
     }
     this.resetMenu();
+    // if (
+    //   this.props.RootStore.globalStore.allData.Socket._callbacks
+    //     .$messageptop === undefined
+    // ) {
+    //   this.props.RootStore.globalStore.allData.Socket.on(
+    //     'messageptop',
+    //     (data) => {
+    //       this.onReceiveText(
+    //         JSON.parse(data).msgContent,
+    //         JSON.parse(data).contentType,
+    //         JSON.parse(data).fromAvatar,
+    //       );
+    //       // this.child.count(JSON.parse(data).fromId);
+    //       console.log('on监听接收消息', JSON.parse(data));
+    //     },
+    //   );
+    // }
+    this.listener = DeviceEventEmitter.addListener(
+      'messageUpdate',
+      (text, type, avatar, id) => {
+        if (id === this.props.route.params.fromId) {
+          this.onReceiveText(text, type, avatar);
+        }
+      },
+    );
+    console.log(this.props.RootStore.globalStore.allData.Socket);
     if (
       this.props.RootStore.globalStore.allData.Socket._callbacks
-        .$messageptop === undefined
+        .$revokeMessage === undefined
     ) {
-      console.log('添加监听');
+      console.log('asdasdasd');
       this.props.RootStore.globalStore.allData.Socket.on(
-        'messageptop',
+        'revokeMessage',
         (data) => {
-          this.onReceiveText(
-            JSON.parse(data).msgContent,
-            JSON.parse(data).contentType,
-            JSON.parse(data).fromAvatar,
-          );
+          this.messageRevoke({ msgId: data });
         },
       );
     }
@@ -115,7 +138,7 @@ class TestRNIMUI extends Component {
       size: 20,
       // toId: this.props.route.params.toId,
     });
-    // console.log(res.data.data.records);
+    console.log(res.data.data.records);
     const messagesHistory = res.data.data.records;
     const messages = [];
     let messageIds = '';
@@ -153,8 +176,10 @@ class TestRNIMUI extends Component {
     if (messageIds !== '') {
       Http.ifRead({
         messageIds,
-      }).then((res) => {
-        console.log(res);
+      }).then((res2) => {
+        if (res2.data.code !== 0) {
+          Toast.fail(res2.data.msg);
+        }
       });
     }
 
@@ -179,15 +204,7 @@ class TestRNIMUI extends Component {
     AuroraIController.removeMessageListDidLoadListener(
       this.messageListDidLoadEvent,
     );
-    console.log('进入willunmount');
-    // this.props.RootStore.globalStore.allData.Socket.close(
-    //   'messageptop',
-    //   (data) => {
-    //     console.log('进入取消监听');
-    //     console.log(data);
-    //   },
-    // );
-    console.log('取消监听结束');
+    this.listener.remove();
   }
 
   resetMenu() {
@@ -293,10 +310,8 @@ class TestRNIMUI extends Component {
   };
   messageRevoke = (message) => {
     let msgId = message.msgId;
-    // console.log(message);
     Http.revoke({ messageId: msgId }).then((res) => {
-      // console.log(res);
-      if (res.data.data === msgId) {
+      if (res.data.code === 0) {
         Toast.success('撤销成功', 1000, 'center');
         AuroraIController.removeMessage(msgId);
       } else {
@@ -328,7 +343,6 @@ class TestRNIMUI extends Component {
       size: 10,
       // toId: this.props.route.params.toId,
     });
-    // console.log(res.data.data.records);
     this.setState({ page: this.state.page + 1 });
     res.data.data.records.forEach((v, i) => {
       var message = constructNormalMessage();
@@ -370,6 +384,7 @@ class TestRNIMUI extends Component {
       toId: this.props.route.params.fromId,
     }).then((res) => {
       console.log(123123, res);
+      message.msgId = res.data.data;
       if (res.data.code === 0) {
         AuroraIController.appendMessages([message]);
       } else {
@@ -408,7 +423,6 @@ class TestRNIMUI extends Component {
   };
 
   onFinishRecordVoice = async (mediaPath, duration) => {
-    // console.log(mediaPath);
     let message = constructNormalMessage();
     message.msgType = 'voice';
     message.mediaPath = mediaPath;
