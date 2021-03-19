@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Image, Text, TouchableOpacity, View, StyleSheet } from 'react-native';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  DeviceEventEmitter,
+} from 'react-native';
 import { deviceWidthDp, pxToDp } from '../../../utils/pxToDp';
 import { fontStyle, padding } from '../../../utils/StyleUtils';
 import { inject } from 'mobx-react';
@@ -8,7 +15,10 @@ import { inject } from 'mobx-react';
 class Index extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      count: props.card.item.count,
+      toId:props.card.item.to_id,
+    };
   }
 
   timeFormmat(data) {
@@ -25,12 +35,47 @@ class Index extends Component {
     }
   }
 
+  componentDidMount() {
+    if (
+      this.props.RootStore.globalStore.allData.Socket._callbacks
+        .$messageptop === undefined
+    ) {
+      this.props.RootStore.globalStore.allData.Socket.on(
+        'messageptop',
+        (data) => {
+          // count更新
+          this.setState({ count: this.state.count + 1 });
+          this.props.countUpdate();
+          console.log(JSON.parse(data))
+          // 消息页实时更新
+          DeviceEventEmitter.emit(
+            'messageUpdate',
+            JSON.parse(data).msgContent,
+            JSON.parse(data).contentType,
+            JSON.parse(data).fromAvatar,
+            JSON.parse(data).fromId
+          );
+        },
+      );
+    }
+  }
+
+  // 父组件调用此函数实现count+1
+  // count = (id) => {
+  //   // if (id === this.state.id) {
+  //     this.setState({ count: 20 });
+  //   console.log(this.state.count);
+  //   // }
+  // };
+
   render() {
     let v = this.props.card.item;
     return (
       <TouchableOpacity
         style={styles.message_list}
         onPress={() => {
+          this.props.messageClear(this.state.count);
+          this.setState({ count: 0 });
           NavigationHelper.navigate('MessageDetail', {
             fromId: v.from_id,
             toId: this.props.RootStore.userStore.allData.userId,
@@ -69,7 +114,7 @@ class Index extends Component {
           >
             {this.timeFormmat(v.lasttime)}
           </Text>
-          {v.count === 0 ? (
+          {this.state.count === 0 ? (
             <Text
               style={{
                 ...styles.message_tips,
@@ -86,7 +131,7 @@ class Index extends Component {
                 marginLeft: pxToDp(92),
               }}
             >
-              {v.count}
+              {this.state.count}
             </Text>
           )}
         </View>
