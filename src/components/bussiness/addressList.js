@@ -19,7 +19,6 @@ export default class AddressList extends Component {
     Http.deleteAddress({}, this.props.addressId).then((res) => {
       console.log(res);
       if (res.data.code === 0) {
-        Toast.success(res.data.msg, 10, 'center');
         //刷新地址列表
         this.props.addressRefresh();
       } else {
