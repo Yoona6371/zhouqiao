@@ -84,7 +84,7 @@ export default class AddressList extends Component {
           {/*编辑结束*/}
           {/*删除开始*/}
           <TouchableOpacity
-            onPress={this.delete}
+            onPress={()=>this.delete}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
